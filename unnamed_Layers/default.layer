@@ -1,9 +1,6 @@
 GenericEntity {
  coords 84.993 5.346 76.895
 }
-Vehicle Med_Mech_Base1 : "{464C756F1E1D8F1E}Prefabs/Vehicles/Mech/SampleMech/Med_Mech_Base.et" {
- coords 81.876 8.377 61.762
-}
 GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
  coords 75.967 6.657 56.241
  angles 0 15.431 0
