@@ -1,0 +1,151 @@
+GenericEntity {
+ ID "F8F0AAF3A86E36E4"
+ components {
+  SignalsManagerComponent "{4BA4B6596B8DF416}" {
+  }
+  CGS_Titan_Missile "{237514BC451E9D2B}" {
+   m_sModuleId "LRM15_PAIR"
+   m_sDisplayName "LRM-15 x2"
+   m_sControlStation "DRIVER"
+   m_iWeaponGroup 3
+   m_bSupportsHeldFire 0
+   m_bSupportsPulseFire 1
+   m_FX BFA_MechWeaponFX "{258CA316B067EA54}" {
+    m_sMuzzleParticle "{6827C9C356E224D7}Particles/Weapon/Muzzle_Rocket_Pod_UB1657_Front.ptc"
+    m_sBackblastParticle "{CD49B367ABBC3629}Particles/Blasts/Blast_tiny_solid.ptc"
+    m_sSoundProject "{95AA0243F9DEAB1C}Sounds/Weapons/Launchers/RPG7/Weapons_Launchers_RPG7_Shot.acp"
+    m_sProjectilePrefab "{557C851E5BF78457}Prefabs/Vehicles/Mech/Weapons/SenMissile/Sen_Missile_Visual.et"
+    m_sTrailParticle "{0B4A2E9ADB3FC664}Particles/Weapon/RPG_75_muzzle_front.ptc"
+    m_fLinger 1
+    m_fImpactPrefabLifetime 2
+    m_bImpactOnMiss 1
+   }
+   m_fHeatPerShot 1.5
+   m_eDamageKind EXPLOSIVE
+   m_Crosshair BFA_MechCrosshair "{4B8C2FB3685F11E1}" {
+    m_fSize 120
+    m_Color 0.2 1 0.4 0.9
+   }
+   m_MuzzlePoint PointInfo "{F79BEB461C1B5AF4}" {
+    Offset 0 0.5 0.45
+   }
+   m_aBarrelPoints {
+    PointInfo "{161A5AB04A679A64}" {
+     Offset -0.84 0.59 0.45
+    }
+    PointInfo "{A792B8AB3E980A73}" {
+     Offset -0.72 0.59 0.45
+    }
+    PointInfo "{B37845F9173B13B0}" {
+     Offset -0.6 0.59 0.45
+    }
+    PointInfo "{DC5E11BEE3D445EC}" {
+     Offset -0.48 0.59 0.45
+    }
+    PointInfo "{0C0FE349818A5CD7}" {
+     Offset -0.36 0.59 0.45
+    }
+    PointInfo "{5E365C36344B3D8B}" {
+     Offset -0.84 0.47 0.45
+    }
+    PointInfo "{DE72891E09CB319A}" {
+     Offset -0.72 0.47 0.45
+    }
+    PointInfo "{8B8D9B0F3DBC74B6}" {
+     Offset -0.6 0.47 0.45
+    }
+    PointInfo "{EC910974F32FC8F6}" {
+     Offset -0.48 0.47 0.45
+    }
+    PointInfo "{46EF4F1AA7C12553}" {
+     Offset -0.36 0.47 0.45
+    }
+    PointInfo "{95ACCB338B9276A3}" {
+     Offset -0.84 0.35 0.45
+    }
+    PointInfo "{EFE099CE61646E46}" {
+     Offset -0.72 0.35 0.45
+    }
+    PointInfo "{684966EE87F3C3FB}" {
+     Offset -0.6 0.35 0.45
+    }
+    PointInfo "{2920B2E0BD6CA5B9}" {
+     Offset -0.48 0.35 0.45
+    }
+    PointInfo "{88EBD50DCD839378}" {
+     Offset -0.36 0.35 0.45
+    }
+    PointInfo "{77BADD27D0A514C6}" {
+     Offset 0.36 0.59 0.45
+    }
+    PointInfo "{FF50120F28854D20}" {
+     Offset 0.48 0.59 0.45
+    }
+    PointInfo "{C7975DA35D48C5F0}" {
+     Offset 0.6 0.59 0.45
+    }
+    PointInfo "{2CC5AB9AF516954F}" {
+     Offset 0.72 0.59 0.45
+    }
+    PointInfo "{D412EC5303149C8C}" {
+     Offset 0.84 0.59 0.45
+    }
+    PointInfo "{C046ACE1B0BEB55C}" {
+     Offset 0.36 0.47 0.45
+    }
+    PointInfo "{A56575301D216FF3}" {
+     Offset 0.48 0.47 0.45
+    }
+    PointInfo "{108A30DBFCB4988A}" {
+     Offset 0.6 0.47 0.45
+    }
+    PointInfo "{0556ED9E92AF5EEA}" {
+     Offset 0.72 0.47 0.45
+    }
+    PointInfo "{97743F306AF599C5}" {
+     Offset 0.84 0.47 0.45
+    }
+    PointInfo "{16B46FF9109F42F6}" {
+     Offset 0.36 0.35 0.45
+    }
+    PointInfo "{7088A4AC7935A8F8}" {
+     Offset 0.48 0.35 0.45
+    }
+    PointInfo "{8C155E7038255296}" {
+     Offset 0.6 0.35 0.45
+    }
+    PointInfo "{3D8035D396B1D603}" {
+     Offset 0.72 0.35 0.45
+    }
+    PointInfo "{F4D188B3D26613D6}" {
+     Offset 0.84 0.35 0.45
+    }
+   }
+   m_fMuzzleClearance 0.3
+   m_iMagazineSize 30
+   m_fReloadTime 15
+   m_fRange 1800
+   m_iSalvoIntervalMs 60
+   m_iRefireMs 3000
+   m_fDirectHitDamage 60
+   m_fSplashDamage 25
+   m_fTrailLength 12
+   m_fTrailThickness 0.3
+   m_bDebug 0
+   m_bFireAtAimPoint 1
+   m_fMaxAimCorrection 100
+   m_bHoming 1
+   m_bLockTargets 1
+   m_eGuidance BOTH
+   m_fLaserConeDeg 120
+   m_fTurnRate 45
+   m_fArmingDistance 60
+   m_fLoftAngle 45
+  }
+  MeshObject "{2A4EE481A96E3799}" {
+   Object "{882394FF329F6DA2}Common/Models/Mech Back/Left_Right_4_Pod.xob"
+  }
+  Hierarchy "{DFCA2553BAAF8B04}" {
+  }
+ }
+}
