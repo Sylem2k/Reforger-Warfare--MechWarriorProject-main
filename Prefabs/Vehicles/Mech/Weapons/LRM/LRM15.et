@@ -3,7 +3,7 @@ GenericEntity {
  components {
   SignalsManagerComponent "{3C38CAF67FFF2790}" {
   }
-  CGS_Titan_Missile "{F959778425F3EAEC}" {
+  RW_LRMWeapon "{F959778425F3EAEC}" {
    m_sModuleId "LRM15"
    m_sDisplayName "LRM-15"
    m_sControlStation "DRIVER"
@@ -60,6 +60,7 @@ GenericEntity {
    m_bHoming 1
    m_bLockTargets 1
    m_eGuidance BOTH
+   m_iLockTimeMs 1200
    m_fLaserConeDeg 120
    m_fTurnRate 45
    m_fArmingDistance 60
