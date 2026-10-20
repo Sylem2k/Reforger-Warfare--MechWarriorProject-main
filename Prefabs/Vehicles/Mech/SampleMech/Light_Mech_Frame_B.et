@@ -171,23 +171,23 @@ Vehicle {
      m_fWeightTons 0
      m_fSwapTime 4
     }
-    BFA_MechModuleDefinition "{FA72E383BC14B725}" {
+    BFA_MechModuleDefinition "{7E0D7D175CA3C40E}" {
      m_iId 8
-     m_sLabel "LRM-15 x2"
+     m_sLabel "LRM-5"
      m_iClass 3
-     m_sWeaponModuleId "LRM15_PAIR"
-     m_sPrefab "{FEFE3F482AB3D8B8}Prefabs/Vehicles/Mech/Weapons/LRM/LRM15_Pair.et"
+     m_sWeaponModuleId "LRM5"
+     m_sPrefab "{F21B7EDD2D3445BA}Prefabs/Vehicles/Mech/Weapons/LRM/LRM5.et"
      m_fWeightTons 0
-     m_fSwapTime 5
+     m_fSwapTime 4
     }
-    BFA_MechModuleDefinition "{3D500F7A19511AF3}" {
+    BFA_MechModuleDefinition "{9B3E73D847E24D40}" {
      m_iId 9
-     m_sLabel "LRM-20 x2"
+     m_sLabel "LRM-10"
      m_iClass 3
-     m_sWeaponModuleId "LRM20_PAIR"
-     m_sPrefab "{8AB285438FD079E6}Prefabs/Vehicles/Mech/Weapons/LRM/LRM20_Pair.et"
+     m_sWeaponModuleId "LRM10"
+     m_sPrefab "{6AA5CE954480A06E}Prefabs/Vehicles/Mech/Weapons/LRM/LRM10.et"
      m_fWeightTons 0
-     m_fSwapTime 5
+     m_fSwapTime 4
     }
    }
    m_sSwapStation "DRIVER"
