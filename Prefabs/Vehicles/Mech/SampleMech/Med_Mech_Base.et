@@ -91,7 +91,7 @@ Vehicle {
      m_iDefaultModuleId 0
      m_Point PointInfo "{0881033FC144BBC0}" {
       Offset 0 1.2994 -1
-      Angles 0 90 0
+      Angles 0 -0.9302 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -599,6 +599,6 @@ Vehicle {
   Hierarchy "{6AA82E28A05FD1B5}" {
   }
  }
- coords 81.876 8.377 61.762
+ coords 84.876 8.363 68.186
  m_eVehicleType VEHICLE
 }
