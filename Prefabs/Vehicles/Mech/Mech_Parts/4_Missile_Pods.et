@@ -22,6 +22,8 @@ GenericEntity {
     m_sTrailParticle "{0F364F4CD1D72350}Particles/Weapon/Trail_PG7VL.ptc"
    }
    m_fHeatPerShot 20
+   m_fRange 1500
+   m_bDebug 1
    m_bFireAtAimPoint 1
    m_fMaxAimCorrection 100
    m_MuzzlePoint PointInfo "{6AA82E22782B01B9}" {
@@ -43,6 +45,7 @@ GenericEntity {
    }
    m_eGuidance BOTH
    m_fLoftAngle 35
+   m_fLaserConeDeg 120
   }
  }
 }
