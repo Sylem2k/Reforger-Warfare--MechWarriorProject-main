@@ -632,7 +632,7 @@ Vehicle {
    }
   }
   RW_MechFrameComponent "{E50300000000005E}" {
-   m_sFrameName "Executioner - Gun"
+   m_sFrameName "Gravemarch-G"
    m_eWeightClass ASSAULT
    m_fMaxTons 100
    m_fFrameTons 60
@@ -763,7 +763,7 @@ Vehicle {
   }
   SCR_EditableVehicleComponent "{E503000000000077}" : "{AC79C9DD1CF681B3}Prefabs/Editor/Components/Vehicle_SCR_EditableEntityComponent.ct" {
    m_UIInfo SCR_EditableVehicleUIInfo "{E503000000000078}" {
-    Name "Assault Executioner - Gun"
+    Name "Assault Gravemarch-G"
     Description "ASSAULT test frame, 100 tons, 11 hardpoints, gun specialization. Temporary model."
     Icon "{A489F552FB7489C3}UI/Textures/Editor/EditableEntities/Characters/EditableEntity_Character_Custom.edds"
     IconSetName "US"

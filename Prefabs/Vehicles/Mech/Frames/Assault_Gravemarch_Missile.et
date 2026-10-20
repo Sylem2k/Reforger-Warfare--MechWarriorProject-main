@@ -642,7 +642,7 @@ Vehicle {
    }
   }
   RW_MechFrameComponent "{E504000000000060}" {
-   m_sFrameName "Executioner - Missile"
+   m_sFrameName "Gravemarch-M"
    m_eWeightClass ASSAULT
    m_fMaxTons 100
    m_fFrameTons 56
@@ -778,7 +778,7 @@ Vehicle {
   }
   SCR_EditableVehicleComponent "{E50400000000007A}" : "{AC79C9DD1CF681B3}Prefabs/Editor/Components/Vehicle_SCR_EditableEntityComponent.ct" {
    m_UIInfo SCR_EditableVehicleUIInfo "{E50400000000007B}" {
-    Name "Assault Executioner - Missile"
+    Name "Assault Gravemarch-M"
     Description "ASSAULT test frame, 100 tons, 12 hardpoints, missile specialization. Temporary model."
     Icon "{A489F552FB7489C3}UI/Textures/Editor/EditableEntities/Characters/EditableEntity_Character_Custom.edds"
     IconSetName "US"

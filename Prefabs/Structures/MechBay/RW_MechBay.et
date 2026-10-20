@@ -34,12 +34,12 @@ GenericEntity {
      m_sPrefab "{B6F0C0A020260002}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Missile.et"
     }
     RW_BayFrameEntry "{BA71000020260003}" {
-     m_sName "Assault Executioner - Gun"
-     m_sPrefab "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frames/Assault_Executioner_Gun.et"
+     m_sName "Assault Gravemarch-G"
+     m_sPrefab "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun.et"
     }
     RW_BayFrameEntry "{BA71000020260004}" {
-     m_sName "Assault Executioner - Missile"
-     m_sPrefab "{B6F0C0A020260004}Prefabs/Vehicles/Mech/Frames/Assault_Executioner_Missile.et"
+     m_sName "Assault Gravemarch-M"
+     m_sPrefab "{B6F0C0A020260004}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Missile.et"
     }
    }
    m_fBuildCooldown 20
