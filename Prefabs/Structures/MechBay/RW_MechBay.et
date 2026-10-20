@@ -17,6 +17,14 @@ GenericEntity {
      m_sName "Warden (Medium)"
      m_sPrefab "{464C756F1E1D8F1E}Prefabs/Vehicles/Mech/SampleMech/Med_Mech_Base.et"
     }
+    RW_BayFrameEntry "{5C2E91A07B3D4F18}" {
+     m_sName "Light Frame B"
+     m_sPrefab "{D8B39EAE0BB68001}Prefabs/Vehicles/Mech/SampleMech/Light_Mech_Frame_B.et"
+    }
+    RW_BayFrameEntry "{A41D6F3C29E85B07}" {
+     m_sName "Medium Frame B"
+     m_sPrefab "{223347F0F553E85B}Prefabs/Vehicles/Mech/SampleMech/Med_Mech_Frame_B.et"
+    }
    }
    m_fBuildCooldown 20
   }
