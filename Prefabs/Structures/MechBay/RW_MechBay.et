@@ -1,0 +1,50 @@
+GenericEntity {
+ ID "900172D9312C9C7D"
+ components {
+  MeshObject "{FB79674657F6AFF6}" {
+   Object "{102855E4AA84B807}Common/Models/Mech_Bay/Mech Bay.xob"
+  }
+  RW_MechBayComponent "{8643B81E650A437F}" {
+   m_sBayName "Mech Bay"
+   m_fRadius 15
+   m_vParkingOffset 0 0 12
+   m_aFrames {
+    RW_BayFrameEntry "{6D351B2848CDE0A6}" {
+     m_sName "Test Frame (Light)"
+     m_sPrefab "{33D70479FF3498E0}Prefabs/Vehicles/Mech/SampleMech/SampleMech.et"
+    }
+    RW_BayFrameEntry "{6E6016EC8D41D2BE}" {
+     m_sName "Warden (Medium)"
+     m_sPrefab "{464C756F1E1D8F1E}Prefabs/Vehicles/Mech/SampleMech/Med_Mech_Base.et"
+    }
+   }
+   m_fBuildCooldown 20
+  }
+  ActionsManagerComponent "{F337AFC7C60E18AE}" {
+   ActionContexts {
+    UserActionContext "{797332C738417C81}" {
+     ContextName "default"
+     Position PointInfo "{F4109CFF22AB3F09}" {
+      Offset 0 1.2 0
+     }
+     Radius 3
+    }
+   }
+   additionalActions {
+    RW_MechBayOpenAction "{39F3B3DF5A1A0A4B}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{D819DE34AA5DB914}" {
+      Name "Open Mech Bay"
+     }
+     VisibilityRange 6
+    }
+   }
+  }
+  RplComponent "{CD2EED750F10A415}" {
+  }
+ }
+ coords 80.129 6.657 55.092
+ angles 0 15.431 0
+}
