@@ -128,6 +128,19 @@ The server re-checks everything, so players can't cheat past it. Heavier loads a
 
 ---
 
+## Firing: one, some or all
+
+This is all Mech Core, so nothing custom is needed:
+
+- **The weapon group comes from the hardpoint** (`m_iWeaponGroup` on the hardpoint), not the weapon prefab. ARM / RIGHT_ARM = 1, SHOULDER = 2, BACK spots = 3.
+- **Group fire (default):** one pull fires every weapon in the selected group.
+- **Chain fire (X):** the weapons in that group take turns, one per pull.
+- **B** cycles the selected group. **Right mouse** fires the aux group.
+- **Rocket and missile weapons** fire **Salvo Count** rockets per pull (`m_iSalvoCount`, default 1). If a rack only fires one missile, this is the field to set.
+- **To fire a hardpoint on its own key,** give it its own group number and add that group to the station's Weapon Group Mask and Cycle Weapon Groups (`BFA_MechCoreComponent`).
+
+---
+
 ## Step by step: adding a new gun
 
 1. **Make the weapon prefab.** In Workbench, right-click an existing weapon that shoots the way you want

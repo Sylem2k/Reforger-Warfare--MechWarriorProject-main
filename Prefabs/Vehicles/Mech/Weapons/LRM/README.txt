@@ -1,45 +1,41 @@
-LRM pods (Catapult-style back racks) for MechWarrior Project
+LRM racks (Catapult-style back missiles) for MechWarrior Project
+Built on Mech Core's CGS_Titan_Missile (homing rocket launcher). One prefab = ONE rack.
 
-Two blank prefabs, each one = TWO racks (left + right of the back):
-  LRM15_Pair.et   Module Id LRM15_PAIR   2 x 15 tubes = 30 missiles a volley   GUID {FEFE3F482AB3D8B8}
-  LRM20_Pair.et   Module Id LRM20_PAIR   2 x 20 tubes = 40 missiles a volley   GUID {8AB285438FD079E6}
-Both are in Configs/RW/RW_Equipment.conf as MISSILE, LARGE (9 t and 12 t).
+  Prefab      Module Id  Tubes (grid)  Size    Tons  Fits on
+  LRM5.et     LRM5        5  (5 x 1)   SMALL   2     Light + Medium back spots
+  LRM10.et    LRM10      10  (5 x 2)   MEDIUM  4     Light + Medium back spots
+  LRM15.et    LRM15      15  (5 x 3)   LARGE   6     Medium back spots
+  LRM20.et    LRM20      20  (5 x 4)   LARGE   8     Medium back spots
+Weight / size live in Configs/RW/RW_Equipment.conf. Light Frame B lists LRM5 + LRM10,
+Medium Frame B lists all four, so e.g. one LRM15 on BACK_L and one LRM20 on BACK_R.
 
-GUIDANCE (homing + designator)
-  Built on the same CGS_Titan_Missile component as Laser_Missile_Arm.et, set to:
-    m_bHoming 1, m_bLockTargets 1   - lock a target and the missiles chase it
-    m_eGuidance BOTH                 - lock-on OR the laser spot from a Target Designator
-    m_fLaserConeDeg 120              - how far off-axis a laser spot can be and still be picked up
-    m_fLoftAngle 45                  - missiles arc up first (LRM look)
-    m_fTurnRate 45                   - how hard they can turn (lower = easier to dodge)
-    m_fArmingDistance 60             - no damage closer than 60 m (LRM minimum range)
-  To designate: put TARGET_DESIGNATOR on the SHOULDER, turn it on (toggle), and fire the LRMs
-  at the spot. A teammate's designator works too.
+FIRING - one, some or all (all Mech Core, nothing custom)
+  - One trigger pull = the whole rack ripples out (Salvo Count = tube count, 60 ms apart).
+  - BACK_L and BACK_R are both weapon group 3, so:
+      Group fire (default)  : one pull fires BOTH racks.
+      Chain fire (X)        : the racks take turns, one rack per pull.
+      B                     : cycle groups (1 arms, 2 shoulder, 3 back) to pick what to fire.
+  - Want each rack on its own key? Give BACK_R its own group (e.g. 4) on the mech's hardpoint and
+    add 4 to the DRIVER station's Weapon Group Mask / Cycle Weapon Groups (BFA_MechCoreComponent).
+  - Ammo: magazine = 4 volleys (LRM5/10) or 3 volleys (LRM15/20), 2 spare magazines.
+  - Heat is charged PER MISSILE (Heat Per Shot 1): an LRM20 volley = 20 heat.
+
+GUIDANCE (Homing category)
+  m_eGuidance BOTH    - flies to a friendly Target Designator spot if there is one in front
+                        (inside m_fLaserConeDeg 120), otherwise locks what the crosshair is on.
+  m_bLockTargets 1    - follows the locked mech / vehicle while it moves.
+  m_fLoftAngle 45     - arcs up, then dives on the target (top attack).
+  m_fTurnRate 45      - low = dodgeable. m_fArmingDistance 60 = flies straight 60 m first.
+  To designate: TARGET_DESIGNATOR on the SHOULDER (toggle on), or a teammate's designator.
+  Enemy point defense can shoot LRMs down.
 
 WHEN THE MODEL IS DONE
-  1. MeshObject > Object: pick your model. It currently uses Left_Right_4_Pod.xob as a placeholder.
-  2. m_aBarrelPoints: one PointInfo per tube, in firing order. They are laid out as a placeholder
-     grid (left rack x = -0.6, right rack x = +0.6, facing +Z). In Workbench drag each one onto its
-     tube opening. Keep exactly 30 (LRM15) / 40 (LRM20), or change m_iMagazineSize to match.
-  3. m_MuzzlePoint: the centre of the pod (used for aim / crosshair).
-  4. Missiles must leave along +Z of the prefab - rotate the model, not the points.
+  1. MeshObject > Object: your rack model (placeholder is Left_Right_4_Pod.xob).
+  2. Tubes > Tube Grids > First Tube: drag onto the TOP-LEFT tube mouth. Blue (Z) arrow out of
+     the tube, red (X) right, green (Y) up.
+  3. Column Spacing / Row Spacing: distance to the next tube right / down (placeholder 0.12).
+     Change Columns / Rows if your layout differs - keep Salvo Count = Columns x Rows.
+  4. Check: tick Debug, fire, watch where the missiles start; adjust until they leave the tubes.
+  5. Muzzle Point: centre of the rack (used for the crosshair / aim).
 
-PUTTING IT ON A MECH
-  Needs a hardpoint whose frame rule is MISSILE (or ANY) and max size LARGE - a heavy / Catapult
-  frame. The Warden's BACK is MEDIUM, so it will refuse these ("too big for this hardpoint").
-  Add to the mech's BFA_MechHardpointComponent > m_aModules:
-    m_iId          next free number (1-31)
-    m_sLabel       "LRM-15 x2"
-    m_iClass       3                          (same class as the BACK hardpoint)
-    m_sWeaponModuleId "LRM15_PAIR"
-    m_sPrefab      "{FEFE3F482AB3D8B8}Prefabs/Vehicles/Mech/Weapons/LRM/LRM15_Pair.et"
-    m_fSwapTime    5
-  (same for LRM20_PAIR / {8AB285438FD079E6}...LRM20_Pair.et)
-
-CHECK IN PLAY (the CGS component's source isn't in this repo, so these are best guesses)
-  - One press should send the whole volley (one missile per barrel point, 60 ms apart =
-    m_iSalvoIntervalMs). If it only fires one missile per press, tell Claude / check the
-    CGS_Titan_Missile attributes in Workbench for a salvo-count setting.
-  - m_fHeatPerShot 1.5: if heat is counted per missile, a full LRM20 volley = 60 heat. If it is
-    counted per press, raise it to ~45 (LRM15) / ~60 (LRM20).
-  - Damage 60 direct + 25 splash per missile. Compare: Laser Missiles do 250 per missile x 4.
+DAMAGE (per missile): 60 direct, 25 splash, 4 m radius. Range 1800 m, speed 90 m/s.
