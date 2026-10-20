@@ -33,12 +33,12 @@ GenericEntity {
    m_iMagazineSize 12
    m_fReloadTime 10
    m_iSpareMagazines 2
-   m_fRocketSpeed 90
+   m_fRocketSpeed 140
    m_fRange 2500
    m_iSalvoCount 1
    m_iSalvoIntervalMs 60
    m_iRefireMs 3000
-   m_fSpreadDeg 2
+   m_fSpreadDeg 0
    m_fDirectHitDamage 150
    m_fSplashDamage 25
    m_fSplashRadius 4
@@ -61,9 +61,13 @@ GenericEntity {
    m_bLockTargets 1
    m_eGuidance BOTH
    m_fLaserConeDeg 120
-   m_fTurnRate 45
-   m_fArmingDistance 60
+   m_fTurnRate 100
+   m_fArmingDistance 30
    m_fLoftAngle 45
+   m_iCourseSyncMs 100
+   m_bRequireFireSolution 1
+   m_fMinimumTargetRange 175
+   m_bLaserOnly 0
   }
   Hierarchy "{9A6D28B0EDF381D7}" {
   }
