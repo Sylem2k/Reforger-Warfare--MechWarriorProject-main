@@ -158,44 +158,6 @@ Vehicle {
      m_fSwapTime 4
     }
    }
-   m_aLoadoutPresets {
-    BFA_MechLoadoutPreset "{6AA82E28A05CF981}" {
-     m_sName "Las Cannon"
-     m_aSlots {
-      BFA_MechLoadoutSlot "{6AA82E28A05CF984}" {
-       m_sHardpoint "ARM"
-       m_iModuleId 1
-      }
-     }
-    }
-    BFA_MechLoadoutPreset "{6AA82E28A05CF985}" {
-     m_sName "Autocannon"
-     m_aSlots {
-      BFA_MechLoadoutSlot "{6AA82E28A05CF98B}" {
-       m_sHardpoint "ARM"
-       m_iModuleId 2
-      }
-     }
-    }
-    BFA_MechLoadoutPreset "{6AA82E28A05F52F0}" {
-     m_sName "Rockets"
-     m_aSlots {
-      BFA_MechLoadoutSlot "{6AA82E28A05F52F2}" {
-       m_sHardpoint "ARM"
-       m_iModuleId 3
-      }
-     }
-    }
-    BFA_MechLoadoutPreset "{6AA82E28A05F52F4}" {
-     m_sName "Empty"
-     m_aSlots {
-      BFA_MechLoadoutSlot "{6AA82E28A05F52F7}" {
-       m_sHardpoint "ARM"
-       m_iModuleId 0
-      }
-     }
-    }
-   }
    m_sSwapStation "DRIVER"
    m_bSwapRequiresStationary 1
    m_fSwapMaxSpeed 0.5
