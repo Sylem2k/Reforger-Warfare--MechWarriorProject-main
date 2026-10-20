@@ -45,7 +45,7 @@ GenericEntity {
    }
    m_eGuidance BOTH
    m_fLoftAngle 35
-   m_fLaserConeDeg 120
+   m_fLaserConeDeg 0
   }
  }
 }
