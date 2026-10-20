@@ -32,11 +32,14 @@ Vehicle {
      m_sStationId "DRIVER"
      m_bCanDrive 1
      m_bCanAim 1
-     m_iWeaponGroupMask 1
+     m_iWeaponGroupMask 7
      m_iCompartmentIndex 0
      m_iPrimaryWeaponGroup 1
      m_iSecondaryWeaponGroup 0
      m_iAuxWeaponGroup 0
+     m_aCycleWeaponGroups {
+      1 2 3
+     }
     }
    }
   }

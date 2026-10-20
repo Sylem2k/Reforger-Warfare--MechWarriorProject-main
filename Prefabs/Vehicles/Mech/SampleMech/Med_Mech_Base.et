@@ -37,6 +37,9 @@ Vehicle {
      m_iPrimaryWeaponGroup 1
      m_iSecondaryWeaponGroup 0
      m_iAuxWeaponGroup 0
+     m_aCycleWeaponGroups {
+      1 2 3
+     }
     }
    }
   }
