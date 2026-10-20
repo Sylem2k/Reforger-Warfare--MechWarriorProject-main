@@ -4,8 +4,9 @@
 //! has the tool) and the frame rules, then applies it with the normal swap timer.
 modded class SCR_PlayerController
 {
-	protected static const int RW_BITS = 5;
-	protected static const int RW_PER_WORD = 6;
+	protected static const int RW_BITS = 10;
+	protected static const int RW_ID_MASK = 1023;
+	protected static const int RW_PER_WORD = 3;
 	protected static const float RW_MAX_DISTANCE = 25;
 
 	//------------------------------------------------------------------------------------------------
@@ -14,43 +15,45 @@ modded class SCR_PlayerController
 	{
 		if (!mech)
 			return;
+		// The current wire format carries at most 18 module IDs.
+		// Never send a partial build while reporting its original count.
+		if (modules.Count() < 1 || modules.Count() > RW_PER_WORD * 6)
+		{
+			Print("[RW MECH LAB] Build refused: unsupported hardpoint count", LogLevel.WARNING);
+			return;
+		}
 		RplComponent rpl = RplComponent.Cast(mech.FindComponent(RplComponent));
 		if (!rpl)
 			return;
 
-		int w0 = 0;
-		int w1 = 0;
-		int w2 = 0;
-		for (int i = 0; i < modules.Count() && i < RW_PER_WORD * 3; i++)
+		// Serialize the 18 local module IDs in a single RPC string.  Each ID is
+		// validated server-side against the authoritative mech definition.
+		string serialized = "";
+		for (int i = 0; i < modules.Count(); i++)
 		{
-			int id = Math.Clamp(modules[i], 0, 31);
-			int shift = Math.Mod(i, RW_PER_WORD) * RW_BITS;
-			int word = i / RW_PER_WORD;
-			if (word == 0)
-				w0 = w0 | (id << shift);
-			else if (word == 1)
-				w1 = w1 | (id << shift);
-			else
-				w2 = w2 | (id << shift);
+			if (modules[i] < 0 || modules[i] > RW_ID_MASK)
+				return;
+			if (i > 0)
+				serialized = serialized + ",";
+			serialized = serialized + modules[i].ToString();
 		}
-
 		if (Replication.IsServer())
 		{
-			RW_ServerBuild(rpl.Id(), w0, w1, w2, modules.Count(), heatsinks);
+			RW_ServerBuild(rpl.Id(), serialized, heatsinks);
 			return;
 		}
-		Rpc(RW_RpcAsk_Build, rpl.Id(), w0, w1, w2, modules.Count(), heatsinks);
+		Rpc(RW_RpcAsk_Build, rpl.Id(), serialized, heatsinks);
 	}
 
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	protected void RW_RpcAsk_Build(RplId mechId, int w0, int w1, int w2, int count, int heatsinks)
+	protected void RW_RpcAsk_Build(RplId mechId, string serialized, int heatsinks)
 	{
-		RW_ServerBuild(mechId, w0, w1, w2, count, heatsinks);
+		RW_ServerBuild(mechId, serialized, heatsinks);
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected void RW_ServerBuild(RplId mechId, int w0, int w1, int w2, int count, int heatsinks)
+	protected void RW_ServerBuild(RplId mechId, string serialized, int heatsinks)
 	{
 		RplComponent rpl = RplComponent.Cast(Replication.FindItem(mechId));
 		if (!rpl || !rpl.GetEntity())
@@ -62,9 +65,45 @@ modded class SCR_PlayerController
 		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
 		if (!frame)
 			return;
+		BFA_MechHardpointComponent hardpoints = BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent));
+		if (!hardpoints)
+		{
+			frame.ServerCrewMessage("REFUSED: this mech has no hardpoints");
+			return;
+		}
 
-		// Parked in a Mech Bay: the bay does the work (no tool needed, the player can stand at the
-		// bay). Anywhere else: the player must stand at the mech with the Mech Wrench.
+		// 18 decimal IDs (up to four digits each) plus separators.
+		if (serialized.IsEmpty() || serialized.Length() > 90)
+		{
+			frame.ServerCrewMessage("REFUSED: invalid loadout data");
+			return;
+		}
+		ref array<string> tokens = {};
+		serialized.Split(",", tokens, false);
+		if (tokens.Count() != hardpoints.GetHardpointCount() || tokens.Count() < 1 || tokens.Count() > RW_PER_WORD * 6)
+		{
+			frame.ServerCrewMessage("REFUSED: invalid loadout hardpoint count");
+			return;
+		}
+
+		array<int> modules = {};
+		foreach (string token : tokens)
+		{
+			if (token.IsEmpty() || token.Length() > 4)
+				return;
+			for (int c = 0; c < token.Length(); c++)
+			{
+				int ch = token.ToAscii(c);
+				if (ch < 48 || ch > 57)
+					return;
+			}
+			int id = token.ToInt();
+			if (id < 0 || id > RW_ID_MASK)
+				return;
+			modules.Insert(id);
+		}
+
+		// Parked in a Mech Bay: the bay does the work (no tool needed).
 		IEntity user = GetControlledEntity();
 		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
 		bool bayWorks = bay && bay.NoToolNeeded() && bay.CanOperate(user, mech);
@@ -79,21 +118,9 @@ modded class SCR_PlayerController
 			return;
 		}
 
-		array<int> modules = {};
-		for (int i = 0; i < count && i < RW_PER_WORD * 3; i++)
-		{
-			int shift = Math.Mod(i, RW_PER_WORD) * RW_BITS;
-			int word = w0;
-			if (i / RW_PER_WORD == 1)
-				word = w1;
-			else if (i / RW_PER_WORD == 2)
-				word = w2;
-			modules.Insert((word >> shift) & 31);
-		}
-
 		string reason;
 		if (frame.ServerApplyBuild(modules, heatsinks, reason))
-			frame.ServerCrewMessage(string.Format("Build accepted: %1 / %2 t, %3 extra heatsinks", frame.BuildTons(BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent)), modules, heatsinks), frame.GetMaxTons(), heatsinks));
+			frame.ServerCrewMessage(string.Format("Build accepted: %1 / %2 t, %3 extra heatsinks", frame.BuildTons(hardpoints, modules, heatsinks), frame.GetMaxTons(), heatsinks));
 		else
 			frame.ServerCrewMessage("REFUSED: " + reason);
 	}
@@ -135,8 +162,15 @@ modded class SCR_PlayerController
 		// Saved build: look it up in this player's builds for that frame.
 		RW_SavedBuild build;
 		RW_BayFrameEntry entry = bay.GetFrameEntry(index);
-		if (savedSlot > 0 && entry)
+		if (savedSlot > 0)
+		{
+			if (!entry)
+				return;
 			build = RW_SavedBuild.FindSlot(RW_BuildStore.Get(RW_BuildStore.KeyFor(GetPlayerId())), RW_SavedBuild.GuidOf(entry.m_sPrefab), savedSlot);
+			// Never silently order an empty frame when a saved slot was requested.
+			if (!build)
+				return;
+		}
 		bay.ServerOrderFrame(index, GetControlledEntity(), build);
 	}
 
@@ -185,6 +219,21 @@ modded class SCR_PlayerController
 		BFA_MechHardpointComponent hardpoints = BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent));
 		if (!frame || !hardpoints)
 			return;
+
+		// Saving a build must obey the same proximity / tool rules as applying one.
+		IEntity user = GetControlledEntity();
+		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
+		bool bayWorks = bay && bay.NoToolNeeded() && bay.CanOperate(user, mech);
+		if (!user || (!bayWorks && (vector.Distance(user.GetOrigin(), mech.GetOrigin()) > RW_MAX_DISTANCE || !RW_MechWrench.HasTool(user, RW_MechWrench.DEFAULT_TOOL))))
+		{
+			frame.ServerCrewMessage("REFUSED: Mech Bay or nearby Mech Wrench required to save");
+			return;
+		}
+		if (packed.Length() > 128)
+		{
+			frame.ServerCrewMessage("REFUSED: saved build data too long");
+			return;
+		}
 
 		RW_SavedBuild build = RW_SavedBuild.FromLine("x|x|" + heatsinks.ToString() + "|" + packed);
 		if (!build)

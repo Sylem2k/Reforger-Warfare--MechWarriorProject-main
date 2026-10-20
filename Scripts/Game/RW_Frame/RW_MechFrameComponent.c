@@ -41,7 +41,7 @@ class RW_MechFrameComponent : ScriptComponent
 {
 	//! True while a loadout is applied to a mech parked in a Mech Bay (frames with Swap Only At
 	//! Mech Bay refuse every other swap).
-	static bool s_bMechBayApplying;
+	static IEntity s_pMechBayApplying;
 
 	//! Every frame in the world (bays look through this list instead of scanning an area).
 	protected static ref array<RW_MechFrameComponent> s_aAllFrames;
@@ -204,9 +204,12 @@ class RW_MechFrameComponent : ScriptComponent
 		int oldHeatsinks = m_iExtraHeatsinks;
 		m_iExtraHeatsinks = heatsinks;
 
-		s_bMechBayApplying = RW_MechBayComponent.IsAtBay(GetOwner());
+		IEntity previousBayMech = s_pMechBayApplying;
+		s_pMechBayApplying = null;
+		if (RW_MechBayComponent.IsAtBay(GetOwner()))
+			s_pMechBayApplying = GetOwner();
 		bool ok = hardpoints.ServerRequestLoadout(hardpoints.m_sSwapStation, modules);
-		s_bMechBayApplying = false;
+		s_pMechBayApplying = previousBayMech;
 
 		if (!ok)
 		{
@@ -312,8 +315,23 @@ class RW_MechFrameComponent : ScriptComponent
 	bool CheckItem(BFA_MechHardpointComponent hardpoints, int hardpointIndex, int moduleId, out string reason)
 	{
 		reason = string.Empty;
-		if (!hardpoints || moduleId == 0)
+		if (!hardpoints)
+		{
+			reason = "this mech has no hardpoints";
+			return false;
+		}
+		if (hardpointIndex < 0 || hardpointIndex >= hardpoints.GetHardpointCount())
+		{
+			reason = "invalid hardpoint";
+			return false;
+		}
+		if (moduleId == 0)
 			return true;
+		if (moduleId < 0 || !hardpoints.GetModuleDefinition(moduleId))
+		{
+			reason = "unknown module";
+			return false;
+		}
 		if (!hardpoints.CanModuleFit(hardpointIndex, moduleId))
 		{
 			reason = "wrong hardpoint class";
@@ -347,7 +365,15 @@ class RW_MechFrameComponent : ScriptComponent
 	{
 		reason = string.Empty;
 		if (!hardpoints)
-			return true;
+		{
+			reason = "this mech has no hardpoints";
+			return false;
+		}
+		if (modules.Count() != hardpoints.GetHardpointCount())
+		{
+			reason = "loadout hardpoint count mismatch";
+			return false;
+		}
 		if (heatsinks < 0 || heatsinks > m_iMaxExtraHeatsinks)
 		{
 			reason = string.Format("heatsinks must be 0 - %1", m_iMaxExtraHeatsinks);
@@ -357,6 +383,8 @@ class RW_MechFrameComponent : ScriptComponent
 		RW_EquipmentCatalog catalog = RW_EquipmentCatalog.Get();
 		for (int i = 0; i < modules.Count(); i++)
 		{
+			if (!CheckItem(hardpoints, i, modules[i], reason))
+				return false;
 			BFA_MechModuleDefinition module = hardpoints.GetModuleDefinition(modules[i]);
 			if (!module)
 				continue; // empty
@@ -480,7 +508,7 @@ modded class BFA_MechExtension
 			return true;
 
 		// The mech bay sets this while it applies a loadout.
-		if (frame.SwapOnlyAtMechBay() && !RW_MechFrameComponent.s_bMechBayApplying)
+		if (frame.SwapOnlyAtMechBay() && RW_MechFrameComponent.s_pMechBayApplying != mech)
 		{
 			reason = "loadouts can only be changed at a mech bay";
 			frame.ServerCrewMessage("REFUSED: " + reason);
