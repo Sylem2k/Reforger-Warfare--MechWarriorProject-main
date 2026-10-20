@@ -43,7 +43,8 @@ GenericEntity {
      Offset -0.1718 1.2005 -1.1099
     }
    }
-   m_eGuidance BOTH
+   m_eGuidance FOLLOW_AIM
+   m_fTurnRate 120
    m_fLoftAngle 35
    m_fLaserConeDeg 0
   }
