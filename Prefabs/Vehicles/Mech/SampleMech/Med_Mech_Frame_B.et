@@ -572,7 +572,7 @@ Vehicle {
    }
   }
   RW_MechFrameComponent "{FA62555B91F6A80D}" {
-   m_sFrameName "Medium Frame B"
+   m_sFrameName "Warden - Alt"
    m_eWeightClass MEDIUM
    m_fMaxTons 55
    m_fFrameTons 35

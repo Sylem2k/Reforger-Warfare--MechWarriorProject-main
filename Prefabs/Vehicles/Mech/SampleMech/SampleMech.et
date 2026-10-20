@@ -490,7 +490,7 @@ Vehicle {
    }
   }
   RW_MechFrameComponent "{9B1C4D875E39A77B}" {
-   m_sFrameName "Test Frame"
+   m_sFrameName "Cricket"
    m_eWeightClass LIGHT
    m_fMaxTons 35
    m_fFrameTons 25
@@ -575,7 +575,7 @@ Vehicle {
   }
   SCR_EditableVehicleComponent "{A16F4D7CA9D028CC}" : "{AC79C9DD1CF681B3}Prefabs/Editor/Components/Vehicle_SCR_EditableEntityComponent.ct" {
    m_UIInfo SCR_EditableVehicleUIInfo "{3FABE2286FDD47D5}" {
-    Name "BFA Mech - 1 Pilot Test"
+    Name "Cricket (Light Mech)"
     Description "Example: one pilot drives and fires. Las arm with swappable weapons (Las / autocannon / rockets). AI can drive and fight."
     Icon "{A489F552FB7489C3}UI/Textures/Editor/EditableEntities/Characters/EditableEntity_Character_Custom.edds"
     IconSetName "US"
