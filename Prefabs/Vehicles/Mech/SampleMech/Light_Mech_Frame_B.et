@@ -541,7 +541,7 @@ Vehicle {
    }
   }
   RW_MechFrameComponent "{89462F25CFDD44F5}" {
-   m_sFrameName "Light Frame B"
+   m_sFrameName "Cricket - Alt"
    m_eWeightClass LIGHT
    m_fMaxTons 40
    m_fFrameTons 25
