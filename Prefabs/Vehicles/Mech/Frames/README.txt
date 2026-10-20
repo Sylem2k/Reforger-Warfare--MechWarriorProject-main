@@ -13,14 +13,14 @@ Cricket (Light - Alt)       existing light Frame B, unchanged loadout
 Warden (Medium - Alt)       existing medium Frame B, unchanged loadout
 Heavy Judiciar - Gun        new
 Heavy Judiciar - Missile    new
-Assault Executioner - Gun   new
-Assault Executioner - Missile new
+Assault Gravemarch-G   new
+Assault Gravemarch-M new
 
 NAME                           MAX  EMPTY  PAYLOAD  HP  ARM/GUN  BACK/MISSILE  SUPPORT
 Heavy Judiciar - Gun            80    49      31     8      5           2         1
 Heavy Judiciar - Missile        80    47      33     8      2           5         1
-Assault Executioner - Gun      100    60      40    11      7           3         1
-Assault Executioner - Missile  100    56      44    12      3           8         1
+Assault Gravemarch-G      100    60      40    11      7           3         1
+Assault Gravemarch-M  100    56      44    12      3           8         1
 
 Core hardpoint classes: ARM=1, SHOULDER=2, BACK=3.
 Weapon group 1: arms, torso guns; group 2: shoulder; group 3: back missile racks.
