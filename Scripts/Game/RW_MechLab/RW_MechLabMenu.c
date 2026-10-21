@@ -184,6 +184,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	static const int BTN_VIEW_LEFT = 3;
 	static const int BTN_VIEW_RIGHT = 4;
 	static const int BTN_SAVE = 5;
+	static const int BTN_DELETE_MECH = 6;
 
 	static const float UI_SCALE = 1.3;      // bigger = everything bigger
 	static const float PANEL_W = 410;
@@ -272,6 +273,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected float m_fLocalUntil;
 	protected int m_iSeenSeq = -1;
 	protected float m_fServerUntil;
+	protected float m_fConfirmDeleteUntil;  // two clicks required within five seconds
 
 	//------------------------------------------------------------------------------------------------
 	//! Open the Mech Lab for this mech (local player).
@@ -318,6 +320,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (m_pMech == mech && m_bBuilt)
 			return;
 		m_pMech = mech;
+		m_fConfirmDeleteUntil = 0;
 		m_Frame = RW_MechFrameComponent.Find(mech);
 		m_Hardpoints = BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent));
 		m_Heat = CGS_MechHeatComponent.Cast(mech.FindComponent(CGS_MechHeatComponent));
@@ -672,6 +675,10 @@ class RW_MechLabMenu : ChimeraMenuBase
 			{
 				SaveBuild();
 			}
+			else if (pressed.m_iValue == BTN_DELETE_MECH)
+			{
+				DeleteOrderedMech();
+			}
 			else if (pressed.m_iValue == BTN_VIEW_RIGHT)
 			{
 				if (m_Camera)
@@ -837,6 +844,14 @@ class RW_MechLabMenu : ChimeraMenuBase
 
 		float py = sy + 118;
 		TextWidget partsHeader = Text(lx + 18, py, panelW - 160, 18, 14, m_cAccent, "PARTS");
+		// Keep DELETE on the bay-specific Mech Lab, away from the main fitting buttons.
+		if (bayHere)
+		{
+			float dx = lx + panelW - 146;
+			RW_LabRow removeMech = AddRow(ROW_BUTTON, BTN_DELETE_MECH, dx, py - 6, 132, 27);
+			removeMech.m_wTitle = Text(dx + 2, py - 3, 128, 20, 13, m_cBad, "DELETE MECH");
+			removeMech.m_wTitle.SetFlags(WidgetFlags.CENTER);
+		}
 		py += 26;
 
 		// Each family has its own page; no need to scroll through every weapon.
@@ -1294,10 +1309,50 @@ class RW_MechLabMenu : ChimeraMenuBase
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//! Deliberately require two separate clicks before sending a server-side delete request.
+	protected void DeleteOrderedMech()
+	{
+		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(m_pMech);
+		if (!bay)
+		{
+			Say("A mech can only be deleted at its Mech Bay", true);
+			return;
+		}
+		if (Now() > m_fConfirmDeleteUntil)
+		{
+			m_fConfirmDeleteUntil = Now() + 5;
+			Say("Click CONFIRM DELETE within 5 seconds. Only your ordered mech can be removed.", true);
+			return;
+		}
+		m_fConfirmDeleteUntil = 0;
+		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		if (!pc)
+			return;
+		pc.RW_RequestDeleteOrderedMech(m_pMech);
+		Say("Asking the bay crew to delete this mech...", false);
+	}
+
+	//------------------------------------------------------------------------------------------------
 	protected void RefreshButton(RW_LabRow row, bool hovered, bool over)
 	{
 		row.m_wAccent.SetVisible(false);
 		bool enabled = true;
+		if (row.m_iKind == ROW_BUTTON && row.m_iValue == BTN_DELETE_MECH)
+		{
+			if (row.m_wTitle)
+			{
+				if (Now() <= m_fConfirmDeleteUntil)
+					row.m_wTitle.SetText("CONFIRM DELETE");
+				else
+					row.m_wTitle.SetText("DELETE MECH");
+				row.m_wTitle.SetColor(m_cBad);
+			}
+			if (hovered)
+				row.m_wBg.SetColor(new Color(0.7, 0.1, 0.1, 0.42));
+			else
+				row.m_wBg.SetColor(m_cRow);
+			return;
+		}
 		if (row.m_iKind == ROW_BUTTON && row.m_iValue == BTN_APPLY)
 		{
 			enabled = PlanChanged() && !over && !m_Hardpoints.IsSwapInProgress();
