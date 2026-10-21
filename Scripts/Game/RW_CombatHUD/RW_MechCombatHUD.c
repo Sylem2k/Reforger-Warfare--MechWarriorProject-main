@@ -355,8 +355,10 @@ modded class BFA_MechHUDDisplay
 			if (weapon.IsReloading())
 				fill = weapon.GetReloadProgress();
 			else if (weapon.UsesAmmo() && weapon.GetMagazineSize() > 0)
+			{
 				float magazineSize = weapon.GetMagazineSize();
 				fill = weapon.GetRoundsInMagazine() / magazineSize;
+			}
 			FrameSlot.SetSize(m_aRwCombatRowBar[i], Math.Max(2, (RW_COMBAT_PANEL_W - 33) * Math.Clamp(fill, 0, 1)), 3);
 			m_aRwCombatRowBar[i].SetColor(color);
 		}
