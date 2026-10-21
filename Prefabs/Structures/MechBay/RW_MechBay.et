@@ -66,32 +66,6 @@ GenericEntity {
     }
    }
   }
-  SCR_EditableEntityComponent "{8701C926ACCE0001}" {
-   m_UIInfo SCR_EditableEntityUIInfo "{8701C926ACCE0002}" {
-    Name "Mech Lab - Mech Bay"
-    Description "GM-placeable mech facility. Players can open the Mech Lab, fit weapons, or order a Cricket, Warden, Judiciar or Gravemarch chassis."
-    m_aAuthoredLabels {
-     CONTENT_MODDED
-    }
-    m_aAutoLabels {
-     ENTITYTYPE_OBJECT SIZE_L
-    }
-   }
-   m_bAutoRegister ALWAYS
-   m_Flags 769
-  }
-  SCR_PreviewEntityComponent "{8701C926ACCE0003}" {
-   m_bRuntime 0
-   m_aEntries {
-    SCR_BasePreviewEntry "{8701C926ACCE0004}" {
-     m_iParentID -1
-     m_Mesh "{102855E4AA84B807}Common/Models/Mech_Bay/Mech Bay.xob"
-     m_Flags EDITABLE
-     m_Shape MESH
-     m_iPivotID ""
-    }
-   }
-  }
   RplComponent "{CD2EED750F10A415}" {
   }
  }
