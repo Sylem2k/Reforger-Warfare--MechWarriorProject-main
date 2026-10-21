@@ -5,6 +5,8 @@ SCR_EditorModeEntity : "{59EF8ECAE1DCD417}Prefabs/Editor/Modes/EditorModeEdit.et
    m_Registries {
     SCR_PlaceableEntitiesRegistry "{62D50D1E4E26AF2D}" : "{2DA412452F22AF0B}Configs/Editor/BFA_Mech_Entities.conf" {
     }
+    SCR_PlaceableEntitiesRegistry "{D82026000000E002}" : "{D82026000000E001}Configs/Editor/PlaceableEntities/Vehicles/EnemyMechs.conf" {
+    }
    }
   }
  }
