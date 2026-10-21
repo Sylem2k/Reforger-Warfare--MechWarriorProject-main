@@ -7,6 +7,8 @@ SCR_EditorModeEntity : "{59EF8ECAE1DCD417}Prefabs/Editor/Modes/EditorModeEdit.et
     }
     SCR_PlaceableEntitiesRegistry "{D82026000000E002}" : "{D82026000000E001}Configs/Editor/PlaceableEntities/Vehicles/EnemyMechs.conf" {
     }
+    SCR_PlaceableEntitiesRegistry "{F1A6E20D202601B0}" : "{3A9124B8692C3F39}Configs/Editor/PlaceableEntities/Systems/Systems.conf" {
+    }
    }
   }
  }
