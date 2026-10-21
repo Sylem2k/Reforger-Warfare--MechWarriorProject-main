@@ -29,6 +29,7 @@ Vehicle {
    m_bFollowGroupMode 0
   }
   BFA_MechAICrewComponent "{C154296B60B0FDDD}" {
+   m_bFireAllGroups 1
   }
   BFA_MechAimComponent "{23EA0C071BB77821}" {
    m_fReticleAimDistance 1000
