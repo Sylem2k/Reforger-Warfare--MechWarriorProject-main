@@ -276,7 +276,7 @@ modded class BFA_MechHUDDisplay
 		if (heat)
 		{
 			int pct = Math.Round(heat.GetHeat01() * 100);
-			heatInfo = string.Format("REACTOR HEAT %1%%", pct);
+			heatInfo = string.Format("REACTOR HEAT %1", pct) + "%";
 			shutDown = heat.IsShutDown();
 			hot = heat.IsOverheated();
 			if (shutDown)
@@ -348,14 +348,15 @@ modded class BFA_MechHUDDisplay
 			if (weapon.UsesAmmo())
 				detail = detail + string.Format("  /  AMMO %1", AmmoText(weapon));
 			else
-				detail = detail + string.Format("  /  HEAT +%1", Math.Round(weapon.GetHeatPerShot() * 10) / 10);
+				detail = detail + string.Format("  /  HEAT +%1", Math.Round(weapon.GetHeatPerShot() * 10) / 10.0);
 			m_aRwCombatRowDetail[i].SetText(detail);
 
 			float fill = 1;
 			if (weapon.IsReloading())
 				fill = weapon.GetReloadProgress();
 			else if (weapon.UsesAmmo() && weapon.GetMagazineSize() > 0)
-				fill = weapon.GetRoundsInMagazine() / (float)weapon.GetMagazineSize();
+				float magazineSize = weapon.GetMagazineSize();
+				fill = weapon.GetRoundsInMagazine() / magazineSize;
 			FrameSlot.SetSize(m_aRwCombatRowBar[i], Math.Max(2, (RW_COMBAT_PANEL_W - 33) * Math.Clamp(fill, 0, 1)), 3);
 			m_aRwCombatRowBar[i].SetColor(color);
 		}
