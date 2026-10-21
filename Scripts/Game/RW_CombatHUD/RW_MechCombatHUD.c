@@ -32,6 +32,7 @@ modded class BFA_MechHUDDisplay
 	protected ref array<ImageWidget> m_aRwAimDecor = {};
 	protected TextWidget m_wRwAimMode;
 	protected TextWidget m_wRwAimDistance;
+	protected TextWidget m_wRwAimContext; // weapon-type targeting info, not an unverified lock state
 
 	//------------------------------------------------------------------------------------------------
 	protected Color RW_CombatTypeColor(RW_EquipmentEntry entry)
@@ -109,6 +110,7 @@ modded class BFA_MechHUDDisplay
 		}
 		m_wRwAimMode = PanelText(220, 22, 14, title);
 		m_wRwAimDistance = PanelText(220, 20, 12, muted);
+		m_wRwAimContext = PanelText(270, 20, 12, muted);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -156,6 +158,7 @@ modded class BFA_MechHUDDisplay
 			Show(corner, visible);
 		Show(m_wRwAimMode, visible);
 		Show(m_wRwAimDistance, visible);
+		Show(m_wRwAimContext, visible);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -189,31 +192,70 @@ modded class BFA_MechHUDDisplay
 		float y = pixel[1];
 		float screenW = ws.DPIUnscale(ws.GetWidth());
 		float screenH = ws.DPIUnscale(ws.GetHeight());
-		if (x < 92 || y < 90 || x > screenW - 245 || y > screenH - 145)
+		if (x < 92 || y < 90 || x > screenW - 300 || y > screenH - 145)
 		{
 			RW_ShowAim(false);
 			return;
 		}
 
 		RW_ShowAim(true);
-		// Eight small corner lines. Core's reticle remains untouched at the centre.
-		Place(m_aRwAimDecor[0], x - 45, y - 43);
-		Place(m_aRwAimDecor[1], x + 29, y - 43);
-		Place(m_aRwAimDecor[2], x - 45, y + 42);
-		Place(m_aRwAimDecor[3], x + 29, y + 42);
-		Place(m_aRwAimDecor[4], x - 45, y - 43);
-		Place(m_aRwAimDecor[5], x + 43, y - 43);
-		Place(m_aRwAimDecor[6], x - 45, y + 28);
-		Place(m_aRwAimDecor[7], x + 43, y + 28);
+		// Different bank types change the surrounding brackets, not Core's true aim point.
+		// ENERGY: compact precision frame, BALLISTIC: mid-size lead frame,
+		// MISSILE: wide acquisition frame. None implies an actual target lock.
+		float halfSize = 45;
+		if (category)
+		{
+			if (category.m_eType == RW_EHardpointType.ENERGY)
+				halfSize = 36;
+			else if (category.m_eType == RW_EHardpointType.BALLISTIC)
+				halfSize = 49;
+			else if (category.m_eType == RW_EHardpointType.MISSILE)
+				halfSize = 58;
+		}
+		float left = x - halfSize;
+		float right = x + halfSize - 16;
+		float top = y - halfSize;
+		float bottom = y + halfSize - 2;
+		Place(m_aRwAimDecor[0], left, top);
+		Place(m_aRwAimDecor[1], right, top);
+		Place(m_aRwAimDecor[2], left, bottom);
+		Place(m_aRwAimDecor[3], right, bottom);
+		Place(m_aRwAimDecor[4], left, top);
+		Place(m_aRwAimDecor[5], x + halfSize - 2, top);
+		Place(m_aRwAimDecor[6], left, y + halfSize - 16);
+		Place(m_aRwAimDecor[7], x + halfSize - 2, y + halfSize - 16);
 		foreach (ImageWidget segment : m_aRwAimDecor)
 			segment.SetColor(accent);
 
-		Place(m_wRwAimMode, x + 60, y - 24);
-		Place(m_wRwAimDistance, x + 60, y - 4);
+		Place(m_wRwAimMode, x + 67, y - 27);
+		Place(m_wRwAimDistance, x + 67, y - 6);
+		Place(m_wRwAimContext, x + 67, y + 13);
 		m_wRwAimMode.SetText(RW_CombatTypeName(category) + " / " + ShortName(primary.GetDisplayName(), 16));
 		m_wRwAimMode.SetColor(accent);
 		int distance = Math.Round(vector.Distance(camera[3], worldPoint));
 		m_wRwAimDistance.SetText(string.Format("AIM POINT %1 m", distance));
+
+		// Report only Core/gameplay values that are actually available on this client.
+		// LRM lock authority is server-side in RW_LRMWeapon; do not invent a progress bar.
+		string context = "DIRECT FIRE";
+		if (RW_LRMWeapon.Cast(primary))
+		{
+			context = "LRM / SERVER LOCK REQUIRED";
+		}
+		else if (RW_LaserWeapon.Cast(primary))
+		{
+			context = string.Format("LASER / RANGE %1 m", Math.Round(primary.GetAimRange()));
+		}
+		else if (category && category.m_eType == RW_EHardpointType.MISSILE)
+		{
+			context = "MISSILE / TRAJECTORY";
+		}
+		else if (primary.GetLeadSpeed() > 0)
+		{
+			context = string.Format("BALLISTIC / %1 m/s LEAD", Math.Round(primary.GetLeadSpeed()));
+		}
+		m_wRwAimContext.SetText(context);
+		m_wRwAimContext.SetColor(accent);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -390,6 +432,7 @@ modded class BFA_MechHUDDisplay
 		m_wRwCombatHeat = null;
 		m_wRwAimMode = null;
 		m_wRwAimDistance = null;
+		m_wRwAimContext = null;
 		m_aRwCombatRowBg.Clear();
 		m_aRwCombatRowStripe.Clear();
 		m_aRwCombatRowName.Clear();
