@@ -1061,12 +1061,15 @@ class RW_MechLabMenu : ChimeraMenuBase
 
 		// Live selection HUD sits below the visible mech, without covering its hardpoint markers.
 		float centreX = lx + panelW + 16;
-		float centreW = Math.Max(rx - centreX - 16, 10);
-		Rect(centreX, by - 92, centreW, 62, m_cPanel);
-		Rect(centreX, by - 92, 4, 62, m_cAccent, 1);
-		m_wSelectedTitle = Text(centreX + 14, by - 83, centreW - 24, 21, 15, m_cAccent, "SELECTED HARDPOINT");
-		m_wSelectedPart = Text(centreX + 14, by - 58, centreW - 24, 26, 16, m_cText, "Select a slot to configure");
-		Text(centreX + 8, top + 14, centreW - 16, 20, 13, m_cAccent, "MECH VIEWPORT  //  REAL-TIME LOADOUT").SetFlags(WidgetFlags.CENTER);
+		float centreW = rx - centreX - 16;
+		if (centreW >= 210)
+		{
+			Rect(centreX, by - 92, centreW, 62, m_cPanel);
+			Rect(centreX, by - 92, 4, 62, m_cAccent, 1);
+			m_wSelectedTitle = Text(centreX + 14, by - 83, centreW - 24, 21, 15, m_cAccent, "SELECTED HARDPOINT");
+			m_wSelectedPart = Text(centreX + 14, by - 58, centreW - 24, 26, 16, m_cText, "Select a slot to configure");
+			Text(centreX + 8, top + 14, centreW - 16, 20, 13, m_cAccent, "MECH VIEWPORT  //  REAL-TIME LOADOUT").SetFlags(WidgetFlags.CENTER);
+		}
 
 		// ---------------- Markers on the mech (one per hardpoint) ----------------
 		m_fLeftEdge = lx + panelW + 10;
@@ -1731,16 +1734,20 @@ class RW_MechLabMenu : ChimeraMenuBase
 		m_iOrderPage = Math.Clamp(m_iOrderPage, 0, Math.Max(count - 1, 0));
 
 		float w = Math.Min(820, sw - EDGE * 2);
+		// Compact saved-build cards on short windows: the footer and close button stay visible.
+		float savedRowH = 66;
+		if (sh < 805)
+			savedRowH = 50;
 		float slotsHeight = 0;
 		if (count > 0)
 		{
 			RW_BayFrameEntry selected = m_OrderBay.GetFrameEntry(m_iOrderPage);
 			if (selected)
-				slotsHeight = 76 + 66 * RW_SavedBuild.CountFor(m_aBuilds, RW_SavedBuild.GuidOf(selected.m_sPrefab));
+				slotsHeight = 76 + savedRowH * RW_SavedBuild.CountFor(m_aBuilds, RW_SavedBuild.GuidOf(selected.m_sPrefab));
 		}
 		float h = 200 + slotsHeight + 92;
 		float x = sw * 0.5 - w * 0.5;
-		float y = Math.Max(sh * 0.5 - h * 0.5, EDGE + 70);
+		float y = Math.Max(sh * 0.5 - h * 0.5, sh < 805 ? 70 : EDGE + 70);
 		TopChrome(sw, "REQUISITIONS / MECH BAY");
 		HangarPanel(x, y, w, h);
 		Text(x + 24, y + 12, w - 48, 20, 14, m_cAccent, "05  //  " + m_OrderBay.GetBayName());
@@ -1784,18 +1791,18 @@ class RW_MechLabMenu : ChimeraMenuBase
 					if (!build)
 						continue;
 					float rowW = w - 44 - 14 - 190;
-					RW_LabRow saved = AddRow(ROW_ORDER, m_iOrderPage * 100 + slot, x + 44, ry, rowW, 58);
-					saved.m_wSub = Text(x + 60, ry + 6, rowW - 30, 18, 13, m_cAccent, "SAVED CONFIG  //  " + slot.ToString());
-					saved.m_wTitle = Text(x + 60, ry + 26, rowW - 30, 24, 17, m_cText, build.m_sName);
+					RW_LabRow saved = AddRow(ROW_ORDER, m_iOrderPage * 100 + slot, x + 44, ry, rowW, savedRowH - 8);
+					saved.m_wSub = Text(x + 60, ry + 4, rowW - 30, 18, 13, m_cAccent, "SAVED CONFIG  //  " + slot.ToString());
+					saved.m_wTitle = Text(x + 60, ry + 21, rowW - 30, 24, 17, m_cText, build.m_sName);
 
-					RW_LabRow ready = AddRow(ROW_ORDER, m_iOrderPage * 100 + slot, x + 44 + rowW + 8, ry, 120, 58);
-					ready.m_wTitle = Text(x + 44 + rowW + 8, ry + 17, 120, 24, 16, m_cGood, "DEPLOY >");
+					RW_LabRow ready = AddRow(ROW_ORDER, m_iOrderPage * 100 + slot, x + 44 + rowW + 8, ry, 120, savedRowH - 8);
+					ready.m_wTitle = Text(x + 44 + rowW + 8, ry + 12, 120, 24, 16, m_cGood, "DEPLOY >");
 					ready.m_wTitle.SetFlags(WidgetFlags.CENTER);
 
-					RW_LabRow del = AddRow(ROW_DELETE, m_iOrderPage * 100 + slot, x + 44 + rowW + 136, ry, 48, 58);
-					del.m_wTitle = Text(x + 44 + rowW + 136, ry + 17, 48, 24, 16, m_cBad, "X");
+					RW_LabRow del = AddRow(ROW_DELETE, m_iOrderPage * 100 + slot, x + 44 + rowW + 136, ry, 48, savedRowH - 8);
+					del.m_wTitle = Text(x + 44 + rowW + 136, ry + 12, 48, 24, 16, m_cBad, "X");
 					del.m_wTitle.SetFlags(WidgetFlags.CENTER);
-					ry += 66;
+					ry += savedRowH;
 				}
 			}
 		}
