@@ -1015,7 +1015,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 			RW_LabRow hpPrev = AddRow(ROW_HARDPOINT_PAGE, -1, rx + 15, top + 73, 92, 28);
 			hpPrev.m_wTitle = Text(rx + 15, top + 77, 92, 18, 13, m_cText, "< PREV");
 			hpPrev.m_wTitle.SetFlags(WidgetFlags.CENTER);
-			Text(rx + 118, top + 78, panelW - 236, 18, 13, m_cAccent, string.Format("%1 / %2", m_iHardpointPage + 1, totalPages + 1)).SetFlags(WidgetFlags.CENTER);
+			TextWidget hardpointPageLabel = Text(rx + 118, top + 78, panelW - 236, 18, 13, m_cAccent, string.Format("%1 / %2", m_iHardpointPage + 1, totalPages + 1));
+			if (hardpointPageLabel)
+				hardpointPageLabel.SetFlags(WidgetFlags.CENTER);
 			RW_LabRow hpNext = AddRow(ROW_HARDPOINT_PAGE, 1, rx + panelW - 107, top + 73, 92, 28);
 			hpNext.m_wTitle = Text(rx + panelW - 107, top + 77, 92, 18, 13, m_cText, "NEXT >");
 			hpNext.m_wTitle.SetFlags(WidgetFlags.CENTER);
@@ -1068,7 +1070,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 			Rect(centreX, by - 92, 4, 62, m_cAccent, 1);
 			m_wSelectedTitle = Text(centreX + 14, by - 83, centreW - 24, 21, 15, m_cAccent, "SELECTED HARDPOINT");
 			m_wSelectedPart = Text(centreX + 14, by - 58, centreW - 24, 26, 16, m_cText, "Select a slot to configure");
-			Text(centreX + 8, top + 14, centreW - 16, 20, 13, m_cAccent, "MECH VIEWPORT  //  REAL-TIME LOADOUT").SetFlags(WidgetFlags.CENTER);
+			TextWidget viewportCaption = Text(centreX + 8, top + 14, centreW - 16, 20, 13, m_cAccent, "MECH VIEWPORT  //  REAL-TIME LOADOUT");
+			if (viewportCaption)
+				viewportCaption.SetFlags(WidgetFlags.CENTER);
 		}
 
 		// ---------------- Markers on the mech (one per hardpoint) ----------------
@@ -1747,7 +1751,11 @@ class RW_MechLabMenu : ChimeraMenuBase
 		}
 		float h = 200 + slotsHeight + 92;
 		float x = sw * 0.5 - w * 0.5;
-		float y = Math.Max(sh * 0.5 - h * 0.5, sh < 805 ? 70 : EDGE + 70);
+		// Enfusion Script does not support inline ?: conditional expressions here.
+		float minTop = EDGE + 70;
+		if (sh < 805)
+			minTop = 70;
+		float y = Math.Max(sh * 0.5 - h * 0.5, minTop);
 		TopChrome(sw, "REQUISITIONS / MECH BAY");
 		HangarPanel(x, y, w, h);
 		Text(x + 24, y + 12, w - 48, 20, 14, m_cAccent, "05  //  " + m_OrderBay.GetBayName());
@@ -1759,7 +1767,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 			RW_LabRow prev = AddRow(ROW_ORDER_PAGE, -1, x + 24, y + 137, 148, 36);
 			prev.m_wTitle = Text(x + 26, y + 145, 144, 21, 16, m_cText, "< PREVIOUS");
 			prev.m_wTitle.SetFlags(WidgetFlags.CENTER);
-			Text(x + 192, y + 145, w - 384, 22, 16, m_cAccent, string.Format("FRAME  %1 / %2", m_iOrderPage + 1, count)).SetFlags(WidgetFlags.CENTER);
+			TextWidget orderPageLabel = Text(x + 192, y + 145, w - 384, 22, 16, m_cAccent, string.Format("FRAME  %1 / %2", m_iOrderPage + 1, count));
+			if (orderPageLabel)
+				orderPageLabel.SetFlags(WidgetFlags.CENTER);
 			RW_LabRow next = AddRow(ROW_ORDER_PAGE, 1, x + w - 172, y + 137, 148, 36);
 			next.m_wTitle = Text(x + w - 170, y + 145, 144, 21, 16, m_cText, "NEXT >");
 			next.m_wTitle.SetFlags(WidgetFlags.CENTER);
