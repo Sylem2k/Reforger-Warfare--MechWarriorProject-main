@@ -13,7 +13,11 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
     m_fSize 96
     m_Color 1 0.3 0.2 0.9
    }
-   m_FX BFA_MechWeaponFX "{846D85F74B3C87CE}" {
+   m_FX BFA_MechWeaponFX "{
+    m_sTrailParticle "{DE6E9481E0342723}Particles/Weapon/Trail_S5KO.ptc"
+    m_sImpactParticle "{636C188C0D4E6074}Particles/Weapon/Explosion_S5KO.ptc"
+    m_sSoundProject "{4623A5BCFEA997F1}Sounds/Weapons/AircraftWeapons/RocketPods/Weapons_RocketPods_Generic_Shot.acp"
+846D85F74B3C87CE}" {
     m_sMuzzleParticle "{6827C9C356E224D7}Particles/Weapon/Muzzle_Rocket_Pod_UB1657_Front.ptc"
     m_sBackblastParticle "{3D36027A37FD85EC}Particles/Weapon/Muzzle_Rocket_Pod_UB1657_Back.ptc"
     m_vBackblastOffset 0 0 -3.26
