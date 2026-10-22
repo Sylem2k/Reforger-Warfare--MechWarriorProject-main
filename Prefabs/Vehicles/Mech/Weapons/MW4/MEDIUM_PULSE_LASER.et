@@ -19,7 +19,6 @@ GenericEntity {
     m_fBeamIdleTimeout 1.25
     m_fBeamDuration 0.09
     m_fBeamWidth 0.17
-    m_sTrailParticle "{C7A0B321810A0041}Particles/BFA_Las/BFA_LasBolt_Trail.ptc"
     m_sImpactParticle "{F487145888100201}Particles/BFA_Las/BFA_LasBolt_Hit.ptc"
     m_fProjectileSpeed 1350
     m_fLinger 0.18
