@@ -605,6 +605,15 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E503000000000054}" {
   }
+  CGS_MechTacticalThrowComponent "{A72700000000C001}" {
+   m_bEnabled 0
+   m_bAllowUnprotectedTest 0
+   m_fDistance 10
+   m_fArcHeight 3
+   m_fCooldown 20
+   m_fUseDistance 6
+   m_bFollowAfterLaunch 1
+  }
   CGS_MechBrainComponent "{CA26B00000010061}" {
    m_bEnabled 1
    m_bDrive 1
@@ -960,6 +969,15 @@ Vehicle {
      }
      VisibilityRange 20
      m_eOrder GUARD
+    }
+    CGS_MechTacticalThrowAction "{A72700000000C002}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A72700000000C003}" {
+      Name "Mech: TACTICAL THROW (TEST)"
+     }
+     VisibilityRange 8
     }
     RW_MechLabOpenAction "{E50300000000008A}" {
      ParentContextList {
