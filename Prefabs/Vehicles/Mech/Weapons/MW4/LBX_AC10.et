@@ -6,6 +6,10 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_sDisplayName "LB-X AC/10 (Prototype)"
    m_sControlStation "GUNNER"
    m_iWeaponGroup 1
+   m_eDamageKind KINETIC
+   m_fDamageVsInfantry 2
+   m_fDamageVsVehicles 1.2
+   m_fInfantryArmourFloor 0.4
    m_bSupportsHeldFire 1
    m_bSupportsPulseFire 1
    m_FX BFA_MechWeaponFX "{20682C3DF9670C55}" {
