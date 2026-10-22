@@ -15,19 +15,6 @@ Vehicle {
   }
   AIKnowledgeComponent "{6AA82E28A05CF96F}" {
   }
-  CGS_MechBrainComponent "{CA26B00000010011}" {
-   m_bEnabled 1
-   m_bDrive 1
-   m_bGunners 1
-   m_eMode 0
-   m_bCompanionEnabled 1
-   m_fCompanionFollowDistance 8
-   m_fCompanionCommandDistance 25
-   m_fCompanionMaxFollowDistance 600
-   m_sPilotPrefab ""
-   m_eFireMode 0
-   m_bFollowGroupMode 0
-  }
   BFA_MechAICrewComponent "{6AA82E28A05CF96C}" {
    m_bFireAllGroups 1
   }
@@ -71,7 +58,8 @@ Vehicle {
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{6AA82E28A05CF9A8}" {
-      Offset -0.8961 0.4898 -0.4025
+      Offset -1.4989 0.7953 -0.4025
+      Angles 0 0 0
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -82,7 +70,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 0
      m_Point PointInfo "{6AA82E28A05CF9AF}" {
-      Offset 0.3661 1.034 0
+      Offset 0.6482 1.1336 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 2
@@ -93,7 +81,7 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_iDefaultModuleId 0
      m_Point PointInfo "{6AA82E28A05CF9B2}" {
-      Offset 0.882 0.4179 -0.4025
+      Offset 1.5118 0.8039 -0.4025
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -104,8 +92,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{0881033FC144BBC0}" {
-      Offset 0 1.2994 -1
-      Angles 0 -0.9302 0
+      Offset 0.0037 0.6805 -1.4367
+      Angles 0 180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -505,6 +493,19 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{6AA82E28A05F5298}" {
   }
+  CGS_MechBrainComponent "{CA26B00000010011}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode HOLD
+   m_bCompanionEnabled 1
+   m_fCompanionFollowDistance 8
+   m_fCompanionCommandDistance 25
+   m_fCompanionMaxFollowDistance 600
+   m_eFireMode FIRE_AT_WILL
+   m_bFollowGroupMode 0
+   m_sPilotPrefab ""
+  }
   CGS_MechDeathComponent "{6AA82E28A05F529B}" {
   }
   CGS_MechHeatComponent "{6AA82E28A05F529A}" {
@@ -795,7 +796,7 @@ Vehicle {
       Name "Mech: FOLLOW ME"
      }
      VisibilityRange 20
-     m_eOrder 0
+     m_eOrder FOLLOW
     }
     CGS_MechCompanionOrderAction "{CA26B00000010014}" {
      ParentContextList {
@@ -805,7 +806,7 @@ Vehicle {
       Name "Mech: GUARD HERE"
      }
      VisibilityRange 20
-     m_eOrder 1
+     m_eOrder GUARD
     }
     RW_MechLabOpenAction "{6AA82E28A05F65DC}" {
      ParentContextList {
@@ -885,6 +886,6 @@ Vehicle {
   Hierarchy "{6AA82E28A05FD1B5}" {
   }
  }
- coords 84.876 8.363 68.186
+ coords 76.96 8.373 47.212
  m_eVehicleType VEHICLE
 }

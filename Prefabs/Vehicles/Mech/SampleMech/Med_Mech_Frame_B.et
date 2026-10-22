@@ -15,19 +15,6 @@ Vehicle {
   }
   AIKnowledgeComponent "{17D976000EE72407}" {
   }
-  CGS_MechBrainComponent "{C622000000000041}" {
-   m_bEnabled 1
-   m_bDrive 1
-   m_bGunners 1
-   m_eMode 0
-   m_bCompanionEnabled 1
-   m_fCompanionFollowDistance 8
-   m_fCompanionCommandDistance 25
-   m_fCompanionMaxFollowDistance 600
-   m_sPilotPrefab ""
-   m_eFireMode 0
-   m_bFollowGroupMode 0
-  }
   BFA_MechAICrewComponent "{C154296B60B0FDDD}" {
    m_bFireAllGroups 1
   }
@@ -104,8 +91,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{0E24212B3D28201F}" {
-      Offset -0.45 1.2994 -1
-      Angles 0 90 0
+      Offset -0.5486 0.9483 -1.0776
+      Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -115,8 +102,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{1CC74F6E0F420D80}" {
-      Offset 0.45 1.2994 -1
-      Angles 0 -0.375 0
+      Offset 0.6261 0.9804 -1.1032
+      Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -552,6 +539,19 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{AC4E8A1280104E2E}" {
   }
+  CGS_MechBrainComponent "{C622000000000041}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode HOLD
+   m_bCompanionEnabled 1
+   m_fCompanionFollowDistance 8
+   m_fCompanionCommandDistance 25
+   m_fCompanionMaxFollowDistance 600
+   m_eFireMode FIRE_AT_WILL
+   m_bFollowGroupMode 0
+   m_sPilotPrefab ""
+  }
   CGS_MechDeathComponent "{0B9C509C2C336E64}" {
   }
   CGS_MechHeatComponent "{281415B24162D4A4}" {
@@ -847,7 +847,7 @@ Vehicle {
       Name "Mech: FOLLOW ME"
      }
      VisibilityRange 20
-     m_eOrder 0
+     m_eOrder FOLLOW
     }
     CGS_MechCompanionOrderAction "{C622000000000044}" {
      ParentContextList {
@@ -857,7 +857,7 @@ Vehicle {
       Name "Mech: GUARD HERE"
      }
      VisibilityRange 20
-     m_eOrder 1
+     m_eOrder GUARD
     }
     RW_MechLabOpenAction "{D32A8F0B9283D6F7}" {
      ParentContextList {
@@ -937,6 +937,6 @@ Vehicle {
   Hierarchy "{C1B35219AA4F8E88}" {
   }
  }
- coords 90.602 4.73 66.521
+ coords 76.094 8.388 51.481
  m_eVehicleType VEHICLE
 }

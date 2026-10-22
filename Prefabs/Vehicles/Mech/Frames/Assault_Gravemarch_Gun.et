@@ -15,19 +15,6 @@ Vehicle {
   }
   AIKnowledgeComponent "{E503000000000005}" {
   }
-  CGS_MechBrainComponent "{CA26B00000010061}" {
-   m_bEnabled 1
-   m_bDrive 1
-   m_bGunners 1
-   m_eMode 0
-   m_bCompanionEnabled 1
-   m_fCompanionFollowDistance 8
-   m_fCompanionCommandDistance 25
-   m_fCompanionMaxFollowDistance 600
-   m_sPilotPrefab ""
-   m_eFireMode 0
-   m_bFollowGroupMode 0
-  }
   BFA_MechAICrewComponent "{E503000000000006}" {
    m_bFireAllGroups 1
   }
@@ -71,7 +58,7 @@ Vehicle {
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E50300000000000E}" {
-      Offset -0.8961 0.4898 -0.4025
+      Offset -1.4473 0.652 -0.4025
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -82,7 +69,8 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000010}" {
-      Offset 0.3661 1.034 0
+      Offset 0.6161 0.9308 -1.0896
+      Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 2
@@ -93,7 +81,7 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000012}" {
-      Offset 0.882 0.4179 -0.4025
+      Offset 1.409 0.733 -0.4025
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -104,8 +92,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000014}" {
-      Offset -0.45 1.2994 -1
-      Angles 0 90 0
+      Offset -0.6638 0.7708 -1
+      Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -115,8 +103,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000016}" {
-      Offset 0.45 1.2994 -1
-      Angles 0 -0.375 0
+      Offset 0.7526 1.1318 -1.3822
+      Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -126,7 +114,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000018}" {
-      Offset -1.2 1.26 0.15
+      Offset -0.5564 1.1282 -0.0691
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -136,7 +124,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E50300000000001A}" {
-      Offset 1.2 1.26 0.15
+      Offset 0.5463 1.26 0.15
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -146,7 +134,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E50300000000001C}" {
-      Offset 0 1.53 0.52
+      Offset 0.023 0.5223 1.069
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -156,7 +144,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E50300000000001E}" {
-      Offset -0.82 0.82 0.62
+      Offset -0.82 -0.2127 0.62
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -166,7 +154,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000020}" {
-      Offset 0.82 0.82 0.62
+      Offset 0.82 -0.2003 0.62
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -176,7 +164,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000022}" {
-      Offset 0 1.62 -1.23
+      Offset 0 1.2403 -1.23
+      Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -546,6 +535,10 @@ Vehicle {
      m_sLeftLegSlotName "Leg_L1"
      m_sRightLegSlotName "Leg_R1"
     }
+    BFA_MechLegPair "{6AAC4D6DD80469E3}" {
+     m_sLeftLegSlotName "Leg_L2"
+     m_sRightLegSlotName "Leg_R2"
+    }
    }
    m_fSpeed 2.8
    m_bCanSprint 1
@@ -555,7 +548,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E50300000000004C}" {
-    Offset 0 -3.4558 -0.8832
+    Offset 0 -2.7816 -0.8832
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -612,6 +605,19 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E503000000000054}" {
   }
+  CGS_MechBrainComponent "{CA26B00000010061}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode HOLD
+   m_bCompanionEnabled 1
+   m_fCompanionFollowDistance 8
+   m_fCompanionCommandDistance 25
+   m_fCompanionMaxFollowDistance 600
+   m_eFireMode FIRE_AT_WILL
+   m_bFollowGroupMode 0
+   m_sPilotPrefab ""
+  }
   CGS_MechDeathComponent "{E503000000000055}" {
   }
   CGS_MechHeatComponent "{E503000000000056}" {
@@ -649,7 +655,7 @@ Vehicle {
    m_sFrameName "Gravemarch-G"
    m_eWeightClass ASSAULT
    m_fMaxTons 100
-   m_fFrameTons 60
+   m_fFrameTons 50
    m_aHardpoints {
     RW_FrameHardpoint "{E50300000000005F}" {
      m_sHardpoint "ARM"
@@ -877,15 +883,17 @@ Vehicle {
   SlotManagerComponent "{E503000000000086}" {
    Slots {
     EntitySlotInfo Leg_R1 {
-     Offset 0.8214 -0.8656 0.3085
+     Offset 0.5063 -2.3387 0.413
+     Angles 0 48.144 0
      MergePhysics 0
-     Prefab "{ECC40896C6FE4B77}Prefabs/Vehicles/Mech/Mech_Parts/Med_Mech_Leg_Right.et"
+     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -0.7886 -0.7234 0.3735
+     Offset -0.6609 -2.3309 0.24
+     Angles 0 -43.7302 0
      MergePhysics 0
-     Prefab "{ECC40896C6FE4B77}Prefabs/Vehicles/Mech/Mech_Parts/Med_Mech_Leg_Right.et"
+     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
@@ -916,6 +924,20 @@ Vehicle {
      Angles 0 2.7371 0
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
     }
+    EntitySlotInfo Leg_R2 {
+     Offset 0.4923 -2.3299 -0.6229
+     Angles 0 123.3269 0
+     MergePhysics 0
+     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo Leg_L2 {
+     Offset -0.3812 -2.3674 -0.6842
+     Angles 0 -123.374 0
+     MergePhysics 0
+     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
+     DisablePhysicsInteraction 1
+    }
    }
   }
   ActionsManagerComponent "{E503000000000087}" {
@@ -937,7 +959,7 @@ Vehicle {
       Name "Mech: FOLLOW ME"
      }
      VisibilityRange 20
-     m_eOrder 0
+     m_eOrder FOLLOW
     }
     CGS_MechCompanionOrderAction "{CA26B00000010064}" {
      ParentContextList {
@@ -947,7 +969,7 @@ Vehicle {
       Name "Mech: GUARD HERE"
      }
      VisibilityRange 20
-     m_eOrder 1
+     m_eOrder GUARD
     }
     RW_MechLabOpenAction "{E50300000000008A}" {
      ParentContextList {
@@ -1027,6 +1049,6 @@ Vehicle {
   Hierarchy "{E503000000000098}" {
   }
  }
- coords 90.602 4.73 66.521
+ coords 82.305 8.92 54.041
  m_eVehicleType VEHICLE
 }
