@@ -574,16 +574,6 @@ Vehicle {
   }
   MeshObject "{3AFC4116371A126E}" {
    Object "{8EB3D751DE396B39}Common/Models/Mech Body/Mech_Med_Body.xob"
-   Materials {
-    MaterialAssignClass "{106C0ED4C875301D}" {
-     SourceMaterial "Material_Sentinel_Body"
-     AssignedMaterial "{C14DDB7EF1DB32BC}Common/Models/Data/Sen_Right_Leg.emat"
-    }
-    MaterialAssignClass "{6EDC07BEFBF29D5E}" {
-     SourceMaterial "Material_Sentinel_Body"
-     AssignedMaterial "{3BDB30D4EC6DC9A6}Common/Models/Data/Material_Sen_Hip.emat"
-    }
-   }
   }
   RW_MechFrameComponent "{FA62555B91F6A80D}" {
    m_sFrameName "Warden - Alt"

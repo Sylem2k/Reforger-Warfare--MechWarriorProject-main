@@ -634,16 +634,6 @@ Vehicle {
   }
   MeshObject "{E50300000000005B}" {
    Object "{8EB3D751DE396B39}Common/Models/Mech Body/Mech_Med_Body.xob"
-   Materials {
-    MaterialAssignClass "{E50300000000005C}" {
-     SourceMaterial "Material_Sentinel_Body"
-     AssignedMaterial "{C14DDB7EF1DB32BC}Common/Models/Data/Sen_Right_Leg.emat"
-    }
-    MaterialAssignClass "{E50300000000005D}" {
-     SourceMaterial "Material_Sentinel_Body"
-     AssignedMaterial "{3BDB30D4EC6DC9A6}Common/Models/Data/Material_Sen_Hip.emat"
-    }
-   }
   }
   RW_MechFrameComponent "{E50300000000005E}" {
    m_sFrameName "Gravemarch-G"
