@@ -1,14 +1,14 @@
 Vehicle {
  ID "6A8740653CE8F8AD"
  components {
-  CGS_MechTacticalThrowComponent "{F2026102200800020}" {
+  CGS_MechTacticalThrowComponent "{F202610220800020}" {
    m_bEnabled 1
    m_bAllowUnprotectedTest 1
    m_fDistance 50
    m_fArcHeight 16
    m_fCooldown 20
    m_fUseDistance 6
-   m_ThrowPoint PointInfo "{F2026102200800021}" {
+   m_ThrowPoint PointInfo "{F202610220800021}" {
     Offset 0 2 0
    }
    m_bV2TryPhysicsFlight 1
@@ -757,20 +757,20 @@ Vehicle {
     }
    }
    additionalActions {
-    CGS_MechTacticalThrowAction "{F2026102200800040}" {
+    CGS_MechTacticalThrowAction "{F202610220800040}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{F2026102200800041}" {
+     UIInfo UIInfo "{F202610220800041}" {
       Name "Mech: TACTICAL THROW (TEST)"
      }
      VisibilityRange 8
     }
-    CGS_MechMarkThrowTargetAction "{F2026102200800042}" {
+    CGS_MechMarkThrowTargetAction "{F202610220800042}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{F2026102200800043}" {
+     UIInfo UIInfo "{F202610220800043}" {
       Name "Mech: MARK THROW TARGET (FACING)"
      }
      VisibilityRange 8
