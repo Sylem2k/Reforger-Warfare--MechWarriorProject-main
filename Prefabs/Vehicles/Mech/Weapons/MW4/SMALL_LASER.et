@@ -15,6 +15,8 @@ GenericEntity {
    m_bSupportsPulseFire 0
    m_FX BFA_MechWeaponFX "{A1C9A9D2F44A1A65}" {
     m_sBeamPrefab "{F9F15A6E70B2C046}Prefabs/Vehicles/Mech/Weapons/CGS_LaserBeam.et"
+    m_bBeamContinuous 1
+    m_fBeamIdleTimeout 1.25
     m_fBeamDuration 0.16
     m_fBeamWidth 0.13
     m_sTrailParticle "{C7A0B321810A0041}Particles/BFA_Las/BFA_LasBolt_Trail.ptc"
