@@ -15,7 +15,21 @@ Vehicle {
   }
   AIKnowledgeComponent "{E502000000000005}" {
   }
+  CGS_MechBrainComponent "{CA26B00000010051}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode 0
+   m_bCompanionEnabled 1
+   m_fCompanionFollowDistance 18
+   m_fCompanionCommandDistance 25
+   m_fCompanionMaxFollowDistance 600
+   m_sPilotPrefab ""
+   m_eFireMode 0
+   m_bFollowGroupMode 0
+  }
   BFA_MechAICrewComponent "{E502000000000006}" {
+   m_bFireAllGroups 1
   }
   BFA_MechAimComponent "{E502000000000007}" {
    m_fReticleAimDistance 1000
@@ -870,6 +884,26 @@ Vehicle {
     }
    }
    additionalActions {
+    CGS_MechCompanionOrderAction "{CA26B00000010052}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{CA26B00000010053}" {
+      Name "Mech: FOLLOW ME"
+     }
+     VisibilityRange 20
+     m_eOrder 0
+    }
+    CGS_MechCompanionOrderAction "{CA26B00000010054}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{CA26B00000010055}" {
+      Name "Mech: GUARD HERE"
+     }
+     VisibilityRange 20
+     m_eOrder 1
+    }
     RW_MechLabOpenAction "{E502000000000081}" {
      ParentContextList {
       "default"

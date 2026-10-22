@@ -802,7 +802,7 @@ Vehicle {
      UIInfo UIInfo "{C621000000000043}" {
       Name "Mech: FOLLOW ME"
      }
-     VisibilityRange 12
+     VisibilityRange 20
      m_eOrder 0
     }
     CGS_MechCompanionOrderAction "{C621000000000044}" {
@@ -812,7 +812,7 @@ Vehicle {
      UIInfo UIInfo "{C621000000000045}" {
       Name "Mech: GUARD HERE"
      }
-     VisibilityRange 12
+     VisibilityRange 20
      m_eOrder 1
     }
     RW_MechLabOpenAction "{F02CFDA7CD0B65DE}" {
