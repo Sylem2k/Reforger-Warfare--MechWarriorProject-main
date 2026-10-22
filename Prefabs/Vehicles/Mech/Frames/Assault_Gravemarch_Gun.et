@@ -981,6 +981,15 @@ Vehicle {
      }
      VisibilityRange 8
     }
+    CGS_MechMarkThrowTargetAction "{A72700000000C004}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A72700000000C005}" {
+      Name "Mech: MARK THROW TARGET (FACING)"
+     }
+     VisibilityRange 8
+    }
     RW_MechLabOpenAction "{E50300000000008A}" {
      ParentContextList {
       "default"
