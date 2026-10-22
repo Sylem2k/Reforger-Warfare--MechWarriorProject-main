@@ -24,8 +24,8 @@ GenericEntity : "{5879D8E9C56E358D}Prefabs/Items/Core/Radio_base.et" {
   InventoryItemComponent "{5222EB4D0C73006B}" {
    Attributes SCR_ItemAttributeCollection "{5222EB4D0A2B466B}" {
     ItemDisplayName UIInfo "{5222EB4D07D865FA}" {
-     Name "#AR-Item_ANPRC68_Name"
-     Description "#AR-Item_ANPRC68_Description"
+     Name "CGS Mech Command Radio"
+     Description "Handheld command radio for recalling your assigned CGS mech."
      Icon "{2FBD8DA665FB8AF1}UI/Textures/VON/ANPRC68-100px_UI.edds"
     }
     ItemPhysAttributes ItemPhysicalAttributes PhysicalAttributes {
@@ -111,6 +111,8 @@ GenericEntity : "{5879D8E9C56E358D}Prefabs/Items/Core/Radio_base.et" {
     }
    }
    additionalActions {
+    CGS_MechRecallPlayerAction "{13DE0E42A003019B}" {
+    }
     SCR_EquipItemAction "{553AEBE8F3B60801}" : "{068D8D646964D12A}Prefabs/Characters/Core/Actions/EquipGadgetAction.conf" {
     }
     SCR_RadioTuningUserAction "{6AAD29007D1E98EE}" {
