@@ -111,7 +111,20 @@ GenericEntity : "{5879D8E9C56E358D}Prefabs/Items/Core/Radio_base.et" {
     }
    }
    additionalActions {
+    CGS_MechRadioGuardAction "{BDCB24A6A18F90E1}" {
+     ParentContextList {
+      "knob_toggle"
+     }
+    }
+    CGS_MechRadioFollowAction "{BDCB24A6A18F90E2}" {
+     ParentContextList {
+      "knob_toggle"
+     }
+    }
     CGS_MechRecallPlayerAction "{13DE0E42A003019B}" {
+     ParentContextList {
+      "knob_toggle"
+     }
     }
     SCR_EquipItemAction "{553AEBE8F3B60801}" : "{068D8D646964D12A}Prefabs/Characters/Core/Actions/EquipGadgetAction.conf" {
     }

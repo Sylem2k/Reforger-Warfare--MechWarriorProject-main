@@ -5,3 +5,6 @@ Vehicle Assault_Gravemarch_Gun1 : "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frame
  coords 82.305 8.92 54.041
  angles 0 10.154 0
 }
+GenericEntity : "{FA805DA3DE09220B}Prefabs/Items/Equipment/Radios/CGS Mech Command Radio.et" {
+ coords 81.936 4.948 66.942
+}
