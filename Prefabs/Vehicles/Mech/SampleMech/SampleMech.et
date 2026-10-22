@@ -21,7 +21,7 @@ Vehicle {
    m_bGunners 1
    m_eMode 0
    m_bCompanionEnabled 1
-   m_fCompanionFollowDistance 18
+   m_fCompanionFollowDistance 8
    m_fCompanionCommandDistance 25
    m_fCompanionMaxFollowDistance 600
    m_sPilotPrefab ""
@@ -29,6 +29,7 @@ Vehicle {
    m_bFollowGroupMode 0
   }
   BFA_MechAICrewComponent "{50378C6DCDF12B22}" {
+   m_bDebug 1
    m_bFireAllGroups 1
   }
   BFA_MechAimComponent "{6A8D7F3B129C4E01}" {
