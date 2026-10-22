@@ -1038,6 +1038,10 @@ Vehicle {
   }
   Hierarchy "{E503000000000098}" {
   }
+  CGS_MechTacticalThrowComponent "{6AAD1111DF5E5454}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+  }
  }
  coords 82.305 8.92 54.041
  m_eVehicleType VEHICLE
