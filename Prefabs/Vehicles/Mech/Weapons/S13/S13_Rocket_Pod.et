@@ -7,6 +7,10 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_sDisplayName "S-13 Rocket Pod"
    m_sControlStation "GUNNER"
    m_iWeaponGroup 2
+   m_fDamageVsInfantry 1
+   m_fDamageVsVehicles 1
+   m_fInfantryArmourFloor 0.4
+   m_eDamageKind EXPLOSIVE
    m_bSupportsHeldFire 0
    m_bSupportsPulseFire 1
    m_Crosshair BFA_MechCrosshair "{F340C610362305C3}" {
