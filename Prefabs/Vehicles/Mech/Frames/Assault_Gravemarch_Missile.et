@@ -95,7 +95,7 @@ Vehicle {
      m_Point PointInfo "{E504000000000012}" {
       Offset 0.882 0.4179 -0.4025
      }
-     m_bRightSide 0
+     m_bRightSide 1
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
     }
