@@ -1,14 +1,14 @@
 Vehicle {
  ID "6A8740653CE8F8AD"
  components {
-  CGS_MechTacticalThrowComponent "{F2026102200400020}" {
+  CGS_MechTacticalThrowComponent "{F202610220400020}" {
    m_bEnabled 1
    m_bAllowUnprotectedTest 1
    m_fDistance 50
    m_fArcHeight 16
    m_fCooldown 20
    m_fUseDistance 6
-   m_ThrowPoint PointInfo "{F2026102200400021}" {
+   m_ThrowPoint PointInfo "{F202610220400021}" {
     Offset 0 2 0
    }
    m_bV2TryPhysicsFlight 1
@@ -18,7 +18,7 @@ Vehicle {
    m_bAllowMarkedTarget 1
    m_fMarkMaximumDistance 75
   }
-  CGS_MechBrainComponent "{F2026102200400010}" {
+  CGS_MechBrainComponent "{F202610220400010}" {
    m_bEnabled 1
    m_bDrive 1
    m_bGunners 1
@@ -751,39 +751,39 @@ Vehicle {
     }
    }
    additionalActions {
-    CGS_MechTacticalThrowAction "{F2026102200400040}" {
+    CGS_MechTacticalThrowAction "{F202610220400040}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{F2026102200400041}" {
+     UIInfo UIInfo "{F202610220400041}" {
       Name "Mech: TACTICAL THROW (TEST)"
      }
      VisibilityRange 8
     }
-    CGS_MechMarkThrowTargetAction "{F2026102200400042}" {
+    CGS_MechMarkThrowTargetAction "{F202610220400042}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{F2026102200400043}" {
+     UIInfo UIInfo "{F202610220400043}" {
       Name "Mech: MARK THROW TARGET (FACING)"
      }
      VisibilityRange 8
     }
-    CGS_MechCompanionOrderAction "{F2026102200400030}" {
+    CGS_MechCompanionOrderAction "{F202610220400030}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{F2026102200400031}" {
+     UIInfo UIInfo "{F202610220400031}" {
       Name "Mech: FOLLOW ME"
      }
      VisibilityRange 20
      m_eOrder FOLLOW
     }
-    CGS_MechCompanionOrderAction "{F2026102200400032}" {
+    CGS_MechCompanionOrderAction "{F202610220400032}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{F2026102200400033}" {
+     UIInfo UIInfo "{F202610220400033}" {
       Name "Mech: GUARD HERE"
      }
      VisibilityRange 20
