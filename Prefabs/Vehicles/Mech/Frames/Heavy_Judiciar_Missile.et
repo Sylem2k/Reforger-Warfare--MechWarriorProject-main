@@ -21,7 +21,7 @@ Vehicle {
    m_bGunners 1
    m_eMode 0
    m_bCompanionEnabled 1
-   m_fCompanionFollowDistance 18
+   m_fCompanionFollowDistance 8
    m_fCompanionCommandDistance 25
    m_fCompanionMaxFollowDistance 600
    m_sPilotPrefab ""
