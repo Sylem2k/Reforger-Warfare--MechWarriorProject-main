@@ -605,15 +605,6 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E503000000000054}" {
   }
-  CGS_MechTacticalThrowComponent "{A72700000000C001}" {
-   m_bEnabled 0
-   m_bAllowUnprotectedTest 0
-   m_fDistance 10
-   m_fArcHeight 3
-   m_fCooldown 20
-   m_fUseDistance 6
-   m_bFollowAfterLaunch 1
-  }
   CGS_MechBrainComponent "{CA26B00000010061}" {
    m_bEnabled 1
    m_bDrive 1
@@ -632,6 +623,17 @@ Vehicle {
   CGS_MechHeatComponent "{E503000000000056}" {
    m_fMaxHeat 500
    m_fCoolingPerSecond 28
+  }
+  CGS_MechTacticalThrowComponent "{6AAD1111DF5E5454}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+   m_fDistance 50
+   m_fArcHeight 25
+   m_fCooldown 1
+   m_ThrowPoint PointInfo "{6AAD155B64242776}" {
+    Offset 0 1.5062 0
+   }
+   m_bV2TryPhysicsFlight 1
   }
   CGS_TorsoTwistComponent "{E503000000000057}" {
    m_aTwistSlots {
@@ -1056,11 +1058,8 @@ Vehicle {
   }
   Hierarchy "{E503000000000098}" {
   }
-  CGS_MechTacticalThrowComponent "{6AAD1111DF5E5454}" {
-   m_bEnabled 1
-   m_bAllowUnprotectedTest 1
-  }
  }
  coords 82.305 8.92 54.041
+ angles 0 10.154 0
  m_eVehicleType VEHICLE
 }

@@ -3,4 +3,5 @@ GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
 }
 Vehicle Assault_Gravemarch_Gun1 : "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun.et" {
  coords 82.305 8.92 54.041
+ angles 0 10.154 0
 }
