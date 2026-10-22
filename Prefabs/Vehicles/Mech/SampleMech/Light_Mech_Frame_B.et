@@ -543,16 +543,6 @@ Vehicle {
   }
   MeshObject "{C7538E3A19F139DD}" {
    Object "{D9C14CA501962E2D}Common/Models/Mech Body/Mech_Body.xob"
-   Materials {
-    MaterialAssignClass "{327A92ECC490A989}" {
-     SourceMaterial "Material_Sentinel_Body"
-     AssignedMaterial "{C14DDB7EF1DB32BC}Common/Models/Data/Sen_Right_Leg.emat"
-    }
-    MaterialAssignClass "{C2492DCB69750468}" {
-     SourceMaterial "Material_Sentinel_Body"
-     AssignedMaterial "{3BDB30D4EC6DC9A6}Common/Models/Data/Material_Sen_Hip.emat"
-    }
-   }
   }
   RW_MechFrameComponent "{89462F25CFDD44F5}" {
    m_sFrameName "Cricket - Alt"
