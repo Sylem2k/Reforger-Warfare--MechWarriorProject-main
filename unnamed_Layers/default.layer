@@ -1,10 +1,6 @@
 GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
  coords 78.463 4.707 43.501
 }
-Vehicle Assault_Gravemarch_Gun1 : "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun.et" {
- coords 82.305 8.92 54.041
- angles 0 10.154 0
-}
 GenericEntity : "{FA805DA3DE09220B}Prefabs/Items/Equipment/Radios/CGS Mech Command Radio.et" {
- coords 81.936 4.948 66.942
+ coords 79.187 6.457 57.178
 }
