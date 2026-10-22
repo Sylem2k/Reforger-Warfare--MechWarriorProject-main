@@ -7,6 +7,10 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_sDisplayName "Sen Missile Launcher"
    m_sControlStation "COMMANDER"
    m_iWeaponGroup 3
+   m_fDamageVsInfantry 1
+   m_fDamageVsVehicles 1
+   m_fInfantryArmourFloor 0.4
+   m_eDamageKind EXPLOSIVE
    m_bSupportsHeldFire 0
    m_bSupportsPulseFire 1
    m_Crosshair BFA_MechCrosshair "{C0154CACEB66265C}" {

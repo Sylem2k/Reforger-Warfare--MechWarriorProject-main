@@ -8,6 +8,9 @@ GenericEntity {
    m_sDisplayName "SRM-6"
    m_sControlStation "DRIVER"
    m_iWeaponGroup 3
+   m_fDamageVsInfantry 1.25
+   m_fDamageVsVehicles 1
+   m_fInfantryArmourFloor 0.4
    m_bSupportsHeldFire 0
    m_bSupportsPulseFire 1
    m_FX BFA_MechWeaponFX "{29B69BD185B9D9D3}" {
