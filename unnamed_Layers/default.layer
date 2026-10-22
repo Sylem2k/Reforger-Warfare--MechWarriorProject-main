@@ -1,12 +1,4 @@
-$grp GenericEntity : "{CF0B566671800627}Prefabs/Items/Equipment/Binoculars/Binoculars_M22/Binoculars_M22_Lazer.et" {
- {
-  coords 72.587 4.649 48.071
- }
- {
-  coords 76.742 5.531 51.875
- }
-}
-GenericEntity : "{F1A6E20D202601AA}PrefabsEditable/Auto/MechBay/E_RW_MechBay.et" {
- coords 76.513 6.805 43.372
+GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
+ coords 2048.147 41.35 2054.155
  angles 0 0 0
 }
