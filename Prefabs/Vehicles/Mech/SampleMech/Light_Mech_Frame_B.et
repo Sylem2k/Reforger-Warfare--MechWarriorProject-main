@@ -1,6 +1,23 @@
 Vehicle {
  ID "7255EDDCA882485A"
  components {
+  CGS_MechTacticalThrowComponent "{F202610220500020}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+   m_fDistance 50
+   m_fArcHeight 16
+   m_fCooldown 20
+   m_fUseDistance 6
+   m_ThrowPoint PointInfo "{F202610220500021}" {
+    Offset 0 2 0
+   }
+   m_bV2TryPhysicsFlight 1
+   m_bV2GroundRelease 1
+   m_fV2ReleaseHeight 1.2
+   m_fV2ReleaseDelay 0.08
+   m_bAllowMarkedTarget 1
+   m_fMarkMaximumDistance 75
+  }
   EventHandlerManagerComponent "{CD116C8C9F01C35C}" {
    EventHandlers {
     BaseEventHandler "{003FEBB7C0B60499}" {
@@ -785,6 +802,24 @@ Vehicle {
     }
    }
    additionalActions {
+    CGS_MechTacticalThrowAction "{F202610220500040}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{F202610220500041}" {
+      Name "Mech: TACTICAL THROW (TEST)"
+     }
+     VisibilityRange 8
+    }
+    CGS_MechMarkThrowTargetAction "{F202610220500042}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{F202610220500043}" {
+      Name "Mech: MARK THROW TARGET (FACING)"
+     }
+     VisibilityRange 8
+    }
     CGS_MechCompanionOrderAction "{C621000000000042}" {
      ParentContextList {
       "default"

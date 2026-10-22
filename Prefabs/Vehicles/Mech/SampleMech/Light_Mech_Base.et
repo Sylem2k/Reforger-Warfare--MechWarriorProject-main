@@ -1,6 +1,35 @@
 Vehicle {
  ID "6A8740653CE8F8AD"
  components {
+  CGS_MechTacticalThrowComponent "{F202610220400020}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+   m_fDistance 50
+   m_fArcHeight 16
+   m_fCooldown 20
+   m_fUseDistance 6
+   m_ThrowPoint PointInfo "{F202610220400021}" {
+    Offset 0 2 0
+   }
+   m_bV2TryPhysicsFlight 1
+   m_bV2GroundRelease 1
+   m_fV2ReleaseHeight 1.2
+   m_fV2ReleaseDelay 0.08
+   m_bAllowMarkedTarget 1
+   m_fMarkMaximumDistance 75
+  }
+  CGS_MechBrainComponent "{F202610220400010}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode HOLD
+   m_bCompanionEnabled 1
+   m_fCompanionFollowDistance 18
+   m_fCompanionCommandDistance 25
+   m_fCompanionMaxFollowDistance 600
+   m_eFireMode FIRE_AT_WILL
+   m_bFollowGroupMode 0
+  }
   EventHandlerManagerComponent "{6A8740653CE8F880}" {
    EventHandlers {
     BaseEventHandler "{6A8740653CE8F8C9}" {
@@ -722,6 +751,44 @@ Vehicle {
     }
    }
    additionalActions {
+    CGS_MechTacticalThrowAction "{F202610220400040}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{F202610220400041}" {
+      Name "Mech: TACTICAL THROW (TEST)"
+     }
+     VisibilityRange 8
+    }
+    CGS_MechMarkThrowTargetAction "{F202610220400042}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{F202610220400043}" {
+      Name "Mech: MARK THROW TARGET (FACING)"
+     }
+     VisibilityRange 8
+    }
+    CGS_MechCompanionOrderAction "{F202610220400030}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{F202610220400031}" {
+      Name "Mech: FOLLOW ME"
+     }
+     VisibilityRange 20
+     m_eOrder FOLLOW
+    }
+    CGS_MechCompanionOrderAction "{F202610220400032}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{F202610220400033}" {
+      Name "Mech: GUARD HERE"
+     }
+     VisibilityRange 20
+     m_eOrder GUARD
+    }
     RW_MechLabOpenAction "{0103C357C716B4AF}" {
      ParentContextList {
       "default"
