@@ -167,3 +167,36 @@ EXPECTED LOGS:
 This code is committed but has not been compiled or tested in Workbench.
 I should TEST WITH UNLOADED PISTOL / NO LIVE AMMO, because its vanilla
 firearm still shoots normal bullets when loaded. ADS remains untouched.
+
+23 OCT 2026 - HELD FIRE DOUBLE-TOGGLE FIX (HARD RELOAD TEST)
+------------------------------------------------------------
+My hard reload confirmed the M9 grip, ADS, controller input and server
+raycast code were running. I logged 4 grapple anchors at roughly 18-25m.
+Three started but stopped with cancelled=1 almost immediately after
+another input. The fourth travelled from approximately
+<86.46, 4.00, 80.10> to <85.69, 11.87, 102.14> and stopped normally.
+The raw log contained 111 "CharacterFire press observed" entries.
+This proves the pull can work, but the fire input is retriggering.
+
+I fixed RW_GrapplingPlayerController.c by removing this input logic:
+  GetActionTriggered("CharacterFire") || (fireDown && !wasDown)
+and using only:
+  fireDown && !wasDown
+with wasDown updated each frame. A held left-click now sends one
+command only; I must release and click again to cancel. I also added
+a 250ms guard between accepted commands for brief input-value glitches.
+
+The M9 prefab, its GUID, its ADS configuration, weapon scripts and
+movement settings are unchanged in this fix. This is NOT yet compiled
+or tested in Workbench.
+
+My next test:
+1. Merge fix/grapple-one-click-one-toggle-20261023 into MW and hard
+   reload Workbench after Game scripts compile.
+2. Spawn Handgun_Grapling.et, equip it, aim at a wall and click once.
+3. Check there is one [RW GRAPPLE] player=... anchor=... event, and
+   no immediate "stopped cancelled=1" until I release and click again.
+4. Hold left-click for several seconds: no repeated start/stop spam.
+5. Release and click again while pulling: grapple cancels.
+6. Keep the pistol EMPTY during testing; the M9 still uses ordinary
+   damaging ammunition if a magazine is installed.
