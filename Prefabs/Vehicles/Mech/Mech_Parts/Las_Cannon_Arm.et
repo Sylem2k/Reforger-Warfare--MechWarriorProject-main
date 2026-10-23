@@ -4,6 +4,7 @@ GenericEntity {
   SignalsManagerComponent "{6A8C29F2D0FE85CF}" {
   }
   BFA_MechLasCannonModuleComponent "{E0B3EAA1FF77BABB}" {
+   m_fArmorPenetrationPercent 18
    m_sModuleId "LAS_CANNON"
    m_sDisplayName "Las Cannon"
    m_sControlStation "GUNNER"

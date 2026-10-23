@@ -4,6 +4,7 @@ GenericEntity {
   SignalsManagerComponent "{A8E9B5AFFC443935}" {
   }
   CGS_Titan_Missile "{2F4368D62B6D589B}" {
+   m_fArmorPenetrationPercent 20
    m_sModuleId "LASER_MISSILE"
    m_sDisplayName "Laser Missiles"
    m_sControlStation "GUNNER"

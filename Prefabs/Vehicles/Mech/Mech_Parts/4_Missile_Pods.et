@@ -9,6 +9,7 @@ GenericEntity {
   Hierarchy "{6A9858959DB5C3B1}" {
   }
   CGS_Titan_Missile "{6AA82E23B5B9C3EC}" {
+   m_fArmorPenetrationPercent 16
    m_sModuleId "POD_MISSILE"
    m_sDisplayName "Missile Pods"
    m_sControlStation "DRIVER"
