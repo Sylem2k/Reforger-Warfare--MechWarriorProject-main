@@ -5,8 +5,12 @@ GenericEntity : "{809488C4984AC087}Prefabs/Weapons/Handguns/M9/Handgun_M9_base.e
    m_fMaxRange 100
    m_fPullSpeed 18
    m_fStopDistance 2
+   m_fSafeArrivalDistance 4.5
+   m_fBrakeStartDistance 14
+   m_fSafeDescentSpeed 2.5
+   m_fSafeDescentTimeout 90
    m_fCooldown 3
-   m_fMaxDuration 6
+   m_fMaxDuration 12
    m_fEyeHeight 1.5
    m_fGroundReleaseLift 1
    m_bScriptedPositionFallback 0
