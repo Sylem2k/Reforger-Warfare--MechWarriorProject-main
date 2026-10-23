@@ -1,0 +1,34 @@
+GenericEntity {
+ ID "E8A200000000003E"
+ components {
+  SignalsManagerComponent "{E8A200000000003F}" {
+  }
+  RW_WarlordOmniTurret "{E8A2000000000040}" {
+   m_sModuleId "Warlord_Omni_Laser"
+   m_sDisplayName "Warlord_Omni_Laser"
+   m_bRequiresCrew 0
+   m_fRange 1300
+   m_fScanInterval 0.8
+   m_fShellSpeed 1000
+   m_fBurstDamage 60
+   m_fBurstRadius 4
+   m_fMissRadius 1
+   m_fMissPer100m 0.2
+   m_iBurstShots 3
+   m_fBurstPause 2
+   m_fShotsPerMinute 150
+   m_bAnimateTurret 1
+   m_fTurnSpeed 180
+   m_fMinElevation -80
+   m_fMaxElevation 89
+   m_fBarrelLength 3
+   m_fSectorBias 3
+   m_iImpactType 1
+  }
+  MeshObject "{E8A2000000000041}" {
+   Object "{3F743FE45DE3354E}Common/Models/Titan_War_Lord/War_Lord_Shoulder_Gun.xob"
+  }
+  Hierarchy "{E8A2000000000042}" {
+  }
+ }
+}
