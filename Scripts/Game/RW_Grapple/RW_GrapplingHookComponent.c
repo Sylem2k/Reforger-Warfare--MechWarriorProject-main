@@ -69,10 +69,19 @@ class RW_GrapplingHookComponent : ScriptComponent
 	protected int m_iLastPistolShotMs;
 	protected bool m_bWasFireDown;
 
+	// Test-only diagnostics: prove the ACTUAL grapple pistol prefab is running.
+	protected bool m_bRWInstanceFrameLogged;
+	protected bool m_bRWEquippedFrameLogged;
+
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
 		super.OnPostInit(owner);
+
+		// Instance-level trace is independent of PlayerController.OnUpdate.
+		// If this message is absent after spawning the test M9, either the
+		// wrong prefab is spawned or the installed Workbench script is stale.
+		Print(string.Format("[RW GRAPPLE ITEM] OnPostInit weapon=%1 server=%2 controllerMode=%3", owner, Replication.IsServer(), m_bUseControllerFireInput));
 
 		// Input polling runs on the owning local client, not only on the server.
 		// The replicated component then requests a validated server-side pull.
@@ -496,6 +505,26 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
+		// A separate proof that the entity FRAME event actually executes.
+		// Printed only once per copy of this test item.
+		if (!m_bRWInstanceFrameLogged)
+		{
+			m_bRWInstanceFrameLogged = true;
+			Print(string.Format("[RW GRAPPLE ITEM] EOnFrame active weapon=%1 server=%2", owner, Replication.IsServer()));
+		}
+
+		// On the server, report the first time the pistol can actually be
+		// resolved as the character's selected weapon. Does not change use.
+		if (Replication.IsServer() && !m_bRWEquippedFrameLogged && m_bUseControllerFireInput)
+		{
+			ChimeraCharacter testOwner = FindEquippedPlayer();
+			if (testOwner)
+			{
+				m_bRWEquippedFrameLogged = true;
+				Print(string.Format("[RW GRAPPLE ITEM] Pistol currently equipped by %1", testOwner));
+			}
+		}
+
 		// Direct input also runs for a client-only weapon replica.
 		PollLocalFireInput();
 
