@@ -21,12 +21,12 @@ GenericEntity {
     m_sImpactParticle "{AD69C17360EE596B}Particles/Weapon/Explosion_API.ptc"
     m_iTracerEvery 1
    }
-   m_fHeatPerShot 10
+   m_fHeatPerShot 14
    m_eDamageKind ENERGY
    m_fDamageVsInfantry 2
    m_fDamageVsVehicles 1
    m_fInfantryArmourFloor 0.4
-   m_fArmorPenetrationPercent 18
+   m_fArmorPenetrationPercent 38
    m_MuzzlePoint PointInfo "{6AAE3A126AD58E2C}" {
     Offset 0 0.8554 0.906
    }
@@ -35,9 +35,9 @@ GenericEntity {
    m_fMuzzleClearance 0.05
    m_bReverseMuzzleForward 0
    m_eCgsSplash MIXED
-   m_fRoundsPerMinute 300
-   m_fRange 1500
-   m_fDamage 75
+   m_fRoundsPerMinute 380
+   m_fRange 2400
+   m_fDamage 230
    m_bArmorPiercingFallback 1
    m_fArmorPiercingMultiplier 1
    m_fTracerSpeed 300
