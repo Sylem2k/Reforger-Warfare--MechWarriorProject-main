@@ -200,3 +200,61 @@ My next test:
 5. Release and click again while pulling: grapple cancels.
 6. Keep the pistol EMPTY during testing; the M9 still uses ordinary
    damaging ammunition if a magazine is installed.
+
+23 OCT 2026 - THREE FIRING PATHS CONFLICTING / LIFT-FIRST TEST
+--------------------------------------------------------------
+I reviewed my latest hard-reload trace (03:05). It shows all grapple
+components loaded and 8 successful surface acquisitions. Every one of
+those 8 starts logged "stopped cancelled=1", with the controller fire
+input immediately following the legacy pistol-entity fire event. The
+same click was handled by TWO different grappling systems. This is why
+the character often only lifts and never begins pulling.
+
+The test pistol prefab in MW main had THREE modes on simultaneously:
+  m_bUseWeaponTrigger 1
+  m_bUseDirectFireInput 1
+  m_bUseControllerFireInput 1
+
+I turned off the first two, leaving ONLY player controller input:
+  m_bUseWeaponTrigger 0
+  m_bUseDirectFireInput 0
+  m_bUseControllerFireInput 1
+
+I also made the controller path override the old weapon and direct
+input handlers at script level to stop this recurring if these prefab
+settings get edited incorrectly again.
+
+I PRESERVED my new stats:
+  m_fMaxRange 100
+  m_fGroundReleaseLift 1
+  m_fPullSpeed 18
+  m_fStopDistance 2
+  m_fCooldown 3
+  m_fMaxDuration 6
+  m_bScriptedPositionFallback 0
+
+The takeoff logic ALREADY lifts me 1 metre with SetOrigin (when clear
+above), then waits 0.08s before trying the normal native velocity
+pull. I left these timings and the physics unchanged until I can
+separately confirm pull operation without duplicate-input cancellation.
+I added logging for:
+  [RW GRAPPLE] Initial clear-space lift applied: ... metres
+  [RW GRAPPLE] Initial lift blocked by overhead collision
+  [RW GRAPPLE] Pull phase started: speed=...
+  [RW GRAPPLE] Pull path blocked by nearby collision
+
+Test:
+1. Pull this branch, compile, hard-reload Workbench.
+2. Spawn the actual M9 Handgun_Grapling.et with no live ammunition.
+3. Aim at 10-30m solid surface, left click ONCE and HOLD it.
+4. Expected: one "player=... anchor", optional initial lift, then
+   "Pull phase started", WITHOUT instant "stopped cancelled=1".
+5. Release and press once more if I need to cancel.
+6. If pull starts but I remain stationary, then test whether player
+   controller rejects Physics.SetVelocity; avoid changing native
+   motion until logs prove that issue.
+7. Keep actual ammo out of pistol during this prototype: the M9
+   inherits vanilla bullet firing and may still cause damage.
+
+No Enfusion Workbench compile or in-game test has been run for this
+commit; it is a code/prefab fix based on the traces I supplied.
