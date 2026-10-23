@@ -1,23 +1,6 @@
 Vehicle {
  ID "D401000000000001"
  components {
-  CGS_MechTacticalThrowComponent "{F202610220200020}" {
-   m_bEnabled 1
-   m_bAllowUnprotectedTest 1
-   m_fDistance 50
-   m_fArcHeight 16
-   m_fCooldown 20
-   m_fUseDistance 6
-   m_ThrowPoint PointInfo "{F202610220200021}" {
-    Offset 0 2 0
-   }
-   m_bV2TryPhysicsFlight 1
-   m_bV2GroundRelease 1
-   m_fV2ReleaseHeight 1.2
-   m_fV2ReleaseDelay 0.08
-   m_bAllowMarkedTarget 1
-   m_fMarkMaximumDistance 75
-  }
   EventHandlerManagerComponent "{E501000000000001}" {
    EventHandlers {
     BaseEventHandler "{E501000000000002}" {
@@ -31,19 +14,6 @@ Vehicle {
   SignalsManagerComponent "{E501000000000004}" {
   }
   AIKnowledgeComponent "{E501000000000005}" {
-  }
-  CGS_MechBrainComponent "{CA26B00000010041}" {
-   m_bEnabled 1
-   m_bDrive 1
-   m_bGunners 1
-   m_eMode 0
-   m_bCompanionEnabled 1
-   m_fCompanionFollowDistance 8
-   m_fCompanionCommandDistance 25
-   m_fCompanionMaxFollowDistance 600
-   m_sPilotPrefab ""
-   m_eFireMode 0
-   m_bFollowGroupMode 0
   }
   BFA_MechAICrewComponent "{E501000000000006}" {
    m_bFireAllGroups 1
@@ -542,7 +512,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E501000000000046}" {
-    Offset 0 -3.4558 -0.8832
+    Offset 0 -4.727 -0.8832
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -599,11 +569,41 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E50100000000004E}" {
   }
+  CGS_MechBrainComponent "{CA26B00000010041}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode HOLD
+   m_bCompanionEnabled 1
+   m_fCompanionFollowDistance 8
+   m_fCompanionCommandDistance 25
+   m_fCompanionMaxFollowDistance 600
+   m_eFireMode FIRE_AT_WILL
+   m_bFollowGroupMode 0
+   m_sPilotPrefab ""
+  }
   CGS_MechDeathComponent "{E50100000000004F}" {
   }
   CGS_MechHeatComponent "{E501000000000050}" {
    m_fMaxHeat 360
    m_fCoolingPerSecond 19
+  }
+  CGS_MechTacticalThrowComponent "{F202610220200020}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+   m_fDistance 50
+   m_fArcHeight 16
+   m_fCooldown 20
+   m_fUseDistance 6
+   m_ThrowPoint PointInfo "{F202610220200021}" {
+    Offset 0 2 0
+   }
+   m_bV2TryPhysicsFlight 1
+   m_bAllowMarkedTarget 1
+   m_fMarkMaximumDistance 75
+   m_bV2GroundRelease 1
+   m_fV2ReleaseHeight 1.2
+   m_fV2ReleaseDelay 0.08
   }
   CGS_TorsoTwistComponent "{E501000000000051}" {
    m_aTwistSlots {
@@ -917,7 +917,7 @@ Vehicle {
       Name "Mech: FOLLOW ME"
      }
      VisibilityRange 20
-     m_eOrder 0
+     m_eOrder FOLLOW
     }
     CGS_MechCompanionOrderAction "{CA26B00000010044}" {
      ParentContextList {
@@ -927,7 +927,7 @@ Vehicle {
       Name "Mech: GUARD HERE"
      }
      VisibilityRange 20
-     m_eOrder 1
+     m_eOrder GUARD
     }
     RW_MechLabOpenAction "{E501000000000081}" {
      ParentContextList {
@@ -1007,6 +1007,7 @@ Vehicle {
   Hierarchy "{E50100000000008F}" {
   }
  }
- coords 90.602 4.73 66.521
+ coords 73.387 8.824 60.751
+ scale 1.3
  m_eVehicleType VEHICLE
 }

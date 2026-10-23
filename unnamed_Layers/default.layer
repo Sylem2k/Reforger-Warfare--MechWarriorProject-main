@@ -1,12 +1,32 @@
+Vehicle Med_Mech_Frame_B1 : "{223347F0F553E85B}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_B.et" {
+ coords 77.12 8.229 61.058
+}
+Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/SampleMech.et" {
+ coords 84.551 7.17 61.505
+}
+Vehicle Med_Mech_Base1 : "{464C756F1E1D8F1E}Prefabs/Vehicles/Mech/Frames/Med_Mech_Base.et" {
+ coords 79.943 8.031 60.931
+}
 GenericEntity : "{70D23AC15EE70D8F}Prefabs/Weapons/Handguns/M9/Handgun_Grapling.et" {
  coords 86.458 4.362 81.918
 }
 GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
  coords 78.463 4.707 43.501
 }
+Vehicle Heavy_Judiciar_Gun1 : "{B6F0C0A020260001}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun.et" {
+ coords 73.387 8.824 60.751
+}
+Vehicle Heavy_Judiciar_Missile1 : "{B6F0C0A020260002}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Missile.et" {
+ coords 69.295 8.692 60.573
+}
 Vehicle Assault_Gravemarch_Gun1 : "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun.et" {
- coords 81.722 7.244 59.974
- angles 0 0 0
+ coords 62.679 8.968 62.033
+}
+Vehicle Assault_Gravemarch_Missile1 : "{B6F0C0A020260004}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Missile.et" {
+ coords 55.69 10.74 65.223
+}
+Vehicle Light_Mech_Frame_B1 : "{D8B39EAE0BB68001}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_B.et" {
+ coords 82.5 6.211 60.923
 }
 GenericEntity : "{FA805DA3DE09220B}Prefabs/Items/Equipment/Radios/CGS Mech Command Radio.et" {
  coords 79.187 6.457 57.178
