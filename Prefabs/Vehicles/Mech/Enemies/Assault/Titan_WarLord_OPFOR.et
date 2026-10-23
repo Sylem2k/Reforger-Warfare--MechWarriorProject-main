@@ -55,7 +55,7 @@ Vehicle {
      m_iClass 1
      m_sAimMountId "SENTINEL_LAS"
      m_bBindExistingAimMount 1
-     m_iDefaultModuleId 15
+     m_iDefaultModuleId 1
      m_Point PointInfo "{E60F00000000000F}" {
       Offset 11.1385 6.5103 14.8706
      }
@@ -77,7 +77,8 @@ Vehicle {
      m_sName "RIGHT_ARM"
      m_iClass 1
      m_sAimMountId "RIGHT_ARM_MOUNT"
-     m_iDefaultModuleId 15
+     m_bBindExistingAimMount 1
+     m_iDefaultModuleId 1
      m_Point PointInfo "{E60F000000000013}" {
       Offset -11.7289 5.8818 15.0028
      }
