@@ -1,0 +1,76 @@
+MY M9 GRAPPLING HOOK TEST - 22 OCT 2026
+========================================
+
+I switched the grappling-hook test over to the firearm-based M9 prefab:
+{70D23AC15EE70D8F}Prefabs/Weapons/Handguns/M9/Handgun_Grapling.et
+
+I kept the original prefab name, GUID, inherited M9 firearm handling,
+ADS, weapon slots, pickup/equip and weapon attachment storage intact.
+I did NOT change the older ETool grappling test prefabs.
+
+My new RW_GrapplingHookComponent is on this pistol with:
+  Use Weapon Trigger = ON
+  Max Range = 50 metres
+  Pull Speed = 18 m/s
+  Stop Distance = 2 metres
+  Cooldown = 3 seconds
+  Maximum Pull Time = 6 seconds
+  Ground Release Lift = 0.65 metres
+  Scripted Position Fallback = OFF
+  Delete Projectile = ON (best effort; see warning)
+  Debug = ON
+
+TEST CONTROLS
+- Right mouse button: normal M9 aim down sights.
+- Left mouse button: fire normal M9 trigger. A server weapon-fire event
+  should start the grapple toward the aimed solid surface.
+- Fire a second time while being pulled: request grapple release.
+- The M9 still needs a valid magazine/round to generate a firing event.
+- The trace must hit a world or entity surface within 50 metres.
+- No cable/hook mesh or shooting sound replacement has been added.
+
+TEST FIRST IN A DISPOSABLE EMPTY WORLD, AIMED AWAY FROM PEOPLE.
+The inherited M9 still uses its live ammunition. The script tries to
+delete the actual bullet one tick after it fires, but this is NOT
+guaranteed to prevent damage, especially from a very close bullet hit,
+nor is projectile cleanup yet verified for multiplayer.
+Before public testing I must replace pistol ammunition with a verified
+zero-damage dummy round and inspect replication behavior.
+
+FIRING EVENT HOOK
+The script tries SCR_MuzzleEffectComponent.GetOnWeaponFired() first,
+if the inherited M9 has that scripted muzzle effect, and also subscribes
+to the equipped character EventHandlerManagerComponent OnProjectileShot.
+Duplicate callbacks for one round are ignored.
+
+KNOWN LIMITATIONS
+- NOT compiled in Enfusion Workbench yet; engine API and runtime still
+  require verification.
+- The player may not be pulled if the character controller cancels native
+  physics velocity. Check the console for [RW GRAPPLE] logs.
+- If I get "Native player motion blocked" I may temporarily switch
+  Scripted Position Fallback to ON in an isolated test world. That uses
+  SetOrigin and can snap the first-person camera or clip collision.
+- Surface acquisition uses weapon aiming direction when exposed by the
+  player/weapon AimingComponent. Otherwise it falls back to character
+  facing and needs further correction before release.
+- Movement collision checks are only a first prototype, not full capsule
+  sweeps or safe rooftop climbing. Falling can still hurt the player.
+- Changing weapon during pull stops it automatically.
+- The second click fires another normal pistol round: use dummy ammo
+  before normal multiplayer use.
+- This hook does not require any extra weapon interaction action,
+  and does not change the existing firearm ADS input binding.
+
+MY FIRST CHECK
+1. Merge this feature branch into the MW addon and compile Game scripts.
+2. Spawn Handgun_Grapling.et and give it one ordinary M9 magazine only
+   inside a disposable test world.
+3. Equip it; check right-click still ADS.
+4. Aim at a wall about 10-20m away and left-click.
+5. Check [RW GRAPPLE] logs for listener attach / pistol trigger / anchor
+   and observe whether server moves the player.
+6. If trigger was not detected, inspect M9 muzzle effect and the player
+   EventHandlerManagerComponent in Workbench.
+7. If trigger is detected but pull stalls, diagnose character physics
+   before changing projectiles or adding a rope effect.
