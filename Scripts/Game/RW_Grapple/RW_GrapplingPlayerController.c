@@ -14,11 +14,31 @@ modded class SCR_PlayerController
 {
 	protected bool m_bRWGrappleFireWasDown;
 	protected bool m_bRWGrappleControllerStartupLogged;
+	protected bool m_bRWGrappleUpdateLogged;
+
+	//------------------------------------------------------------------------------------------------
+	//! Logged at controller initialization, even before play input begins.
+	override protected void OnInit(IEntity owner)
+	{
+		super.OnInit(owner);
+		Print(string.Format("[RW GRAPPLE DIAG] PlayerController OnInit; server=%1", Replication.IsServer()));
+	}
 
 	//------------------------------------------------------------------------------------------------
 	override void OnUpdate(float timeSlice)
 	{
 		super.OnUpdate(timeSlice);
+
+		// Print once for every instance (local and server). If this does not
+		// appear, the game has not executed our new controller script.
+		if (!m_bRWGrappleUpdateLogged)
+		{
+			m_bRWGrappleUpdateLogged = true;
+			bool isLocalController = false;
+			if (GetGame())
+				isLocalController = GetGame().GetPlayerController() == this;
+			Print(string.Format("[RW GRAPPLE DIAG] PlayerController OnUpdate; server=%1 local=%2", Replication.IsServer(), isLocalController));
+		}
 
 		if (!GetGame() || GetGame().GetPlayerController() != this)
 			return;
@@ -42,17 +62,35 @@ modded class SCR_PlayerController
 		if (!justPressed)
 			return;
 
+		Print("[RW GRAPPLE DIAG] CharacterFire press observed before weapon checks");
+
 		ChimeraCharacter user = ChimeraCharacter.Cast(GetControlledEntity());
 		if (!user)
+		{
+			Print("[RW GRAPPLE DIAG] No character controlled", LogLevel.WARNING);
 			return;
+		}
 
 		BaseWeaponComponent weapon = SCR_WeaponLib.GetCurrentWeaponComponent(user);
 		if (!weapon)
+		{
+			Print("[RW GRAPPLE DIAG] Current weapon manager reports no selected gun", LogLevel.WARNING);
 			return;
+		}
+
+		Print(string.Format("[RW GRAPPLE DIAG] Current weapon entity=%1", weapon.GetOwner()));
 
 		RW_GrapplingHookComponent grapple = RW_GrapplingHookComponent.Cast(weapon.GetOwner().FindComponent(RW_GrapplingHookComponent));
-		if (!grapple || !grapple.WantsControllerFireInput())
+		if (!grapple)
+		{
+			Print("[RW GRAPPLE DIAG] Equipped weapon has no RW_GrapplingHookComponent", LogLevel.WARNING);
 			return;
+		}
+		if (!grapple.WantsControllerFireInput())
+		{
+			Print("[RW GRAPPLE DIAG] Grappling component found, but controller-fire mode is DISABLED", LogLevel.WARNING);
+			return;
+		}
 
 		vector direction = user.GetTransformAxis(2);
 		AimingComponent aim = AimingComponent.Cast(user.FindComponent(AimingComponent));
