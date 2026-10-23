@@ -5,7 +5,7 @@ GenericEntity {
   }
   RW_WarlordOmniTurret "{E8A2000000000040}" {
    m_sModuleId "Warlord_Omni_Laser"
-   m_sDisplayName "Warlord_Omni_Laser"
+   m_sDisplayName "Autonomous Beam Laser"
    m_bRequiresCrew 0
    m_fRange 1300
    m_fScanInterval 0.8
@@ -18,15 +18,21 @@ GenericEntity {
    m_fBurstPause 2
    m_fShotsPerMinute 150
    m_bAnimateTurret 1
+   // Rotation applies to the root, so future custom meshes aim with the module.
    m_fTurnSpeed 180
    m_fMinElevation -80
    m_fMaxElevation 89
-   m_fBarrelLength 3
+   m_fBarrelLength 0.3
+   m_FX BFA_MechWeaponFX "{E8A30000000000A5}" {
+    m_sBeamPrefab "{F9F15A6E70B2C046}Prefabs/Vehicles/Mech/Weapons/CGS_LaserBeam.et"
+    m_fBeamDuration 0.16
+    m_fBeamWidth 0.13
+    m_fProjectileSpeed 1500
+    m_iTracerEvery 1
+   }
+   m_eDamageKind ENERGY
    m_fSectorBias 3
    m_iImpactType 1
-  }
-  MeshObject "{E8A2000000000041}" {
-   Object "{3F743FE45DE3354E}Common/Models/Titan_War_Lord/War_Lord_Shoulder_Gun.xob"
   }
   Hierarchy "{E8A2000000000042}" {
   }
