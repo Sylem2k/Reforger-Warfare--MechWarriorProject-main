@@ -1,7 +1,9 @@
 //------------------------------------------------------------------------------------------------
 //! Reforger Warfare - handheld Grappling Hook test prototype.
-//! Attach to Grappling_Hook.et (derived from the ETool item).
-//! Server authority only; character facing is used for aiming in this first pass.
+//! Also supports Handgun_Grapling.et (M9): firing the normal pistol trigger
+//! invokes grapple. ADS stays vanilla. OnProjectileShot event from the player
+//! is used with an optional immediate MuzzleEffect event where available.
+//! Server is authoritative; camera/weapon aim direction is used when available.
 //! There is NO rope rendering, no fall-damage immunity and no wall-climbing yet.
 //! With physics pull the player controller may reject imposed velocity on some builds;
 //! an explicitly opt-in scripted movement test is exposed in Workbench.
@@ -39,6 +41,12 @@ class RW_GrapplingHookComponent : ScriptComponent
 	[Attribute("false", UIWidgets.CheckBox, "Log start, stop and failed motion diagnostics.", category: "Grapple Test")]
 	protected bool m_bDebug;
 
+	[Attribute("false", UIWidgets.CheckBox, "M9 test: listen for actual pistol shots and activate grapple on left-click. ADS remains normal.", category: "Pistol Trigger")]
+	protected bool m_bUseWeaponTrigger;
+
+	[Attribute("true", UIWidgets.CheckBox, "M9 test: try to remove the normal fired bullet on the server. This is NOT a substitute for using a proper zero-damage test cartridge.", category: "Pistol Trigger")]
+	protected bool m_bDeleteProjectile;
+
 	protected IEntity m_pUser;
 	protected vector m_vAnchor;
 	protected vector m_vLastPosition;
@@ -47,19 +55,184 @@ class RW_GrapplingHookComponent : ScriptComponent
 	protected int m_iNextUseMs;
 	protected float m_fReleaseDelay;
 
+	// The equipped player's OnProjectileShot is a vanilla Reforger weapon event.
+	protected IEntity m_pFireEventUser;
+	protected bool m_bRegisteredMuzzle;
+	protected int m_iLastPistolShotMs;
+
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
 		super.OnPostInit(owner);
-		if (Replication.IsServer())
-			SetEventMask(owner, EntityEvent.FRAME);
+		if (!Replication.IsServer())
+			return;
+
+		SetEventMask(owner, EntityEvent.FRAME);
+
+		// Reforger's regular muzzle event is immediate. Register only if this
+		// inherited pistol base has the scripted muzzle-effect component.
+		if (m_bUseWeaponTrigger)
+		{
+			SCR_MuzzleEffectComponent muzzleEffects = SCR_MuzzleEffectComponent.Cast(owner.FindComponent(SCR_MuzzleEffectComponent));
+			if (muzzleEffects)
+			{
+				muzzleEffects.GetOnWeaponFired().Insert(OnMuzzleFired);
+				m_bRegisteredMuzzle = true;
+			}
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
 	override void OnDelete(IEntity owner)
 	{
+		DetachShotListener();
+		if (m_bRegisteredMuzzle)
+		{
+			SCR_MuzzleEffectComponent muzzleEffects = SCR_MuzzleEffectComponent.Cast(owner.FindComponent(SCR_MuzzleEffectComponent));
+			if (muzzleEffects)
+				muzzleEffects.GetOnWeaponFired().Remove(OnMuzzleFired);
+		}
 		StopPull(false);
 		super.OnDelete(owner);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Find the active user from the pistol's inventory/hand hierarchy.
+	protected ChimeraCharacter FindEquippedPlayer()
+	{
+		IEntity weaponEntity = GetOwner();
+		if (!weaponEntity)
+			return null;
+
+		IEntity ancestor = weaponEntity.GetParent();
+		while (ancestor)
+		{
+			ChimeraCharacter character = ChimeraCharacter.Cast(ancestor);
+			if (character && IsEquippedBy(character))
+				return character;
+			ancestor = ancestor.GetParent();
+		}
+
+		return null;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void DetachShotListener()
+	{
+		if (!m_pFireEventUser)
+			return;
+
+		EventHandlerManagerComponent events = EventHandlerManagerComponent.Cast(m_pFireEventUser.FindComponent(EventHandlerManagerComponent));
+		if (events)
+			events.RemoveScriptHandler("OnProjectileShot", this, OnPlayerShot);
+
+		m_pFireEventUser = null;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void UpdateShotListener()
+	{
+		if (!m_bUseWeaponTrigger)
+			return;
+
+		IEntity active = FindEquippedPlayer();
+		if (active == m_pFireEventUser)
+			return;
+
+		DetachShotListener();
+		if (!active)
+			return;
+
+		EventHandlerManagerComponent events = EventHandlerManagerComponent.Cast(active.FindComponent(EventHandlerManagerComponent));
+		if (!events)
+		{
+			if (m_bDebug)
+				Print("[RW GRAPPLE] Active player lacks EventHandlerManagerComponent", LogLevel.WARNING);
+			return;
+		}
+
+		events.RegisterScriptHandler("OnProjectileShot", this, OnPlayerShot);
+		m_pFireEventUser = active;
+		if (m_bDebug)
+			Print("[RW GRAPPLE] Pistol trigger listener attached to player");
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Scripted muzzle callback (immediate, if inherited pistol supplies it).
+	protected void OnMuzzleFired(IEntity effectEntity, BaseMuzzleComponent muzzle, IEntity projectileEntity)
+	{
+		if (!Replication.IsServer())
+			return;
+		ProcessPistolShot(projectileEntity);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Vanilla player event, delayed until the next frame: catches pistol
+	//! variants that do not expose SCR_MuzzleEffectComponent.
+	protected void OnPlayerShot(int playerId, BaseWeaponComponent weapon, IEntity projectileEntity)
+	{
+		if (!Replication.IsServer() || !weapon || weapon.GetOwner() != GetOwner())
+			return;
+
+		ProcessPistolShot(projectileEntity);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void DeleteShotProjectile(IEntity projectileEntity)
+	{
+		if (!Replication.IsServer() || !projectileEntity)
+			return;
+		SCR_EntityHelper.DeleteEntityAndChildren(projectileEntity);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void ProcessPistolShot(IEntity projectileEntity)
+	{
+		if (!m_bUseWeaponTrigger || !Replication.IsServer())
+			return;
+
+		ChimeraCharacter user = FindEquippedPlayer();
+		if (!user)
+			return;
+
+		// Muzzle and player events may fire for the same round. Process it once
+		// so we never schedule deletion of the same projectile twice.
+		int now = System.GetTickCount();
+		if (now - m_iLastPistolShotMs < 100)
+			return;
+		m_iLastPistolShotMs = now;
+
+		// Never delete an engine projectile from inside its own OnFired
+		// callback: other muzzle listeners may still be using the same entity.
+		// Postpone the deletion until the callback has returned.
+		// This is best effort ONLY. A zero-damage test round is still required
+		// before allowing this weapon to shoot around players.
+		if (m_bDeleteProjectile && projectileEntity && GetGame())
+		{
+			ScriptCallQueue queue = GetGame().GetCallqueue();
+			if (queue)
+				queue.CallLater(DeleteShotProjectile, 1, false, projectileEntity);
+		}
+
+		vector aimDirection = user.GetTransformAxis(2);
+		AimingComponent aiming = AimingComponent.Cast(user.FindComponent(AimingComponent));
+		if (!aiming)
+			aiming = AimingComponent.Cast(GetOwner().FindComponent(AimingComponent));
+
+		if (aiming)
+		{
+			vector weaponDirection = aiming.GetAimingDirectionWorld();
+			if (weaponDirection.LengthSq() > 0.001)
+				aimDirection = weaponDirection;
+		}
+
+		if (aimDirection.LengthSq() > 0.001)
+			aimDirection.Normalize();
+
+		if (m_bDebug)
+			Print(string.Format("[RW GRAPPLE] Pistol trigger detected, aim=%1", aimDirection));
+
+		ServerToggleWithDirection(user, aimDirection);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -72,7 +245,12 @@ class RW_GrapplingHookComponent : ScriptComponent
 		if (!controller)
 			return false;
 
-		return controller.GetRightHandItem() == GetOwner();
+		if (controller.GetRightHandItem() == GetOwner())
+			return true;
+
+		// Firearms use the weapon manager, not the gadget right-hand item.
+		BaseWeaponComponent currentWeapon = SCR_WeaponLib.GetCurrentWeaponComponent(ChimeraCharacter.Cast(user));
+		return currentWeapon && currentWeapon.GetOwner() == GetOwner();
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -101,6 +279,14 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//! One activation toggles fire/cancel. ScriptedUserAction is executed on the server.
 	bool ServerToggle(IEntity user)
 	{
+		if (!user)
+			return false;
+		return ServerToggleWithDirection(user, user.GetTransformAxis(2));
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected bool ServerToggleWithDirection(IEntity user, vector shotDirection)
+	{
 		if (!Replication.IsServer() || !GetGame() || !IsEquippedBy(user))
 			return false;
 
@@ -126,7 +312,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 		if (!world || !user.GetPhysics())
 			return false;
 
-		vector direction = user.GetTransformAxis(2);
+		vector direction = shotDirection;
 		if (direction.LengthSq() <= 0.0001)
 			return false;
 		direction.Normalize();
@@ -205,7 +391,14 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
-		if (!Replication.IsServer() || !m_pUser || !GetGame())
+		if (!Replication.IsServer() || !GetGame())
+			return;
+
+		// Equipped pistol may change ownership when stored, dropped, or swapped.
+		// No global hooks or changes to other weapons.
+		UpdateShotListener();
+
+		if (!m_pUser)
 			return;
 
 		if (!IsEquippedBy(m_pUser))
