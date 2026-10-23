@@ -11,6 +11,7 @@ GenericEntity {
    m_fDamageVsInfantry 1
    m_fDamageVsVehicles 1
    m_fInfantryArmourFloor 0.4
+   m_fArmorPenetrationPercent 35
    m_bSupportsHeldFire 0
    m_bSupportsPulseFire 1
    m_FX BFA_MechWeaponFX "{29B69BD185B9D9D3}" {

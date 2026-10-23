@@ -10,6 +10,7 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_fDamageVsInfantry 1
    m_fDamageVsVehicles 1
    m_fInfantryArmourFloor 0.4
+   m_fArmorPenetrationPercent 18
    m_eDamageKind EXPLOSIVE
    m_bSupportsHeldFire 0
    m_bSupportsPulseFire 1

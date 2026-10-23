@@ -4,6 +4,7 @@ GenericEntity {
   SignalsManagerComponent "{878EE5024BCFCDE1}" {
   }
   BFA_MechRocketLauncherModuleComponent "{878EE5024BCFCDE2}" {
+   m_fArmorPenetrationPercent 16
    m_sModuleId "ROCKET_LAUNCHER"
    m_sDisplayName "Rocket Launcher"
    m_sControlStation "GUNNER"
