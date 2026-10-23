@@ -19,7 +19,7 @@ GenericEntity : "{BFAA0FABA771280F}Prefabs/Vehicles/Mech/Weapons/MW4/ARROW_IV.et
  coords 84.565 4.703 68.301
 }
 Vehicle Gravemarch_Tempest_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
- coords 54.551 21.905 82.564
+ coords 81.715 21.905 39.154
 }
 GenericEntity : "{FA805DA3DE09220B}Prefabs/Items/Equipment/Radios/CGS Mech Command Radio.et" {
  coords 79.187 6.457 57.178
