@@ -35,14 +35,16 @@ GenericEntity {
     Offset 0 0.5 0.45
    }
    m_fMuzzleClearance 0.3
+   m_bFireAtAimPoint 1
+   m_fMaxAimCorrection 180
    m_iMagazineSize 60
    m_fReloadTime 16
    m_iSpareMagazines 2
-   m_fRocketSpeed 90
+   m_fRocketSpeed 140
    m_fRange 1800
-   m_iSalvoCount 20
-   m_iSalvoIntervalMs 60
-   m_iRefireMs 4500
+   m_iSalvoCount 8
+   m_iSalvoIntervalMs 120
+   m_iRefireMs 7000
    m_fSpreadDeg 2
    m_fDirectHitDamage 60
    m_fSplashDamage 25
@@ -66,8 +68,8 @@ GenericEntity {
    m_bLockTargets 1
    m_eGuidance BOTH
    m_iLockTimeMs 1200
-   m_fLaserConeDeg 120
-   m_fTurnRate 45
+   m_fLaserConeDeg 160
+   m_fTurnRate 85
    m_fArmingDistance 60
    m_fLoftAngle 45
   }
