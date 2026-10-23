@@ -258,3 +258,61 @@ Test:
 
 No Enfusion Workbench compile or in-game test has been run for this
 commit; it is a code/prefab fix based on the traces I supplied.
+
+23 OCT 2026 - WALL IMPACT SAFETY / CONTROLLED ARRIVAL
+-----------------------------------------------------
+I confirmed the initial 1m lift, the actual pull at 18m/s, and a
+normal stop near the anchor in my test log. However I then died from
+being pulled directly into the wall. My old 2m stop distance was
+measured from the chest to a POINT raycast hit, without slowing the
+player or accounting for their body collision.
+
+I updated my Grappling M9 to try a SAFE ARRIVAL prototype:
+- Keep 100m maximum targeting range.
+- Keep 1m initial lift where overhead space is clear.
+- Keep max 18m/s travel speed over the long part of the pull.
+- Start reducing speed inside 14m of the impact point.
+- Stop moving horizontally at least 4.5m short of the impact point.
+- Check forward clearance with 3 traces from foot/chest/head,
+  including a buffer in the direction of movement.
+- If the path gets too close to the wall, immediately brake and
+  begin a controlled descent instead of driving toward the wall.
+- During descent, keep horizontal velocity at zero and apply at most
+  2.5m/s of downward velocity until I am close to walkable ground.
+- Extend active pull duration 6s -> 12s because the last metres
+  now use gradual deceleration at the configured 100m range.
+- Allow up to 90s of controlled descent for very tall structures,
+  with manual second-click cancel still available.
+
+MY NEW M9 VALUES:
+  m_fMaxRange 100
+  m_fPullSpeed 18
+  m_fStopDistance 2             (legacy distance)
+  m_fSafeArrivalDistance 4.5    (effective arrival distance)
+  m_fBrakeStartDistance 14
+  m_fSafeDescentSpeed 2.5
+  m_fSafeDescentTimeout 90
+  m_fMaxDuration 12
+  m_fGroundReleaseLift 1
+  m_bScriptedPositionFallback 0
+  m_bUseWeaponTrigger 0
+  m_bUseDirectFireInput 0
+  m_bUseControllerFireInput 1
+
+MY EXPECTED LOGS:
+  [RW GRAPPLE] Initial clear-space lift applied
+  [RW GRAPPLE] Pull phase started
+  [RW GRAPPLE SAFE] Approach ended (...). Controlled descent started.
+  [RW GRAPPLE SAFE] Landed, foot gap=...
+  [RW GRAPPLE] stopped cancelled=0 ...
+
+CAVEATS:
+This is a WALL-IMPACT SAFETY PROTOTYPE, not an automatic ledge climb.
+If I hook the side of a tall wall, I stop away from it and descend to
+the nearest walkable ground directly below, instead of being teleported
+onto the rooftop. A future ledge/roof-top traversal feature needs a
+separate validated path that cannot phase my character into geometry.
+Cancelling manually in midair may still allow an ordinary fall.
+Rapid changes in player-controller physics, fall damage or other mods
+might still create injuries. The new code is committed and structurally
+checked but NOT compiled or tested inside Workbench.
