@@ -160,7 +160,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000024}" {
      m_sName "RACK_TOP_R"
      m_iClass 4
-     m_iDefaultModuleId 117
+     m_iDefaultModuleId 917
      m_Point PointInfo "{E60F000000000025}" {
       Offset -11.9318 7.1945 14.5388
      }
@@ -709,6 +709,14 @@ Vehicle {
      m_iClass 3
      m_sWeaponModuleId "LRM20"
      m_sPrefab "{E8A100000000B134}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_LRM20_Blank.et"
+     m_fSwapTime 4
+    }
+    BFA_MechModuleDefinition "{E8A30000000000A7}" {
+     m_iId 917
+     m_sLabel "Arrow IV - Blank Boss Rack"
+     m_iClass 4
+     m_sWeaponModuleId "ARROW_IV"
+     m_sPrefab "{E8A100000000B137}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_ArrowIV_Blank.et"
      m_fSwapTime 4
     }
    m_sSwapStation "DRIVER"
