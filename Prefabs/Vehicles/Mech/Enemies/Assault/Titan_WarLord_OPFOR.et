@@ -565,7 +565,7 @@ Vehicle {
      m_sLabel "Titan Stomp Pulse"
      m_iClass 4
      m_sWeaponModuleId "FORCE_PULSE"
-     m_sPrefab "{3764FA8EDD9C9864}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Stomp_Pulse.et"
+     m_sPrefab "{D600202610230201}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_Stomp_Pulse.et"
      m_fWeightTons 0
      m_fSwapTime 10
     }
