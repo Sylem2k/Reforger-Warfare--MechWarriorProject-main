@@ -66,7 +66,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000010}" {
      m_sName "SHOULDER"
      m_iClass 2
-     m_iDefaultModuleId 0
+     m_iDefaultModuleId 5
      m_Point PointInfo "{E60F000000000011}" {
       Offset -3.6187 21.6033 2.5351
      }
@@ -151,7 +151,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000022}" {
      m_sName "RACK_TOP_L"
      m_iClass 3
-     m_iDefaultModuleId 0
+     m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000023}" {
       Offset 0.74 14.4258 8.6535
      }
@@ -161,7 +161,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000024}" {
      m_sName "RACK_TOP_R"
      m_iClass 3
-     m_iDefaultModuleId 0
+     m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000025}" {
       Offset -11.9318 7.1945 14.5388
      }
