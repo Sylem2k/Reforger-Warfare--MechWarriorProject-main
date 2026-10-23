@@ -53,6 +53,17 @@ GenericEntity : "{8A89D3F70713E55B}Prefabs/Items/Equipment/Accessories/ETool_MPL
     m_SlotType SLOT_LOADOUT_STORAGE
    }
   }
+  RW_GrapplingHookComponent "{6A991024002300F1}" {
+   m_fMaxRange 50
+   m_fPullSpeed 18
+   m_fStopDistance 2
+   m_fCooldown 3
+   m_fMaxDuration 6
+   m_fEyeHeight 1.5
+   m_fGroundReleaseLift 0.65
+   m_bScriptedPositionFallback 0
+   m_bDebug 1
+  }
   SCR_CampaignBuildingGadgetToolComponent "{6AAE13C37564E723}" {
    m_eAnimVariable ADRIANOV
    m_eUseMask FROM_ACTION
@@ -71,6 +82,15 @@ GenericEntity : "{8A89D3F70713E55B}Prefabs/Items/Equipment/Accessories/ETool_MPL
      }
     }
     SCR_EquipItemAction "{6324CBA5DE3B714F}" : "{068D8D646964D12A}Prefabs/Characters/Core/Actions/EquipGadgetAction.conf" {
+    }
+    RW_GrapplingHookAction "{6A991024002300F2}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6A991024002300F3}" {
+      Name "GRAPPLE: FIRE / RELEASE (TEST)"
+     }
+     VisibilityRange 2
     }
    }
   }
