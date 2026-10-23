@@ -72,6 +72,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 	// Test-only diagnostics: prove the ACTUAL grapple pistol prefab is running.
 	protected bool m_bRWInstanceFrameLogged;
 	protected bool m_bRWEquippedFrameLogged;
+	protected bool m_bRWPullStartLogged;
 
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
@@ -91,7 +92,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 
 		// Reforger's regular muzzle event is immediate. Register only if this
 		// inherited pistol base has the scripted muzzle-effect component.
-		if (m_bUseWeaponTrigger)
+		if (m_bUseWeaponTrigger && !m_bUseControllerFireInput)
 		{
 			SCR_MuzzleEffectComponent muzzleEffects = SCR_MuzzleEffectComponent.Cast(owner.FindComponent(SCR_MuzzleEffectComponent));
 			if (muzzleEffects)
@@ -152,7 +153,10 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void UpdateShotListener()
 	{
-		if (!m_bUseWeaponTrigger)
+		// Controller input takes priority over legacy bullet listeners.
+		// This prevents two firings for one click even if a prefab accidentally
+		// has multiple legacy trigger options enabled.
+		if (!m_bUseWeaponTrigger || m_bUseControllerFireInput)
 			return;
 
 		IEntity active = FindEquippedPlayer();
@@ -208,7 +212,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void ProcessPistolShot(IEntity projectileEntity)
 	{
-		if (!m_bUseWeaponTrigger || m_bUseDirectFireInput || !Replication.IsServer())
+		if (!m_bUseWeaponTrigger || m_bUseDirectFireInput || m_bUseControllerFireInput || !Replication.IsServer())
 			return;
 
 		ChimeraCharacter user = FindEquippedPlayer();
@@ -260,7 +264,9 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//! Runs on each client but only reacts to its own equipped pistol.
 	protected void PollLocalFireInput()
 	{
-		if (!m_bUseDirectFireInput || !GetGame())
+		// Never poll the same left-click from both the pistol entity and the
+		// player's controller. If controller mode is enabled it owns all input.
+		if (!m_bUseDirectFireInput || m_bUseControllerFireInput || !GetGame())
 			return;
 
 		PlayerController controller = GetGame().GetPlayerController();
@@ -469,13 +475,23 @@ class RW_GrapplingHookComponent : ScriptComponent
 			liftTrace.LayerMask = EPhysicsLayerPresets.Projectile;
 			liftTrace.ExcludeArray = excluded;
 			if (world.TraceMove(liftTrace, null) >= 1.0)
+			{
 				user.SetOrigin(user.GetOrigin() + vector.Up * lift);
+				if (m_bDebug)
+					Print(string.Format("[RW GRAPPLE] Initial clear-space lift applied: %1 metres", lift));
+			}
+			else
+			{
+				if (m_bDebug)
+					Print("[RW GRAPPLE] Initial lift blocked by overhead collision", LogLevel.WARNING);
+			}
 		}
 
 		m_pUser = user;
 		m_vAnchor = anchor;
 		m_vLastPosition = user.GetOrigin();
 		m_fNoMotionSeconds = 0;
+		m_bRWPullStartLogged = false;
 		m_fReleaseDelay = 0.08;
 		m_iStartMs = System.GetTickCount();
 		m_iNextUseMs = m_iStartMs + (int)(Math.Max(m_fCooldown, 0.0) * 1000.0);
@@ -498,6 +514,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 			Print(string.Format("[RW GRAPPLE] stopped cancelled=%1 at=%2", playerCancelled, m_pUser.GetOrigin()));
 
 		m_pUser = null;
+		m_bRWPullStartLogged = false;
 		m_fReleaseDelay = 0;
 		m_fNoMotionSeconds = 0;
 	}
@@ -532,7 +549,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 			return;
 
 		// The old projectile listener still supports non-direct-fire tests.
-		if (!m_bUseDirectFireInput)
+		if (!m_bUseDirectFireInput && !m_bUseControllerFireInput)
 			UpdateShotListener();
 
 		if (!m_pUser)
@@ -595,8 +612,17 @@ class RW_GrapplingHookComponent : ScriptComponent
 
 		if (world.TraceMove(clearance, null) < 0.95)
 		{
+			if (m_bDebug)
+				Print("[RW GRAPPLE] Pull path blocked by nearby collision", LogLevel.WARNING);
 			StopPull(false);
 			return;
+		}
+
+		if (!m_bRWPullStartLogged)
+		{
+			m_bRWPullStartLogged = true;
+			if (m_bDebug)
+				Print(string.Format("[RW GRAPPLE] Pull phase started: speed=%1 m/s, scriptedFallback=%2", speed, m_bScriptedPositionFallback));
 		}
 
 		if (m_bScriptedPositionFallback)
