@@ -13,6 +13,7 @@
 modded class SCR_PlayerController
 {
 	protected bool m_bRWGrappleFireWasDown;
+	protected bool m_bRWGrappleControllerStartupLogged;
 
 	//------------------------------------------------------------------------------------------------
 	override void OnUpdate(float timeSlice)
@@ -21,6 +22,12 @@ modded class SCR_PlayerController
 
 		if (!GetGame() || GetGame().GetPlayerController() != this)
 			return;
+
+		if (!m_bRWGrappleControllerStartupLogged)
+		{
+			m_bRWGrappleControllerStartupLogged = true;
+			Print("[RW GRAPPLE CTRL] Player-controller input hook loaded");
+		}
 
 		InputManager inputs = GetGame().GetInputManager();
 		if (!inputs)
