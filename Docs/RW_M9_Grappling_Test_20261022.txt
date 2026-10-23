@@ -122,3 +122,48 @@ TEST:
 
 This remains a prototype. There is no rope, safe climbing, fall protection,
 or verified multiplayer synchronization yet.
+
+23 OCT 2026 - PLAYER CONTROLLER FIRING FIX AND LOG ANALYSIS
+----------------------------------------------------------
+I corrected an earlier incorrect claim that the M9 video proved there
+were no bullets. The weapon actually fired a complete magazine. The
+brief provided log showed no [RW GRAPPLE] trace, so I cannot claim
+the gun was empty or that movement failed: a firing activation was
+never established by the supplied log.
+
+The provided Grappling_Hook.et attachment is the ORIGINAL ALICE ETool
+shovel item (no RW_GrapplingHookComponent); it is NOT the new M9 pistol.
+My grappling test pistol remains:
+{70D23AC15EE70D8F}Prefabs/Weapons/Handguns/M9/Handgun_Grapling.et
+
+The previous script attempted to read CharacterFire from a component
+attached to a weapon entity and send an RPC on that firearm; ownership
+and frame-event execution are not guaranteed in multiplayer.
+Instead I added:
+  Scripts/Game/RW_Grapple/RW_GrapplingPlayerController.c
+
+This modded SCR_PlayerController reads CharacterFire on the LOCAL player's
+controller OnUpdate. When the CURRENT equipped gun is Handgun_Grapling
+and contains RW_GrapplingHookComponent with Use Controller Fire Input
+enabled, it invokes a server-side controller RPC. The server resolves
+its actual current weapon again, and then calls the grapple component.
+
+M9 SETTINGS:
+  m_bUseWeaponTrigger 0
+  m_bUseDirectFireInput 0
+  m_bUseControllerFireInput 1
+  m_bDeleteProjectile 0
+  m_bDebug 1
+
+EXPECTED LOGS:
+1. On game start, once: [RW GRAPPLE CTRL] Player-controller input hook loaded
+2. On equipped M9 left click: [RW GRAPPLE CTRL] Local FIRE input detected
+3. Multiplayer server: [RW GRAPPLE CTRL] Server received fire input
+4. Server: [RW GRAPPLE CTRL] Component received player-controller fire
+5. On an accepted surface: [RW GRAPPLE] player=... anchor=...
+6. If there's no surface: [RW GRAPPLE] No surface within range
+7. If no motion after server start: [RW GRAPPLE] Native player motion blocked
+
+This code is committed but has not been compiled or tested in Workbench.
+I should TEST WITH UNLOADED PISTOL / NO LIVE AMMO, because its vanilla
+firearm still shoots normal bullets when loaded. ADS remains untouched.

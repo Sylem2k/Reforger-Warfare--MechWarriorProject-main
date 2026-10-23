@@ -52,6 +52,9 @@ class RW_GrapplingHookComponent : ScriptComponent
 	[Attribute("false", UIWidgets.CheckBox, "M9: fire/release using the player CharacterFire input, even with ZERO ammo. Reads local input and RPCs the authoritative weapon owner. No bullet event needed.", category: "Pistol Trigger")]
 	protected bool m_bUseDirectFireInput;
 
+	[Attribute("false", UIWidgets.CheckBox, "Preferred M9 mode: local SCR_PlayerController reads CharacterFire and sends a player-owned server RPC. Works without ammunition and avoids firearm entity network ownership.", category: "Pistol Trigger")]
+	protected bool m_bUseControllerFireInput;
+
 	protected IEntity m_pUser;
 	protected vector m_vAnchor;
 	protected vector m_vLastPosition;
@@ -316,6 +319,25 @@ class RW_GrapplingHookComponent : ScriptComponent
 		if (m_bDebug)
 			Print(string.Format("[RW GRAPPLE INPUT] Server received LEFT CLICK from pistol owner: %1", user));
 		ServerToggleWithDirection(user, direction);
+	}
+
+	//------------------------------------------------------------------------------------------------
+ 	//------------------------------------------------------------------------------------------------
+	//! Read by the local SCR_PlayerController without requiring a magazine.
+	bool WantsControllerFireInput()
+	{
+		return m_bUseControllerFireInput;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Validated on the server against the controller's CURRENT weapon and user.
+	bool ServerPlayerControllerFire(IEntity user, vector direction)
+	{
+		if (!m_bUseControllerFireInput || !Replication.IsServer())
+			return false;
+		if (m_bDebug)
+			Print(string.Format("[RW GRAPPLE CTRL] Component received player-controller fire user=%1 equipped=%2", user, IsEquippedBy(user)));
+		return ServerToggleWithDirection(user, direction);
 	}
 
 	//------------------------------------------------------------------------------------------------
