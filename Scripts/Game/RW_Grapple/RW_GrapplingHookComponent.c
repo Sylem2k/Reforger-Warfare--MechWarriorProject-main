@@ -195,6 +195,13 @@ class RW_GrapplingHookComponent : ScriptComponent
 		if (!user)
 			return;
 
+		// Muzzle and player events may fire for the same round. Process it once
+		// so we never schedule deletion of the same projectile twice.
+		int now = System.GetTickCount();
+		if (now - m_iLastPistolShotMs < 100)
+			return;
+		m_iLastPistolShotMs = now;
+
 		// Never delete an engine projectile from inside its own OnFired
 		// callback: other muzzle listeners may still be using the same entity.
 		// Postpone the deletion until the callback has returned.
@@ -206,12 +213,6 @@ class RW_GrapplingHookComponent : ScriptComponent
 			if (queue)
 				queue.CallLater(DeleteShotProjectile, 1, false, projectileEntity);
 		}
-
-		int now = System.GetTickCount();
-		if (now - m_iLastPistolShotMs < 100)
-			return;
-
-		m_iLastPistolShotMs = now;
 
 		vector aimDirection = user.GetTransformAxis(2);
 		AimingComponent aiming = AimingComponent.Cast(user.FindComponent(AimingComponent));
