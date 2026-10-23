@@ -107,16 +107,6 @@ Vehicle {
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
     }
-" {
-     m_sName "CHEST_GUN"
-     m_iClass 1
-     m_iDefaultModuleId 101
-     m_Point PointInfo "{E60F000000000019}" {
-      Offset -0.2053 15.002 10.0201
-     }
-     m_sControlStation "DRIVER"
-     m_iWeaponGroup 1
-    }
     BFA_MechHardpointDefinition "{E60F00000000001A}" {
      m_sName "RACK_OUTER_L"
      m_iClass 3
@@ -764,11 +754,6 @@ Vehicle {
     }
     RW_FrameHardpoint "{E60F000000000066}" {
      m_sHardpoint "BACK_R"
-     m_eType ANY
-     m_eMaxSize LARGE
-    }
-" {
-     m_sHardpoint "CHEST_GUN"
      m_eType ANY
      m_eMaxSize LARGE
     }
