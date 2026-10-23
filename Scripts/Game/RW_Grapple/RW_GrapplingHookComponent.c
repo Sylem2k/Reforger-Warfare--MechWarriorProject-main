@@ -91,7 +91,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 
 		// Reforger's regular muzzle event is immediate. Register only if this
 		// inherited pistol base has the scripted muzzle-effect component.
-		if (m_bUseWeaponTrigger)
+		if (m_bUseWeaponTrigger && !m_bUseControllerFireInput)
 		{
 			SCR_MuzzleEffectComponent muzzleEffects = SCR_MuzzleEffectComponent.Cast(owner.FindComponent(SCR_MuzzleEffectComponent));
 			if (muzzleEffects)
@@ -152,7 +152,10 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void UpdateShotListener()
 	{
-		if (!m_bUseWeaponTrigger)
+		// Controller input takes priority over legacy bullet listeners.
+		// This prevents two firings for one click even if a prefab accidentally
+		// has multiple legacy trigger options enabled.
+		if (!m_bUseWeaponTrigger || m_bUseControllerFireInput)
 			return;
 
 		IEntity active = FindEquippedPlayer();
@@ -208,7 +211,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void ProcessPistolShot(IEntity projectileEntity)
 	{
-		if (!m_bUseWeaponTrigger || m_bUseDirectFireInput || !Replication.IsServer())
+		if (!m_bUseWeaponTrigger || m_bUseDirectFireInput || m_bUseControllerFireInput || !Replication.IsServer())
 			return;
 
 		ChimeraCharacter user = FindEquippedPlayer();
@@ -260,7 +263,9 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//! Runs on each client but only reacts to its own equipped pistol.
 	protected void PollLocalFireInput()
 	{
-		if (!m_bUseDirectFireInput || !GetGame())
+		// Never poll the same left-click from both the pistol entity and the
+		// player's controller. If controller mode is enabled it owns all input.
+		if (!m_bUseDirectFireInput || m_bUseControllerFireInput || !GetGame())
 			return;
 
 		PlayerController controller = GetGame().GetPlayerController();
@@ -532,7 +537,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 			return;
 
 		// The old projectile listener still supports non-direct-fire tests.
-		if (!m_bUseDirectFireInput)
+		if (!m_bUseDirectFireInput && !m_bUseControllerFireInput)
 			UpdateShotListener();
 
 		if (!m_pUser)
