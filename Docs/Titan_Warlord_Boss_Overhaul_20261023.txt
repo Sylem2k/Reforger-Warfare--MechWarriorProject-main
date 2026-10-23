@@ -131,3 +131,12 @@ No adjustments have been made to other MW vehicle prefabs.
 The Titan arm/leg part prefabs themselves WERE changed in this branch;
 these changes affect any other mechs that share those specific part
 prefabs.
+
+PREFAB META FIX
+While validating resource IDs I found that the existing
+Titan_WarLord_OPFOR.et.meta still said Gravemarch_Tempest_OPFOR.et.
+I corrected its Name to exactly:
+  {D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et
+I did not change the original resource GUID or prefab filename.
+This matters because mismatched .meta Name and actual resource path
+can cause Workbench wrong-GUID/name resource warnings.
