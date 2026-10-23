@@ -74,3 +74,51 @@ MY FIRST CHECK
    EventHandlerManagerComponent in Workbench.
 7. If trigger is detected but pull stalls, diagnose character physics
    before changing projectiles or adding a rope effect.
+
+FIX: EMPTY MAGAZINE CANNOT ACTIVATE OnProjectileShot (user video at 02:29)
+------------------------------------------------------------------------
+I confirmed the pistol is equipped and ADS works, but the HUD has ZERO
+rounds. My first grappling hook depends on a fired projectile event;
+with zero ammo, that event never occurs. This explains the observed
+failure before any grapple raycast or movement happens.
+
+I changed the test M9 to poll the player's LOCAL CharacterFire action.
+It detects the rising edge of left-click while this exact gun is equipped,
+including when the gun is EMPTY and contains no magazine. The local client
+sends the aiming direction by Reliable RPC to the corresponding weapon
+component on the server; the server checks that the weapon is equipped
+before starting/stopping a grapple.
+
+NEW TEST PREFAB SETTINGS:
+  m_bUseWeaponTrigger 0
+  m_bUseDirectFireInput 1
+  m_bDeleteProjectile 0 (no projectile events expected)
+  m_bDebug 1
+
+IMPORTANT: I must NOT load real M9 ammo during this prototype test. The
+base pistol remains a real firearm: loading its magazine can fire live
+bullets concurrently with the input-driven hook. The grapple needs NO
+ammo, and no attempt is made to override vanilla gunfire.
+
+TEST:
+1. Pull MW fix/grappling-m9-ammo-free-input-20261022 and compile.
+2. Spawn Handgun_Grapling.et. Equip with ZERO ammo.
+3. Aim at a solid rock or wall 8-20m away, right-click ADS if desired.
+4. Left-click ONCE. Expected CLIENT log:
+     [RW GRAPPLE INPUT] CharacterFire pressed
+5. Expected SERVER log (in multiplayer):
+     [RW GRAPPLE INPUT] Server received LEFT CLICK
+   and then:
+     [RW GRAPPLE] player=... anchor=... range=...
+6. Left-click while airborne to release; or wait until stop range.
+7. If there is no CLIENT log, the local input frame or weapon detection
+   isn't being invoked. If the CLIENT log occurs without SERVER log,
+   troubleshoot the pistol's RplComponent ownership/RPC replication.
+   If SERVER log occurs without movement, debug the native character
+   controller, raycast, and collision trace.
+8. Testing still required on a dedicated server. Movement physics could
+   be cancelled by the default character controller; scripted-position
+   fallback is OFF and can be tested in a disposable isolated world.
+
+This remains a prototype. There is no rope, safe climbing, fall protection,
+or verified multiplayer synchronization yet.

@@ -10,8 +10,9 @@ GenericEntity : "{809488C4984AC087}Prefabs/Weapons/Handguns/M9/Handgun_M9_base.e
    m_fEyeHeight 1.5
    m_fGroundReleaseLift 0.65
    m_bScriptedPositionFallback 0
-   m_bUseWeaponTrigger 1
-   m_bDeleteProjectile 1
+   m_bUseWeaponTrigger 0
+   m_bUseDirectFireInput 1
+   m_bDeleteProjectile 0
    m_bDebug 1
   }
   SCR_WeaponAttachmentsStorageComponent "{51F080D5CE45A1A2}" {

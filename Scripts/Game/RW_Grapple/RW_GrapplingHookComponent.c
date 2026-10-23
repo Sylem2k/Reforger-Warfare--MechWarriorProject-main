@@ -4,6 +4,8 @@
 //! invokes grapple. ADS stays vanilla. OnProjectileShot event from the player
 //! is used with an optional immediate MuzzleEffect event where available.
 //! Server is authoritative; camera/weapon aim direction is used when available.
+//! Direct CharacterFire input works even with an empty pistol / no magazine.
+//! The old OnProjectileShot path is retained only for non-direct-fire setups.
 //! There is NO rope rendering, no fall-damage immunity and no wall-climbing yet.
 //! With physics pull the player controller may reject imposed velocity on some builds;
 //! an explicitly opt-in scripted movement test is exposed in Workbench.
@@ -47,6 +49,9 @@ class RW_GrapplingHookComponent : ScriptComponent
 	[Attribute("true", UIWidgets.CheckBox, "M9 test: try to remove the normal fired bullet on the server. This is NOT a substitute for using a proper zero-damage test cartridge.", category: "Pistol Trigger")]
 	protected bool m_bDeleteProjectile;
 
+	[Attribute("false", UIWidgets.CheckBox, "M9: fire/release using the player CharacterFire input, even with ZERO ammo. Reads local input and RPCs the authoritative weapon owner. No bullet event needed.", category: "Pistol Trigger")]
+	protected bool m_bUseDirectFireInput;
+
 	protected IEntity m_pUser;
 	protected vector m_vAnchor;
 	protected vector m_vLastPosition;
@@ -59,15 +64,18 @@ class RW_GrapplingHookComponent : ScriptComponent
 	protected IEntity m_pFireEventUser;
 	protected bool m_bRegisteredMuzzle;
 	protected int m_iLastPistolShotMs;
+	protected bool m_bWasFireDown;
 
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
 		super.OnPostInit(owner);
+
+		// Input polling runs on the owning local client, not only on the server.
+		// The replicated component then requests a validated server-side pull.
+		SetEventMask(owner, EntityEvent.FRAME);
 		if (!Replication.IsServer())
 			return;
-
-		SetEventMask(owner, EntityEvent.FRAME);
 
 		// Reforger's regular muzzle event is immediate. Register only if this
 		// inherited pistol base has the scripted muzzle-effect component.
@@ -188,7 +196,7 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void ProcessPistolShot(IEntity projectileEntity)
 	{
-		if (!m_bUseWeaponTrigger || !Replication.IsServer())
+		if (!m_bUseWeaponTrigger || m_bUseDirectFireInput || !Replication.IsServer())
 			return;
 
 		ChimeraCharacter user = FindEquippedPlayer();
@@ -233,6 +241,81 @@ class RW_GrapplingHookComponent : ScriptComponent
 			Print(string.Format("[RW GRAPPLE] Pistol trigger detected, aim=%1", aimDirection));
 
 		ServerToggleWithDirection(user, aimDirection);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Receive the LEFT MOUSE / CharacterFire press on the player owning the gun.
+	//! Runs on each client but only reacts to its own equipped pistol.
+	protected void PollLocalFireInput()
+	{
+		if (!m_bUseDirectFireInput || !GetGame())
+			return;
+
+		PlayerController controller = GetGame().GetPlayerController();
+		if (!controller)
+			return; // Dedicated server has no local shooter.
+
+		IEntity user = controller.GetControlledEntity();
+		if (!user || !IsEquippedBy(user))
+		{
+			m_bWasFireDown = false;
+			return;
+		}
+
+		InputManager inputs = GetGame().GetInputManager();
+		if (!inputs)
+			return;
+
+		// Works with 0 rounds; the game does not need to issue OnProjectileShot.
+		bool down = inputs.GetActionValue("CharacterFire") > 0.5;
+		bool pressed = down && !m_bWasFireDown;
+		m_bWasFireDown = down;
+
+		if (!pressed)
+			return;
+
+		vector direction = user.GetTransformAxis(2);
+		AimingComponent aiming = AimingComponent.Cast(user.FindComponent(AimingComponent));
+		if (!aiming)
+			aiming = AimingComponent.Cast(GetOwner().FindComponent(AimingComponent));
+		if (aiming && aiming.GetAimingDirectionWorld().LengthSq() > 0.001)
+			direction = aiming.GetAimingDirectionWorld();
+
+		if (direction.LengthSq() < 0.001)
+			return;
+		direction.Normalize();
+
+		if (m_bDebug)
+			Print(string.Format("[RW GRAPPLE INPUT] CharacterFire pressed, weapon=%1, server=%2", GetOwner(), Replication.IsServer()));
+
+		if (Replication.IsServer())
+		{
+			ServerToggleWithDirection(user, direction);
+		}
+		else
+		{
+			// Pistol inherits M9's RplComponent. The server validates that
+			// this exact weapon is equipped by a live player before moving them.
+			Rpc(RW_RpcAskToggle, direction);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RW_RpcAskToggle(vector direction)
+	{
+		if (!Replication.IsServer() || !m_bUseDirectFireInput)
+			return;
+		ChimeraCharacter user = FindEquippedPlayer();
+		if (!user)
+		{
+			if (m_bDebug)
+				Print("[RW GRAPPLE INPUT] Server rejected grapple: pistol not actively equipped", LogLevel.WARNING);
+			return;
+		}
+		if (m_bDebug)
+			Print(string.Format("[RW GRAPPLE INPUT] Server received LEFT CLICK from pistol owner: %1", user));
+		ServerToggleWithDirection(user, direction);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -391,12 +474,15 @@ class RW_GrapplingHookComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
+		// Direct input also runs for a client-only weapon replica.
+		PollLocalFireInput();
+
 		if (!Replication.IsServer() || !GetGame())
 			return;
 
-		// Equipped pistol may change ownership when stored, dropped, or swapped.
-		// No global hooks or changes to other weapons.
-		UpdateShotListener();
+		// The old projectile listener still supports non-direct-fire tests.
+		if (!m_bUseDirectFireInput)
+			UpdateShotListener();
 
 		if (!m_pUser)
 			return;
