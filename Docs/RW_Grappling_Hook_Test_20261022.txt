@@ -47,3 +47,30 @@ LIMITATIONS / SAFETY
 - Test at low altitude first. Falling from a grapple can still cause damage.
 - Confirm Workbench script compile and both host+remote client behavior
   before adopting this in normal gameplay.
+
+DUPLICATE ACTIONS MANAGER FIX (23 OCT TEST)
+----------------------------------------
+Workbench reported:
+  GenericEntity component ActionsManagerComponent cannot be combined with
+  component ActionsManagerComponent
+
+The inherited ETool_base.et already contains ActionsManagerComponent.
+The first test prefab mistakenly added a SECOND one, blocking creation.
+The fix branch removes only the duplicate component, leaving the existing
+mesh, RigidBody, loadout cloth and RW_GrapplingHookComponent unchanged.
+
+IMPORTANT: Once the duplicate is removed, the grapple action is NOT yet
+registered with the inherited manager. To restore the Grapple action:
+  1. Open Grappling_Hook.et in Workbench's Prefab Editor.
+  2. Locate the inherited ActionsManagerComponent from ETool_base.et.
+  3. Edit/override that SAME component; do NOT Add Component again.
+  4. In additionalActions add RW_GrapplingHookAction.
+  5. Set ParentContextList to default; set UIInfo.Name to
+     GRAPPLE: FIRE / RELEASE (TEST). Save and push the prefab override.
+
+Alternatively copy the existing ActionsManagerComponent's ID from
+ETool_base.et and update its SAME inherited component in the prefab text.
+Do NOT assign a new GUID; that creates another duplicate component.
+
+The item should now spawn visibly. The interaction remains unavailable until
+the inherited manager is configured. Compile and test the resulting action.
