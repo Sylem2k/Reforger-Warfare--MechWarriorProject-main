@@ -18,15 +18,14 @@ GenericEntity {
    m_fBurstPause 2
    m_fShotsPerMinute 150
    m_bAnimateTurret 1
+   // Rotation applies to the root, so future custom meshes aim with the module.
    m_fTurnSpeed 130
    m_fMinElevation -80
    m_fMaxElevation 89
-   m_fBarrelLength 3
+   m_fBarrelLength 0.3
+   m_eDamageKind KINETIC
    m_fSectorBias 3
    m_iImpactType 0
-  }
-  MeshObject "{E8A200000000003C}" {
-   Object "{3F743FE45DE3354E}Common/Models/Titan_War_Lord/War_Lord_Shoulder_Gun.xob"
   }
   Hierarchy "{E8A200000000003D}" {
   }
