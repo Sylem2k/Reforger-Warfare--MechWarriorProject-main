@@ -28,8 +28,22 @@ class RW_GrapplingHookComponent : ScriptComponent
 	[Attribute("3", UIWidgets.Auto, "Cooldown after activation, seconds.", category: "Grapple")]
 	protected float m_fCooldown;
 
-	[Attribute("6", UIWidgets.Auto, "Maximum grapple duration, seconds.", category: "Grapple")]
+	[Attribute("6", UIWidgets.Auto, "Maximum grapple pull duration before controlled descent, seconds.", category: "Grapple")]
 	protected float m_fMaxDuration;
+
+	// SAFETY: The hook ray is a point, but a moving soldier occupies a capsule.
+	// Stay several metres away from the anchor and brake before approaching it.
+	[Attribute("4.5", UIWidgets.Auto, "Minimum body clearance from grapple impact before stopping horizontal pull (metres). 4+ recommended for walls.", category: "Safe Arrival")]
+	protected float m_fSafeArrivalDistance;
+
+	[Attribute("14", UIWidgets.Auto, "Distance at which the grapple starts slowing for a safe arrival (metres).", category: "Safe Arrival")]
+	protected float m_fBrakeStartDistance;
+
+	[Attribute("2.5", UIWidgets.Auto, "Controlled downward speed when the grapple ends in the air (metres/second).", category: "Safe Arrival")]
+	protected float m_fSafeDescentSpeed;
+
+	[Attribute("90", UIWidgets.Auto, "Maximum controlled descent time in seconds before giving control back to the character. Manual cancel always releases.", category: "Safe Arrival")]
+	protected float m_fSafeDescentTimeout;
 
 	[Attribute("1.5", UIWidgets.Auto, "Approximate eye height for the server-side facing raycast.", category: "Grapple")]
 	protected float m_fEyeHeight;
@@ -73,6 +87,8 @@ class RW_GrapplingHookComponent : ScriptComponent
 	protected bool m_bRWInstanceFrameLogged;
 	protected bool m_bRWEquippedFrameLogged;
 	protected bool m_bRWPullStartLogged;
+	protected bool m_bRWSafeDescending;
+	protected int m_iRWSafeDescentStartMs;
 
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
@@ -492,6 +508,8 @@ class RW_GrapplingHookComponent : ScriptComponent
 		m_vLastPosition = user.GetOrigin();
 		m_fNoMotionSeconds = 0;
 		m_bRWPullStartLogged = false;
+		m_bRWSafeDescending = false;
+		m_iRWSafeDescentStartMs = 0;
 		m_fReleaseDelay = 0.08;
 		m_iStartMs = System.GetTickCount();
 		m_iNextUseMs = m_iStartMs + (int)(Math.Max(m_fCooldown, 0.0) * 1000.0);
@@ -515,8 +533,130 @@ class RW_GrapplingHookComponent : ScriptComponent
 
 		m_pUser = null;
 		m_bRWPullStartLogged = false;
+		m_bRWSafeDescending = false;
+		m_iRWSafeDescentStartMs = 0;
 		m_fReleaseDelay = 0;
 		m_fNoMotionSeconds = 0;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! The final metres are where full pull speed causes fatal wall collisions.
+	//! Switch from horizontal travel to a controlled descent, holding the
+	//! player's horizontal velocity at zero instead of letting the 18m/s
+	//! momentum send them into the collision mesh.
+	protected void BeginSafeDescent(string reason)
+	{
+		if (!m_pUser || m_bRWSafeDescending)
+			return;
+
+		m_bRWSafeDescending = true;
+		m_iRWSafeDescentStartMs = System.GetTickCount();
+
+		Physics body = m_pUser.GetPhysics();
+		if (body)
+			body.SetVelocity(vector.Zero);
+
+		if (m_bDebug)
+			Print(string.Format("[RW GRAPPLE SAFE] Approach ended (%1). Controlled descent started.", reason));
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Move vertically at a low speed until feet are near walkable ground.
+	//! Only use the server's character physics here; never teleport into a
+	//! wall or forcibly adjust other players' health/damage state.
+	protected void UpdateSafeDescent(float timeSlice)
+	{
+		if (!m_pUser || !GetGame())
+			return;
+
+		Physics body = m_pUser.GetPhysics();
+		BaseWorld world = GetGame().GetWorld();
+		if (!body || !world)
+		{
+			StopPull(false);
+			return;
+		}
+
+		vector pos = m_pUser.GetOrigin();
+		TraceParam down = new TraceParam();
+		down.Start = pos + vector.Up * 0.45;
+		down.End = pos - vector.Up * 2.2;
+		down.Flags = TraceFlags.WORLD | TraceFlags.ENTS;
+		down.LayerMask = EPhysicsLayerPresets.Projectile;
+		array<IEntity> excluded = {};
+		excluded.Insert(m_pUser);
+		excluded.Insert(GetOwner());
+		down.ExcludeArray = excluded;
+
+		float fraction = world.TraceMove(down, null);
+		if (fraction < 1.0 && down.TraceNorm[1] > 0.55)
+		{
+			vector surface = down.Start + (down.End - down.Start) * fraction;
+			float footGap = pos[1] - surface[1];
+			if (footGap <= 0.55 && footGap >= -0.25)
+			{
+				if (m_bDebug)
+					Print(string.Format("[RW GRAPPLE SAFE] Landed, foot gap=%1", footGap));
+				StopPull(false);
+				return;
+			}
+		}
+
+		int descentMs = System.GetTickCount() - m_iRWSafeDescentStartMs;
+		if (descentMs > (int)(Math.Max(m_fSafeDescentTimeout, 10.0) * 1000.0))
+		{
+			if (m_bDebug)
+				Print("[RW GRAPPLE SAFE] Controlled descent timed out; control released.", LogLevel.WARNING);
+			StopPull(false);
+			return;
+		}
+
+		float safeFallSpeed = Math.Clamp(m_fSafeDescentSpeed, 1.0, 4.0);
+		if (m_bScriptedPositionFallback)
+		{
+			// Keep scripted-position fallback explicit and conservative.
+			// Never move below the detected floor within this frame.
+			float stepDown = safeFallSpeed * Math.Clamp(timeSlice, 0.0, 0.05);
+			if (fraction < 1.0 && down.TraceNorm[1] > 0.55)
+			{
+				vector hit = down.Start + (down.End - down.Start) * fraction;
+				stepDown = Math.Min(stepDown, Math.Max(0.0, pos[1] - hit[1] - 0.1));
+			}
+			m_pUser.SetOrigin(pos - vector.Up * stepDown);
+		}
+		else
+		{
+			body.SetVelocity(vector.Up * -safeFallSpeed);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Check near future capsule clearance with three parallel forward rays.
+	//! Unlike the old single chest ray, these detect ledges at head/foot height.
+	protected bool IsApproachBlocked(BaseWorld world, vector origin, vector travelDir, float ahead)
+	{
+		array<IEntity> ignored = {};
+		ignored.Insert(m_pUser);
+		ignored.Insert(GetOwner());
+
+		for (int i = 0; i < 3; i++)
+		{
+			float h = 0.35;
+			if (i == 1)
+				h = 1.1;
+			else if (i == 2)
+				h = 1.75;
+
+			TraceParam test = new TraceParam();
+			test.Start = origin + vector.Up * h;
+			test.End = test.Start + travelDir * ahead;
+			test.Flags = TraceFlags.WORLD | TraceFlags.ENTS;
+			test.LayerMask = EPhysicsLayerPresets.Projectile;
+			test.ExcludeArray = ignored;
+			if (world.TraceMove(test, null) < 1.0)
+				return true;
+		}
+		return false;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -561,10 +701,18 @@ class RW_GrapplingHookComponent : ScriptComponent
 			return;
 		}
 
+		// Once the grapple has finished advancing, continue applying gentle
+		// downward speed until the character is on a walkable surface.
+		if (m_bRWSafeDescending)
+		{
+			UpdateSafeDescent(timeSlice);
+			return;
+		}
+
 		int elapsed = System.GetTickCount() - m_iStartMs;
 		if (elapsed > (int)(Math.Max(m_fMaxDuration, 0.5) * 1000.0))
 		{
-			StopPull(false);
+			BeginSafeDescent("pull timeout");
 			return;
 		}
 
@@ -587,34 +735,41 @@ class RW_GrapplingHookComponent : ScriptComponent
 		vector toward = m_vAnchor - chest;
 		float remaining = toward.Length();
 
-		if (remaining <= Math.Max(m_fStopDistance, 0.75))
+		// The anchor is a WALL CONTACT POINT, not a safe place for a human
+		// capsule. Hold off by several metres (including the inherited stop
+		// distance) and avoid slamming into the object at full travel speed.
+		float stopDistance = Math.Max(Math.Clamp(m_fSafeArrivalDistance, 3.0, 10.0), Math.Max(m_fStopDistance, 0.75));
+		if (remaining <= stopDistance)
 		{
-			StopPull(false);
+			BeginSafeDescent("safe stand-off distance");
 			return;
 		}
 
 		toward.Normalize();
 		float speed = Math.Clamp(m_fPullSpeed, 3.0, 40.0);
-		float dt = Math.Clamp(timeSlice, 0.0, 0.1);
-		vector step = toward * Math.Min(speed * dt, remaining);
-
-		// Check the immediate path, not the entire rope. Stop before striking
-		// collision so the grappler doesn't phase through a wall or rooftop.
-		TraceParam clearance = new TraceParam();
-		clearance.Start = chest;
-		clearance.End = chest + step;
-		clearance.Flags = TraceFlags.WORLD | TraceFlags.ENTS;
-		clearance.LayerMask = EPhysicsLayerPresets.Projectile;
-		array<IEntity> ignored = {};
-		ignored.Insert(m_pUser);
-		ignored.Insert(GetOwner());
-		clearance.ExcludeArray = ignored;
-
-		if (world.TraceMove(clearance, null) < 0.95)
+		float brakeAt = Math.Max(Math.Clamp(m_fBrakeStartDistance, 5.0, 40.0), stopDistance + 2.0);
+		if (remaining < brakeAt)
 		{
-			if (m_bDebug)
-				Print("[RW GRAPPLE] Pull path blocked by nearby collision", LogLevel.WARNING);
-			StopPull(false);
+			// Continuous slowdown prevents the engine character controller
+			// from having to absorb an 18m/s collision impulse at the wall.
+			float allowed = Math.Max(1.5, (remaining - stopDistance) * 1.6);
+			speed = Math.Min(speed, allowed);
+		}
+
+		float dt = Math.Clamp(timeSlice, 0.0, 0.1);
+		if (dt <= 0.0001)
+			return;
+		// Do not ask the body to cross the final stand-off zone this frame.
+		speed = Math.Min(speed, Math.Max(0.25, (remaining - stopDistance) / dt));
+		vector step = toward * speed * dt;
+
+		// Keep an advance safety buffer and inspect feet, chest and head.
+		// This intentionally cancels the high-speed approach before any one
+		// of those points would meet the wall or an overhanging obstacle.
+		float lookAhead = Math.Min(remaining, Math.Max(1.4, step.Length() + 1.1));
+		if (IsApproachBlocked(world, position, toward, lookAhead))
+		{
+			BeginSafeDescent("wall/head/feet clearance");
 			return;
 		}
 
