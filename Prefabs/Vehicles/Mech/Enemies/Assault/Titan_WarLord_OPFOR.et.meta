@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Gravemarch_Tempest_OPFOR.et"
+ Name "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

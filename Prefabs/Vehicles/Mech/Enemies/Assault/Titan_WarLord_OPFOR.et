@@ -55,7 +55,7 @@ Vehicle {
      m_iClass 1
      m_sAimMountId "SENTINEL_LAS"
      m_bBindExistingAimMount 1
-     m_iDefaultModuleId 15
+     m_iDefaultModuleId 1
      m_Point PointInfo "{E60F00000000000F}" {
       Offset 11.1385 6.5103 14.8706
      }
@@ -66,7 +66,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000010}" {
      m_sName "SHOULDER"
      m_iClass 2
-     m_iDefaultModuleId 0
+     m_iDefaultModuleId 5
      m_Point PointInfo "{E60F000000000011}" {
       Offset -3.6187 21.6033 2.5351
      }
@@ -77,7 +77,8 @@ Vehicle {
      m_sName "RIGHT_ARM"
      m_iClass 1
      m_sAimMountId "RIGHT_ARM_MOUNT"
-     m_iDefaultModuleId 15
+     m_bBindExistingAimMount 1
+     m_iDefaultModuleId 1
      m_Point PointInfo "{E60F000000000013}" {
       Offset -11.7289 5.8818 15.0028
      }
@@ -106,16 +107,6 @@ Vehicle {
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
-    }
-    BFA_MechHardpointDefinition "{E60F000000000018}" {
-     m_sName "CHEST_GUN"
-     m_iClass 1
-     m_iDefaultModuleId 101
-     m_Point PointInfo "{E60F000000000019}" {
-      Offset -0.2053 15.002 10.0201
-     }
-     m_sControlStation "DRIVER"
-     m_iWeaponGroup 1
     }
     BFA_MechHardpointDefinition "{E60F00000000001A}" {
      m_sName "RACK_OUTER_L"
@@ -160,7 +151,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000022}" {
      m_sName "RACK_TOP_L"
      m_iClass 3
-     m_iDefaultModuleId 0
+     m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000023}" {
       Offset 0.74 14.4258 8.6535
      }
@@ -170,7 +161,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000024}" {
      m_sName "RACK_TOP_R"
      m_iClass 3
-     m_iDefaultModuleId 0
+     m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000025}" {
       Offset -11.9318 7.1945 14.5388
      }
@@ -178,6 +169,78 @@ Vehicle {
      m_iWeaponGroup 3
     }
    }
+    BFA_MechHardpointDefinition "{E60F0000000000A0}" {
+     m_sName "AA_TURRET_LEFT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000A1}" {
+      Offset -7.4 21.75 1.2
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000A2}" {
+     m_sName "AA_TURRET_RIGHT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000A3}" {
+      Offset 7.4 21.75 1.2
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000A4}" {
+     m_sName "STOMP_PULSE"
+     m_iClass 4
+     m_iDefaultModuleId 1201
+     m_Point PointInfo "{E60F0000000000A5}" {
+      Offset 0 -16 -1
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 8
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000AE}" {
+     m_sName "AA_REAR_LEFT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000AF}" {
+      Offset -7.35 21.5 -6.8
+      Angles 0 180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B0}" {
+     m_sName "AA_REAR_RIGHT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000B1}" {
+      Offset 7.35 21.5 -6.8
+      Angles 0 180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B2}" {
+     m_sName "POINT_DEFENSE_LEFT"
+     m_iClass 4
+     m_iDefaultModuleId 1202
+     m_Point PointInfo "{E60F0000000000B3}" {
+      Offset -9 8.5 3
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 4
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B4}" {
+     m_sName "POINT_DEFENSE_RIGHT"
+     m_iClass 4
+     m_iDefaultModuleId 1202
+     m_Point PointInfo "{E60F0000000000B5}" {
+      Offset 9 8.5 3
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 4
+    }
    m_aModules {
     BFA_MechModuleDefinition "{E60F000000000026}" {
      m_iId 1
@@ -531,6 +594,33 @@ Vehicle {
      m_fSwapTime 3
     }
    }
+    BFA_MechModuleDefinition "{E60F0000000000A6}" {
+     m_iId 1200
+     m_sLabel "Warlord Valk Hunter Flak"
+     m_iClass 2
+     m_sWeaponModuleId "WARLORD_AA"
+     m_sPrefab "{D600202610230101}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_AA_Flak.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
+    BFA_MechModuleDefinition "{E60F0000000000A7}" {
+     m_iId 1201
+     m_sLabel "Titan Stomp Pulse"
+     m_iClass 4
+     m_sWeaponModuleId "FORCE_PULSE"
+     m_sPrefab "{D600202610230201}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_Stomp_Pulse.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
+    BFA_MechModuleDefinition "{E60F0000000000B6}" {
+     m_iId 1202
+     m_sLabel "Warlord Point Defense"
+     m_iClass 4
+     m_sWeaponModuleId "POINT_DEFENSE"
+     m_sPrefab "{D600202610230301}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_Point_Defense.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
    m_sSwapStation "DRIVER"
    m_bSwapRequiresStationary 1
    m_fSwapMaxSpeed 0.5
@@ -561,6 +651,40 @@ Vehicle {
    m_fGroundFallSpeed 4
    m_fGroundFollowGain 4
   }
+  CGS_MechShieldComponent "{E60F0000000000AB}" {
+   m_fMaxShield 30000
+   m_fRegenPerSecond 750
+   m_fRegenDelay 7
+   m_fBrokenDelay 20
+   m_fReactivateAt 0.4
+   m_fBleedThrough 0.03
+   m_fKineticCost 1
+   m_fExplosiveCost 1.2
+   m_fEnergyCost 1.1
+   m_fEmpCost 3
+   m_fOtherCost 1.15
+   m_Center PointInfo "{E60F0000000000AC}" {
+    Offset 0 13 0
+   }
+   m_fRadius 35
+   m_bBlockBeams 1
+   m_sBubblePrefab "{198F9942AAB5B87C}Prefabs/Vehicles/Mech/Shield/CGS_Mech_Shield_Bubble.et"
+   m_bBubbleAlwaysVisible 0
+   m_fBubbleFlashTime 0.85
+  }
+  CGS_MechBossComponent "{E60F0000000000AD}" {
+   m_fHeavyPerSecond 2200
+   m_fSmallArmsPerSecond 60
+   m_fPartHeavyPerSecond 850
+   m_fPartSmallArmsPerSecond 30
+   m_fOverCapMultiplier 0.1
+   m_fSmallArmsOverCap 0
+   m_fHeavyHitMin 120
+   m_aShieldPhases {
+    0.66 0.33
+   }
+   m_bDebug 0
+  }
   BFA_MechWeaponComponent "{E60F000000000050}" {
   }
   BFA_MechWeaponMountComponent "{E60F000000000051}" {
@@ -570,10 +694,10 @@ Vehicle {
      m_sSlotName "Las_Cannon_Arm"
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
-     m_fYawMin -70
-     m_fYawMax 70
-     m_fPitchMin -20
-     m_fPitchMax 45
+     m_fYawMin -125
+     m_fYawMax 125
+     m_fPitchMin -70
+     m_fPitchMax 85
      m_bInvertPitch 0
      m_fConvergenceDistance 1000
     }
@@ -582,10 +706,10 @@ Vehicle {
      m_sSlotName "Right_Arm_Mount"
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
-     m_fYawMin -70
-     m_fYawMax 70
-     m_fPitchMin -20
-     m_fPitchMax 45
+     m_fYawMin -125
+     m_fYawMax 125
+     m_fPitchMin -70
+     m_fPitchMax 85
      m_bInvertPitch 0
      m_fConvergenceDistance 1000
     }
@@ -624,8 +748,8 @@ Vehicle {
   CGS_MechDeathComponent "{E60F000000000058}" {
   }
   CGS_MechHeatComponent "{E60F000000000059}" {
-   m_fMaxHeat 520
-   m_fCoolingPerSecond 30
+   m_fMaxHeat 1850
+   m_fCoolingPerSecond 105
   }
   CGS_TorsoTwistComponent "{E60F00000000005A}" {
    m_aTwistSlots {
@@ -655,10 +779,10 @@ Vehicle {
    }
   }
   RW_MechFrameComponent "{E60F000000000061}" {
-   m_sFrameName "Gravemarch - Tempest"
+   m_sFrameName "Titan Warlord - Siege Overlord"
    m_eWeightClass ASSAULT
-   m_fMaxTons 100
-   m_fFrameTons 56
+   m_fMaxTons 250
+   m_fFrameTons 170
    m_aHardpoints {
     RW_FrameHardpoint "{E60F000000000062}" {
      m_sHardpoint "ARM"
@@ -667,8 +791,8 @@ Vehicle {
     }
     RW_FrameHardpoint "{E60F000000000063}" {
      m_sHardpoint "SHOULDER"
-     m_eType SUPPORT
-     m_eMaxSize SMALL
+     m_eType ANY
+     m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F000000000064}" {
      m_sHardpoint "RIGHT_ARM"
@@ -677,52 +801,82 @@ Vehicle {
     }
     RW_FrameHardpoint "{E60F000000000065}" {
      m_sHardpoint "BACK_L"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F000000000066}" {
      m_sHardpoint "BACK_R"
-     m_eType MISSILE
-     m_eMaxSize LARGE
-    }
-    RW_FrameHardpoint "{E60F000000000067}" {
-     m_sHardpoint "CHEST_GUN"
-     m_eType BALLISTIC
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F000000000068}" {
      m_sHardpoint "RACK_OUTER_L"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F000000000069}" {
      m_sHardpoint "RACK_INNER_L"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F00000000006A}" {
      m_sHardpoint "RACK_INNER_R"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F00000000006B}" {
      m_sHardpoint "RACK_OUTER_R"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F00000000006C}" {
      m_sHardpoint "RACK_TOP_L"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
     RW_FrameHardpoint "{E60F00000000006D}" {
      m_sHardpoint "RACK_TOP_R"
-     m_eType MISSILE
+     m_eType ANY
      m_eMaxSize LARGE
     }
    }
-   m_iStartExtraHeatsinks 0
-   m_iMaxExtraHeatsinks 24
+    RW_FrameHardpoint "{E60F0000000000A8}" {
+     m_sHardpoint "AA_TURRET_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000A9}" {
+     m_sHardpoint "AA_TURRET_RIGHT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000AA}" {
+     m_sHardpoint "STOMP_PULSE"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B7}" {
+     m_sHardpoint "AA_REAR_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B8}" {
+     m_sHardpoint "AA_REAR_RIGHT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B9}" {
+     m_sHardpoint "POINT_DEFENSE_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000BA}" {
+     m_sHardpoint "POINT_DEFENSE_RIGHT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+   m_iStartExtraHeatsinks 24
+   m_iMaxExtraHeatsinks 48
    m_bSwapOnlyAtMechBay 1
   }
   RigidBody "{E60F00000000006E}" {
@@ -838,14 +992,14 @@ Vehicle {
    "Additional hit zones" {
     BFA_MechHitZone Hull {
      HZDefault 1
-     MaxHealth 6800
+     MaxHealth 40000
      DamageReduction 2
      DamageThreshold 1
      "Melee multiplier" 0.01
-     "Kinetic multiplier" 0.1
-     "Fragmentation multiplier" 0.05
-     "Explosive multiplier" 1
-     "Incendiary multiplier" 0.7
+     "Kinetic multiplier" 0.05
+     "Fragmentation multiplier" 0.03
+     "Explosive multiplier" 0.65
+     "Incendiary multiplier" 0.35
      "DamageState threshold" {
       0.7 0.4 0.2
      }
@@ -915,16 +1069,6 @@ Vehicle {
      Offset -12.6876 4.2021 -0.4025
      Angles 5.1116 2.2621 23.9108
      Prefab "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon_Arm.et"
-    }
-    EntitySlotInfo Exhust {
-     Offset 7.1191 21.9053 -0.7401
-     Angles 0 0 0
-     Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_top_Cannon_Right.et"
-    }
-    EntitySlotInfo Exhust2 {
-     Offset -7.4794 21.108 -0.7401
-     Angles 0 0 0
-     Prefab "{5DC496963E915EFB}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Module_S.et"
     }
     EntitySlotInfo Exta {
      Offset -0.0105 -0.9679 0.3266
