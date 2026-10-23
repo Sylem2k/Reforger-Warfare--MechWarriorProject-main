@@ -58,7 +58,7 @@ Vehicle {
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{E50300000000000E}" {
-      Offset -1.4473 0.652 -0.4025
+      Offset -1.8296 0.1426 -0.4025
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -92,7 +92,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{E503000000000014}" {
-      Offset -0.6638 0.7708 -1
+      Offset -0.7796 1.4454 -1
       Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
@@ -548,7 +548,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E50300000000004C}" {
-    Offset 0 -4.0206 -0.163
+    Offset 0 -3.4681 -0.163
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -1068,7 +1068,7 @@ Vehicle {
   Hierarchy "{E503000000000098}" {
   }
  }
- coords 62.679 8.968 62.033
- scale 1.7
+ coords 78.533 9.23 59.019
+ scale 1.3
  m_eVehicleType VEHICLE
 }

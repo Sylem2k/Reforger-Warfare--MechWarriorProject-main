@@ -552,7 +552,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E50400000000004E}" {
-    Offset 0 -5.5682 -0.8832
+    Offset 0 -4.2871 -0.8832
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -1067,7 +1067,7 @@ Vehicle {
   Hierarchy "{E50400000000009B}" {
   }
  }
- coords 55.69 10.74 65.223
- scale 1.7
+ coords 71.779 8.918 59.34
+ scale 1.3
  m_eVehicleType VEHICLE
 }

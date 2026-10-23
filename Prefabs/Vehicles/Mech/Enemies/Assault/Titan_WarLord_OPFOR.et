@@ -15,19 +15,6 @@ Vehicle {
   }
   AIKnowledgeComponent "{E60F000000000006}" {
   }
-  CGS_MechBrainComponent "{E60F00000000009D}" {
-   m_bEnabled 1
-   m_bDrive 1
-   m_bGunners 1
-   m_eMode 2
-   m_sFaction "USSR"
-   m_eFireMode 0
-   m_bFollowGroupMode 0
-   m_fPatrolRadius 95
-   m_fPatrolPause 4
-   m_fHuntRadius 730
-   m_fLeash 913
-  }
   BFA_MechAICrewComponent "{E60F000000000007}" {
   }
   BFA_MechAimComponent "{E60F000000000008}" {
@@ -70,7 +57,7 @@ Vehicle {
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 15
      m_Point PointInfo "{E60F00000000000F}" {
-      Offset -0.8961 0.4898 -0.4025
+      Offset 11.1385 6.5103 14.8706
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -81,7 +68,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 0
      m_Point PointInfo "{E60F000000000011}" {
-      Offset 0.3661 1.034 0
+      Offset -3.6187 21.6033 2.5351
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 2
@@ -92,7 +79,7 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_iDefaultModuleId 15
      m_Point PointInfo "{E60F000000000013}" {
-      Offset 0.882 0.4179 -0.4025
+      Offset -11.7289 5.8818 15.0028
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -103,8 +90,8 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 9
      m_Point PointInfo "{E60F000000000015}" {
-      Offset -0.45 1.2994 -1
-      Angles 0 90 0
+      Offset 3.148 20.348 3.2444
+      Angles 0 0 0
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -114,7 +101,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 9
      m_Point PointInfo "{E60F000000000017}" {
-      Offset 0.45 1.2994 -1
+      Offset -3.6561 22.264 3.1327
       Angles 0 -0.375 0
      }
      m_sControlStation "DRIVER"
@@ -125,7 +112,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 101
      m_Point PointInfo "{E60F000000000019}" {
-      Offset 0 1.38 0.45
+      Offset -0.2053 15.002 10.0201
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -135,7 +122,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F00000000001B}" {
-      Offset -1.85 1.58 -1.2
+      Offset 2.8063 22.123 5.6138
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -145,7 +132,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F00000000001D}" {
-      Offset -1.05 1.62 -1.25
+      Offset -1.05 14.5117 8.7268
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -155,7 +142,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F00000000001F}" {
-      Offset 1.05 1.62 -1.25
+      Offset -12.1396 6.745 15.1885
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -165,7 +152,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000021}" {
-      Offset 1.85 1.58 -1.2
+      Offset 11.2251 5.2887 14.6656
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -175,7 +162,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{E60F000000000023}" {
-      Offset -0.75 2.03 -1.3
+      Offset 0.74 14.4258 8.6535
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -185,7 +172,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{E60F000000000025}" {
-      Offset 0.75 2.03 -1.3
+      Offset -11.9318 7.1945 14.5388
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
@@ -564,7 +551,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E60F00000000004F}" {
-    Offset 0 -3.4558 -0.8832
+    Offset 0 -16.5867 -0.8832
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -621,6 +608,19 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E60F000000000057}" {
   }
+  CGS_MechBrainComponent "{E60F00000000009D}" {
+   m_bEnabled 1
+   m_bDrive 1
+   m_bGunners 1
+   m_eMode HUNT
+   m_sFaction "USSR"
+   m_eFireMode FIRE_AT_WILL
+   m_bFollowGroupMode 0
+   m_fPatrolRadius 95
+   m_fPatrolPause 4
+   m_fHuntRadius 730
+   m_fLeash 913
+  }
   CGS_MechDeathComponent "{E60F000000000058}" {
   }
   CGS_MechHeatComponent "{E60F000000000059}" {
@@ -642,7 +642,7 @@ Vehicle {
   ControllersManagerComponent "{E60F00000000005D}" {
   }
   MeshObject "{E60F00000000005E}" {
-   Object "{8EB3D751DE396B39}Common/Models/Mech Body/Mech_Med_Body.xob"
+   Object "{528115F7F8BA3093}Common/Models/Titan_War_Lord/War_Lord_Body.xob"
    Materials {
     MaterialAssignClass "{E60F00000000005F}" {
      SourceMaterial "Material_Sentinel_Body"
@@ -891,39 +891,40 @@ Vehicle {
   SlotManagerComponent "{E60F00000000008A}" {
    Slots {
     EntitySlotInfo Leg_R1 {
-     Offset 0.8214 -0.8656 0.3085
+     Offset 2.7706 -15.2045 0.3085
      MergePhysics 0
-     Prefab "{ECC40896C6FE4B77}Prefabs/Vehicles/Mech/Mech_Parts/Med_Mech_Leg_Right.et"
+     Prefab "{6BB422555F06DDAD}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -0.7886 -0.7234 0.3735
+     Offset -3.6375 3.0121 0.3735
      MergePhysics 0
-     Prefab "{ECC40896C6FE4B77}Prefabs/Vehicles/Mech/Mech_Parts/Med_Mech_Leg_Right.et"
+     Prefab "{E95CFCAA70835149}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
-     Offset -0.0036 -0.1256 -0.2335
+     Offset -0.4067 12.3143 7.6684
      Angles 0 2.7371 0
-     Prefab "{61A846D7093FF826}Prefabs/Vehicles/Mech/Mech_Parts/Hip.et"
+     Prefab "{3BC88C1B5DE393A2}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Head.et"
     }
     EntitySlotInfo Right_Arm_Mount {
-     Offset 0.882 0.4179 -0.4025
-     Prefab "{284CF67ECBD5978E}Prefabs/Vehicles/Mech/Mech_Parts/Right_Arm_Mount.et"
+     Offset 10.9582 4.4392 -0.4025
+     Prefab "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon_Arm.et"
     }
     EntitySlotInfo Las_Cannon_Arm {
-     Offset -0.8961 0.4898 -0.4025
-     Prefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Las_Cannon_Arm.et"
+     Offset -12.6876 4.2021 -0.4025
+     Angles 5.1116 2.2621 23.9108
+     Prefab "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon_Arm.et"
     }
     EntitySlotInfo Exhust {
-     Offset -0.2859 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
+     Offset 7.1191 21.9053 -0.7401
+     Angles 0 0 0
+     Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_top_Cannon_Right.et"
     }
     EntitySlotInfo Exhust2 {
-     Offset 0.2836 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
+     Offset -7.4794 21.108 -0.7401
+     Angles 0 0 0
+     Prefab "{5DC496963E915EFB}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Module_S.et"
     }
     EntitySlotInfo Exta {
      Offset -0.0105 -0.9679 0.3266
@@ -1021,6 +1022,6 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 90.602 4.73 66.521
+ coords 54.551 21.905 82.564
  m_eVehicleType VEHICLE
 }
