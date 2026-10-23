@@ -1,6 +1,8 @@
-GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.et" {
- ID "D600202610230101"
+GenericEntity {
+ ID "A600202610230101"
  components {
+  SignalsManagerComponent "{A600202610230102}" {
+  }
   CGS_AntiAirModuleComponent "{D600202610230102}" {
    m_sModuleId "WARLORD_AA"
    m_sDisplayName "Warlord Valk Hunter Flak"
@@ -36,9 +38,17 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_fShotsPerMinute 360
    m_iMagazineSize 0
    m_bDebug 0
+   m_FX BFA_MechWeaponFX "{A600202610230103}" {
+    m_sMuzzleParticle "{4DEF02F09203DF08}Particles/Weapon/Muzzle_Base_Medium_01.ptc"
+    m_iTracerEvery 1
+   }
   }
   MeshObject "{D600202610230103}" {
    Object "{3F743FE45DE3354E}Common/Models/Titan_War_Lord/War_Lord_Shoulder_Gun.xob"
+  }
+  RplComponent "{A600202610230104}" {
+  }
+  Hierarchy "{A600202610230105}" {
   }
  }
 }
