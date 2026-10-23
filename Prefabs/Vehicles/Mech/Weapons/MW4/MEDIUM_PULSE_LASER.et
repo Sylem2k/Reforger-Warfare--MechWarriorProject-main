@@ -24,6 +24,9 @@ GenericEntity {
     m_fLinger 0.18
     m_sMuzzleParticle "{4DEF02F09203DF08}Particles/Weapon/Muzzle_Base_Medium_01.ptc"
     m_sSoundProject "{25FCE4141ECBD633}Sounds/Weapons/Machineguns/UK59/LasCannon.acp"
+    m_sFireSoundEvent "SOUND_SHOT"
+    m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
+    m_sImpactSoundEvent "SOUND_HIT"
     m_iTracerEvery 1
    }
    m_fHeatPerShot 5
