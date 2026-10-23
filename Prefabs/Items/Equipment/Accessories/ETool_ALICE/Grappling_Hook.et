@@ -22,26 +22,5 @@ GenericEntity : "{44FC3E59DFA001A4}Prefabs/Items/Core/ETool_base.et" {
    m_bScriptedPositionFallback 0
    m_bDebug 1
   }
-  ActionsManagerComponent "{BFF2026102200102}" {
-   ActionContexts {
-    UserActionContext "{BFF2026102200103}" {
-     ContextName "default"
-     Position PointInfo "{BFF2026102200104}" {
-     }
-     Radius 2
-    }
-   }
-   additionalActions {
-    RW_GrapplingHookAction "{BFF2026102200105}" {
-     ParentContextList {
-      "default"
-     }
-     UIInfo UIInfo "{BFF2026102200106}" {
-      Name "GRAPPLE: FIRE / RELEASE (TEST)"
-     }
-     VisibilityRange 2
-    }
-   }
-  }
  }
 }
