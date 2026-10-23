@@ -3,6 +3,8 @@
 //!
 //! M9-derived guns keep their default ADS (right mouse) and equip/pickup behavior.
 //! The normal CharacterFire input (left mouse) is read on the local player controller,
+//! A press is a held-value rising edge; holding down left mouse cannot toggle
+//! the grapple twice. Release, then click again to cancel.
 //! regardless of whether the firearm successfully fires a projectile.
 //! The controller has player-owned RPC authority and resolves the EQUIPPED
 //! RW_GrapplingHookComponent again on the server. No weapon-entity RPC ownership
@@ -53,10 +55,13 @@ modded class SCR_PlayerController
 		if (!inputs)
 			return;
 
-		// Track held state every frame. One left-click sends one request.
-		// CharacterFire is the game's normal shoot input, not a new binding.
+		// IMPORTANT: GetActionTriggered("CharacterFire") can report true on
+		// successive update frames while a button is held. Combining it with
+		// the edge test makes one click immediately FIRE then RELEASE.
+		// Use the actual held input VALUE and send exactly one command per
+		// down-edge. Another command requires a physical release first.
 		bool fireDown = inputs.GetActionValue("CharacterFire") > 0.5;
-		bool justPressed = inputs.GetActionTriggered("CharacterFire") || (fireDown && !m_bRWGrappleFireWasDown);
+		bool justPressed = fireDown && !m_bRWGrappleFireWasDown;
 		m_bRWGrappleFireWasDown = fireDown;
 
 		if (!justPressed)
