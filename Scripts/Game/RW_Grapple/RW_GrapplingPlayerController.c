@@ -34,7 +34,10 @@ modded class SCR_PlayerController
 		if (!m_bRWGrappleUpdateLogged)
 		{
 			m_bRWGrappleUpdateLogged = true;
-			Print(string.Format("[RW GRAPPLE DIAG] PlayerController OnUpdate; server=%1 local=%2", Replication.IsServer(), GetGame() && GetGame().GetPlayerController() == this));
+			bool isLocalController = false;
+			if (GetGame())
+				isLocalController = GetGame().GetPlayerController() == this;
+			Print(string.Format("[RW GRAPPLE DIAG] PlayerController OnUpdate; server=%1 local=%2", Replication.IsServer(), isLocalController));
 		}
 
 		if (!GetGame() || GetGame().GetPlayerController() != this)
