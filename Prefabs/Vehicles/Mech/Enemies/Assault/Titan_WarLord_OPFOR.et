@@ -199,6 +199,48 @@ Vehicle {
      m_sControlStation "DRIVER"
      m_iWeaponGroup 8
     }
+    BFA_MechHardpointDefinition "{E60F0000000000AE}" {
+     m_sName "AA_REAR_LEFT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000AF}" {
+      Offset -7.35 21.5 -6.8
+      Angles 0 180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B0}" {
+     m_sName "AA_REAR_RIGHT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000B1}" {
+      Offset 7.35 21.5 -6.8
+      Angles 0 180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B2}" {
+     m_sName "POINT_DEFENSE_LEFT"
+     m_iClass 4
+     m_iDefaultModuleId 1202
+     m_Point PointInfo "{E60F0000000000B3}" {
+      Offset -9 8.5 3
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 4
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B4}" {
+     m_sName "POINT_DEFENSE_RIGHT"
+     m_iClass 4
+     m_iDefaultModuleId 1202
+     m_Point PointInfo "{E60F0000000000B5}" {
+      Offset 9 8.5 3
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 4
+    }
    m_aModules {
     BFA_MechModuleDefinition "{E60F000000000026}" {
      m_iId 1
@@ -570,6 +612,15 @@ Vehicle {
      m_fWeightTons 0
      m_fSwapTime 10
     }
+    BFA_MechModuleDefinition "{E60F0000000000B6}" {
+     m_iId 1202
+     m_sLabel "Warlord Point Defense"
+     m_iClass 4
+     m_sWeaponModuleId "POINT_DEFENSE"
+     m_sPrefab "{D600202610230301}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_Point_Defense.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
    m_sSwapStation "DRIVER"
    m_bSwapRequiresStationary 1
    m_fSwapMaxSpeed 0.5
@@ -801,6 +852,26 @@ Vehicle {
     }
     RW_FrameHardpoint "{E60F0000000000AA}" {
      m_sHardpoint "STOMP_PULSE"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B7}" {
+     m_sHardpoint "AA_REAR_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B8}" {
+     m_sHardpoint "AA_REAR_RIGHT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B9}" {
+     m_sHardpoint "POINT_DEFENSE_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000BA}" {
+     m_sHardpoint "POINT_DEFENSE_RIGHT"
      m_eType ANY
      m_eMaxSize LARGE
     }
