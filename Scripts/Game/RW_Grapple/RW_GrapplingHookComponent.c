@@ -178,6 +178,14 @@ class RW_GrapplingHookComponent : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
+	protected void DeleteShotProjectile(IEntity projectileEntity)
+	{
+		if (!Replication.IsServer() || !projectileEntity)
+			return;
+		SCR_EntityHelper.DeleteEntityAndChildren(projectileEntity);
+	}
+
+	//------------------------------------------------------------------------------------------------
 	protected void ProcessPistolShot(IEntity projectileEntity)
 	{
 		if (!m_bUseWeaponTrigger || !Replication.IsServer())
@@ -187,10 +195,17 @@ class RW_GrapplingHookComponent : ScriptComponent
 		if (!user)
 			return;
 
-		// Remove bullet whenever possible. The player event can be delayed
-		// so normal M9 rounds must NOT be used around other players for testing.
-		if (m_bDeleteProjectile && projectileEntity)
-			SCR_EntityHelper.DeleteEntityAndChildren(projectileEntity);
+		// Never delete an engine projectile from inside its own OnFired
+		// callback: other muzzle listeners may still be using the same entity.
+		// Postpone the deletion until the callback has returned.
+		// This is best effort ONLY. A zero-damage test round is still required
+		// before allowing this weapon to shoot around players.
+		if (m_bDeleteProjectile && projectileEntity && GetGame())
+		{
+			ScriptCallQueue queue = GetGame().GetCallqueue();
+			if (queue)
+				queue.CallLater(DeleteShotProjectile, 1, false, projectileEntity);
+		}
 
 		int now = System.GetTickCount();
 		if (now - m_iLastPistolShotMs < 100)
