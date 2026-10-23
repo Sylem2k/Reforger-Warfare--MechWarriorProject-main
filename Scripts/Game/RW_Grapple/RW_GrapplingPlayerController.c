@@ -17,6 +17,7 @@ modded class SCR_PlayerController
 	protected bool m_bRWGrappleFireWasDown;
 	protected bool m_bRWGrappleControllerStartupLogged;
 	protected bool m_bRWGrappleUpdateLogged;
+	protected int m_iRWGrappleLastCommandMs;
 
 	//------------------------------------------------------------------------------------------------
 	//! Logged at controller initialization, even before play input begins.
@@ -67,6 +68,12 @@ modded class SCR_PlayerController
 		if (!justPressed)
 			return;
 
+		// Suppress bounce/rapid-fire action pulses in case an input context
+		// briefly resets the held value across adjacent frames.
+		int nowMs = System.GetTickCount();
+		if (m_iRWGrappleLastCommandMs > 0 && nowMs - m_iRWGrappleLastCommandMs < 250)
+			return;
+
 		Print("[RW GRAPPLE DIAG] CharacterFire press observed before weapon checks");
 
 		ChimeraCharacter user = ChimeraCharacter.Cast(GetControlledEntity());
@@ -113,6 +120,7 @@ modded class SCR_PlayerController
 		direction.Normalize();
 
 		Print(string.Format("[RW GRAPPLE CTRL] Local FIRE input detected. Equipped=%1", weapon.GetOwner()));
+		m_iRWGrappleLastCommandMs = nowMs;
 
 		if (Replication.IsServer())
 		{
