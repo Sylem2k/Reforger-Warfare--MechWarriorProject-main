@@ -16,10 +16,10 @@ Vehicle {
   AIKnowledgeComponent "{E60F000000000006}" {
   }
   BFA_MechAICrewComponent "{E60F000000000007}" {
-   m_fEngageRange 1200
-   m_fAimSettleTime 1.6
-   m_fBurstTime 1.8
-   m_fBurstPause 9
+   m_fEngageRange 1100
+   m_fAimSettleTime 0.9
+   m_fBurstTime 2.5
+   m_fBurstPause 5.5
    m_bFireAllGroups 1
   }
   BFA_MechAimComponent "{E60F000000000008}" {
@@ -110,7 +110,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F00000000001A}" {
      m_sName "RACK_OUTER_L"
      m_iClass 3
-     m_iDefaultModuleId 10
+     m_iDefaultModuleId 1210
      m_Point PointInfo "{E60F00000000001B}" {
       Offset 6.4765 22.123 1.7533
      }
@@ -140,7 +140,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F000000000020}" {
      m_sName "RACK_OUTER_R"
      m_iClass 3
-     m_iDefaultModuleId 10
+     m_iDefaultModuleId 1210
      m_Point PointInfo "{E60F000000000021}" {
       Offset 11.2251 5.2887 13.7287
      }
@@ -241,6 +241,15 @@ Vehicle {
     }
    }
    m_aModules {
+    BFA_MechModuleDefinition "{E9C1000000000210}" {
+     m_iId 1210
+     m_sLabel "Warlord Siege Autocannon AC/10"
+     m_iClass 3
+     m_sWeaponModuleId "WARLORD_BOSS_AC10"
+     m_sPrefab "{E9C100000000011A}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Boss_AC10.et"
+     m_fWeightTons 0
+     m_fSwapTime 3
+    }
     BFA_MechModuleDefinition "{A600202610230311}" {
      m_iId 1203
      m_sLabel "Warlord Autonomous Ground Laser"
@@ -327,7 +336,7 @@ Vehicle {
      m_sLabel "LRM-10"
      m_iClass 3
      m_sWeaponModuleId "LRM10"
-     m_sPrefab "{6AA5CE954480A06E}Prefabs/Vehicles/Mech/Weapons/LRM/LRM10.et"
+     m_sPrefab "{E9C1000000000110}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Boss_LRM10.et"
      m_fWeightTons 0
      m_fSwapTime 4
     }
@@ -336,7 +345,7 @@ Vehicle {
      m_sLabel "LRM-15"
      m_iClass 3
      m_sWeaponModuleId "LRM15"
-     m_sPrefab "{496370B98580D971}Prefabs/Vehicles/Mech/Weapons/LRM/LRM15.et"
+     m_sPrefab "{E9C1000000000115}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Boss_LRM15.et"
      m_fWeightTons 0
      m_fSwapTime 4
     }
@@ -725,7 +734,7 @@ Vehicle {
    m_bGunners 1
    m_eMode HOLD
    m_sFaction "USSR"
-   m_eFireMode RETURN_FIRE
+   m_eFireMode FIRE_AT_WILL
    m_bFollowGroupMode 0
    m_fPatrolRadius 1
    m_fPatrolPause 1
@@ -1068,12 +1077,12 @@ Vehicle {
     }
     EntitySlotInfo Right_Arm_Mount {
      Offset 10.9582 4.4392 -0.4025
-     Prefab "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon_Arm.et"
+     Prefab "{E9C1000000000202}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Las_Cannon_Arm.et"
     }
     EntitySlotInfo Las_Cannon_Arm {
      Offset -12.6876 4.2021 -0.4025
      Angles 5.1116 2.2621 23.9108
-     Prefab "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon_Arm.et"
+     Prefab "{E9C1000000000202}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Las_Cannon_Arm.et"
     }
     EntitySlotInfo Exta {
      Offset -0.2166 12.339 7.5671
