@@ -16,6 +16,11 @@ Vehicle {
   AIKnowledgeComponent "{E60F000000000006}" {
   }
   BFA_MechAICrewComponent "{E60F000000000007}" {
+   m_bFireAllGroups 1
+   m_fEngageRange 1400
+   m_fAimSettleTime 1.6
+   m_fBurstTime 1.8
+   m_fBurstPause 7.5
   }
   BFA_MechAimComponent "{E60F000000000008}" {
    m_fReticleAimDistance 1000
@@ -593,17 +598,17 @@ Vehicle {
     }
     BFA_MechModuleDefinition "{E8A2000000000010}" {
      m_iId 901
-     m_sLabel "Warlord_AA_Flak"
+     m_sLabel "Warlord Autonomous Ground Laser"
      m_iClass 4
-     m_sWeaponModuleId "Warlord_AA_Flak"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
     }
     BFA_MechModuleDefinition "{E8A2000000000011}" {
      m_iId 902
-     m_sLabel "Warlord_AA_Flak"
+     m_sLabel "Warlord Autonomous Ground Laser"
      m_iClass 4
-     m_sWeaponModuleId "Warlord_AA_Flak"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
     }
     BFA_MechModuleDefinition "{E8A2000000000012}" {
      m_iId 903
@@ -635,17 +640,17 @@ Vehicle {
     }
     BFA_MechModuleDefinition "{E8A2000000000016}" {
      m_iId 907
-     m_sLabel "Warlord_AA_Flak"
+     m_sLabel "Warlord Autonomous Ground Laser"
      m_iClass 4
-     m_sWeaponModuleId "Warlord_AA_Flak"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
     }
     BFA_MechModuleDefinition "{E8A2000000000017}" {
      m_iId 908
-     m_sLabel "Warlord_AA_Flak"
+     m_sLabel "Warlord Autonomous Ground Laser"
      m_iClass 4
-     m_sWeaponModuleId "Warlord_AA_Flak"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
     }
     BFA_MechModuleDefinition "{E8A2000000000018}" {
      m_iId 909
@@ -684,17 +689,17 @@ Vehicle {
     }
     BFA_MechModuleDefinition "{E8A200000000001D}" {
      m_iId 914
-     m_sLabel "Warlord_AA_Flak"
+     m_sLabel "Warlord Autonomous Ground Laser"
      m_iClass 4
-     m_sWeaponModuleId "Warlord_AA_Flak"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
     }
     BFA_MechModuleDefinition "{E8A200000000001E}" {
      m_iId 915
-     m_sLabel "Warlord_AA_Flak"
+     m_sLabel "Warlord Autonomous Ground Laser"
      m_iClass 4
-     m_sWeaponModuleId "Warlord_AA_Flak"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
     }
    }
     BFA_MechModuleDefinition "{E8A30000000000A6}" {
