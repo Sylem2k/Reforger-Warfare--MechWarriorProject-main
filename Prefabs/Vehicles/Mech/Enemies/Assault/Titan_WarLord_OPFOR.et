@@ -16,6 +16,11 @@ Vehicle {
   AIKnowledgeComponent "{E60F000000000006}" {
   }
   BFA_MechAICrewComponent "{E60F000000000007}" {
+   m_bFireAllGroups 1
+   m_fEngageRange 1200
+   m_fAimSettleTime 1.6
+   m_fBurstTime 1.8
+   m_fBurstPause 9
   }
   BFA_MechAimComponent "{E60F000000000008}" {
    m_fReticleAimDistance 1000
@@ -176,7 +181,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F0000000000A2}" {
      m_sName "AA_TURRET_RIGHT"
      m_iClass 2
-     m_iDefaultModuleId 1200
+     m_iDefaultModuleId 1203
      m_Point PointInfo "{E60F0000000000A3}" {
       Offset 7.4 21.75 1.2
      }
@@ -196,7 +201,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F0000000000AE}" {
      m_sName "AA_REAR_LEFT"
      m_iClass 2
-     m_iDefaultModuleId 1200
+     m_iDefaultModuleId 1203
      m_Point PointInfo "{E60F0000000000AF}" {
       Offset -7.35 21.5 -6.8
       Angles 0 180 0
@@ -207,7 +212,7 @@ Vehicle {
     BFA_MechHardpointDefinition "{E60F0000000000B0}" {
      m_sName "AA_REAR_RIGHT"
      m_iClass 2
-     m_iDefaultModuleId 1200
+     m_iDefaultModuleId 1203
      m_Point PointInfo "{E60F0000000000B1}" {
       Offset 7.35 21.5 -6.8
       Angles 0 180 0
@@ -236,6 +241,15 @@ Vehicle {
      m_iWeaponGroup 4
     }
    m_aModules {
+    BFA_MechModuleDefinition "{A600202610230311}" {
+     m_iId 1203
+     m_sLabel "Warlord Autonomous Ground Laser"
+     m_iClass 2
+     m_sWeaponModuleId "Warlord_Omni_Laser"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_fWeightTons 0
+     m_fSwapTime 3
+    }
     BFA_MechModuleDefinition "{E60F000000000026}" {
      m_iId 1
      m_sLabel "Las Cannon"
