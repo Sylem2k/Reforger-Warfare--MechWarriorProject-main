@@ -856,7 +856,7 @@ Vehicle {
    }
    m_fRadius 35
    m_bBlockBeams 1
-   m_sBubblePrefab "{198F9942AAB5B87C}Prefabs/Vehicles/Mech/Shield/CGS_Mech_Shield_Bubble.et"
+   m_sBubblePrefab "{E8A100000000B136}Prefabs/Vehicles/Mech/Shield/Warlord_Boss_Shield_Bubble.et"
    m_bBubbleAlwaysVisible 1
    m_fBubbleFlashTime 0.85
   }
