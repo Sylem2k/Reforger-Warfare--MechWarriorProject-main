@@ -74,6 +74,28 @@ GenericEntity {
    StartNode "IK Chain to IK Target"
    AnimUpdate EOnFrame
   }
+  SlotManagerComponent "{ED24000000000004}" {
+   Slots {
+    EntitySlotInfo HB_LegThigh {
+     PivotID "J1"
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{C3106EB5D2686DB8}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_LegL_Thigh.et"
+    }
+    EntitySlotInfo HB_LegShin {
+     PivotID "J2"
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{210534106E80B33D}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_LegL_Shin.et"
+    }
+    EntitySlotInfo HB_LegFoot {
+     PivotID "J3"
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{F117E41CDC645EDF}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_LegL_Foot.et"
+    }
+   }
+  }
   RplComponent "{EA3100000000051C}" {
   }
   Hierarchy "{EA3100000000051D}" {

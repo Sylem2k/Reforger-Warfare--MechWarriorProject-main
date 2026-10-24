@@ -25,6 +25,16 @@ GenericEntity {
   MeshObject "{6AAE3A12334BDD2A}" {
    Object "{8F91A214D9047D09}Common/Models/Titan_War_Lord/War_Lord_Head.xob"
   }
+  SlotManagerComponent "{ED24000000000001}" {
+   Slots {
+    EntitySlotInfo HB_Head {
+     Offset 0 0 0
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{383A959AA5817612}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_Body_Head.et"
+    }
+   }
+  }
   Hierarchy "{6AAE3A12334BDD29}" {
   }
  }
