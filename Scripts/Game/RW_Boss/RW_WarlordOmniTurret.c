@@ -18,6 +18,11 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
     [Attribute("0", UIWidgets.Auto, "0 = kinetic, 1 = incendiary (laser-like), 2 = explosive.", category: "Warlord Damage")]
     protected int m_iImpactType;
 
+    [Attribute("6", UIWidgets.Auto, "Minimum seconds on a valid target before picking a new target.", category: "Warlord Targeting")]
+    protected float m_fTargetHoldSeconds;
+
+    protected float m_fCanRetargetAt;
+
     // The CGS anti-air base only gathers vehicles. Include dismounted infantry.
     override protected bool CollectEntity(IEntity entity)
     {
@@ -84,6 +89,12 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
         if (!world || !ourFaction || !GetOwner())
             return null;
 
+        float now = Now();
+        // Don't chase a different nearby player each scan. This also gives the
+        // existing CGS yaw/pitch animation time to traverse to the target.
+        if (m_pTarget && now < m_fCanRetargetAt && IsValidTarget(m_pTarget, ourFaction))
+            return m_pTarget;
+
         s_aCollect.Clear();
         world.QueryEntitiesBySphere(GetOwner().GetOrigin(), m_fRange, CollectEntity, null, EQueryEntitiesFlags.DYNAMIC);
 
@@ -117,6 +128,8 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
         }
 
         s_aCollect.Clear();
+        if (best)
+            m_fCanRetargetAt = now + Math.Max(m_fTargetHoldSeconds, 0);
         return best;
     }
 
