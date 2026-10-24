@@ -8,7 +8,8 @@ GenericEntity {
    m_sDisplayName "Warlord_Omni_Cannon"
    m_bRequiresCrew 0
    m_fRange 1000
-   m_fScanInterval 0.8
+   m_fScanInterval 1.1
+   m_fTargetHoldSeconds 6
    m_fShellSpeed 1000
    m_fBurstDamage 90
    m_fBurstRadius 5
@@ -19,7 +20,7 @@ GenericEntity {
    m_fShotsPerMinute 150
    m_bAnimateTurret 1
    // Rotation applies to the root, so future custom meshes aim with the module.
-   m_fTurnSpeed 130
+   m_fTurnSpeed 55
    m_fMinElevation -80
    m_fMaxElevation 89
    m_fBarrelLength 0.3
