@@ -20,6 +20,8 @@ GenericEntity {
    m_fHeatPerSecond 2
    m_bToggle 1
   }
+  CGS_TorsoTwistComponent "{6AB0559E98BA325D}" {
+  }
   MeshObject "{6AAE3A12334BDD2A}" {
    Object "{8F91A214D9047D09}Common/Models/Titan_War_Lord/War_Lord_Head.xob"
   }
