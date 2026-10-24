@@ -815,7 +815,7 @@ Vehicle {
    m_aShieldPhases {
     0.66 0.33 0.1
    }
-   m_bDebug 0
+   m_bDebug 1
   }
   CGS_MechBrainComponent "{E60F00000000009D}" {
    m_bEnabled 1
@@ -857,7 +857,7 @@ Vehicle {
    m_fRadius 35
    m_bBlockBeams 1
    m_sBubblePrefab "{198F9942AAB5B87C}Prefabs/Vehicles/Mech/Shield/CGS_Mech_Shield_Bubble.et"
-   m_bBubbleAlwaysVisible 0
+   m_bBubbleAlwaysVisible 1
    m_fBubbleFlashTime 0.85
   }
   CGS_TorsoTwistComponent "{E60F00000000005A}" {
@@ -1137,7 +1137,7 @@ Vehicle {
      m_sBurningParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_engine_small.ptc"
      m_sBurningGroundParticle "{A9259561960FD620}Particles/Vehicle/Vehicle_fire_ground_medium.ptc"
      m_sFireStateSignal "EngineFireState"
-     m_bLogDamage 0
+     m_bLogDamage 1
     }
    }
    CollisionVelocityThreshold 100000
@@ -1163,6 +1163,30 @@ Vehicle {
   }
   SlotManagerComponent "{E60F00000000008A}" {
    Slots {
+    EntitySlotInfo HB_Chest {
+     Offset 0 5 0
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{7314401C0F1E3B62}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_Body_Chest.et"
+    }
+    EntitySlotInfo HB_Torso {
+     Offset 0 0 0
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{A8D8ACAB7C339EED}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_Body_Torso.et"
+    }
+    EntitySlotInfo HB_Pelvis {
+     Offset 0 -6 0
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{5CAFED0B6731BA91}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_Body_Pelvis.et"
+    }
+    EntitySlotInfo HB_WeakSpot {
+     Offset 0 3 -6.5
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{42CC142E3170D158}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_WeakSpot.et"
+    }
     EntitySlotInfo Leg_R1 {
      Offset 2.7706 -15.2045 0.3085
      MergePhysics 0
@@ -1177,12 +1201,12 @@ Vehicle {
     }
     EntitySlotInfo Right_Arm_Mount {
      Offset 10.9582 4.4392 -0.4025
-     Prefab "{E9C1000000000202}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Las_Cannon_Arm.et"
+     Prefab "{ED24000000000032}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_DamageTest_Arm_Right.et"
     }
     EntitySlotInfo Las_Cannon_Arm {
      Offset -12.6876 4.2021 -0.4025
      Angles 5.1116 2.2621 23.9108
-     Prefab "{E9C1000000000202}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Las_Cannon_Arm.et"
+     Prefab "{ED24000000000031}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_DamageTest_Arm_Left.et"
     }
     EntitySlotInfo Exta {
      Offset -0.2166 12.339 7.5671
