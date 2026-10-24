@@ -43,9 +43,6 @@ GenericEntity {
     m_iTracerEvery 1
    }
   }
-  MeshObject "{D600202610230103}" {
-   Object "{3F743FE45DE3354E}Common/Models/Titan_War_Lord/War_Lord_Shoulder_Gun.xob"
-  }
   RplComponent "{A600202610230104}" {
   }
   Hierarchy "{A600202610230105}" {
