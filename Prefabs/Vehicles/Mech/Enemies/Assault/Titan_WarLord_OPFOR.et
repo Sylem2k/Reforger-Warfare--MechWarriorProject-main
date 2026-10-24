@@ -17,7 +17,7 @@ Vehicle {
   }
   RW_WarlordMultiTargetAICrewComponent "{E60F000000000007}" {
    m_bSpreadTargets 1
-   m_fScanInterval 0.8
+   m_fScanInterval 1.2
    m_fEngageRange 1100
    m_fAimSettleTime 0.9
    m_fBurstTime 2.5
@@ -48,8 +48,11 @@ Vehicle {
       1 2 3
      }
     }
-    BFA_MechCrewStationDefinition "{EA32000000001101}" {
-     m_sStationId "BOSS_LEFT"
+    
+    
+   
+    BFA_MechCrewStationDefinition "{EB83000000000001}" {
+     m_sStationId "BOSS_AC_L"
      m_bCanDrive 0
      m_bCanAim 1
      m_iWeaponGroupMask 4
@@ -59,8 +62,63 @@ Vehicle {
       3
      }
     }
-    BFA_MechCrewStationDefinition "{EA32000000001102}" {
-     m_sStationId "BOSS_RIGHT"
+    BFA_MechCrewStationDefinition "{EB83000000000002}" {
+     m_sStationId "BOSS_AC_R"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EB83000000000003}" {
+     m_sStationId "BOSS_LRM_L1"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EB83000000000004}" {
+     m_sStationId "BOSS_LRM_L2"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EB83000000000005}" {
+     m_sStationId "BOSS_LRM_R1"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EB83000000000006}" {
+     m_sStationId "BOSS_LRM_R2"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EB83000000000007}" {
+     m_sStationId "BOSS_LRM_R3"
      m_bCanDrive 0
      m_bCanAim 1
      m_iWeaponGroupMask 4
@@ -117,7 +175,7 @@ Vehicle {
       Offset 3.148 20.348 -0.8847
       Angles 0 0 0
      }
-     m_sControlStation "BOSS_LEFT"
+     m_sControlStation "BOSS_LRM_L1"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000016}" {
@@ -128,7 +186,7 @@ Vehicle {
       Offset -3.6403 22.264 0.715
       Angles 0 -0.375 0
      }
-     m_sControlStation "BOSS_RIGHT"
+     m_sControlStation "BOSS_LRM_R1"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F00000000001A}" {
@@ -138,7 +196,7 @@ Vehicle {
      m_Point PointInfo "{E60F00000000001B}" {
       Offset 6.4765 22.123 1.7533
      }
-     m_sControlStation "BOSS_LEFT"
+     m_sControlStation "BOSS_AC_L"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F00000000001C}" {
@@ -148,7 +206,7 @@ Vehicle {
      m_Point PointInfo "{E60F00000000001D}" {
       Offset -1.05 14.5117 7.2024
      }
-     m_sControlStation "BOSS_LEFT"
+     m_sControlStation "BOSS_LRM_L2"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F00000000001E}" {
@@ -158,7 +216,7 @@ Vehicle {
      m_Point PointInfo "{E60F00000000001F}" {
       Offset -12.1396 6.745 12.9869
      }
-     m_sControlStation "BOSS_RIGHT"
+     m_sControlStation "BOSS_LRM_R2"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000020}" {
@@ -168,7 +226,7 @@ Vehicle {
      m_Point PointInfo "{E60F000000000021}" {
       Offset 11.2251 5.2887 13.7287
      }
-     m_sControlStation "BOSS_RIGHT"
+     m_sControlStation "BOSS_AC_R"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000022}" {
@@ -178,7 +236,7 @@ Vehicle {
      m_Point PointInfo "{E60F000000000023}" {
       Offset 0.9415 14.4258 6.7368
      }
-     m_sControlStation "BOSS_LEFT"
+     m_sControlStation "BOSS_LRM_L2"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000024}" {
@@ -188,7 +246,7 @@ Vehicle {
      m_Point PointInfo "{E60F000000000025}" {
       Offset -11.9318 7.1945 13.3134
      }
-     m_sControlStation "BOSS_RIGHT"
+     m_sControlStation "BOSS_LRM_R3"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F0000000000A0}" {
