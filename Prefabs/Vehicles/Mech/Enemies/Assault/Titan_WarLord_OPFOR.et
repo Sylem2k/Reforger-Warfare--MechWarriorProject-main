@@ -56,9 +56,6 @@ Vehicle {
      m_sAimMountId "SENTINEL_LAS"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
-     m_Point PointInfo "{E60F00000000000F}" {
-      Offset 11.1385 6.5103 14.8706
-     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -79,9 +76,6 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
-     m_Point PointInfo "{E60F000000000013}" {
-      Offset -11.7289 5.8818 15.0028
-     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -694,10 +688,10 @@ Vehicle {
      m_sSlotName "Las_Cannon_Arm"
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
-     m_fYawMin -125
-     m_fYawMax 125
-     m_fPitchMin -70
-     m_fPitchMax 85
+     m_fYawMin -45
+     m_fYawMax 45
+     m_fPitchMin -20
+     m_fPitchMax 40
      m_bInvertPitch 0
      m_fConvergenceDistance 1000
     }
@@ -706,10 +700,10 @@ Vehicle {
      m_sSlotName "Right_Arm_Mount"
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
-     m_fYawMin -125
-     m_fYawMax 125
-     m_fPitchMin -70
-     m_fPitchMax 85
+     m_fYawMin -45
+     m_fYawMax 45
+     m_fPitchMin -20
+     m_fPitchMax 40
      m_bInvertPitch 0
      m_fConvergenceDistance 1000
     }
