@@ -733,13 +733,14 @@ Vehicle {
    m_bEnabled 1
    m_bDrive 1
    m_bGunners 1
-   m_eMode HOLD
+   m_eMode PATROL
    m_sFaction "USSR"
    m_eFireMode FIRE_AT_WILL
    m_bFollowGroupMode 0
-   m_fPatrolRadius 1
+   m_sPilotPrefab "{C56A957843F590E5}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/REDFOR_BRAIN.et"
+   m_fPatrolRadius 10
    m_fPatrolPause 1
-   m_fHuntRadius 1
+   m_fHuntRadius 10
    m_fLeash 1
   }
   CGS_MechDeathComponent "{E60F000000000058}" {
