@@ -725,13 +725,14 @@ Vehicle {
      m_sRightLegSlotName "Leg_R1"
     }
    }
-   m_fSpeed 2.7
+   m_fSpeed 3.2
    m_bCanSprint 1
-   m_fSprintSpeed 4.2
-   m_fStrafeSpeed 1.65
-   m_fSprintStrafeSpeed 2.05
+   m_fSprintSpeed 4.9
+   m_fStrafeSpeed 1.55
+   m_fSprintStrafeSpeed 1.9
    m_fAvgHeightSpeed 2
-   m_fAngularSpeed 0.85
+   m_fAngularSpeed 0.55
+   m_fSizeScale 2.5
    m_GroundPoint PointInfo "{E60F00000000004F}" {
     Offset 0 -16.5867 -0.8832
    }
@@ -1128,13 +1129,13 @@ Vehicle {
     EntitySlotInfo Leg_R1 {
      Offset 2.7706 -15.2045 0.3085
      MergePhysics 0
-     Prefab "{6BB422555F06DDAD}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Leg_Right.et"
+     Prefab "{E9B1000000001102}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
      Offset -3.6375 3.0121 0.3735
      MergePhysics 0
-     Prefab "{E95CFCAA70835149}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Leg_Left.et"
+     Prefab "{E9B1000000001101}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
