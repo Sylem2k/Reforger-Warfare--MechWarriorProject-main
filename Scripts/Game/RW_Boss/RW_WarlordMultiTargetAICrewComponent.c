@@ -18,10 +18,23 @@ class RW_WarlordMultiTargetAICrewComponentClass : BFA_MechAICrewComponentClass
 
 class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
 {
+    [Attribute("7", UIWidgets.Auto, "Minimum seconds to stay locked on a valid visible target. Prevents turrets switching every scan.", category: "Warlord Targeting")]
+    protected float m_fMinimumTargetHoldSeconds;
+
     override protected IEntity FindBestTarget(BFA_MechAIStationState forState = null)
     {
         if (!forState || !m_bSpreadTargets)
             return super.FindBestTarget(forState);
+
+        // An unchanged target needs time for heavy guns to physically traverse.
+        // Keep it instead of bouncing between players at every 1.2 s scan.
+        IEntity held = forState.m_pTarget;
+        if (held && forState.m_fTargetTime < Math.Max(m_fMinimumTargetHoldSeconds, 0))
+        {
+            Faction currentFaction = GetMechFaction();
+            if (currentFaction && IsValidTarget(held) && IsHostile(held, currentFaction) && HasLineOfSight(GetAimPoint(held), held))
+                return held;
+        }
 
         BaseWorld world = GetGame().GetWorld();
         Faction mechFaction = GetMechFaction();
