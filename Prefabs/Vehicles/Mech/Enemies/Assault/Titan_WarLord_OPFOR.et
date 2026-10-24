@@ -61,9 +61,6 @@ Vehicle {
      m_sAimMountId "SENTINEL_LAS"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
-     m_Point PointInfo "{6AB0559FDDE98FC0}" {
-      Offset 0.5713 14.7176 7.3745
-     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -84,9 +81,6 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
-     m_Point PointInfo "{6AB0559FF8B8012F}" {
-      Offset 11.3128 9.0369 17.882
-     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -172,6 +166,78 @@ Vehicle {
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 3
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000A0}" {
+     m_sName "AA_TURRET_LEFT"
+     m_iClass 2
+     m_iDefaultModuleId 1200
+     m_Point PointInfo "{E60F0000000000A1}" {
+      Offset -7.4 21.75 1.2
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000A2}" {
+     m_sName "AA_TURRET_RIGHT"
+     m_iClass 2
+     m_iDefaultModuleId 1203
+     m_Point PointInfo "{E60F0000000000A3}" {
+      Offset 7.4 21.75 1.2
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000A4}" {
+     m_sName "STOMP_PULSE"
+     m_iClass 4
+     m_iDefaultModuleId 1201
+     m_Point PointInfo "{E60F0000000000A5}" {
+      Offset 0 -16 -1
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 8
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000AE}" {
+     m_sName "AA_REAR_LEFT"
+     m_iClass 2
+     m_iDefaultModuleId 1203
+     m_Point PointInfo "{E60F0000000000AF}" {
+      Offset -7.35 21.5 -6.8
+      Angles 0 180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B0}" {
+     m_sName "AA_REAR_RIGHT"
+     m_iClass 2
+     m_iDefaultModuleId 1203
+     m_Point PointInfo "{E60F0000000000B1}" {
+      Offset 7.35 21.5 -6.8
+      Angles 0 180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 9
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B2}" {
+     m_sName "POINT_DEFENSE_LEFT"
+     m_iClass 4
+     m_iDefaultModuleId 1202
+     m_Point PointInfo "{E60F0000000000B3}" {
+      Offset -9 8.5 3
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 4
+    }
+    BFA_MechHardpointDefinition "{E60F0000000000B4}" {
+     m_sName "POINT_DEFENSE_RIGHT"
+     m_iClass 4
+     m_iDefaultModuleId 1202
+     m_Point PointInfo "{E60F0000000000B5}" {
+      Offset 9 8.5 3
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 4
     }
    }
    m_aModules {
@@ -535,6 +601,33 @@ Vehicle {
      m_fWeightTons 0
      m_fSwapTime 3
     }
+    BFA_MechModuleDefinition "{E60F0000000000A6}" {
+     m_iId 1200
+     m_sLabel "Warlord Valk Hunter Flak"
+     m_iClass 2
+     m_sWeaponModuleId "WARLORD_AA"
+     m_sPrefab "{D600202610230101}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_AA_Flak.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
+    BFA_MechModuleDefinition "{E60F0000000000A7}" {
+     m_iId 1201
+     m_sLabel "Titan Stomp Pulse"
+     m_iClass 4
+     m_sWeaponModuleId "FORCE_PULSE"
+     m_sPrefab "{D600202610230201}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_Stomp_Pulse.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
+    BFA_MechModuleDefinition "{E60F0000000000B6}" {
+     m_iId 1202
+     m_sLabel "Warlord Point Defense"
+     m_iClass 4
+     m_sWeaponModuleId "POINT_DEFENSE"
+     m_sPrefab "{D600202610230301}Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_Point_Defense.et"
+     m_fWeightTons 0
+     m_fSwapTime 10
+    }
    }
    m_sSwapStation "DRIVER"
    m_bSwapRequiresStationary 1
@@ -752,6 +845,41 @@ Vehicle {
     }
     RW_FrameHardpoint "{E60F00000000006D}" {
      m_sHardpoint "RACK_TOP_R"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000A8}" {
+     m_sHardpoint "AA_TURRET_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000A9}" {
+     m_sHardpoint "AA_TURRET_RIGHT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000AA}" {
+     m_sHardpoint "STOMP_PULSE"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B7}" {
+     m_sHardpoint "AA_REAR_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B8}" {
+     m_sHardpoint "AA_REAR_RIGHT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000B9}" {
+     m_sHardpoint "POINT_DEFENSE_LEFT"
+     m_eType ANY
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{E60F0000000000BA}" {
+     m_sHardpoint "POINT_DEFENSE_RIGHT"
      m_eType ANY
      m_eMaxSize LARGE
     }
