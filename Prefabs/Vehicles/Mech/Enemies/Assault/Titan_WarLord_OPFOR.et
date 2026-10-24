@@ -1080,6 +1080,16 @@ Vehicle {
      Angles 0 2.7371 0
      Prefab "{3BC88C1B5DE393A2}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_Head.et"
     }
+    EntitySlotInfo Cannon_top_R {
+     Offset 7.3847 21.8601 0.5664
+     Angles 0 2.7371 0
+     Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_top_Cannon_Right.et"
+    }
+    EntitySlotInfo Cannon_top_L {
+     Offset -7.1076 22.1054 0.0686
+     Angles 0 2.7371 0
+     Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/Warlord_top_Cannon_Right.et"
+    }
    }
   }
   ActionsManagerComponent "{E60F00000000008B}" {
