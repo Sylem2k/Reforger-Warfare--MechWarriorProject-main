@@ -1112,13 +1112,13 @@ Vehicle {
     BFA_MechHitZone Hull {
      HZDefault 1
      MaxHealth 40000
-     DamageReduction 2
-     DamageThreshold 1
+     DamageReduction 1
+     DamageThreshold 0
      "Melee multiplier" 0.01
-     "Kinetic multiplier" 0.05
-     "Fragmentation multiplier" 0.03
+     "Kinetic multiplier" 0.4
+     "Fragmentation multiplier" 0.15
      "Explosive multiplier" 0.65
-     "Incendiary multiplier" 0.35
+     "Incendiary multiplier" 0.5
      "DamageState threshold" {
       0.7 0.4 0.2
      }
@@ -1137,7 +1137,7 @@ Vehicle {
      m_sBurningParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_engine_small.ptc"
      m_sBurningGroundParticle "{A9259561960FD620}Particles/Vehicle/Vehicle_fire_ground_medium.ptc"
      m_sFireStateSignal "EngineFireState"
-     m_bLogDamage 1
+     m_bLogDamage 0
     }
    }
    CollisionVelocityThreshold 100000
