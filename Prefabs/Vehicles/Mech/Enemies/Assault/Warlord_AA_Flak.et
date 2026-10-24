@@ -14,7 +14,7 @@ GenericEntity {
    m_eDamageKind EXPLOSIVE
    m_fRange 1800
    m_fMinAltitude 5
-   m_fScanInterval 0.35
+   m_fScanInterval 0.5
    m_bRequiresCrew 0
    m_fShellSpeed 1050
    m_fBurstDamage 320
@@ -30,7 +30,7 @@ GenericEntity {
    m_fTracerLength 7
    m_fTracerThickness 0.32
    m_bAnimateTurret 1
-   m_fTurnSpeed 165
+   m_fTurnSpeed 65
    m_fMinElevation -35
    m_fMaxElevation 88
    m_fReturnToRestTime 5

@@ -16,17 +16,23 @@ Vehicle {
   AIKnowledgeComponent "{E60F000000000006}" {
   }
   RW_WarlordMultiTargetAICrewComponent "{E60F000000000007}" {
+   m_bAIDriver 0
+   m_bCombatMovement 0
+   m_bAdvanceOnTargets 0
+   m_bFollowLeader 0
    m_bSpreadTargets 1
    m_fScanInterval 1.2
    m_fEngageRange 1100
-   m_fAimSettleTime 0.9
+   m_fAimSettleTime 3.8
    m_fBurstTime 2.5
    m_fBurstPause 5.5
    m_bFireAllGroups 1
   }
-  BFA_MechAimComponent "{E60F000000000008}" {
+  RW_WarlordSmoothAimComponent "{E60F000000000008}" {
    m_fReticleAimDistance 1000
    m_iLocalAimTickMs 16
+   m_fAIYawSpeed 38
+   m_fAIPitchSpeed 27
   }
   BFA_MechControllerComponent "{E60F000000000009}" {
    MaxStartupTime 8
@@ -813,9 +819,9 @@ Vehicle {
   }
   CGS_MechBrainComponent "{E60F00000000009D}" {
    m_bEnabled 1
-   m_bDrive 1
+   m_bDrive 0
    m_bGunners 1
-   m_eMode PATROL
+   m_eMode HOLD
    m_sFaction "USSR"
    m_sPilotPrefab "{D49891BE09F32E3B}Prefabs/Characters/Factions/BLUFOR/US_Army/CGS_Pilot_US.et"
    m_bLockDriverSeat 1
@@ -856,9 +862,9 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{E60F00000000005A}" {
    m_sAimStation "DRIVER"
-   m_fMaxTwist 105
-   m_fTwistSpeed 38
-   m_fDeadzone 3
+   m_fMaxTwist 80
+   m_fTwistSpeed 26
+   m_fDeadzone 6
    m_bCentreWhenEmpty 0
    m_vPivot -0.2166 12.339 7.5671
    m_aTwistSlots {
