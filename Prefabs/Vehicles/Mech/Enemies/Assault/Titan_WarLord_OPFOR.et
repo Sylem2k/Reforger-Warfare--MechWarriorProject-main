@@ -15,7 +15,9 @@ Vehicle {
   }
   AIKnowledgeComponent "{E60F000000000006}" {
   }
-  BFA_MechAICrewComponent "{E60F000000000007}" {
+  RW_WarlordMultiTargetAICrewComponent "{E60F000000000007}" {
+   m_bSpreadTargets 1
+   m_fScanInterval 0.8
    m_fEngageRange 1100
    m_fAimSettleTime 0.9
    m_fBurstTime 2.5
@@ -44,6 +46,28 @@ Vehicle {
      m_iAuxWeaponGroup 0
      m_aCycleWeaponGroups {
       1 2 3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EA32000000001101}" {
+     m_sStationId "BOSS_LEFT"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
+     }
+    }
+    BFA_MechCrewStationDefinition "{EA32000000001102}" {
+     m_sStationId "BOSS_RIGHT"
+     m_bCanDrive 0
+     m_bCanAim 1
+     m_iWeaponGroupMask 4
+     m_iCompartmentIndex -1
+     m_iPrimaryWeaponGroup 3
+     m_aCycleWeaponGroups {
+      3
      }
     }
    }
@@ -93,7 +117,7 @@ Vehicle {
       Offset 3.148 20.348 -0.8847
       Angles 0 0 0
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_LEFT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000016}" {
@@ -104,7 +128,7 @@ Vehicle {
       Offset -3.6403 22.264 0.715
       Angles 0 -0.375 0
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_RIGHT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F00000000001A}" {
@@ -114,7 +138,7 @@ Vehicle {
      m_Point PointInfo "{E60F00000000001B}" {
       Offset 6.4765 22.123 1.7533
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_LEFT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F00000000001C}" {
@@ -124,7 +148,7 @@ Vehicle {
      m_Point PointInfo "{E60F00000000001D}" {
       Offset -1.05 14.5117 7.2024
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_LEFT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F00000000001E}" {
@@ -134,7 +158,7 @@ Vehicle {
      m_Point PointInfo "{E60F00000000001F}" {
       Offset -12.1396 6.745 12.9869
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_RIGHT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000020}" {
@@ -144,7 +168,7 @@ Vehicle {
      m_Point PointInfo "{E60F000000000021}" {
       Offset 11.2251 5.2887 13.7287
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_RIGHT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000022}" {
@@ -154,7 +178,7 @@ Vehicle {
      m_Point PointInfo "{E60F000000000023}" {
       Offset 0.9415 14.4258 6.7368
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_LEFT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F000000000024}" {
@@ -164,7 +188,7 @@ Vehicle {
      m_Point PointInfo "{E60F000000000025}" {
       Offset -11.9318 7.1945 13.3134
      }
-     m_sControlStation "DRIVER"
+     m_sControlStation "BOSS_RIGHT"
      m_iWeaponGroup 3
     }
     BFA_MechHardpointDefinition "{E60F0000000000A0}" {
@@ -735,6 +759,8 @@ Vehicle {
    m_bGunners 1
    m_eMode PATROL
    m_sFaction "USSR"
+   m_sPilotPrefab "{D49891BE09F32E3B}Prefabs/Characters/Factions/BLUFOR/US_Army/CGS_Pilot_US.et"
+   m_bLockDriverSeat 1
    m_eFireMode FIRE_AT_WILL
    m_bFollowGroupMode 0
    m_sPilotPrefab "{C56A957843F590E5}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/REDFOR_BRAIN.et"
@@ -771,10 +797,18 @@ Vehicle {
    m_fBubbleFlashTime 0.85
   }
   CGS_TorsoTwistComponent "{E60F00000000005A}" {
+   m_sAimStation "DRIVER"
+   m_fMaxTwist 105
+   m_fTwistSpeed 38
+   m_fDeadzone 3
+   m_bCentreWhenEmpty 0
+   m_vPivot -0.2166 12.339 7.5671
    m_aTwistSlots {
+    "Exta"
    }
    m_aTwistMounts {
    }
+   m_bHideRootMesh 0
   }
   ChimeraAIPathfindingComponent "{E60F00000000005B}" {
    NavmeshProject "BTRlike"
