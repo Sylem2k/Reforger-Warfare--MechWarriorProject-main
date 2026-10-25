@@ -1663,6 +1663,283 @@ class RW_MechLabMenu : ChimeraMenuBase
 		m_wStatus.SetColor(color);
 	}
 
+	//==================================================================================================
+	// WEAPON GROUPS: responsive six-column routing matrix + chain-fire modes.
+	// This reuses the existing Mech Lab window, mouse handlers and server RPCs.
+	//==================================================================================================
+
+	//------------------------------------------------------------------------------------------------
+	protected string GroupsLabel(int mask)
+	{
+		string label = "";
+		for (int group = 1; group <= 6; group++)
+		{
+			if ((mask & (1 << (group - 1))) == 0)
+				continue;
+			if (!label.IsEmpty())
+				label = label + ", ";
+			label = label + group.ToString();
+		}
+		if (label.IsEmpty())
+			return "-";
+		return label;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void OpenGroupsScreen()
+	{
+		if (m_bGroupsOpen || !m_Hardpoints)
+			return;
+		m_aGroupPreview.Clear();
+		m_aGroupPreviewUntil.Clear();
+		for (int hp = 0; hp < m_Hardpoints.GetHardpointCount(); hp++)
+		{
+			m_aGroupPreview.Insert(-1);
+			m_aGroupPreviewUntil.Insert(0);
+		}
+		m_bGroupsOpen = true;
+		m_iGroupPage = 0;
+		RebuildGroupsScreen();
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void CloseGroupsScreen()
+	{
+		if (!m_bGroupsOpen)
+			return;
+		m_bGroupsOpen = false;
+		m_aGroupPreview.Clear();
+		m_aGroupPreviewUntil.Clear();
+		RebuildGroupsScreen();
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void RebuildGroupsScreen()
+	{
+		RetireCanvas();
+		m_aRows.Clear();
+		m_bBuilt = false;
+		m_iBuildTries = 0;
+		m_iPressRow = -1;
+		m_bDragging = false;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Reading a pending local mask prevents rapid clicks from toggling stale Rpl
+	//! values. The next server snapshot confirms it or the preview expires.
+	protected int DisplayedGroupMask(int hp)
+	{
+		if (!m_Hardpoints || hp < 0 || hp >= m_Hardpoints.GetHardpointCount())
+			return 0;
+		int replicated = m_Hardpoints.GetEffectiveWeaponGroupMask(hp);
+		if (hp >= m_aGroupPreview.Count() || m_aGroupPreview[hp] < 0)
+			return replicated;
+		if (replicated == m_aGroupPreview[hp] || Now() >= m_aGroupPreviewUntil[hp])
+		{
+			m_aGroupPreview[hp] = -1;
+			return replicated;
+		}
+		return m_aGroupPreview[hp];
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void ToggleGroupCell(int hp, int group)
+	{
+		if (!m_pMech || !m_Hardpoints || group < 1 || group > 6 || hp < 0 || hp >= m_Hardpoints.GetHardpointCount())
+			return;
+		int before = DisplayedGroupMask(hp);
+		int bit = 1 << (group - 1);
+		int after = before ^ bit;
+		if (after == 0)
+		{
+			Say("Each weapon must stay assigned to at least one group.", true);
+			return;
+		}
+		SCR_PlayerController requester = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		if (!requester)
+			return;
+		m_aGroupPreview[hp] = after;
+		m_aGroupPreviewUntil[hp] = Now() + 3.0;
+		requester.RW_RequestWeaponGroupMask(m_pMech, hp, after);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void ToggleGroupChain(int group)
+	{
+		if (!m_pMech || group < 1 || group > 6)
+			return;
+		SCR_PlayerController requester = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		if (requester)
+			requester.RW_RequestGroupChainFire(m_pMech, group);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected bool BuildGroupsScreen()
+	{
+		float sw, sh;
+		if (!PrepareCanvas(sw, sh))
+			return false;
+		m_bBuilt = true;
+		float panelW = Math.Min(1200, sw - EDGE * 2);
+		float panelX = (sw - panelW) * 0.5;
+		float top = EDGE + 67;
+		float bottom = sh - EDGE - 82;
+		TopChrome(sw, "WEAPON GROUP CONFIGURATION");
+		HangarPanel(panelX, top, panelW, bottom - top);
+
+		Text(panelX + 22, top + 12, panelW - 44, 32, 23, m_cText, m_Frame.GetFrameName());
+		Text(panelX + 22, top + 49, panelW - 44, 18, 14, m_cDim, "Assign a weapon to multiple groups. Press number keys 1-6 while piloting to select a group.");
+
+		float matrixX = panelX + 20;
+		float matrixW = panelW - 40;
+		if (panelW >= 980)
+			matrixW = panelW * 0.72;
+		float nameW = Math.Max(155, matrixW * 0.37);
+		float colW = (matrixW - nameW - 12) / 6;
+		float colX = matrixX + nameW;
+		float groupY = top + 82;
+
+		Text(matrixX + 8, groupY + 2, nameW - 15, 25, 16, m_cAccent, "WEAPON / HARDPOINT");
+		for (int group = 1; group <= 6; group++)
+		{
+			float cx = colX + (group - 1) * colW;
+			TextWidget groupHeader = Text(cx, groupY + 2, colW, 25, 18, m_cAccent, group.ToString());
+			groupHeader.SetFlags(WidgetFlags.CENTER);
+		}
+		Rect(matrixX, groupY + 29, matrixW, 2, m_cAccent, 1);
+		float chainY = groupY + 41;
+		Text(matrixX + 8, chainY + 7, nameW - 14, 22, 14, m_cDim, "CHAIN FIRE");
+		for (int chainGroup = 1; chainGroup <= 6; chainGroup++)
+		{
+			float cx = colX + (chainGroup - 1) * colW;
+			RW_LabRow chainCell = AddRow(ROW_GROUP_CHAIN, chainGroup, cx + 4, chainY, colW - 8, 32);
+			chainCell.m_wTitle = Text(cx + 4, chainY + 5, colW - 8, 22, 14, m_cText, "OFF");
+			chainCell.m_wTitle.SetFlags(WidgetFlags.CENTER);
+		}
+		Rect(matrixX, chainY + 41, matrixW, 1, m_cDim, 1);
+
+		m_aGroupHardpoints.Clear();
+		for (int hp = 0; hp < m_Hardpoints.GetHardpointCount(); hp++)
+		{
+			int moduleId = m_Hardpoints.GetModuleAt(hp);
+			if (hp < m_aPending.Count())
+				moduleId = m_aPending[hp];
+			if (moduleId > 0)
+				m_aGroupHardpoints.Insert(hp);
+		}
+
+		float rowY = chainY + 56;
+		float rowH = 52;
+		m_iGroupRowsPerPage = Math.Max((int)((bottom - rowY - 65) / rowH), 3);
+		int pageCount = Math.Max((m_aGroupHardpoints.Count() + m_iGroupRowsPerPage - 1) / m_iGroupRowsPerPage, 1);
+		m_iGroupPage = Math.Clamp(m_iGroupPage, 0, pageCount - 1);
+		int first = m_iGroupPage * m_iGroupRowsPerPage;
+		int last = Math.Min(first + m_iGroupRowsPerPage, m_aGroupHardpoints.Count());
+		for (int i = first; i < last; i++)
+		{
+			int hp = m_aGroupHardpoints[i];
+			int moduleId = m_Hardpoints.GetModuleAt(hp);
+			if (hp < m_aPending.Count())
+				moduleId = m_aPending[hp];
+			float y = rowY + (i - first) * rowH;
+			Rect(matrixX, y, matrixW, rowH - 4, m_cRow, 0);
+			Text(matrixX + 8, y + 3, nameW - 14, 23, 17, m_cText, PartName(moduleId));
+			Text(matrixX + 8, y + 27, nameW - 14, 16, 12, m_cDim, m_Hardpoints.GetHardpointName(hp));
+			for (int group = 1; group <= 6; group++)
+			{
+				float cx = colX + (group - 1) * colW;
+				RW_LabRow cell = AddRow(ROW_GROUP_CELL, hp * 10 + group, cx + 4, y + 6, colW - 8, rowH - 17);
+				cell.m_wTitle = Text(cx + 4, y + 11, colW - 8, 25, 16, m_cText, group.ToString());
+				cell.m_wTitle.SetFlags(WidgetFlags.CENTER);
+			}
+		}
+		if (m_aGroupHardpoints.IsEmpty())
+			Text(matrixX + 12, rowY + 20, matrixW - 24, 30, 16, m_cDim, "Install weapons in the loadout screen to configure their groups.");
+
+		float pagingY = bottom - 48;
+		if (pageCount > 1)
+		{
+			RW_LabRow prev = AddRow(ROW_GROUP_PAGE, -1, matrixX + 8, pagingY, 110, 30);
+			prev.m_wTitle = Text(matrixX + 10, pagingY + 5, 106, 23, 15, m_cAccent, "< PREV");
+			RW_LabRow next = AddRow(ROW_GROUP_PAGE, 1, matrixX + matrixW - 120, pagingY, 110, 30);
+			next.m_wTitle = Text(matrixX + matrixW - 117, pagingY + 5, 106, 23, 15, m_cAccent, "NEXT >");
+		}
+		TextWidget pageText = Text(matrixX + matrixW * 0.35, pagingY + 6, matrixW * 0.3, 22, 14, m_cDim, string.Format("PAGE %1 / %2", m_iGroupPage + 1, pageCount));
+		pageText.SetFlags(WidgetFlags.CENTER);
+
+		if (panelW >= 980)
+		{
+			float helpX = matrixX + matrixW + 20;
+			float helpW = panelX + panelW - helpX - 20;
+			Text(helpX, groupY + 4, helpW, 28, 19, m_cAccent, "WEAPON GROUPS");
+			Text(helpX, groupY + 46, helpW, 24, 16, m_cText, "1  //  SELECT");
+			Text(helpX, groupY + 70, helpW, 22, 13, m_cDim, "Click any numbered box");
+			Text(helpX, groupY + 89, helpW, 22, 13, m_cDim, "to include that weapon.");
+			Text(helpX, groupY + 109, helpW, 22, 13, m_cDim, "One weapon may be in");
+			Text(helpX, groupY + 128, helpW, 22, 13, m_cDim, "multiple groups.");
+			Text(helpX, groupY + 169, helpW, 24, 16, m_cText, "2  //  FIRE MODE");
+			Text(helpX, groupY + 193, helpW, 22, 13, m_cDim, "Chain: weapons alternate.");
+			Text(helpX, groupY + 212, helpW, 22, 13, m_cDim, "Off: fire together.");
+			Text(helpX, groupY + 253, helpW, 24, 16, m_cText, "3  //  CONTROLS");
+			Text(helpX, groupY + 277, helpW, 22, 13, m_cDim, "1-6: choose weapon group");
+			Text(helpX, groupY + 296, helpW, 22, 13, m_cDim, "B: cycle weapon groups");
+		}
+		float footerY = sh - EDGE - 57;
+		AddButton(BTN_GROUP_BACK, "< BACK TO LOADOUT", panelX + 16, footerY, 200);
+		m_wStatus = Text(panelX + 234, footerY + 4, panelW - 246, 34, 14, m_cText, "Changes apply to this mech immediately.");
+		FinishCanvasSwitch();
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Highlight from local preview immediately, then reconcile from RplProps.
+	protected void RefreshGroupsScreen()
+	{
+		int hover = RowAt(m_fMouseX, m_fMouseY);
+		BFA_MechWeaponComponent router = BFA_MechWeaponComponent.Cast(m_pMech.FindComponent(BFA_MechWeaponComponent));
+		for (int i = 0; i < m_aRows.Count(); i++)
+		{
+			RW_LabRow row = m_aRows[i];
+			bool over = i == hover;
+			bool active = false;
+			if (row.m_iKind == ROW_GROUP_CELL)
+			{
+				int hp = row.m_iValue / 10;
+				int group = Math.Mod(row.m_iValue, 10);
+				active = (DisplayedGroupMask(hp) & (1 << (group - 1))) != 0;
+			}
+			else if (row.m_iKind == ROW_GROUP_CHAIN)
+			{
+				active = router && router.IsChainFire(row.m_iValue);
+				if (row.m_wTitle)
+				{
+					if (active)
+						row.m_wTitle.SetText("ON");
+					else
+						row.m_wTitle.SetText("OFF");
+				}
+			}
+			if (row.m_wAccent)
+				row.m_wAccent.SetVisible(over);
+			if (row.m_wBg)
+			{
+				if (active)
+					row.m_wBg.SetColor(new Color(0.04, 0.46, 0.53, 1));
+				else if (over)
+					row.m_wBg.SetColor(m_cRowHover);
+				else
+					row.m_wBg.SetColor(m_cRow);
+			}
+			if (row.m_wTitle && (row.m_iKind == ROW_GROUP_CELL || row.m_iKind == ROW_GROUP_CHAIN))
+			{
+				if (active)
+					row.m_wTitle.SetColor(m_cText);
+				else
+					row.m_wTitle.SetColor(m_cDim);
+			}
+		}
+	}
+
 	//------------------------------------------------------------------------------------------------
 	//! Change the group for the currently selected hardpoint. The server owns the
 	//! actual edit and checks Mech Bay/order ownership or the Mech Wrench.
