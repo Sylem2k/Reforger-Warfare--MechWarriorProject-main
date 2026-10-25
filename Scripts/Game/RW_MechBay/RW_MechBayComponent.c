@@ -472,7 +472,9 @@ class RW_MechBayOpenAction : ScriptedUserAction
 		if (frame && GetGame())
 		{
 			PlayerController pc = GetGame().GetPlayerController();
-			if (frame.IsBayReservedForOtherPlayer(pc ? pc.GetPlayerId() : 0))
+			// Client UI check only; a headless server has no local PlayerController.
+			// The server RPC performs the authoritative ownership validation.
+			if (pc && frame.IsBayReservedForOtherPlayer(pc.GetPlayerId()))
 			{
 				SetCannotPerformReason("Another player owns this bay order");
 				return false;
