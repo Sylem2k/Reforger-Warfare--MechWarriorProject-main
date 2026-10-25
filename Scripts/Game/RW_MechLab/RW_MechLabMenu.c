@@ -233,6 +233,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected CGS_MechHeatComponent m_Heat;
 
 	protected Widget m_wCanvas;
+	protected Widget m_wRetiredCanvas; // old screen stays visible until the next is ready
 	protected float m_fS = 1;               // design units -> screen units
 	protected float m_fLeftEdge;            // inner edges of the side panels (design units)
 	protected float m_fRightEdge;
@@ -379,6 +380,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (m_wCanvas)
 			m_wCanvas.RemoveFromHierarchy();
 		m_wCanvas = null;
+		if (m_wRetiredCanvas)
+			m_wRetiredCanvas.RemoveFromHierarchy();
+		m_wRetiredCanvas = null;
 		m_aRows.Clear();
 		s_pNextMech = null;
 		s_pNextBay = null;
@@ -1115,6 +1119,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 
 		m_wDragGhost = Text(0, 0, 300, 26, 18, m_cAccent, "", 20);
 		m_wDragGhost.SetVisible(false);
+		FinishCanvasSwitch();
 		return true;
 	}
 
@@ -1701,6 +1706,27 @@ class RW_MechLabMenu : ChimeraMenuBase
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	//! Preserve the previous full screen during the 1+ frame canvas measurement
+	//! and rebuild. This prevents black/menu flashes when switching pages or parts.
+	protected void RetireCanvas()
+	{
+		if (m_wRetiredCanvas)
+			m_wRetiredCanvas.RemoveFromHierarchy();
+		m_wRetiredCanvas = m_wCanvas;
+		m_wCanvas = null;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void FinishCanvasSwitch()
+	{
+		if (!m_wRetiredCanvas)
+			return;
+		m_wRetiredCanvas.RemoveFromHierarchy();
+		m_wRetiredCanvas = null;
+	}
+
+	//------------------------------------------------------------------------------------------------
 	protected void ScrollParts(int step, bool force = false)
 	{
 		int maxScroll = Math.Max(m_iPartCount - m_iPartsShown, 0);
@@ -1708,10 +1734,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (next == m_iPartScroll && !force)
 			return;
 		m_iPartScroll = next;
-		// Build the screen again with the new window (the plan is kept).
-		if (m_wCanvas)
-			m_wCanvas.RemoveFromHierarchy();
-		m_wCanvas = null;
+		// Build the screen again without leaving a blank transition frame.
+		RetireCanvas();
 		m_aRows.Clear();
 		m_bBuilt = false;
 		m_iBuildTries = 0;
@@ -1722,9 +1746,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//------------------------------------------------------------------------------------------------
 	protected void SwitchToLab(IEntity mech)
 	{
-		if (m_wCanvas)
-			m_wCanvas.RemoveFromHierarchy();
-		m_wCanvas = null;
+		RetireCanvas();
 		m_aRows.Clear();
 		m_bBuilt = false;
 		m_iBuildTries = 0;
@@ -1871,6 +1893,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		Rect(x + 12, by - 8, w - 24, 1, new Color(0.26, 0.52, 0.56, 0.55), 1);
 		m_wStatus = Text(x + 24, by + 7, w - 220, 42, 15, m_cText);
 		AddButton(BTN_CLOSE, "CLOSE", x + w - 165, by, 140);
+		FinishCanvasSwitch();
 		return true;
 	}
 
@@ -1878,9 +1901,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//! New list from the server: build the screen again.
 	protected void RebuildOrder()
 	{
-		if (m_wCanvas)
-			m_wCanvas.RemoveFromHierarchy();
-		m_wCanvas = null;
+		RetireCanvas();
 		m_aRows.Clear();
 		m_bBuilt = false;
 		m_iBuildTries = 0;
