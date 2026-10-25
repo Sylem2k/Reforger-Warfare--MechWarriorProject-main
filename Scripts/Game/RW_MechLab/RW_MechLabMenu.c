@@ -1608,8 +1608,12 @@ class RW_MechLabMenu : ChimeraMenuBase
 		{
 			m_fNextPadLook = now + 0.5;
 			IEntity mech = m_OrderBay.FindParkedMech();
-			if (mech && RW_MechFrameComponent.Find(mech))
+			RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+			SCR_PlayerController localPC = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+			if (frame && localPC && !frame.IsBayReservedForOtherPlayer(localPC.GetPlayerId()))
 			{
+				// Only this player's order screen switches to the produced frame.
+				// The other player still sees the shared world mech, not its build UI.
 				SwitchToLab(mech);
 				return;
 			}
