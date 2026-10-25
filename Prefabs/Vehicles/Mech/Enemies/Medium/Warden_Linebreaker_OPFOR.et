@@ -559,9 +559,13 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{E60500000000004C}" {
    m_aTwistSlots {
+    "Torso"
+    "Exhust"
+    "Exhust2"
    }
    m_aTwistMounts {
    }
+   m_bHideRootMesh 1
   }
   ChimeraAIPathfindingComponent "{E60500000000004D}" {
    NavmeshProject "BTRlike"
@@ -785,6 +789,11 @@ Vehicle {
   }
   SlotManagerComponent "{E605000000000075}" {
    Slots {
+    EntitySlotInfo Torso {
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{C628000000020104}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium_Camo.et"
+    }
     EntitySlotInfo Leg_R1 {
      Offset 0.8214 -0.8656 0.3085
      MergePhysics 0
