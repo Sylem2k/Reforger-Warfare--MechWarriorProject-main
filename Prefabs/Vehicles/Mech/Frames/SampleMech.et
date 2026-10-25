@@ -508,6 +508,13 @@ Vehicle {
   }
   ControllersManagerComponent "{6A8740653CE8FB22}" {
   }
+  CGS_TorsoTwistComponent "{C630000000020101}" {
+   m_sAimStation "DRIVER"
+   m_aTwistSlots {
+    "Torso"
+   }
+   m_bHideRootMesh 1
+  }
   MeshObject "{6A8740653CE8FB20}" {
    Object "{D9C14CA501962E2D}Common/Models/Mech Body/Mech_Body.xob"
    Materials {
@@ -706,6 +713,11 @@ Vehicle {
   }
   SlotManagerComponent "{6A8740653CE8FB7D}" {
    Slots {
+    EntitySlotInfo Torso {
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{C628000000020102}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Light_Camo.et"
+    }
     EntitySlotInfo Leg_R1 {
      Offset 0.6433 -2.477 -0.9805
      MergePhysics 0

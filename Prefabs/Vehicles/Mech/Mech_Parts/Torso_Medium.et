@@ -1,0 +1,12 @@
+GenericEntity {
+ ID "C629000000020103"
+ components {
+  MeshObject "{C62C000000020103}" {
+   Object "{8EB3D751DE396B39}Common/Models/Mech Body/Mech_Med_Body.xob"
+  }
+  RplComponent "{C62D000000020103}" {
+  }
+  Hierarchy "{C62E000000020103}" {
+  }
+ }
+}
