@@ -804,7 +804,7 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E60F000000000057}" {
   }
-  CGS_MechBossComponent "{E60F0000000000AD}" {
+  RW_WarlordBossDamageComponent "{E60F0000000000AD}" {
    m_fHeavyPerSecond 2200
    m_fSmallArmsPerSecond 60
    m_fPartHeavyPerSecond 850
@@ -823,11 +823,11 @@ Vehicle {
    m_bGunners 1
    m_eMode HOLD
    m_sFaction "USSR"
-   m_sPilotPrefab "{D49891BE09F32E3B}Prefabs/Characters/Factions/BLUFOR/US_Army/CGS_Pilot_US.et"
+   m_sPilotPrefab "{C56A957843F590E5}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/REDFOR_BRAIN.et"
+   m_sPilotGroupPrefab ""
    m_bLockDriverSeat 1
    m_eFireMode FIRE_AT_WILL
    m_bFollowGroupMode 0
-   m_sPilotPrefab "{C56A957843F590E5}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/REDFOR_BRAIN.et"
    m_fPatrolRadius 10
    m_fPatrolPause 1
    m_fHuntRadius 10
@@ -839,11 +839,11 @@ Vehicle {
    m_fMaxHeat 1850
    m_fCoolingPerSecond 105
   }
-  CGS_MechShieldComponent "{E60F0000000000AB}" {
+  RW_WarlordShieldComponent "{E60F0000000000AB}" {
    m_fMaxShield 30000
-   m_fRegenPerSecond 750
-   m_fRegenDelay 7
-   m_fBrokenDelay 20
+   m_fRegenPerSecond 250
+   m_fRegenDelay 20
+   m_fBrokenDelay 40
    m_fReactivateAt 0.4
    m_fBleedThrough 0.03
    m_fKineticCost 1
@@ -1112,13 +1112,13 @@ Vehicle {
     BFA_MechHitZone Hull {
      HZDefault 1
      MaxHealth 40000
-     DamageReduction 2
-     DamageThreshold 1
+     DamageReduction 1
+     DamageThreshold 0
      "Melee multiplier" 0.01
-     "Kinetic multiplier" 0.05
-     "Fragmentation multiplier" 0.03
+     "Kinetic multiplier" 0.4
+     "Fragmentation multiplier" 0.15
      "Explosive multiplier" 0.65
-     "Incendiary multiplier" 0.35
+     "Incendiary multiplier" 0.5
      "DamageState threshold" {
       0.7 0.4 0.2
      }
@@ -1137,7 +1137,7 @@ Vehicle {
      m_sBurningParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_engine_small.ptc"
      m_sBurningGroundParticle "{A9259561960FD620}Particles/Vehicle/Vehicle_fire_ground_medium.ptc"
      m_sFireStateSignal "EngineFireState"
-     m_bLogDamage 1
+     m_bLogDamage 0
     }
    }
    CollisionVelocityThreshold 100000
@@ -1158,6 +1158,28 @@ Vehicle {
   SCR_VehicleSpawnProtectionComponent "{E60F000000000088}" {
   }
   SCR_VehiclePerceivableComponent "{E60F000000000089}" {
+   "Additional aim points" {
+    AimPoint "{FC24000000000001}" : "{9E76A1CE4C88117E}Prefabs/Vehicles/Core/Configs/AimPoints/AimPoint_Hull_APC.conf" {
+     AimPointPosition AttachPoint "{FC24000000000011}" {
+      Offset 0 5 0
+     }
+    }
+    AimPoint "{FC24000000000002}" : "{5D12ACF04A43E73A}Prefabs/Vehicles/Core/Configs/AimPoints/AimPoint_Crew_APC.conf" {
+     AimPointPosition AttachPoint "{FC24000000000012}" {
+      Offset -0.2166 12.339 7.5671
+     }
+    }
+    AimPoint "{FC24000000000003}" : "{9E76A1CE4C88117E}Prefabs/Vehicles/Core/Configs/AimPoints/AimPoint_Hull_APC.conf" {
+     AimPointPosition AttachPoint "{FC24000000000013}" {
+      Offset 0 2 -5
+     }
+    }
+    AimPoint "{FC24000000000004}" : "{9E76A1CE4C88117E}Prefabs/Vehicles/Core/Configs/AimPoints/AimPoint_Hull_APC.conf" {
+     AimPointPosition AttachPoint "{FC24000000000014}" {
+      Offset 0 -7 0
+     }
+    }
+   }
    IlluminationLvPerLight 4
    UnitType VehicleHeavy
   }
