@@ -191,6 +191,127 @@ modded class SCR_PlayerController
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//! The new six-column group editor sends the FULL desired mask per hardpoint.
+	//! Unlike a toggle RPC this is safe for rapid successive clicks: a delayed
+	//! response cannot read the previous group's stale client state.
+	void RW_RequestWeaponGroupMask(IEntity mech, int hardpointIndex, int groupMask)
+	{
+		if (!mech || hardpointIndex < 0 || groupMask < 0 || groupMask > 63)
+			return;
+		RplComponent rpl = RplComponent.Cast(mech.FindComponent(RplComponent));
+		if (!rpl)
+			return;
+		if (Replication.IsServer())
+		{
+			RW_ServerWeaponGroupMask(rpl.Id(), hardpointIndex, groupMask);
+			return;
+		}
+		Rpc(RW_RpcAsk_WeaponGroupMask, rpl.Id(), hardpointIndex, groupMask);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RW_RpcAsk_WeaponGroupMask(RplId mechId, int hardpointIndex, int groupMask)
+	{
+		RW_ServerWeaponGroupMask(mechId, hardpointIndex, groupMask);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Recheck the sender in every RPC. Do not trust client-supplied player IDs.
+	protected bool RW_CanEditGroupRouting(IEntity mech)
+	{
+		if (!Replication.IsServer() || !mech)
+			return false;
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		if (!frame || frame.IsBayReservedForOtherPlayer(GetPlayerId()))
+			return false;
+		IEntity user = GetControlledEntity();
+		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
+		bool bayWorks = bay && bay.NoToolNeeded() && bay.CanOperate(user, mech);
+		if (!user || (!bayWorks && (vector.Distance(user.GetOrigin(), mech.GetOrigin()) > RW_MAX_DISTANCE || !RW_MechWrench.HasTool(user, RW_MechWrench.DEFAULT_TOOL))))
+			return false;
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void RW_ServerWeaponGroupMask(RplId mechId, int hardpointIndex, int groupMask)
+	{
+		if (!Replication.IsServer() || hardpointIndex < 0 || groupMask < 0 || groupMask > 63)
+			return;
+		RplComponent rpl = RplComponent.Cast(Replication.FindItem(mechId));
+		if (!rpl || !rpl.GetEntity())
+			return;
+		IEntity mech = rpl.GetEntity().GetRootParent();
+		if (!mech)
+			mech = rpl.GetEntity();
+		if (!RW_CanEditGroupRouting(mech))
+			return;
+		BFA_MechHardpointComponent hardpoints = BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent));
+		if (!hardpoints || hardpointIndex >= hardpoints.GetHardpointCount())
+			return;
+		hardpoints.ServerSetCustomWeaponGroupMask(hardpointIndex, groupMask);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Per-column Chain Fire is set independently from the cockpit's selected group.
+	void RW_RequestGroupChainFire(IEntity mech, int group)
+	{
+		if (!mech || group < 1 || group > 6)
+			return;
+		RplComponent rpl = RplComponent.Cast(mech.FindComponent(RplComponent));
+		if (!rpl)
+			return;
+		if (Replication.IsServer())
+		{
+			RW_ServerGroupChainFire(rpl.Id(), group);
+			return;
+		}
+		Rpc(RW_RpcAsk_GroupChainFire, rpl.Id(), group);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RW_RpcAsk_GroupChainFire(RplId mechId, int group)
+	{
+		RW_ServerGroupChainFire(mechId, group);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void RW_ServerGroupChainFire(RplId mechId, int group)
+	{
+		if (!Replication.IsServer() || group < 1 || group > 6)
+			return;
+		RplComponent rpl = RplComponent.Cast(Replication.FindItem(mechId));
+		if (!rpl || !rpl.GetEntity())
+			return;
+		IEntity mech = rpl.GetEntity().GetRootParent();
+		if (!mech)
+			mech = rpl.GetEntity();
+		if (!RW_CanEditGroupRouting(mech))
+			return;
+		BFA_MechWeaponComponent weapons = BFA_MechWeaponComponent.Cast(mech.FindComponent(BFA_MechWeaponComponent));
+		if (!weapons)
+			return;
+		// Chain mode itself is shared per group across stations. Use a real
+		// station ID where available to stop held fire safely before switching.
+		string stationId = "DRIVER";
+		BFA_MechCoreComponent core = BFA_MechCoreComponent.Cast(mech.FindComponent(BFA_MechCoreComponent));
+		if (core)
+		{
+			array<string> stations = {};
+			core.GetStationIds(stations);
+			foreach (string station : stations)
+			{
+				if (!core.CanStationFireGroup(station, group))
+					continue;
+				stationId = station;
+				break;
+			}
+		}
+		weapons.ServerToggleChainFire(stationId, group);
+	}
+
+	//------------------------------------------------------------------------------------------------
 	//! Client: ask a Mech Bay to build frame 'index' on its pad.
 	void RW_RequestOrderFrame(IEntity bayEntity, int index, int savedSlot = 0)
 	{
