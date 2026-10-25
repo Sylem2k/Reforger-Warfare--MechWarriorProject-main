@@ -44,9 +44,6 @@ GenericEntity {
    m_fRange 1150
    m_fDamage 30
    m_fBeamSpeed 300
-   m_fTracerLength 25
-   m_fTracerThickness 0.62
-   m_bDebug 0
   }
   RplComponent "{F171EBDA68C05DBF}" {
   }
