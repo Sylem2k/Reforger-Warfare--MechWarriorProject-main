@@ -103,6 +103,14 @@ modded class SCR_PlayerController
 			modules.Insert(id);
 		}
 
+		// A Mech Bay frame is reserved for its authenticated ordering player.
+		// Another nearby player cannot modify it even if holding a wrench.
+		if (frame.IsBayReservedForOtherPlayer(GetPlayerId()))
+		{
+			frame.ServerCrewMessage("REFUSED: this frame belongs to another Mech Bay order");
+			return;
+		}
+
 		// Parked in a Mech Bay: the bay does the work (no tool needed).
 		IEntity user = GetControlledEntity();
 		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
@@ -257,6 +265,12 @@ modded class SCR_PlayerController
 		BFA_MechHardpointComponent hardpoints = BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent));
 		if (!frame || !hardpoints)
 			return;
+
+		if (frame.IsBayReservedForOtherPlayer(GetPlayerId()))
+		{
+			frame.ServerCrewMessage("REFUSED: this frame belongs to another Mech Bay order");
+			return;
+		}
 
 		// Saving a build must obey the same proximity / tool rules as applying one.
 		IEntity user = GetControlledEntity();
