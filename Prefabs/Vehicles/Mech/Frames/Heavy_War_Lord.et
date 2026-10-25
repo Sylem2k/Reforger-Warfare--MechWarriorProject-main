@@ -608,9 +608,14 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{6AAE3A15B74EC666}" {
    m_aTwistSlots {
+    "Torso"
+    "Head"
+    "Exhust"
+    "Exhust2"
    }
    m_aTwistMounts {
    }
+   m_bHideRootMesh 1
   }
   ChimeraAIPathfindingComponent "{6AAE3A15B74EC66B}" {
    NavmeshProject "BTRlike"
@@ -839,6 +844,11 @@ Vehicle {
   }
   SlotManagerComponent "{6AAE3A15B74EC6CA}" {
    Slots {
+    EntitySlotInfo Torso {
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{C628000000020105}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Warlord.et"
+    }
     EntitySlotInfo Leg_R1 {
      Offset 3.7637 -14.2431 0.3085
      MergePhysics 0
