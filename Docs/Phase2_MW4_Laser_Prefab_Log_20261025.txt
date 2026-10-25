@@ -1,0 +1,46 @@
+PHASE 2 - MW4 LASER/PPC PREFAB WARNINGS
+October 25, 2026
+Development notes (first person)
+
+I tested the new Mech Lab / Weapon Groups screen and the interface is much easier to use.
+My Workbench log shows that the Assault Gravemarch-G spawned successfully and accepted five successive loadout updates without any Game-script compilation exceptions.
+
+When I fitted the Small Laser, Medium Laser, ER Medium Laser and Small Pulse Laser, Workbench complained about three obsolete serialized weapon-component properties:
+- m_fTracerLength
+- m_fTracerThickness
+- m_bDebug
+
+I traced them back to the RW_LaserWeapon / RW_PulseLaserWeapon prefabs. Those properties are not declared by the current weapon script. The active laser visual settings are held in the weapon's BFA_MechWeaponFX block, which already has CGS_LaserBeam.et plus beam duration/width.
+I checked the other MW4 laser and PPC variants before updating so the warnings would not simply reappear when I fitted another weapon.
+
+I removed exactly these three stale lines from these nine prefabs:
+- SMALL_LASER.et
+- MEDIUM_LASER.et
+- ER_MEDIUM_LASER.et
+- LARGE_LASER.et
+- SMALL_PULSE_LASER.et
+- MEDIUM_PULSE_LASER.et
+- LARGE_PULSE_LASER.et
+- PPC.et
+- ER_PPC.et
+
+ER_LARGE_LASER.et was already clean, so I left it untouched.
+I kept all prefab component class names, IDs/GUIDs, resource paths, weapon damage, range, heat, shots/minute, muzzle points, and FX values unchanged. This change only removes obsolete serialized fields.
+
+The log also has unrelated or previously identified issues which I have NOT changed in this branch:
+- Missing SampleMech2.et and SampleMech3.et in FactionManager_Editor1.
+- Duplicate faction catalog registrations for SampleMech and several mech frame variants.
+- Assault_Gravemarch_Gun.et / SCR_VehiclePerceivableComponent missing AI aimpoints.
+- Unknown Parent / SlidingTrackMaterial entries in unrelated vehicle prefabs.
+- A chat widget filter warning and other base UI content warnings.
+
+The new branch builds directly on the Phase 2 multi-group grid test branch, which already contains the earlier Phase 2 and Phase 1 MW work. I have not changed main or Mech Core CGS in this follow-up.
+
+TEST PLAN
+1. Pull the MW 'fix/phase2-mw4-laser-stale-prefab-fields-20261025' branch alongside the current Core 'feat/phase2-multi-group-grid-20261025' branch.
+2. Open Workbench, place or build a Gravemarch-G, install the four laser types mentioned in the log and verify the Unknown keyword/data warnings do not return for these fields.
+3. Try the other five changed laser/PPC variants to verify they also load without those warnings.
+4. Confirm beams and firing still appear correctly locally; multiplayer RPL remains unverified.
+5. Keep the existing known catalog, AI aimpoint and external mod warnings separate from these laser prefab changes.
+
+I only reviewed/modified source data and checked the edited prefabs structurally; this build has not yet been compiled or retested in Workbench.
