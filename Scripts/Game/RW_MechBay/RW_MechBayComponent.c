@@ -190,7 +190,15 @@ class RW_MechBayComponent : ScriptComponent
 			ServerBayMessage("REFUSED: no such frame");
 			return false;
 		}
-		if (!user || vector.Distance(user.GetOrigin(), GetOwner().GetOrigin()) > m_fRadius + 10)
+		// The RPC runs through the requesting PlayerController; verify that its
+		// controlled entity actually belongs to that player before locking ownership.
+		PlayerManager playerManager = GetGame().GetPlayerManager();
+		if (playerId <= 0 || !playerManager || !user || playerManager.GetPlayerIdFromControlledEntity(user) != playerId)
+		{
+			ServerBayMessage("REFUSED: could not verify ordering player");
+			return false;
+		}
+		if (vector.Distance(user.GetOrigin(), GetOwner().GetOrigin()) > m_fRadius + 10)
 		{
 			ServerBayMessage("REFUSED: too far from the bay");
 			return false;
@@ -248,6 +256,13 @@ class RW_MechBayComponent : ScriptComponent
 		m_fNextBuildTime = now + Math.Max(m_fBuildCooldown, 0);
 		string name = entry.m_sName;
 		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		if (frame)
+			frame.ServerSetBayOrderOwnerId(playerId);
+
+		// A companion frame is reserved for the same authenticated player at birth.
+		CGS_MechBrainComponent brain = CGS_MechBrainComponent.Find(mech);
+		if (brain)
+			brain.ServerBindCompanionOwner(playerId);
 		if (name.IsEmpty() && frame)
 			name = frame.GetFrameName();
 		if (!build)
@@ -452,7 +467,20 @@ class RW_MechBayOpenAction : ScriptedUserAction
 	//------------------------------------------------------------------------------------------------
 	override bool CanBePerformedScript(IEntity user)
 	{
-		if (!ParkedMech() && m_Bay.GetFrameCount() == 0)
+		IEntity mech = ParkedMech();
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		if (frame && GetGame())
+		{
+			PlayerController pc = GetGame().GetPlayerController();
+			// Client UI check only; a headless server has no local PlayerController.
+			// The server RPC performs the authoritative ownership validation.
+			if (pc && frame.IsBayReservedForOtherPlayer(pc.GetPlayerId()))
+			{
+				SetCannotPerformReason("Another player owns this bay order");
+				return false;
+			}
+		}
+		if (!mech && m_Bay.GetFrameCount() == 0)
 		{
 			SetCannotPerformReason("No mech parked in the bay");
 			return false;

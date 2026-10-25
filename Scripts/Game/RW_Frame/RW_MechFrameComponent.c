@@ -68,6 +68,11 @@ class RW_MechFrameComponent : ScriptComponent
 	[RplProp()]
 	protected int m_iExtraHeatsinks;
 
+	// Owner of a frame ORDERED at a Mech Bay. Zero = world/GM mech, no bay reservation.
+	// Only the server-authenticated bay order sets this; clients only read it for UI.
+	[RplProp()]
+	protected int m_iBayOrderOwnerId;
+
 	// Last loadout message for the crew HUD (server sets it, everyone sees it).
 	[RplProp()]
 	protected string m_sCrewMessage;
@@ -105,6 +110,27 @@ class RW_MechFrameComponent : ScriptComponent
 	string GetFrameName()
 	{
 		return m_sFrameName;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	int GetBayOrderOwnerId()
+	{
+		return m_iBayOrderOwnerId;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	bool IsBayReservedForOtherPlayer(int playerId)
+	{
+		return m_iBayOrderOwnerId > 0 && m_iBayOrderOwnerId != playerId;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	void ServerSetBayOrderOwnerId(int playerId)
+	{
+		if (!Replication.IsServer())
+			return;
+		m_iBayOrderOwnerId = Math.Max(playerId, 0);
+		Replication.BumpMe();
 	}
 
 	RW_EWeightClass GetWeightClass()
