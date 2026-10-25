@@ -34,9 +34,6 @@ GenericEntity {
    m_fRange 1700
    m_fDamage 88
    m_fBeamSpeed 300
-   m_fTracerLength 25
-   m_fTracerThickness 0.62
-   m_bDebug 0
   }
   RigidBody "{6A8C29F2D0FE85DF}" {
    Enabled 0
