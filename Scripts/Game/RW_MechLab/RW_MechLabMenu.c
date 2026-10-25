@@ -178,6 +178,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 	static const int ROW_FILTER = 9;    // filter parts by family
 	static const int ROW_ORDER_PAGE = 10; // move between chassis cards
 	static const int ROW_HARDPOINT_PAGE = 11; // display all slots, including large assault frames
+	static const int ROW_GROUP_MINUS = 12;
+	static const int ROW_GROUP_PLUS = 13;
 	static const int ROW_SCROLL = 8;    // value -1 = up, 1 = down (parts list)    // value = frame index * 100 + saved slot
 
 	static const int BTN_RESET = 0;
@@ -231,6 +233,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected CGS_MechHeatComponent m_Heat;
 
 	protected Widget m_wCanvas;
+	protected Widget m_wRetiredCanvas; // old screen stays visible until the next is ready
 	protected float m_fS = 1;               // design units -> screen units
 	protected float m_fLeftEdge;            // inner edges of the side panels (design units)
 	protected float m_fRightEdge;
@@ -377,6 +380,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (m_wCanvas)
 			m_wCanvas.RemoveFromHierarchy();
 		m_wCanvas = null;
+		if (m_wRetiredCanvas)
+			m_wRetiredCanvas.RemoveFromHierarchy();
+		m_wRetiredCanvas = null;
 		m_aRows.Clear();
 		s_pNextMech = null;
 		s_pNextBay = null;
@@ -685,6 +691,14 @@ class RW_MechLabMenu : ChimeraMenuBase
 					ScrollParts(0, true);
 				}
 			}
+		}
+		else if (pressed.m_iKind == ROW_GROUP_MINUS)
+		{
+			ChangeSelectedWeaponGroup(-1);
+		}
+		else if (pressed.m_iKind == ROW_GROUP_PLUS)
+		{
+			ChangeSelectedWeaponGroup(1);
 		}
 		else if (pressed.m_iKind == ROW_HS_MINUS)
 		{
@@ -1066,6 +1080,15 @@ class RW_MechLabMenu : ChimeraMenuBase
 		float centreW = rx - centreX - 16;
 		if (centreW >= 210)
 		{
+			// Group routing is per hardpoint and stays on the same mech after refitting.
+			// 0 restores the prefab's authored group; 1-6 are player-configurable.
+			RW_LabRow groupMinus = AddRow(ROW_GROUP_MINUS, -1, centreX + 8, by - 135, 85, 30);
+			groupMinus.m_wTitle = Text(centreX + 12, by - 130, 80, 20, 14, m_cAccent, "< GROUP");
+			RW_LabRow groupPlus = AddRow(ROW_GROUP_PLUS, 1, centreX + centreW - 93, by - 135, 85, 30);
+			groupPlus.m_wTitle = Text(centreX + centreW - 89, by - 130, 80, 20, 14, m_cAccent, "GROUP >");
+			TextWidget groupLegend = Text(centreX + 98, by - 129, centreW - 196, 18, 12, m_cDim, "0 = DEFAULT");
+			if (groupLegend)
+				groupLegend.SetFlags(WidgetFlags.CENTER);
 			Rect(centreX, by - 92, centreW, 62, m_cPanel);
 			Rect(centreX, by - 92, 4, 62, m_cAccent, 1);
 			m_wSelectedTitle = Text(centreX + 14, by - 83, centreW - 24, 21, 15, m_cAccent, "SELECTED HARDPOINT");
@@ -1096,6 +1119,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 
 		m_wDragGhost = Text(0, 0, 300, 26, 18, m_cAccent, "", 20);
 		m_wDragGhost.SetVisible(false);
+		FinishCanvasSwitch();
 		return true;
 	}
 
@@ -1300,6 +1324,11 @@ class RW_MechLabMenu : ChimeraMenuBase
 				string selection = PartName(m_aPending[m_iSelectedHp]);
 				if (m_aPending[m_iSelectedHp] != m_Hardpoints.GetModuleAt(m_iSelectedHp))
 					selection = selection + "  [PENDING]";
+				int customGroup = m_Hardpoints.GetCustomWeaponGroup(m_iSelectedHp);
+				if (customGroup > 0)
+					selection = selection + string.Format("  /  GROUP %1", customGroup);
+				else
+					selection = selection + "  /  GROUP DEFAULT";
 				m_wSelectedPart.SetText(selection);
 			}
 			else
@@ -1587,6 +1616,28 @@ class RW_MechLabMenu : ChimeraMenuBase
 		m_wStatus.SetColor(color);
 	}
 
+	//------------------------------------------------------------------------------------------------
+	//! Change the group for the currently selected hardpoint. The server owns the
+	//! actual edit and checks Mech Bay/order ownership or the Mech Wrench.
+	protected void ChangeSelectedWeaponGroup(int direction)
+	{
+		if (!m_pMech || !m_Hardpoints || m_iSelectedHp < 0 || m_iSelectedHp >= m_Hardpoints.GetHardpointCount())
+			return;
+
+		int current = m_Hardpoints.GetCustomWeaponGroup(m_iSelectedHp);
+		int requested = current + direction;
+		if (requested > 6)
+			requested = 0;
+		else if (requested < 0)
+			requested = 6;
+
+		SCR_PlayerController requester = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		if (!requester)
+			return;
+		requester.RW_RequestHardpointGroup(m_pMech, m_iSelectedHp, requested);
+		Say(string.Format("Requested weapon group %1 for %2 (0 = prefab default)", requested, m_Hardpoints.GetHardpointName(m_iSelectedHp)), false);
+	}
+
 	//==================================================================================================
 	// ORDER FRAME (bay with an empty pad)
 	//==================================================================================================
@@ -1655,6 +1706,27 @@ class RW_MechLabMenu : ChimeraMenuBase
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	//! Preserve the previous full screen during the 1+ frame canvas measurement
+	//! and rebuild. This prevents black/menu flashes when switching pages or parts.
+	protected void RetireCanvas()
+	{
+		if (m_wRetiredCanvas)
+			m_wRetiredCanvas.RemoveFromHierarchy();
+		m_wRetiredCanvas = m_wCanvas;
+		m_wCanvas = null;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void FinishCanvasSwitch()
+	{
+		if (!m_wRetiredCanvas)
+			return;
+		m_wRetiredCanvas.RemoveFromHierarchy();
+		m_wRetiredCanvas = null;
+	}
+
+	//------------------------------------------------------------------------------------------------
 	protected void ScrollParts(int step, bool force = false)
 	{
 		int maxScroll = Math.Max(m_iPartCount - m_iPartsShown, 0);
@@ -1662,10 +1734,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (next == m_iPartScroll && !force)
 			return;
 		m_iPartScroll = next;
-		// Build the screen again with the new window (the plan is kept).
-		if (m_wCanvas)
-			m_wCanvas.RemoveFromHierarchy();
-		m_wCanvas = null;
+		// Build the screen again without leaving a blank transition frame.
+		RetireCanvas();
 		m_aRows.Clear();
 		m_bBuilt = false;
 		m_iBuildTries = 0;
@@ -1676,9 +1746,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//------------------------------------------------------------------------------------------------
 	protected void SwitchToLab(IEntity mech)
 	{
-		if (m_wCanvas)
-			m_wCanvas.RemoveFromHierarchy();
-		m_wCanvas = null;
+		RetireCanvas();
 		m_aRows.Clear();
 		m_bBuilt = false;
 		m_iBuildTries = 0;
@@ -1825,6 +1893,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		Rect(x + 12, by - 8, w - 24, 1, new Color(0.26, 0.52, 0.56, 0.55), 1);
 		m_wStatus = Text(x + 24, by + 7, w - 220, 42, 15, m_cText);
 		AddButton(BTN_CLOSE, "CLOSE", x + w - 165, by, 140);
+		FinishCanvasSwitch();
 		return true;
 	}
 
@@ -1832,9 +1901,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//! New list from the server: build the screen again.
 	protected void RebuildOrder()
 	{
-		if (m_wCanvas)
-			m_wCanvas.RemoveFromHierarchy();
-		m_wCanvas = null;
+		RetireCanvas();
 		m_aRows.Clear();
 		m_bBuilt = false;
 		m_iBuildTries = 0;

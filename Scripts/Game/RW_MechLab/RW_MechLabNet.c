@@ -134,6 +134,63 @@ modded class SCR_PlayerController
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//! Mech Lab weapon grouping, immediately replicated per hardpoint.
+	//! 0 = return to authored default; 1-6 = a player-selected fire group.
+	void RW_RequestHardpointGroup(IEntity mech, int hardpointIndex, int group)
+	{
+		if (!mech || hardpointIndex < 0 || group < 0 || group > 6)
+			return;
+		RplComponent rpl = RplComponent.Cast(mech.FindComponent(RplComponent));
+		if (!rpl)
+			return;
+		if (Replication.IsServer())
+		{
+			RW_ServerHardpointGroup(rpl.Id(), hardpointIndex, group);
+			return;
+		}
+		Rpc(RW_RpcAsk_HardpointGroup, rpl.Id(), hardpointIndex, group);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RW_RpcAsk_HardpointGroup(RplId mechId, int hardpointIndex, int group)
+	{
+		RW_ServerHardpointGroup(mechId, hardpointIndex, group);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void RW_ServerHardpointGroup(RplId mechId, int hardpointIndex, int group)
+	{
+		if (!Replication.IsServer() || hardpointIndex < 0 || group < 0 || group > 6)
+			return;
+		RplComponent rpl = RplComponent.Cast(Replication.FindItem(mechId));
+		if (!rpl || !rpl.GetEntity())
+			return;
+		IEntity mech = rpl.GetEntity().GetRootParent();
+		if (!mech)
+			mech = rpl.GetEntity();
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		BFA_MechHardpointComponent hardpoints = BFA_MechHardpointComponent.Cast(mech.FindComponent(BFA_MechHardpointComponent));
+		if (!frame || !hardpoints || hardpointIndex >= hardpoints.GetHardpointCount())
+			return;
+		if (frame.IsBayReservedForOtherPlayer(GetPlayerId()))
+		{
+			frame.ServerCrewMessage("REFUSED: another player owns this bay order");
+			return;
+		}
+		IEntity user = GetControlledEntity();
+		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
+		bool bayWorks = bay && bay.NoToolNeeded() && bay.CanOperate(user, mech);
+		if (!user || (!bayWorks && (vector.Distance(user.GetOrigin(), mech.GetOrigin()) > RW_MAX_DISTANCE || !RW_MechWrench.HasTool(user, RW_MechWrench.DEFAULT_TOOL))))
+		{
+			frame.ServerCrewMessage("REFUSED: Mech Bay or nearby Mech Wrench required to configure groups");
+			return;
+		}
+		if (hardpoints.ServerSetCustomWeaponGroup(hardpointIndex, group))
+			frame.ServerCrewMessage(string.Format("Weapon hardpoint %1 set to group %2 (0 = original)", hardpoints.GetHardpointName(hardpointIndex), group));
+	}
+
+	//------------------------------------------------------------------------------------------------
 	//! Client: ask a Mech Bay to build frame 'index' on its pad.
 	void RW_RequestOrderFrame(IEntity bayEntity, int index, int savedSlot = 0)
 	{
