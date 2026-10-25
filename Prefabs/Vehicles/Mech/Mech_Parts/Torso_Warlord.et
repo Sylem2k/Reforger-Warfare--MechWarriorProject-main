@@ -1,0 +1,12 @@
+GenericEntity {
+ ID "C629000000020105"
+ components {
+  MeshObject "{C62C000000020105}" {
+   Object "{528115F7F8BA3093}Common/Models/Titan_War_Lord/War_Lord_Body.xob"
+  }
+  RplComponent "{C62D000000020105}" {
+  }
+  Hierarchy "{C62E000000020105}" {
+  }
+ }
+}
