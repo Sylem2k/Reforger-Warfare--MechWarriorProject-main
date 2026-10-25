@@ -248,6 +248,13 @@ class RW_MechBayComponent : ScriptComponent
 		m_fNextBuildTime = now + Math.Max(m_fBuildCooldown, 0);
 		string name = entry.m_sName;
 		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		if (frame)
+			frame.ServerSetBayOrderOwnerId(playerId);
+
+		// A companion frame is reserved for the same authenticated player at birth.
+		CGS_MechBrainComponent brain = CGS_MechBrainComponent.Find(mech);
+		if (brain)
+			brain.ServerBindCompanionOwner(playerId);
 		if (name.IsEmpty() && frame)
 			name = frame.GetFrameName();
 		if (!build)
@@ -452,7 +459,18 @@ class RW_MechBayOpenAction : ScriptedUserAction
 	//------------------------------------------------------------------------------------------------
 	override bool CanBePerformedScript(IEntity user)
 	{
-		if (!ParkedMech() && m_Bay.GetFrameCount() == 0)
+		IEntity mech = ParkedMech();
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		if (frame && GetGame())
+		{
+			PlayerController pc = GetGame().GetPlayerController();
+			if (frame.IsBayReservedForOtherPlayer(pc ? pc.GetPlayerId() : 0))
+			{
+				SetCannotPerformReason("Another player owns this bay order");
+				return false;
+			}
+		}
+		if (!mech && m_Bay.GetFrameCount() == 0)
 		{
 			SetCannotPerformReason("No mech parked in the bay");
 			return false;
