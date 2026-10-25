@@ -270,6 +270,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected ref array<int> m_aGroupHardpoints = {};
 	protected ref array<int> m_aGroupPreview = {};
 	protected ref array<float> m_aGroupPreviewUntil = {};
+	protected ref array<int> m_aChainPreview = {};
+	protected ref array<float> m_aChainPreviewUntil = {};
 
 	// Mouse.
 	protected float m_fMouseX;
@@ -1695,6 +1697,13 @@ class RW_MechLabMenu : ChimeraMenuBase
 			return;
 		m_aGroupPreview.Clear();
 		m_aGroupPreviewUntil.Clear();
+		m_aChainPreview.Clear();
+		m_aChainPreviewUntil.Clear();
+		for (int group = 1; group <= 6; group++)
+		{
+			m_aChainPreview.Insert(-1);
+			m_aChainPreviewUntil.Insert(0);
+		}
 		for (int hp = 0; hp < m_Hardpoints.GetHardpointCount(); hp++)
 		{
 			m_aGroupPreview.Insert(-1);
@@ -1713,6 +1722,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 		m_bGroupsOpen = false;
 		m_aGroupPreview.Clear();
 		m_aGroupPreviewUntil.Clear();
+		m_aChainPreview.Clear();
+		m_aChainPreviewUntil.Clear();
 		RebuildGroupsScreen();
 	}
 
@@ -1782,13 +1793,38 @@ class RW_MechLabMenu : ChimeraMenuBase
 	}
 
 	//------------------------------------------------------------------------------------------------
+	protected bool DisplayedChainFire(int group)
+	{
+		if (group < 1 || group > 6 || !m_pMech)
+			return false;
+		BFA_MechWeaponComponent weapons = BFA_MechWeaponComponent.Cast(m_pMech.FindComponent(BFA_MechWeaponComponent));
+		bool actual = weapons && weapons.IsChainFire(group);
+		int index = group - 1;
+		if (index >= m_aChainPreview.Count() || m_aChainPreview[index] < 0)
+			return actual;
+		if ((actual && m_aChainPreview[index] == 1) || (!actual && m_aChainPreview[index] == 0) || Now() >= m_aChainPreviewUntil[index])
+		{
+			m_aChainPreview[index] = -1;
+			return actual;
+		}
+		return m_aChainPreview[index] == 1;
+	}
+
+	//------------------------------------------------------------------------------------------------
 	protected void ToggleGroupChain(int group)
 	{
 		if (!m_pMech || group < 1 || group > 6)
 			return;
 		SCR_PlayerController requester = SCR_PlayerController.Cast(GetGame().GetPlayerController());
-		if (requester)
-			requester.RW_RequestGroupChainFire(m_pMech, group);
+		if (!requester)
+			return;
+		bool current = DisplayedChainFire(group);
+		if (current)
+			m_aChainPreview[group - 1] = 0;
+		else
+			m_aChainPreview[group - 1] = 1;
+		m_aChainPreviewUntil[group - 1] = Now() + 3.0;
+		requester.RW_RequestGroupChainFire(m_pMech, group);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -1917,7 +1953,22 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected void RefreshGroupsScreen()
 	{
 		int hover = RowAt(m_fMouseX, m_fMouseY);
-		BFA_MechWeaponComponent router = BFA_MechWeaponComponent.Cast(m_pMech.FindComponent(BFA_MechWeaponComponent));
+		if (m_wStatus)
+		{
+			if (Now() < m_fLocalUntil)
+			{
+				m_wStatus.SetText(m_sLocalMessage);
+				if (m_bLocalBad)
+					m_wStatus.SetColor(m_cBad);
+				else
+					m_wStatus.SetColor(m_cText);
+			}
+			else
+			{
+				m_wStatus.SetText("Changes apply to this mech immediately.");
+				m_wStatus.SetColor(m_cDim);
+			}
+		}
 		for (int i = 0; i < m_aRows.Count(); i++)
 		{
 			RW_LabRow row = m_aRows[i];
@@ -1931,7 +1982,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 			}
 			else if (row.m_iKind == ROW_GROUP_CHAIN)
 			{
-				active = router && router.IsChainFire(row.m_iValue);
+				active = DisplayedChainFire(row.m_iValue);
 				if (row.m_wTitle)
 				{
 					if (active)
