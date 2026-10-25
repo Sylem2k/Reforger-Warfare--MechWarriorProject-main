@@ -180,6 +180,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 	static const int ROW_HARDPOINT_PAGE = 11; // display all slots, including large assault frames
 	static const int ROW_GROUP_MINUS = 12;
 	static const int ROW_GROUP_PLUS = 13;
+	static const int ROW_GROUP_CELL = 14;
+	static const int ROW_GROUP_CHAIN = 15;
+	static const int ROW_GROUP_PAGE = 16;
 	static const int ROW_SCROLL = 8;    // value -1 = up, 1 = down (parts list)    // value = frame index * 100 + saved slot
 
 	static const int BTN_RESET = 0;
@@ -189,6 +192,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 	static const int BTN_VIEW_RIGHT = 4;
 	static const int BTN_SAVE = 5;
 	static const int BTN_DELETE_MECH = 6;
+	static const int BTN_GROUP_SCREEN = 7;
+	static const int BTN_GROUP_BACK = 8;
 
 	static const float UI_SCALE = 1.3;      // bigger = everything bigger
 	static const float PANEL_W = 398;
@@ -255,6 +260,15 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected ref array<int> m_aPending = {};
 	protected int m_iPendingHS;
 	protected int m_iSelectedHp;
+
+	// Full weapon-group editor screen. Local preview masks make checkboxes react
+	// immediately; the authoritative values still come from server RplProps.
+	protected bool m_bGroupsOpen;
+	protected int m_iGroupPage;
+	protected int m_iGroupRowsPerPage = 8;
+	protected ref array<int> m_aGroupHardpoints = {};
+	protected ref array<int> m_aGroupPreview = {};
+	protected ref array<float> m_aGroupPreviewUntil = {};
 
 	// Mouse.
 	protected float m_fMouseX;
@@ -392,6 +406,11 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//------------------------------------------------------------------------------------------------
 	protected void OnBack()
 	{
+		if (m_bGroupsOpen)
+		{
+			CloseGroupsScreen();
+			return;
+		}
 		Close();
 	}
 
@@ -422,8 +441,16 @@ class RW_MechLabMenu : ChimeraMenuBase
 			return;
 		}
 
-		if (!m_bBuilt && !Build())
-			return;
+		if (!m_bBuilt)
+		{
+			if (m_bGroupsOpen)
+			{
+				if (!BuildGroupsScreen())
+					return;
+			}
+			else if (!Build())
+				return;
+		}
 
 		WorkspaceWidget ws = GetGame().GetWorkspace();
 		int mx, my;
@@ -433,6 +460,12 @@ class RW_MechLabMenu : ChimeraMenuBase
 
 		if (m_Camera)
 			m_Camera.Update(tDelta);
+
+		if (m_bGroupsOpen)
+		{
+			RefreshGroupsScreen();
+			return;
+		}
 
 		if (m_iPressRow >= 0 && !m_bDragging && m_aRows[m_iPressRow].m_iKind == ROW_PART)
 		{
@@ -640,6 +673,22 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (overIndex < 0 || m_aRows[overIndex] != pressed)
 			return;
 
+		if (m_bGroupsOpen)
+		{
+			if (pressed.m_iKind == ROW_GROUP_CELL)
+				ToggleGroupCell(pressed.m_iValue / 10, Math.Mod(pressed.m_iValue, 10));
+			else if (pressed.m_iKind == ROW_GROUP_CHAIN)
+				ToggleGroupChain(pressed.m_iValue);
+			else if (pressed.m_iKind == ROW_GROUP_PAGE)
+			{
+				m_iGroupPage = Math.Max(0, m_iGroupPage + pressed.m_iValue);
+				RebuildGroupsScreen();
+			}
+			else if (pressed.m_iKind == ROW_BUTTON && pressed.m_iValue == BTN_GROUP_BACK)
+				CloseGroupsScreen();
+			return;
+		}
+
 		if (pressed.m_iKind == ROW_FILTER)
 		{
 			m_iPartFilter = pressed.m_iValue;
@@ -718,6 +767,10 @@ class RW_MechLabMenu : ChimeraMenuBase
 			else if (pressed.m_iValue == BTN_APPLY)
 			{
 				Apply();
+			}
+			else if (pressed.m_iValue == BTN_GROUP_SCREEN)
+			{
+				OpenGroupsScreen();
 			}
 			else if (pressed.m_iValue == BTN_VIEW_LEFT)
 			{
@@ -1082,13 +1135,11 @@ class RW_MechLabMenu : ChimeraMenuBase
 		{
 			// Group routing is per hardpoint and stays on the same mech after refitting.
 			// 0 restores the prefab's authored group; 1-6 are player-configurable.
-			RW_LabRow groupMinus = AddRow(ROW_GROUP_MINUS, -1, centreX + 8, by - 135, 85, 30);
-			groupMinus.m_wTitle = Text(centreX + 12, by - 130, 80, 20, 14, m_cAccent, "< GROUP");
-			RW_LabRow groupPlus = AddRow(ROW_GROUP_PLUS, 1, centreX + centreW - 93, by - 135, 85, 30);
-			groupPlus.m_wTitle = Text(centreX + centreW - 89, by - 130, 80, 20, 14, m_cAccent, "GROUP >");
-			TextWidget groupLegend = Text(centreX + 98, by - 129, centreW - 196, 18, 12, m_cDim, "0 = DEFAULT");
-			if (groupLegend)
-				groupLegend.SetFlags(WidgetFlags.CENTER);
+			// Open the full per-weapon 1-6 matrix. A button is less cramped
+			// than changing one hardpoint's group here while editing modules.
+			RW_LabRow groupButton = AddRow(ROW_BUTTON, BTN_GROUP_SCREEN, centreX + 8, by - 135, centreW - 16, 31);
+			groupButton.m_wTitle = Text(centreX + 14, by - 130, centreW - 28, 22, 15, m_cAccent, "WEAPON GROUPS  //  CONFIGURE >");
+			groupButton.m_wTitle.SetFlags(WidgetFlags.CENTER);
 			Rect(centreX, by - 92, centreW, 62, m_cPanel);
 			Rect(centreX, by - 92, 4, 62, m_cAccent, 1);
 			m_wSelectedTitle = Text(centreX + 14, by - 83, centreW - 24, 21, 15, m_cAccent, "SELECTED HARDPOINT");
@@ -1324,11 +1375,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 				string selection = PartName(m_aPending[m_iSelectedHp]);
 				if (m_aPending[m_iSelectedHp] != m_Hardpoints.GetModuleAt(m_iSelectedHp))
 					selection = selection + "  [PENDING]";
-				int customGroup = m_Hardpoints.GetCustomWeaponGroup(m_iSelectedHp);
-				if (customGroup > 0)
-					selection = selection + string.Format("  /  GROUP %1", customGroup);
-				else
-					selection = selection + "  /  GROUP DEFAULT";
+				selection = selection + "  /  G " + GroupsLabel(m_Hardpoints.GetEffectiveWeaponGroupMask(m_iSelectedHp));
 				m_wSelectedPart.SetText(selection);
 			}
 			else
