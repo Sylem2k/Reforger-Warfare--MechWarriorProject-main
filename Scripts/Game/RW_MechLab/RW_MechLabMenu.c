@@ -183,6 +183,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	static const int ROW_GROUP_CELL = 14;
 	static const int ROW_GROUP_CHAIN = 15;
 	static const int ROW_GROUP_PAGE = 16;
+	static const int ROW_GROUP_RESET = 17;
 	static const int ROW_SCROLL = 8;    // value -1 = up, 1 = down (parts list)    // value = frame index * 100 + saved slot
 
 	static const int BTN_RESET = 0;
@@ -679,6 +680,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 				ToggleGroupCell(pressed.m_iValue / 10, Math.Mod(pressed.m_iValue, 10));
 			else if (pressed.m_iKind == ROW_GROUP_CHAIN)
 				ToggleGroupChain(pressed.m_iValue);
+			else if (pressed.m_iKind == ROW_GROUP_RESET)
+				ResetWeaponGroup(pressed.m_iValue);
 			else if (pressed.m_iKind == ROW_GROUP_PAGE)
 			{
 				m_iGroupPage = Math.Max(0, m_iGroupPage + pressed.m_iValue);
@@ -1764,6 +1767,21 @@ class RW_MechLabMenu : ChimeraMenuBase
 	}
 
 	//------------------------------------------------------------------------------------------------
+	//! A per-row DEFAULT restores original prefab routing without wiping any
+	//! other weapon's custom multi-group assignments.
+	protected void ResetWeaponGroup(int hp)
+	{
+		if (!m_pMech || !m_Hardpoints || hp < 0 || hp >= m_Hardpoints.GetHardpointCount())
+			return;
+		SCR_PlayerController requester = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		if (!requester)
+			return;
+		m_aGroupPreview[hp] = m_Hardpoints.GetDefaultWeaponGroupMask(hp);
+		m_aGroupPreviewUntil[hp] = Now() + 3.0;
+		requester.RW_RequestWeaponGroupMask(m_pMech, hp, 0);
+	}
+
+	//------------------------------------------------------------------------------------------------
 	protected void ToggleGroupChain(int group)
 	{
 		if (!m_pMech || group < 1 || group > 6)
@@ -1843,8 +1861,11 @@ class RW_MechLabMenu : ChimeraMenuBase
 				moduleId = m_aPending[hp];
 			float y = rowY + (i - first) * rowH;
 			Rect(matrixX, y, matrixW, rowH - 4, m_cRow, 0);
-			Text(matrixX + 8, y + 3, nameW - 14, 23, 17, m_cText, PartName(moduleId));
-			Text(matrixX + 8, y + 27, nameW - 14, 16, 12, m_cDim, m_Hardpoints.GetHardpointName(hp));
+			Text(matrixX + 8, y + 3, nameW - 74, 23, 17, m_cText, PartName(moduleId));
+			Text(matrixX + 8, y + 27, nameW - 74, 16, 12, m_cDim, m_Hardpoints.GetHardpointName(hp));
+			RW_LabRow reset = AddRow(ROW_GROUP_RESET, hp, matrixX + nameW - 67, y + 8, 59, rowH - 20);
+			reset.m_wTitle = Text(matrixX + nameW - 66, y + 13, 57, 20, 12, m_cAccent, "DEFAULT");
+			reset.m_wTitle.SetFlags(WidgetFlags.CENTER);
 			for (int group = 1; group <= 6; group++)
 			{
 				float cx = colX + (group - 1) * colW;
