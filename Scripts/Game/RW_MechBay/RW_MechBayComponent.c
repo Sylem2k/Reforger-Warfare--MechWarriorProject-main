@@ -190,7 +190,15 @@ class RW_MechBayComponent : ScriptComponent
 			ServerBayMessage("REFUSED: no such frame");
 			return false;
 		}
-		if (!user || vector.Distance(user.GetOrigin(), GetOwner().GetOrigin()) > m_fRadius + 10)
+		// The RPC runs through the requesting PlayerController; verify that its
+		// controlled entity actually belongs to that player before locking ownership.
+		PlayerManager playerManager = GetGame().GetPlayerManager();
+		if (playerId <= 0 || !playerManager || !user || playerManager.GetPlayerIdFromControlledEntity(user) != playerId)
+		{
+			ServerBayMessage("REFUSED: could not verify ordering player");
+			return false;
+		}
+		if (vector.Distance(user.GetOrigin(), GetOwner().GetOrigin()) > m_fRadius + 10)
 		{
 			ServerBayMessage("REFUSED: too far from the bay");
 			return false;
