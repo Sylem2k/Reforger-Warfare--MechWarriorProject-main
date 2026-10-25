@@ -1,0 +1,5 @@
+MatPBRBasic {
+ EmissiveMap "{BC6FD41FBBF946A4}Common/Models/Mech-Bay/Data/addons_EM.edds"
+ BCRMap "{A60069AE0BAC2C6A}Common/Models/Mech-Bay/Data/addons_BCR.edds"
+ NMOMap "{9ED8D23CD2DB7EF4}Common/Models/Mech-Bay/Data/addons_NMO.edds"
+}

@@ -1,0 +1,5 @@
+MatPBRBasic {
+ EmissiveMap "{E442991CF2EE6AA6}Common/Models/Mech-Bay/Data/Door_EM.edds"
+ BCRMap "{A513DC877A885314}Common/Models/Mech-Bay/Data/Door_BCR.edds"
+ NMOMap "{9DCB6715A3FF018A}Common/Models/Mech-Bay/Data/Door_NMO.edds"
+}
