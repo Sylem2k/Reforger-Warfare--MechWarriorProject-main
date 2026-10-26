@@ -47,3 +47,25 @@ DAMAGE (per missile): 60 direct, 25 splash, 4 m radius. Range 1800 m, speed 90 m
 LOCK STATUS
   - Lock acquisition is server-authoritative. No client HUD progress/LOCKED indicator yet.
   - For debugging, enable the launcher Debug property to print LOCKED and blocked shots.
+
+
+OPTIONAL AREA BARRAGE - OCT 26 2026 TEST FEATURE
+  - I can press Z while piloting (rebindable: "Mech: toggle LRM precision / barrage")
+    with the LRM weapon group selected. The server only accepts the actual driver/station controller.
+  - PRECISION remains the default mode: normal uninterrupted 1200 ms lock required.
+  - BARRAGE ignores the entity lock gate; I aim the reticle at a ground location and FIRE.
+    The point is frozen for that salvo, so looking elsewhere while 20 tubes fire does
+    not redirect later rockets.
+  - Each missile selects a random impact point inside an 18 m circular radius
+    of the designated point. The normal lofted guidance (45 degrees), independent
+    tube sequencing, flight time, reload, heat and damage still apply.
+  - If I select a group containing multiple LRM racks, Z toggles each eligible rack.
+    SRMs, Streak SRMs and Warlord boss racks are not enabled.
+  - To use it on other CGS Titan Missile-derived racks, tick m_bAllowBarrage and
+    optionally change m_fBarrageRadius / m_bBarrageGroundSnap in the weapon prefab.
+  - There is no replicated cockpit mode indicator yet; I should verify by firing
+    at terrain without obtaining a target lock.
+  - The original smoke-trail and impact particles are unchanged in this pass.
+    Heavier lingering FX should be tuned after the flight path is verified in MP.
+  - Requires BOTH matching feat/lrm-barrage-mode-20261026 Core and MW branches.
+  - Workbench compilation / dedicated MP behavior has NOT been verified.
