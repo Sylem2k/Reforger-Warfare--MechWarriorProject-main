@@ -2057,9 +2057,10 @@ class RW_MechLabMenu : ChimeraMenuBase
 			IEntity mech = m_OrderBay.FindParkedMech();
 			RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
 			SCR_PlayerController localPC = SCR_PlayerController.Cast(GetGame().GetPlayerController());
-			if (frame && localPC && !frame.IsBayReservedForOtherPlayer(localPC.GetPlayerId()))
+			if (frame && localPC && frame.GetBayOrderOwnerId() > 0 && frame.GetBayOrderOwnerId() == localPC.GetPlayerId())
 			{
-				// Only this player's order screen switches to the produced frame.
+				// Switch only after the replicated bay-order owner matches THIS player.
+				// An unreserved (0) or not-yet-replicated frame must not open anyone's Lab.
 				// The other player still sees the shared world mech, not its build UI.
 				SwitchToLab(mech);
 				return;
