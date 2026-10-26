@@ -894,6 +894,10 @@ Vehicle {
   }
   SlotManagerComponent "{E61000000000008A}" {
    Slots {
+    EntitySlotInfo Cockpit {
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+    }
     EntitySlotInfo Torso {
      MergePhysics 0
      DisablePhysicsInteraction 1
