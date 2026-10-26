@@ -142,6 +142,15 @@ class RW_LRMWeapon : CGS_Titan_Missile
         if (!Replication.IsServer() || !m_bBoundToHardpoint)
             return;
 
+        // Ground barrage is opt-in and intentionally does not require an entity
+        // or TAG lock. The Core launcher freezes the crosshair ground point,
+        // spreads the individual missiles and preserves all ammo/heat/cooldown checks.
+        if (IsBarrageMode())
+        {
+            super.TryStartSalvo(instigator);
+            return;
+        }
+
         // A final server-side check prevents shooting an already-lost target.
         RefreshLRMLock();
         if (!m_bLockReady)

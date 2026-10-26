@@ -62,6 +62,9 @@ GenericEntity {
     }
    }
    m_bRandomTubeOrder 1
+   m_bAllowBarrage 1
+   m_fBarrageRadius 18
+   m_bBarrageGroundSnap 1
    m_bHoming 1
    m_bLockTargets 1
    m_eGuidance BOTH
