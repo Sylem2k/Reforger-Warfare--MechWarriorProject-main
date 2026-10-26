@@ -872,6 +872,7 @@ Vehicle {
    }
    m_aTwistMounts {
    }
+   m_bAimRootMountedWeapons 0
    m_bHideRootMesh 0
   }
   ChimeraAIPathfindingComponent "{E60F00000000005B}" {
