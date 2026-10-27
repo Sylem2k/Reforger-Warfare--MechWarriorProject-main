@@ -13,6 +13,11 @@ Vehicle {
   }
   SignalsManagerComponent "{6AB64C955AF35BD7}" {
   }
+  SoundComponent "{C627A00000000071}" {
+   Filenames {
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+   }
+  }
   AIKnowledgeComponent "{6AB64C955AF35BD5}" {
   }
   BFA_MechAICrewComponent "{6AB64C955AF35BCB}" {
@@ -529,30 +534,11 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  SoundComponent "{C627A00000000071}" {
-   Filenames {
-    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-   }
-  }
-  SCR_SoundDataComponent "{C627A00000000072}" {
-   m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{C627A00000000073}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
-    }
-    SCR_AudioSourceConfiguration "{C627A00000000074}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
-    }
-   }
-  }
   BFA_MechMovementComponent "{6AB64C955AF35C57}" {
-   m_aLegPairs {
-   }
    m_iLocomotionMode 1
+   m_bTrackedADSteering 1
    m_sTrackClankEvent "SOUND_MECH_TRACK_CLANK"
    m_sTrackRumbleEvent "SOUND_MECH_TRACK_RUMBLE"
-   m_bTrackedADSteering 1
    m_fSpeed 2.8
    m_bCanSprint 1
    m_fSprintSpeed 4.4
@@ -561,7 +547,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AB64C955AF35C48}" {
-    Offset 0 -4.1228 -0.1631
+    Offset 0 -2.32 -0.1631
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -832,6 +818,18 @@ Vehicle {
    m_bAutoRegister ALWAYS
    m_vIconPos 0 3 0
   }
+  SCR_SoundDataComponent "{C627A00000000072}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{C627A00000000073}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000074}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
+    }
+   }
+  }
   SCR_VehicleCameraDataComponent "{6AB64C955AF35CCF}" {
    m_fHeight 3
    m_fBobScale 0.25
@@ -917,14 +915,12 @@ Vehicle {
      Offset 0.5063 -2.3387 0.413
      Angles 0 48.144 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
      Offset -0.6609 -2.3309 0.24
      Angles 0 -43.7302 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
@@ -959,14 +955,12 @@ Vehicle {
      Offset 0.4923 -2.3299 -0.6229
      Angles 0 123.3269 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L2 {
      Offset -0.3812 -2.3674 -0.6842
      Angles 0 -123.374 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
    }
@@ -1098,7 +1092,7 @@ Vehicle {
   Hierarchy "{6AB64C955AF376C2}" {
   }
  }
- coords 2118.303 57.712 2917.803
+ coords 2167.997 57.168 2923.539
  scale 1.6
  m_eVehicleType VEHICLE
 }
