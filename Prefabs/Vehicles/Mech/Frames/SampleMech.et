@@ -509,6 +509,9 @@ Vehicle {
   ControllersManagerComponent "{6A8740653CE8FB22}" {
   }
   CGS_TorsoTwistComponent "{C630000000020101}" {
+   m_TorsoPivotPoint PointInfo "{C62700000005000A}" {
+    Offset 0 0 0
+   }
    m_sAimStation "DRIVER"
    m_aTwistSlots {
     "Torso"

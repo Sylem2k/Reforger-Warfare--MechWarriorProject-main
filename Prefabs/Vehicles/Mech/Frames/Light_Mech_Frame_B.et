@@ -545,6 +545,9 @@ Vehicle {
    m_fV2ReleaseDelay 0.08
   }
   CGS_TorsoTwistComponent "{F733288D7D0D2B6B}" {
+   m_TorsoPivotPoint PointInfo "{C627000000050002}" {
+    Offset 0 0 0
+   }
    m_aTwistSlots {
     "Torso"
     "Exhust"
