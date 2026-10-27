@@ -5,61 +5,24 @@ GenericEntity {
   }
   SoundComponent "{6AB65961C9BE81B2}" {
    Filenames {
-    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-   }
-  }
-  BFA_MechLegComponent "{6AB65961C9BE81B1}" {
-   m_fStepHeight 1
-   m_fObstacleStepHeight 3
-   m_LastBone PointInfo "{6AB65961C9BE81B4}" {
-    PivotID "J3"
-   }
-  }
-  MeshObject "{6AB65961C9BE81BA}" {
-   Object "{00BF568EACF0923C}Common/Models/Mech Leg/Light_Leg.xob"
-   RainOccluder 0
-   WetnessOccluder 0
-   ReceiveLight 0
-  }
-  RigidBody "{6AB65961C9BE81B8}" {
-   Gravity 0
-   Geometries {
-    PhysicsBoxGeometry asd {
-     LayerPreset "VehicleFireView"
-     Offset 0 1.5 0.133
-     Extents 1 3 2
-    }
-   }
-  }
-  SCR_DamageManagerComponent "{6AB65961C9BE81BC}" {
-   "Additional hit zones" {
-    BFA_MechPartHitZone Leg {
-     HZDefault 1
-     MaxHealth 800
-     DamageReduction 2
-     DamageThreshold 1
-     "Melee multiplier" 0.01
-     "Kinetic multiplier" 0.1
-     "Fragmentation multiplier" 0.05
-     "Explosive multiplier" 1
-     "Incendiary multiplier" 0.5
-     m_fHullShare 0.6
-    }
+    "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
    }
   }
   SCR_SoundDataComponent "{6AB65961C9BE8180}" {
    m_aAudioSourceConfiguration {
     SCR_AudioSourceConfiguration "{6AB65961C9BE8184}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_STEP"
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
+    }
+    SCR_AudioSourceConfiguration "{6AB65961C9BE8185}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
+    }
+    SCR_AudioSourceConfiguration "{6AB65961C9BE8186}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
     }
    }
-  }
-  AnimationControllerComponent "{6AB65961C9BE8189}" {
-   AnimGraph "{087ADD06D87386F4}Anims/Workspaces/Mech/IK_Arm.agr"
-   AnimInstance "{E51088DDC47AD41A}Anims/Workspaces/Mech/IK_Arm.asi"
-   StartNode "IK Chain to IK Target"
-   AnimUpdate EOnFrame
   }
   RplComponent "{6AB65961C9BE818C}" {
   }
