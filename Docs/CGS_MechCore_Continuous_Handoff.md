@@ -47,3 +47,5 @@ Updated: 2026-10-27. This is my living first-person development log. I update th
 
 ## MW-specific notes
 MW owns Assault_Gravemarch_Gun_Tracked.et, track/hover part prefabs, existing RW_MechWrenchActions.c and RW_MechBayComponent.c. Current Assault Tracked has four configured track repair PointInfos but no repair user actions. Do not change fixed SlotManager assemblies to implement weapon swapping.
+
+- 2026-10-27: Assault Tracked changed from four to TWO SlotManager track attachments on MW branch feat/assault-two-tracks-20261027, prefab commit 2a2f5a6d6d8916dd666865bba8182c6064b010a0. Retained Track_L1 and Track_R1; removed Track_L2 and Track_R2 plus their read-only CGS_MechRepairSite entries. Start/Stop actions and engine/movement scripts are untouched. Track part meshes may be SHORT because only front original meshes remain: inspect visually in Workbench before merging. Current repair sites still have NO usable repair actions. No compile or game test yet. Core movement/HUD still recognizes L2/R2 optionally for OTHER frames and does not require modifications.
