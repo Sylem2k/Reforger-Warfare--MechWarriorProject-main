@@ -1026,7 +1026,7 @@ Vehicle {
      }
      ContextName "Start Mech"
      Position PointInfo "{6AB70BFACC745ACE}" {
-      Offset 0 2.1406 0.6673
+      Offset -0.2108 1.8464 0.6673
      }
      Radius 8
     }
@@ -1036,7 +1036,7 @@ Vehicle {
      }
      ContextName "StopMech"
      Position PointInfo "{6AB70BFABFB3EAE6}" {
-      Offset 0.352 1.8377 0.8343
+      Offset 0.1552 1.7657 0.8343
      }
      Radius 8
     }
@@ -1203,7 +1203,7 @@ Vehicle {
   Hierarchy "{6AB64C955AF376C2}" {
   }
  }
- coords 74.433 7.507 54.42
+ coords 74.433 7.852 54.42
  scale 1.6
  m_eVehicleType VEHICLE
 }
