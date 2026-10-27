@@ -678,15 +678,17 @@ Vehicle {
   }
   CGS_MechEngineComponent "{6AB706FA459DBA21}" {
    m_bStartRunning 0
+   m_bAllowExteriorSwitches 1
+   m_fExteriorSwitchDistance 5
    m_bDebugEngine 1
    m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
     Offset 0 0 1.3625
    }
    m_StartButtonPoint PointInfo "{6AB706FA36E0ED91}" {
-    Offset 0 1.1994 0
+    Offset -0.5697 2.1406 1.2681
    }
    m_StopButtonPoint PointInfo "{6AB706FA3D900DFC}" {
-    Offset 0.7789 1.1497 0
+    Offset 0.2558 2.0278 0.8343
    }
    m_FuelPoint PointInfo "{6AB706FA27102160}" {
     Offset 0 -1.1558 1.0435
