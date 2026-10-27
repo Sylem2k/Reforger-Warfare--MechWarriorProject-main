@@ -480,6 +480,7 @@ Vehicle {
   }
   CGS_MechDriveAudioComponent "{A2710C2700010004}" {
    m_iDriveType 2
+   m_bDebugSound 1
   }
   BFA_MechMovementComponent "{6AB64C95533BD239}" {
    m_iLocomotionMode 2
