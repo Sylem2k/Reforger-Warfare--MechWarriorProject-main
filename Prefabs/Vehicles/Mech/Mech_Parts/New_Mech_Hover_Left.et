@@ -6,27 +6,6 @@ GenericEntity {
   }
   SignalsManagerComponent "{6AB65961C9BE81A3}" {
   }
-  SoundComponent "{6AB65961C9BE81B2}" {
-   Filenames {
-    "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-   }
-  }
-  SCR_SoundDataComponent "{6AB65961C9BE8180}" {
-   m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{7EC270270003001E}" {
-     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
-    }
-    SCR_AudioSourceConfiguration "{7EC270270003001F}" {
-     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
-    }
-    SCR_AudioSourceConfiguration "{7EC2702700030020}" {
-     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
-    }
-   }
-  }
   RplComponent "{6AB65961C9BE818C}" {
   }
   Hierarchy "{6AB65961C9BE8192}" {

@@ -13,11 +13,6 @@ Vehicle {
   }
   SignalsManagerComponent "{6AB64C954031B877}" {
   }
-  SoundComponent "{C627A00000000021}" {
-   Filenames {
-    "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-   }
-  }
   AIKnowledgeComponent "{6AB64C954031B871}" {
   }
   BFA_MechAICrewComponent "{6AB64C954031B873}" {
@@ -455,14 +450,10 @@ Vehicle {
   }
   BFA_MechMovementComponent "{6AB64C9540338DB3}" {
    m_iLocomotionMode 2
-   m_bDebugLocomotionSound 1
    m_fHoverClearance 1.25
    m_fHoverBob 0.08
    m_fHoverBobHz 0.65
    m_fHoverGlideTime 0.35
-   m_sHoverThrustEvent "SOUND_MECH_HOVER_THRUST"
-   m_sHoverIdlePulseEvent "SOUND_MECH_HOVER_IDLE_PULSE"
-   m_sHoverIdleLoopEvent "SOUND_MECH_HOVER_IDLE"
    m_fSpeed 5
    m_bCanSprint 1
    m_fSprintSpeed 8
@@ -705,22 +696,6 @@ Vehicle {
    }
    m_bAutoRegister ALWAYS
    m_vIconPos 0 3 0
-  }
-  SCR_SoundDataComponent "{C627A00000000022}" {
-   m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{C627A00000000023}" {
-     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
-    }
-    SCR_AudioSourceConfiguration "{C627A00000000024}" {
-     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
-    }
-    SCR_AudioSourceConfiguration "{C627A00000000025}" {
-     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
-    }
-   }
   }
   SCR_VehicleCameraDataComponent "{6AB64C95403233B7}" {
    m_fHeight 3

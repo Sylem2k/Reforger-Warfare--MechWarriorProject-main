@@ -6,23 +6,6 @@ GenericEntity {
   }
   SignalsManagerComponent "{6AB65DBA80CD57C1}" {
   }
-  SoundComponent "{6AB65DBA80CD5632}" {
-   Filenames {
-    "{D21496B618117D7B}Sounds/Tracked.acp"
-   }
-  }
-  SCR_SoundDataComponent "{6AB65DBA80CD5602}" {
-   m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{7EC270270001001E}" {
-     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
-     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
-    }
-    SCR_AudioSourceConfiguration "{7EC270270001001F}" {
-     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
-     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
-    }
-   }
-  }
   RplComponent "{6AB65DBA80CD5609}" {
   }
   Hierarchy "{6AB65DBA80CE9395}" {

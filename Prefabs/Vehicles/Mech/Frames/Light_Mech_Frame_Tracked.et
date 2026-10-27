@@ -13,11 +13,6 @@ Vehicle {
   }
   SignalsManagerComponent "{6AB64C954639338C}" {
   }
-  SoundComponent "{C627A00000000011}" {
-   Filenames {
-    "{D21496B618117D7B}Sounds/Tracked.acp"
-   }
-  }
   AIKnowledgeComponent "{6AB64C954639338D}" {
   }
   BFA_MechAICrewComponent "{6AB64C9546393393}" {
@@ -455,10 +450,7 @@ Vehicle {
   }
   BFA_MechMovementComponent "{6AB64C95463A10D8}" {
    m_iLocomotionMode 1
-   m_bDebugLocomotionSound 1
    m_bTrackedADSteering 1
-   m_sTrackClankEvent "SOUND_MECH_TRACK_CLANK"
-   m_sTrackRumbleEvent "SOUND_MECH_TRACK_RUMBLE"
    m_fSpeed 5
    m_bCanSprint 1
    m_fSprintSpeed 8
@@ -701,18 +693,6 @@ Vehicle {
    }
    m_bAutoRegister ALWAYS
    m_vIconPos 0 3 0
-  }
-  SCR_SoundDataComponent "{C627A00000000012}" {
-   m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{C627A00000000013}" {
-     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
-     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
-    }
-    SCR_AudioSourceConfiguration "{C627A00000000014}" {
-     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
-     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
-    }
-   }
   }
   SCR_VehicleCameraDataComponent "{6AB64C95463B79F2}" {
    m_fHeight 3
