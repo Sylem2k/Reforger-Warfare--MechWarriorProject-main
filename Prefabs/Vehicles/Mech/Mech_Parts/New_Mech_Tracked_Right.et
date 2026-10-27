@@ -7,6 +7,7 @@ GenericEntity {
   SoundComponent "{A2710C2700000201}" {
    Filenames {
     "{D21496B618117D7B}Sounds/Tracked.acp"
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
    }
   }
   SCR_SoundDataComponent "{A2710C2700000202}" {
@@ -19,7 +20,11 @@ GenericEntity {
      m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
      m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
     }
-   }
+       SCR_AudioSourceConfiguration "{A2710C2700020002}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_STEP"
+    }
+}
   }
   SignalsManagerComponent "{6AB65961CE273327}" {
   }
