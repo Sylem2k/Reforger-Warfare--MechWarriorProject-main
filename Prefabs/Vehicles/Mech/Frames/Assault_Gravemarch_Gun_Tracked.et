@@ -15,7 +15,7 @@ Vehicle {
   }
   SoundComponent "{C627A00000000071}" {
    Filenames {
-    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+    "{D21496B618117D7B}Sounds/Tracked.acp"
    }
   }
   AIKnowledgeComponent "{6AB64C955AF35BD5}" {
@@ -821,11 +821,11 @@ Vehicle {
   SCR_SoundDataComponent "{C627A00000000072}" {
    m_aAudioSourceConfiguration {
     SCR_AudioSourceConfiguration "{C627A00000000073}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
      m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
     }
     SCR_AudioSourceConfiguration "{C627A00000000074}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
      m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
     }
    }
