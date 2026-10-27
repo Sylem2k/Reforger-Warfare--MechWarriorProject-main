@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{90CB2DCC0C95BC19}Sounds/Vehicles/Helicopters/UH1H/Vehicles_UH1H_Wind.acp"
+ Configurations {
+  AudioProjectResourceClass PC {
+  }
+  AudioProjectResourceClass XBOX_ONE : PC {
+  }
+  AudioProjectResourceClass XBOX_SERIES : PC {
+  }
+  AudioProjectResourceClass PS4 : PC {
+  }
+  AudioProjectResourceClass PS5 : PC {
+  }
+  AudioProjectResourceClass HEADLESS : PC {
+  }
+ }
+}

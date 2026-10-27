@@ -1,0 +1,502 @@
+AudioClass {
+ signals {
+  SignalClass {
+   id 1037
+   name "Signal Wind"
+   tl -768 -512
+   res "{F717F782BD968EB9}Sounds/_SharedData/Signals/Vehicles/Vehicles_Air_Wind.sig"
+   conns {
+    IOPConnectionClass iopConnection {
+     port 20
+     conn {
+      ConnectionsClass connections {
+       id 8
+       links {
+        ConnectionClass connection {
+         id 14348
+         port 1
+        }
+       }
+      }
+     }
+    }
+    IOPConnectionClass iopConnection {
+     port 21
+     conn {
+      ConnectionsClass connections {
+       id 8
+       links {
+        ConnectionClass connection {
+         id 14348
+         port 1
+        }
+       }
+      }
+     }
+    }
+   }
+   inputsport {
+    1 6 10 20 21 26
+   }
+   outputsport {
+    2 4 13 15 24 25 31
+   }
+   inputvalues {
+    0 1 0 1 1 0
+   }
+   inputvaluesmin {
+    0 0 0 0 0 0
+   }
+   inputvaluesmax {
+    200 1 1 1 1 1
+   }
+   path "{F717F782BD968EB9}Sounds/_SharedData/Signals/Vehicles/Vehicles_Air_Wind.sig"
+  }
+ }
+ filters {
+  FilterClass {
+   id 13334
+   name "Filter Low Shelf"
+   version 5
+   tl -256 -512
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 31
+      }
+     }
+    }
+   }
+   pi {
+    1 0
+   }
+   pu {
+    1 0
+   }
+   DSPObject BiquadDSPTypeClass dsp {
+    biquadType HighPass
+    fc 180
+   }
+  }
+ }
+ sounds {
+  SoundClass {
+   id 5129
+   name "SOUND_WIND_DOOR_L"
+   version 5
+   tl 0 -256
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 24
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 64
+     links {
+      ConnectionClass connection {
+       id 3090
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    1 0
+   }
+   outState 7179
+   outStatePort 17415
+   transformation Offset
+   offset -1.7 1.6 0.45
+   Type Box
+   Scale 0.5 1.5 1.3
+  }
+  SoundClass {
+   id 9225
+   name "SOUND_WIND_DOOR_R"
+   version 5
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 25
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 64
+     links {
+      ConnectionClass connection {
+       id 8210
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    1 0
+   }
+   outState 7179
+   outStatePort 17415
+   transformation Offset
+   offset 1.7 1.6 0.45
+   Type Box
+   Scale 0.5 1.5 1.3
+  }
+  SoundClass {
+   id 12297
+   name "SOUND_WIND_LP"
+   version 5
+   tl 0 -768
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 4
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 64
+     links {
+      ConnectionClass connection {
+       id 11268
+       port 65
+      }
+      ConnectionClass connection {
+       id 10244
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    3 0
+   }
+   priority 60
+   outState 7179
+   outStatePort 17415
+  }
+ }
+ mixers {
+  MixerClass {
+   id 7179
+   name "OutputState"
+   version 4
+   tl 256 -512
+   res "{B764D803219C775E}Sounds/FinalMix.afm"
+   ins {
+    ConnectionsClass connections {
+     id 17415
+     links {
+      ConnectionClass connection {
+       id 5129
+       port 65
+      }
+      ConnectionClass connection {
+       id 9225
+       port 65
+      }
+      ConnectionClass connection {
+       id 12297
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    64 0
+   }
+   path "{B764D803219C775E}Sounds/FinalMix.afm"
+   inputs {
+    "WPN_Handling" "WPN_Shots" "WPN_Explosions" "WNP_BulletHits" "CHAR" "ENV_AMB_2D" "VEH_Animations" "Impacts" "Dialogue" "Music" "ENV_Doors" "VEH_Engine" "VEH_Tires" "VON" "SFX" "SFX_Reverb" "VON_Reverb" "Dialogue_Reverb" "Impacts_EXT" "ENV_AMB_3D" "WPN_SonicCracks" "CHAR_Gear" "PA" "SFX_Reverb_Exterior" "UI" "ENV_AMB_3D_Reverb_Exterior" "SFX_Direct" "SFX_Reverb_Small" "SFX_Reverb_Medium" "SFX_Reverb_Large"
+   }
+  }
+ }
+ constants {
+  ConstantClass {
+   id 14348
+   name "Constant One"
+   version 5
+   tl -960 -432
+   "Constant values" {
+    IOPConstantsValueClass One {
+     Key "One"
+     Value 1
+     Port 1
+    }
+   }
+  }
+ }
+ shaders {
+  ShaderClass {
+   id 3090
+   name "Shader Wind Door L"
+   version 5
+   tl -256 -256
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 6172
+       port 65
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 1
+     links {
+      ConnectionClass connection {
+       id 4115
+       port 65
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 4
+     links {
+      ConnectionClass connection {
+       id 13334
+       port 65
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 64
+     links {
+      ConnectionClass connection {
+       id 2052
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    19 0
+   }
+   ITD 0
+  }
+  ShaderClass {
+   id 8210
+   name "Shader Wind Door R"
+   version 5
+   tl -256 0
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 6172
+       port 65
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 1
+     links {
+      ConnectionClass connection {
+       id 4115
+       port 65
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 4
+     links {
+      ConnectionClass connection {
+       id 13334
+       port 65
+      }
+     }
+    }
+    ConnectionsClass connections {
+     id 64
+     links {
+      ConnectionClass connection {
+       id 2052
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    19 0
+   }
+   ITD 0
+  }
+ }
+ amplitudes {
+  AmplitudeClass {
+   id 4115
+   name "Amplitude Wind Door"
+   version 5
+   tl -256 -336
+   curve Linear
+   outerRange 4
+   EnableDirectivity 1
+   DirectivityCurve {
+    CurvePoint "1" {
+     Y 0.25
+    }
+    CurvePoint "2" {
+     X 80
+     Y 1
+    }
+    CurvePoint "3" {
+     X 100
+     Y 1
+    }
+    CurvePoint "4" {
+     X 180
+     Y 0.25
+    }
+   }
+  }
+ }
+ banks_local {
+  BankLocalClass {
+   id 2052
+   name "Wind Door"
+   version 7
+   tl -512 -256
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 15
+      }
+     }
+    }
+   }
+   pi {
+    1 0
+   }
+   pu {
+    1 0
+   }
+   "Loop count" 255
+   "Infinite loop" 1
+   "Termination Fade Out" 500
+   "Random start offset" 1
+   "Fade in time" 500
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{F8F19156642525A4}Sounds/Vehicles/_SharedData/Wind/Vehicles_Air_Wind_Door_LP.wav"
+    }
+   }
+  }
+  BankLocalClass {
+   id 10244
+   name "Wind"
+   version 7
+   tl -512 -768
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 2
+      }
+     }
+    }
+   }
+   pi {
+    1 0
+   }
+   pu {
+    1 0
+   }
+   Volume 2
+   "Loop count" 255
+   "Infinite loop" 1
+   "Termination Fade Out" 100
+   "Random start offset" 1
+   "Fade in time" 100
+   "Disable streaming" 1
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{A0D8352DACCB7074}Sounds/Vehicles/_SharedData/Wind/Vehicles_Air_Wind_LP.wav"
+    }
+   }
+  }
+  BankLocalClass {
+   id 11268
+   name "Stress"
+   version 7
+   tl -512 -688
+   ins {
+    ConnectionsClass connections {
+     id 0
+     links {
+      ConnectionClass connection {
+       id 1037
+       port 2
+      }
+     }
+    }
+   }
+   pi {
+    1 0
+   }
+   pu {
+    1 0
+   }
+   Volume -8
+   "Loop count" 255
+   "Infinite loop" 1
+   "Termination Fade Out" 100
+   "Random start offset" 1
+   "Fade in time" 100
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{E785499818E5B021}Sounds/Vehicles/Helicopters/Mi-8MT/Samples/Vehicles_Mi-8MT_FuselageStress_LP.wav"
+    }
+   }
+  }
+ }
+ spatialities {
+  SpatialityClass {
+   id 6172
+   name "Spatiality Wind"
+   comment "Adjusted for ADS, gunner, passanger perspective"
+   version 5
+   tl -256 -416
+   ctl 0 -21
+   SpatialFactorSource AzimuthCurve
+   Curve0 {
+    CurvePoint "1" {
+    }
+    CurvePoint "2" {
+     X 1.3
+     Y 1
+    }
+   }
+   Curve90 {
+    CurvePoint "1" {
+     X 0.3
+    }
+    CurvePoint "2" {
+     X 1
+     Y 1
+    }
+   }
+  }
+ }
+ version 1
+ listenerWindowModel "{7FF449DB9ED11DB4}Assets/Vehicles/Helicopters/UH1H/UH1H_base.xob"
+}

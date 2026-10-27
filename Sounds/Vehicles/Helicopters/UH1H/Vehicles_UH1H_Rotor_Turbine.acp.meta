@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{00503AA9BAA5C6ED}Sounds/Vehicles/Helicopters/UH1H/Vehicles_UH1H_Rotor_Turbine.acp"
+ Configurations {
+  AudioProjectResourceClass PC {
+  }
+  AudioProjectResourceClass XBOX_ONE : PC {
+  }
+  AudioProjectResourceClass XBOX_SERIES : PC {
+  }
+  AudioProjectResourceClass PS4 : PC {
+  }
+  AudioProjectResourceClass PS5 : PC {
+  }
+  AudioProjectResourceClass HEADLESS : PC {
+  }
+ }
+}

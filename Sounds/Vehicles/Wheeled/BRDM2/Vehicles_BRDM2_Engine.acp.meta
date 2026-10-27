@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{5B2A3941F79B5F10}Sounds/Vehicles/Wheeled/BRDM2/Vehicles_BRDM2_Engine.acp"
+ Configurations {
+  AudioProjectResourceClass PC {
+  }
+  AudioProjectResourceClass XBOX_ONE : PC {
+  }
+  AudioProjectResourceClass XBOX_SERIES : PC {
+  }
+  AudioProjectResourceClass PS4 : PC {
+  }
+  AudioProjectResourceClass PS5 : PC {
+  }
+  AudioProjectResourceClass HEADLESS : PC {
+  }
+ }
+}

@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{20F631142D2417D8}Sounds/Vehicles/Wheeled/BRDM2/Vehicles_BRDM2_Engine.sig"
+ Configurations {
+  AudioSignalResourceClass PC {
+  }
+  AudioSignalResourceClass XBOX_ONE : PC {
+  }
+  AudioSignalResourceClass XBOX_SERIES : PC {
+  }
+  AudioSignalResourceClass PS4 : PC {
+  }
+  AudioSignalResourceClass PS5 : PC {
+  }
+  AudioSignalResourceClass HEADLESS : PC {
+  }
+ }
+}
