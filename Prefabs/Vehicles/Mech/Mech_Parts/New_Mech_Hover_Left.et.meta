@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover.et"
+ Name "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_Left.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

@@ -1,70 +1,31 @@
 GenericEntity {
  ID "6AB65DBA80CD57FB"
  components {
+  MeshObject "{6AB65DBA80CD5635}" {
+   Object "{6A673BE677191F67}Common/Models/Mech Track/CGS_Track_L.xob"
+  }
   SignalsManagerComponent "{6AB65DBA80CD57C1}" {
   }
   SoundComponent "{6AB65DBA80CD5632}" {
    Filenames {
-    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-   }
-  }
-  BFA_MechLegComponent "{6AB65DBA80CD5630}" {
-   m_fStepHeight 1
-   m_fObstacleStepHeight 3
-   m_LastBone PointInfo "{6AB65DBA80CD5637}" {
-    PivotID "J3"
-   }
-  }
-  MeshObject "{6AB65DBA80CD5635}" {
-   Object "{6A673BE677191F67}Common/Models/Mech Track/CGS_Track_L.xob"
-   RainOccluder 0
-   WetnessOccluder 0
-   ReceiveLight 0
-  }
-  RigidBody "{6AB65DBA80CD563B}" {
-   Gravity 0
-   Geometries {
-    PhysicsBoxGeometry asd {
-     LayerPreset "VehicleFireView"
-     Offset 0 1.5 0.133
-     Extents 1 3 2
-    }
-   }
-  }
-  SCR_DamageManagerComponent "{6AB65DBA80CD563F}" {
-   "Additional hit zones" {
-    BFA_MechPartHitZone Leg {
-     HZDefault 1
-     MaxHealth 800
-     DamageReduction 2
-     DamageThreshold 1
-     "Melee multiplier" 0.01
-     "Kinetic multiplier" 0.1
-     "Fragmentation multiplier" 0.05
-     "Explosive multiplier" 1
-     "Incendiary multiplier" 0.5
-     m_fHullShare 0.6
-    }
+    "{D21496B618117D7B}Sounds/Tracked.acp"
    }
   }
   SCR_SoundDataComponent "{6AB65DBA80CD5602}" {
    m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{6AB65DBA80CD5604}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_STEP"
+    SCR_AudioSourceConfiguration "{7EC270270001001E}" {
+     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
+    }
+    SCR_AudioSourceConfiguration "{7EC270270001001F}" {
+     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
     }
    }
-  }
-  AnimationControllerComponent "{6AB65DBA80CD560B}" {
-   AnimGraph "{087ADD06D87386F4}Anims/Workspaces/Mech/IK_Arm.agr"
-   AnimInstance "{E51088DDC47AD41A}Anims/Workspaces/Mech/IK_Arm.asi"
-   StartNode "IK Chain to IK Target"
-   AnimUpdate EOnFrame
   }
   RplComponent "{6AB65DBA80CD5609}" {
   }
   Hierarchy "{6AB65DBA80CE9395}" {
   }
  }
- coords 2161.05 53.961 2916.4
 }

@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked.et"
+ Name "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }
