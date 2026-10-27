@@ -1,6 +1,16 @@
-Vehicle Assault_Gravemarch_Gun_Tracked1 : "{87EA5222BF2670A6}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Tracked.et" {
- coords 201.444 6.391 109.385
+$grp Vehicle : "{87EA5222BF2670A6}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Tracked.et" {
+ Assault_Gravemarch_Gun_Tracked1 {
+  coords 201.444 6.391 109.385
+ }
+ Assault_Gravemarch_Gun_Tracked2 {
+  coords 147.482 6.705 170.314
+ }
 }
-Vehicle Assault_Gravemarch_Gun_Hover1 : "{9C2752184FA09715}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Hover.et" {
- coords 164.748 1 131.791
+$grp Vehicle : "{9C2752184FA09715}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Hover.et" {
+ Assault_Gravemarch_Gun_Hover1 {
+  coords 164.748 1 131.791
+ }
+ Assault_Gravemarch_Gun_Hover2 {
+  coords 143.168 6.134 163.033
+ }
 }

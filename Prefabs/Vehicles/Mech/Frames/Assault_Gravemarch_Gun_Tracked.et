@@ -529,10 +529,6 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  CGS_MechDriveAudioComponent "{A2710C2700010007}" {
-   m_iDriveType 1
-   m_bDebugSound 1
-  }
   BFA_MechMovementComponent "{6AB64C955AF35C57}" {
    m_iLocomotionMode 1
    m_bTrackedADSteering 1
@@ -615,6 +611,28 @@ Vehicle {
    m_sPilotPrefab ""
   }
   CGS_MechDeathComponent "{6AB64C955AF35CBF}" {
+  }
+  CGS_MechDriveAudioComponent "{A2710C2700010007}" {
+   m_iDriveType 1
+   m_bDebugSound 1
+  }
+  CGS_MechEngineComponent "{6AB706FA459DBA21}" {
+   m_bStartRunning 1
+   m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
+    Offset 0 0 1.3625
+   }
+   m_StartButtonPoint PointInfo "{6AB706FA36E0ED91}" {
+    Offset 0 1.1994 0
+   }
+   m_StopButtonPoint PointInfo "{6AB706FA3D900DFC}" {
+    Offset 0.7789 1.1497 0
+   }
+   m_FuelPoint PointInfo "{6AB706FA27102160}" {
+    Offset 0 -1.1558 1.0435
+   }
+   m_RepairPoint PointInfo "{6AB706FA18AFC822}" {
+    Offset 0 0 1.6314
+   }
   }
   CGS_MechHeatComponent "{6AB64C955AF35CBC}" {
    m_fMaxHeat 500
@@ -900,15 +918,15 @@ Vehicle {
      Offset 0.5063 -2.3387 0.413
      Angles 0 48.144 0
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
      Offset -0.6609 -2.3309 0.24
      Angles 0 -43.7302 0
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
      Offset -0.0036 -0.1256 -0.2335
@@ -942,15 +960,15 @@ Vehicle {
      Offset 0.4923 -2.3299 -0.6229
      Angles 0 123.3269 0
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L2 {
      Offset -0.3812 -2.3674 -0.6842
      Angles 0 -123.374 0
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
+     DisablePhysicsInteraction 1
     }
    }
   }
@@ -1081,7 +1099,7 @@ Vehicle {
   Hierarchy "{6AB64C955AF376C2}" {
   }
  }
- coords 2167.997 57.168 2923.539
+ coords 147.482 6.705 170.314
  scale 1.6
  m_eVehicleType VEHICLE
 }
