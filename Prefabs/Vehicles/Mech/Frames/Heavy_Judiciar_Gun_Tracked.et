@@ -497,10 +497,29 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
+  SoundComponent "{C627A00000000051}" {
+   Filenames {
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+   }
+  }
+  SCR_SoundDataComponent "{C627A00000000052}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{C627A00000000053}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000054}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
+    }
+   }
+  }
   BFA_MechMovementComponent "{6AB64D2E687458CC}" {
    m_aLegPairs {
    }
    m_iLocomotionMode 1
+   m_sTrackClankEvent "SOUND_MECH_TRACK_CLANK"
+   m_sTrackRumbleEvent "SOUND_MECH_TRACK_RUMBLE"
    m_bTrackedADSteering 1
    m_fSpeed 3.4
    m_bCanSprint 1
