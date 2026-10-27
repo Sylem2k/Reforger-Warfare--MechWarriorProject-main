@@ -13,6 +13,11 @@ Vehicle {
   }
   SignalsManagerComponent "{6AB64C9524CD0401}" {
   }
+  SoundComponent "{C627A00000000081}" {
+   Filenames {
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+   }
+  }
   AIKnowledgeComponent "{6AB64C9524CD0402}" {
   }
   BFA_MechAICrewComponent "{6AB64C9524CD040D}" {
@@ -529,38 +534,15 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  SoundComponent "{C627A00000000081}" {
-   Filenames {
-    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-   }
-  }
-  SCR_SoundDataComponent "{C627A00000000082}" {
-   m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{C627A00000000083}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
-    }
-    SCR_AudioSourceConfiguration "{C627A00000000084}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
-    }
-    SCR_AudioSourceConfiguration "{C627A00000000085}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
-     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
-    }
-   }
-  }
   BFA_MechMovementComponent "{6AB64C9524CDE072}" {
-   m_aLegPairs {
-   }
    m_iLocomotionMode 2
-   m_sHoverThrustEvent "SOUND_MECH_HOVER_THRUST"
-   m_sHoverIdlePulseEvent "SOUND_MECH_HOVER_IDLE_PULSE"
-   m_sHoverIdleLoopEvent "SOUND_MECH_HOVER_IDLE"
    m_fHoverClearance 1.25
    m_fHoverBob 0.08
    m_fHoverBobHz 0.65
    m_fHoverGlideTime 0.35
+   m_sHoverThrustEvent "SOUND_MECH_HOVER_THRUST"
+   m_sHoverIdlePulseEvent "SOUND_MECH_HOVER_IDLE_PULSE"
+   m_sHoverIdleLoopEvent "SOUND_MECH_HOVER_IDLE"
    m_fSpeed 2.8
    m_bCanSprint 1
    m_fSprintSpeed 4.4
@@ -569,7 +551,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AB64C9524CDE078}" {
-    Offset 0 -4.1228 -0.1631
+    Offset 0 -2.3426 -0.1631
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -840,6 +822,22 @@ Vehicle {
    m_bAutoRegister ALWAYS
    m_vIconPos 0 3 0
   }
+  SCR_SoundDataComponent "{C627A00000000082}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{C627A00000000083}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000084}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000085}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
+    }
+   }
+  }
   SCR_VehicleCameraDataComponent "{6AB64C9524CDE0FE}" {
    m_fHeight 3
    m_fBobScale 0.25
@@ -925,14 +923,12 @@ Vehicle {
      Offset 0.5063 -2.3387 0.413
      Angles 0 48.144 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo HoverPad_L1 {
      Offset -0.6609 -2.3309 0.24
      Angles 0 -43.7302 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
@@ -967,14 +963,12 @@ Vehicle {
      Offset 0.4923 -2.3299 -0.6229
      Angles 0 123.3269 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo HoverPad_L2 {
      Offset -0.3812 -2.3674 -0.6842
      Angles 0 -123.374 0
      MergePhysics 0
-
      DisablePhysicsInteraction 1
     }
    }
@@ -1106,7 +1100,7 @@ Vehicle {
   Hierarchy "{6AB64C9524CDE14A}" {
   }
  }
- coords 2118.303 57.712 2917.803
+ coords 2162.752 57.271 2923.239
  scale 1.6
  m_eVehicleType VEHICLE
 }
