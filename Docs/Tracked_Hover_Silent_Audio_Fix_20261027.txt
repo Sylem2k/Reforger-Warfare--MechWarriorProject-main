@@ -27,3 +27,7 @@ Do not misattribute these to the sound fix.
 
 STATUS
 Mixer source repaired; existing 5 WAV refs and 8 prefab event maps preserved. No Workbench compile/Audio Editor audition or audible runtime result available to me. Main not modified.
+
+
+OCT 27 LATEST DEDICATED ACP FOLLOW-UP
+I found Sounds/Tracked.acp and Sounds/Hover.acp added on Core main during this investigation. Each had the SAME wrongly detached mixer links as SampleMech.acp. I repaired both Core dedicated projects and switched the eight MW frame project references: four *_Tracked.et frames point to {D21496B618117D7B}Sounds/Tracked.acp, and four *_Hover.et frames point to {4B8D1AB9C2FD05BE}Sounds/Hover.acp. Every event mapping still uses the existing locomotion sound event name. No model or movement changes were needed.
