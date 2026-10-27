@@ -632,7 +632,7 @@ Vehicle {
     Offset 0 -1.1558 1.0435
    }
    m_RepairPoint PointInfo "{6AB706FA18AFC822}" {
-    Offset 0 0 1.6314
+    Offset 3.1217 -1.5444 1.6314
    }
   }
   CGS_MechHeatComponent "{6AB64C955AF35CBC}" {
