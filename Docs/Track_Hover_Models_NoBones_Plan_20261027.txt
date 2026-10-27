@@ -1,0 +1,37 @@
+OCT 27, 2026 — LIVE TRACKED/HOVER MODEL INSTALL AND RIGGING PLAN
+
+I just pushed CGS_Track_L/R.xob and CGS_HoverPad_L/R.xob to CGS-MW-Assets/main. The original Blender 4.5 procedural placeholder generator joined all geometry per sample into one mesh. The imported .xob model therefore has NO moving tread/wheel rig. The Core chassis TRACKED/HOVER physics already moves the whole mech and its attached part prefabs; I still need a separate visual animation system for the track treads to roll convincingly.
+
+While I was editing, I also pushed a replacement set of MW part files with explicit _Left and _Right suffixes. I chose to preserve that LATEST naming scheme rather than restoring the obsolete New_Mech_Tracked.et / New_Mech_Hover.et filenames. I created this isolated test branch directly from latest main:
+ fix/track-hover-current-parts-20261027
+
+PART PREFABS CORRECTED
+- New_Mech_Tracked_Left.et -> {6A673BE677191F67}Common/Models/Mech Track/CGS_Track_L.xob
+- New_Mech_Tracked_Right.et -> {9B6C03B204462A8B}Common/Models/Mech Track/CGS_Track_R.xob
+- New_Mech_Hover_Left.et -> {08182C30B6AE4C3B}Common/Models/Mech Hover/CGS_HoverPad_L.xob
+- New_Mech_Hover_Right.et -> {F9131464C5F179D7}Common/Models/Mech Hover/CGS_HoverPad_R.xob
+
+These parts keep their spatial SoundComponent, SCR_SoundDataComponent, Hierarchy and RplComponent. I stripped the incorrectly copied walking-leg IK, BFA_MechLegComponent, SOUND_MECH_STEP, walking animation graph and walker hit-zone/collider. Track parts now reference Tracked.acp and events TRACK_CLANK + TRACK_RUMBLE; hover parts reference Hover.acp and events HOVER_IDLE, HOVER_IDLE_PULSE and HOVER_THRUST.
+
+I fixed stale .meta paths for Tracked_Right and Hover_Left; I added the missing Hover_Right.et.meta file and gave Hover_Right unique entity/component IDs instead of duplicating the Hover_Left IDs. I retained the existing meta resource GUIDs for Tracked_Left/Right and Hover_Left.
+
+FRAMES UPDATED
+All eight MW frame prefabs now actually attach their proper named left and right parts to Track_L1/R1 or HoverPad_L1/R1. Assault frames also attach L2/R2. All standard cockpit/torso, group/weapon and locomotion settings are unchanged.
+
+HOW I PLAN TO MAKE THE TREADS MOVE
+The current sample track is one static joined mesh that includes skirt, wheels, tread belt and tread ribs. No script can spin only the wheels of a single baked mesh simply by rotating the whole attached part. I must go back to the procedural Blender generator BEFORE join_as_one() and separate the moving geometry:
+1. Keep armor skirt, suspension frame and mount fixed.
+2. Give each road wheel its own rotatable mesh and a bone or dedicated child entity with pivot through the axle (X axis).
+3. Make the rubber tread its own UV-unwrapped belt, with seamless UV coordinate around its oval route. If Workbench supports an appropriate scrolling material shader, animate the tread UV locally based on speed; otherwise build a true animated bone/tread-link rig + animation graph.
+4. For tank-steering behavior use left/right speed = forward_speed +/- yaw_rate_rad_per_sec * (distance_between_tracks / 2). Rotate wheels at speed / radius. Reverse direction and spin tracks opposite ways on pivots. Derive visually from the replicated root transform on each client instead of per-link network RPCs.
+5. Arma Reforger will NOT automatically play Blender keyframes on an arbitrary imported XOB. I need to wire a supported Enfusion animation graph/instance and a suitable controller or shader. No rig or actual tread animation has been committed in this pass.
+
+HOVER VISUALS
+Hover pads do not require bones to move because they are mounted under the chassis and follow hover physics already. Thruster nozzles can get emissive shaders, local particle exhaust and ground dust. The imported CGS_Hover_Cyan_Emission.emat is currently an empty MatPBRBasic block, so the glow still needs authoring in Workbench.
+
+TEST
+1. Use MW branch fix/track-hover-current-parts-20261027; Core main and Assets main.
+2. Rebuild resources. Spawn each tracked and hover class. Check model appearance and left/right orientation; all 8 frames now have slots populated.
+3. Check that walker leg IK does not initialize on tracked/hover parts and event names are the correct track/hover ones.
+4. Check slot offsets against the sample model dimensions and adjust in Workbench before scaling to each class. Sound routing uses one fitted part emitter per mech.
+5. Workbench compile and actual runtime visuals/audio still must be tested. No main merges.
