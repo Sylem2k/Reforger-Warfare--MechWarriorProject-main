@@ -452,6 +452,26 @@ Vehicle {
    m_iDriveType 2
    m_bDebugSound 1
   }
+  CGS_MechEngineComponent "{C627102700030001}" {
+   m_fStartDuration 3
+   m_bStartRunning 0
+   m_bDebugEngine 1
+   m_EnginePoint PointInfo "{C627102700030002}" {
+    Offset 0 1.1 -1.3
+   }
+   m_StartButtonPoint PointInfo "{C627102700030003}" {
+    Offset -0.35 1.05 -0.8
+   }
+   m_StopButtonPoint PointInfo "{C627102700030004}" {
+    Offset 0.35 1.05 -0.8
+   }
+   m_FuelPoint PointInfo "{C627102700030005}" {
+    Offset -1.1 0.7 -1.5
+   }
+   m_RepairPoint PointInfo "{C627102700030006}" {
+    Offset 1.1 0.7 -1.5
+   }
+  }
   BFA_MechMovementComponent "{6AB64C9540338DB3}" {
    m_iLocomotionMode 2
    m_fHoverClearance 1.25
@@ -819,8 +839,40 @@ Vehicle {
      }
      Radius 50
     }
+    UserActionContext "{C627102700030007}" {
+     ContextName "CGS_EngineStart"
+     Position PointInfo "{C627102700030008}" {
+      Offset -0.35 1.05 -0.8
+     }
+     Radius 0.9
+    }
+    UserActionContext "{C627102700030009}" {
+     ContextName "CGS_EngineStop"
+     Position PointInfo "{C62710270003000A}" {
+      Offset 0.35 1.05 -0.8
+     }
+     Radius 0.9
+    }
    }
    additionalActions {
+    CGS_MechEngineStartAction "{C62710270003000B}" {
+     ParentContextList {
+      "CGS_EngineStart"
+     }
+     UIInfo UIInfo "{C62710270003000C}" {
+      Name "ENGINE: START CORE"
+     }
+     VisibilityRange 4
+    }
+    CGS_MechEngineStopAction "{C62710270003000D}" {
+     ParentContextList {
+      "CGS_EngineStop"
+     }
+     UIInfo UIInfo "{C62710270003000E}" {
+      Name "ENGINE: SHUT DOWN"
+     }
+     VisibilityRange 4
+    }
     CGS_MechTacticalThrowAction "{6AB64C9540323367}" {
      ParentContextList {
       "default"
