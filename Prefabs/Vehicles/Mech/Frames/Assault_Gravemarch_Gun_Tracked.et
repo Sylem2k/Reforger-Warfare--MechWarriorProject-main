@@ -540,7 +540,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AB64C955AF35C48}" {
-    Offset 0 -1.9951 -0.1631
+    Offset 0 -2.9177 -0.1631
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -616,6 +616,29 @@ Vehicle {
    m_iDriveType 1
    m_bDebugSound 1
   }
+  CGS_MechEngineComponent "{6AB706FA459DBA21}" {
+   m_bStartRunning 0
+   m_bDebugEngine 1
+   m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
+    Offset 0 0 1.3625
+   }
+   m_StartButtonPoint PointInfo "{6AB706FA36E0ED91}" {
+    Offset 0 1.1994 0
+   }
+   m_StopButtonPoint PointInfo "{6AB706FA3D900DFC}" {
+    Offset 0.7789 1.1497 0
+   }
+   m_FuelPoint PointInfo "{6AB706FA27102160}" {
+    Offset 0 -1.1558 1.0435
+   }
+   m_RepairPoint PointInfo "{6AB706FA18AFC822}" {
+    Offset 3.1217 -1.5444 1.6314
+   }
+  }
+  CGS_MechHeatComponent "{6AB64C955AF35CBC}" {
+   m_fMaxHeat 500
+   m_fCoolingPerSecond 28
+  }
   CGS_MechRepairComponent "{6A001027D0000001}" {
    m_aRepairSites {
     CGS_MechRepairSite "{6A001027D0000002}" {
@@ -675,29 +698,6 @@ Vehicle {
      }
     }
    }
-  }
-  CGS_MechEngineComponent "{6AB706FA459DBA21}" {
-   m_bStartRunning 0
-   m_bDebugEngine 1
-   m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
-    Offset 0 0 1.3625
-   }
-   m_StartButtonPoint PointInfo "{6AB706FA36E0ED91}" {
-    Offset 0 1.1994 0
-   }
-   m_StopButtonPoint PointInfo "{6AB706FA3D900DFC}" {
-    Offset 0.7789 1.1497 0
-   }
-   m_FuelPoint PointInfo "{6AB706FA27102160}" {
-    Offset 0 -1.1558 1.0435
-   }
-   m_RepairPoint PointInfo "{6AB706FA18AFC822}" {
-    Offset 3.1217 -1.5444 1.6314
-   }
-  }
-  CGS_MechHeatComponent "{6AB64C955AF35CBC}" {
-   m_fMaxHeat 500
-   m_fCoolingPerSecond 28
   }
   CGS_MechTacticalThrowComponent "{6AB64C955AF35CB2}" {
    m_bEnabled 1
@@ -976,14 +976,14 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_R1 {
-     Offset 1.24 -0.1903 0.4646
+     Offset 1.0507 -0.6929 -0.1359
      Angles 0 -4.0234 0
      MergePhysics 0
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
-     Offset -0.6609 -0.2978 0.24
+     Offset -1.0681 -0.7752 -0.0825
      Angles 0 -0.8583 0
      MergePhysics 0
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
@@ -1026,10 +1026,11 @@ Vehicle {
      }
      ContextName "Start Mech"
      Position PointInfo "{6AB70BFACC745ACE}" {
-      Offset -0.5697 2.1406 1.2681
+      Offset 0.0006 1.6727 0.8433
       Angles 0 0 0
      }
      Radius 19.42
+     FilterActionsUsingCache 0
     }
     UserActionContext "{6AB70BFABFB3E9E0}" {
      UIInfo UIInfo "{6AB70BFABFB3EAE8}" {
@@ -1037,10 +1038,11 @@ Vehicle {
      }
      ContextName "StopMech"
      Position PointInfo "{6AB70BFABFB3EAE6}" {
-      Offset 0.2558 2.0278 0.8343
+      Offset 0.2558 1.5745 0.9012
       Angles 0 0 0
      }
      Radius 22.37
+     FilterActionsUsingCache 0
     }
    }
    additionalActions {
@@ -1178,7 +1180,7 @@ Vehicle {
   Hierarchy "{6AB64C955AF376C2}" {
   }
  }
- coords 156.293 6.221 193.997
+ coords 74.433 7.507 54.42
  scale 1.6
  m_eVehicleType VEHICLE
 }

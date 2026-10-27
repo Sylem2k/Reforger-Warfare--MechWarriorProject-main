@@ -529,10 +529,6 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  CGS_MechDriveAudioComponent "{A2710C2700010008}" {
-   m_iDriveType 2
-   m_bDebugSound 1
-  }
   BFA_MechMovementComponent "{6AB64C9524CDE072}" {
    m_iLocomotionMode 2
    m_fHoverClearance 1.25
@@ -618,6 +614,10 @@ Vehicle {
    m_sPilotPrefab ""
   }
   CGS_MechDeathComponent "{6AB64C9524CDE011}" {
+  }
+  CGS_MechDriveAudioComponent "{A2710C2700010008}" {
+   m_iDriveType 2
+   m_bDebugSound 1
   }
   CGS_MechHeatComponent "{6AB64C9524CDE013}" {
    m_fMaxHeat 500
@@ -900,18 +900,18 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo HoverPad_R1 {
-     Offset 0.5063 -2.3387 0.413
-     Angles 0 48.144 0
+     Offset 0.7809 -0.5339 -0.2206
+     Angles 0 13.9564 0
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{A233B9FCF4E68697}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_Right.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo HoverPad_L1 {
-     Offset -0.6609 -2.3309 0.24
-     Angles 0 -43.7302 0
+     Offset -0.9971 -0.5372 0.1179
+     Angles 0 12.4535 0
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_Left.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
      Offset -0.0036 -0.1256 -0.2335
@@ -940,20 +940,6 @@ Vehicle {
      Offset -0.0105 -0.9679 0.3266
      Angles 0 2.7371 0
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
-    }
-    EntitySlotInfo HoverPad_R2 {
-     Offset 0.4923 -2.3299 -0.6229
-     Angles 0 123.3269 0
-     MergePhysics 0
-     DisablePhysicsInteraction 1
-     Prefab "{A233B9FCF4E68697}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_Right.et"
-    }
-    EntitySlotInfo HoverPad_L2 {
-     Offset -0.3812 -2.3674 -0.6842
-     Angles 0 -123.374 0
-     MergePhysics 0
-     DisablePhysicsInteraction 1
-     Prefab "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_Left.et"
     }
    }
   }
@@ -1084,7 +1070,7 @@ Vehicle {
   Hierarchy "{6AB64C9524CDE14A}" {
   }
  }
- coords 2162.752 57.271 2923.239
+ coords 80.76 10.364 51.755
  scale 1.6
  m_eVehicleType VEHICLE
 }
