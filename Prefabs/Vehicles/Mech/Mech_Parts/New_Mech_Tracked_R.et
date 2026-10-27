@@ -1,0 +1,31 @@
+GenericEntity {
+ ID "7AC2B561DC170001"
+ components {
+  MeshObject "{7AC2B561DC170002}" {
+   Object "{9B6C03B204462A8B}Common/Models/Mech Track/CGS_Track_R.xob"
+  }
+  SignalsManagerComponent "{7AC2B561DC170003}" {
+  }
+  SoundComponent "{7AC2B561DC170004}" {
+   Filenames {
+    "{D21496B618117D7B}Sounds/Tracked.acp"
+   }
+  }
+  SCR_SoundDataComponent "{7AC2B561DC170005}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{7AC2B561DC170014}" {
+     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_CLANK"
+    }
+    SCR_AudioSourceConfiguration "{7AC2B561DC170015}" {
+     m_sSoundProject "{D21496B618117D7B}Sounds/Tracked.acp"
+     m_sSoundEventName "SOUND_MECH_TRACK_RUMBLE"
+    }
+   }
+  }
+  RplComponent "{7AC2B561DC170006}" {
+  }
+  Hierarchy "{7AC2B561DC170007}" {
+  }
+ }
+}

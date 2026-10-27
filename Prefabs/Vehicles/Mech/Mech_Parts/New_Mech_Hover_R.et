@@ -1,0 +1,35 @@
+GenericEntity {
+ ID "7AC2B561DC180001"
+ components {
+  MeshObject "{7AC2B561DC180002}" {
+   Object "{F9131464C5F179D7}Common/Models/Mech Hover/CGS_HoverPad_R.xob"
+  }
+  SignalsManagerComponent "{7AC2B561DC180003}" {
+  }
+  SoundComponent "{7AC2B561DC180004}" {
+   Filenames {
+    "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+   }
+  }
+  SCR_SoundDataComponent "{7AC2B561DC180005}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{7AC2B561DC180014}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
+    }
+    SCR_AudioSourceConfiguration "{7AC2B561DC180015}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
+    }
+    SCR_AudioSourceConfiguration "{7AC2B561DC180016}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
+    }
+   }
+  }
+  RplComponent "{7AC2B561DC180006}" {
+  }
+  Hierarchy "{7AC2B561DC180007}" {
+  }
+ }
+}
