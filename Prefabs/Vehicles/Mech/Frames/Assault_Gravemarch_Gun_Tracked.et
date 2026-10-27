@@ -934,14 +934,6 @@ Vehicle {
      Angles 0 2.7371 0
      Prefab "{61A846D7093FF826}Prefabs/Vehicles/Mech/Mech_Parts/Hip.et"
     }
-    EntitySlotInfo Right_Arm_Mount {
-     Offset 0.882 0.4179 -0.4025
-     Prefab "{284CF67ECBD5978E}Prefabs/Vehicles/Mech/Mech_Parts/Right_Arm_Mount.et"
-    }
-    EntitySlotInfo Las_Cannon_Arm {
-     Offset -0.8961 0.4898 -0.4025
-     Prefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Las_Cannon_Arm.et"
-    }
     EntitySlotInfo Exhust {
      Offset -0.2859 0.6321 -0.7401
      Angles 53.8107 180 -180
