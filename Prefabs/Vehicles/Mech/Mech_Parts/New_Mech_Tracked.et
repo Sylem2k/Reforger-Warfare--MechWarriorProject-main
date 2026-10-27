@@ -1,6 +1,9 @@
 GenericEntity {
  ID "6AB65961CE2730D9"
  components {
+  MeshObject "{6C277E2027100001}" {
+   Object "{6A673BE677191F67}Common/Models/Mech Track/CGS_Track_L.xob"
+  }
   SignalsManagerComponent "{6AB65961CE273327}" {
   }
   SoundComponent "{6AB65961CE273319}" {
