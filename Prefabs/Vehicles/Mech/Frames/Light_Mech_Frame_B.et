@@ -58,7 +58,7 @@ Vehicle {
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{BD248B0C91C36F39}" {
-      Offset -0.8961 0.4898 -0.4025
+      Offset -1.6233 1.2724 -0.937
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -69,7 +69,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 0
      m_Point PointInfo "{72A275E1AA8A2904}" {
-      Offset 0.3661 1.034 0
+      Offset 0.7822 1.7042 -0.5471
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 2
@@ -79,7 +79,7 @@ Vehicle {
      m_iClass 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{8A0C797677A67619}" {
-      Offset 0.882 0.4179 -0.4025
+      Offset 1.6355 1.3029 -0.8015
      }
      m_bRightSide 1
      m_sControlStation "DRIVER"
@@ -90,7 +90,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{A618270B918D821E}" {
-      Offset -0.35 1 -0.6
+      Offset -0.3179 1.7164 -1.1128
       Angles 0 90 0
      }
      m_sControlStation "DRIVER"
@@ -101,7 +101,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{5370C31F8048EB9B}" {
-      Offset 0.35 1 -0.6
+      Offset 0.8101 1.6608 -1.1445
       Angles 0 90 0
      }
      m_sControlStation "DRIVER"
@@ -463,7 +463,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 1
    m_GroundPoint PointInfo "{661A166D519AF5B3}" {
-    Offset 0 -1.584 -0.8832
+    Offset 0 -2.8839 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -535,7 +535,7 @@ Vehicle {
    m_fCooldown 20
    m_fUseDistance 6
    m_ThrowPoint PointInfo "{F202610220500021}" {
-    Offset 0 2 0
+    Offset 0 1.1894 1.1948
    }
    m_bV2TryPhysicsFlight 1
    m_bAllowMarkedTarget 1
@@ -546,7 +546,7 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{F733288D7D0D2B6B}" {
    m_TorsoPivotPoint PointInfo "{C627000000050002}" {
-    Offset 0 0 0
+    Offset 0 0 -0.5876
    }
    m_aTwistSlots {
     "Torso" "Exhust" "Exhust2"
@@ -653,7 +653,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{CD5C85665DC755C2}" {
      }
      PassengerPositionInfo EntitySlotInfo "{7605FF85E13CCCA9}" {
-      Offset 0 1.5338 0
+      Offset 0 0.5812 -0.7231
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -779,19 +779,19 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
-     Offset 1.0879 -2.3558 -0.9724
+     Offset 1.0879 -3.081 -1.7681
      MergePhysics 0
      Prefab "{D9D8C5E3C437305D}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -1.458 -2.2256 -0.8354
+     Offset -1.458 -3.0665 -1.6038
      MergePhysics 0
      Prefab "{D9D8C5E3C437305D}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
-     Offset -0.0036 -0.4253 -0.2335
+     Offset -0.0037 -0.83 -0.2334
      Angles 0 2.7371 0
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
     }
@@ -934,6 +934,6 @@ Vehicle {
   Hierarchy "{DD40FF9CF1C4F883}" {
   }
  }
- coords 2153.094 56.264 2915.412
+ coords 2154.264 56.566 2916.899
  m_eVehicleType VEHICLE
 }

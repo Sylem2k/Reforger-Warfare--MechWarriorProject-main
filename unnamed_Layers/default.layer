@@ -1,18 +1,38 @@
 Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/SampleMech.et" {
- coords 2147.638 56.632 2921.637
-}
-GenericEntity : "{43AEDD6EDE9723BB}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Heavy.et" {
- coords 2131.407 53.574 2917.884
+ components {
+  BFA_MechMovementComponent "{6A8740653CE8F8D7}" {
+   m_GroundPoint PointInfo "{6AA7395946953F23}" {
+    Offset -0.24 -3.9467 -1.0508
+   }
+  }
+  SlotManagerComponent "{6A8740653CE8FB7D}" {
+   Slots {
+    EntitySlotInfo Leg_R1 {
+     Offset 1.1294 -3.9991 -0.1897
+    }
+    EntitySlotInfo Leg_L1 {
+     Offset -1.2449 -3.9542 -0.2717
+    }
+    EntitySlotInfo Hip {
+     Offset -0.0757 -0.8164 -0.019
+    }
+   }
+  }
+ }
+ coords 2146.914 57.601 2915.938
 }
 GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
- coords 2139.899 54.119 2936.497
+ coords 2139.899 54.119 2963.627
 }
 Vehicle Heavy_Judiciar_Gun1 : "{B6F0C0A020260001}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun.et" {
- coords 2142.493 58.655 2914.947
+ coords 2132.589 59.293 2917.049
 }
-GenericEntity : "{C49BCEA0ACB48275}Prefabs/Vehicles/Mech/Mech_Parts/Heavy_Cock_Pit.et" {
- coords 2150.128 53.943 2914.393
+Vehicle Assault_Gravemarch_Gun1 : "{B6F0C0A020260003}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun.et" {
+ coords 2118.303 57.712 2917.803
+}
+Vehicle Assault_Gravemarch_Missile1 : "{B6F0C0A020260004}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Missile.et" {
+ coords 2126.596 59.557 2917.28
 }
 Vehicle Light_Mech_Frame_B1 : "{D8B39EAE0BB68001}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_B.et" {
- coords 2153.094 56.264 2915.412
+ coords 2154.264 56.566 2916.899
 }

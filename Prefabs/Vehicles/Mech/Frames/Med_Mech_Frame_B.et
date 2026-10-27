@@ -58,7 +58,7 @@ Vehicle {
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 0
      m_Point PointInfo "{6E959BC7D57CBB80}" {
-      Offset -0.8961 0.4898 -0.4025
+      Offset -2.4512 1.7157 -0.4026
      }
      m_bRightSide 0
      m_sControlStation "DRIVER"
@@ -69,7 +69,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 0
      m_Point PointInfo "{768CF2C749F0CF80}" {
-      Offset 0.3661 1.034 0
+      Offset 1.0046 2.3562 0.8369
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 2
@@ -80,7 +80,7 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_iDefaultModuleId 0
      m_Point PointInfo "{B10756ED4C98387D}" {
-      Offset 0.882 0.4179 -0.4025
+      Offset 2.3513 1.8111 -0.1826
      }
      m_bRightSide 1
      m_sControlStation "DRIVER"
@@ -91,7 +91,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{0E24212B3D28201F}" {
-      Offset -0.5486 0.9483 -1.0776
+      Offset -1.0012 2.5307 -1.0776
       Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
@@ -102,7 +102,18 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 0
      m_Point PointInfo "{1CC74F6E0F420D80}" {
-      Offset 0.6261 0.9804 -1.1032
+      Offset 0.8899 2.9894 -0.6089
+      Angles 0 -180 0
+     }
+     m_sControlStation "DRIVER"
+     m_iWeaponGroup 3
+    }
+    BFA_MechHardpointDefinition "{6AB626EA4221E2E9}" {
+     m_sName "BACK_M"
+     m_iClass 3
+     m_iDefaultModuleId 0
+     m_Point PointInfo "{6AB626EA4221E505}" {
+      Offset -0.0288 3.0749 -1.1033
       Angles 0 -180 0
      }
      m_sControlStation "DRIVER"
@@ -482,7 +493,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{CFD7822306357F7C}" {
-    Offset 0 -3.6182 -0.8832
+    Offset 0 -4.8553 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -576,13 +587,13 @@ Vehicle {
    m_fV2ReleaseDelay 0.08
   }
   CGS_TorsoTwistComponent "{81AA74EF32745ABD}" {
+   m_fMaxTwist 35
+   m_fTwistSpeed 25
    m_TorsoPivotPoint PointInfo "{C627000000050004}" {
-    Offset 0 0 0
+    Offset 0 0 -0.0537
    }
    m_aTwistSlots {
-    "Torso"
-    "Exhust"
-    "Exhust2"
+    "Torso" "Exhust" "Exhust2"
    }
    m_aTwistMounts {
    }
@@ -603,7 +614,6 @@ Vehicle {
    m_sFrameName "Warden - Alt"
    m_eWeightClass MEDIUM
    m_fMaxTons 55
-   m_fFrameTons 35
    m_aHardpoints {
     RW_FrameHardpoint "{BD7FC16AEB18F12D}" {
      m_sHardpoint "ARM"
@@ -628,6 +638,10 @@ Vehicle {
     RW_FrameHardpoint "{5FF6669BF7194B5F}" {
      m_sHardpoint "BACK_R"
      m_eType MISSILE
+     m_eMaxSize LARGE
+    }
+    RW_FrameHardpoint "{6AB626EA61DE9A1C}" {
+     m_sHardpoint "BACK_R"
      m_eMaxSize LARGE
     }
    }
@@ -686,7 +700,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{3DC8F885EB8CB5DD}" {
      }
      PassengerPositionInfo EntitySlotInfo "{AA2648B4F4C2245D}" {
-      Offset 0 1.5338 0
+      Offset 0 0.6294 0
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -801,13 +815,15 @@ Vehicle {
   SlotManagerComponent "{0E1D7AF1E9F28F15}" {
    Slots {
     EntitySlotInfo Cockpit {
+     Offset 0 0.1425 0.1714
      MergePhysics 0
+     Prefab "{96D0BD05A703D475}Prefabs/Vehicles/Mech/Mech_Parts/Cock_pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
      Offset 0.8214 -0.8656 0.3085
@@ -825,24 +841,6 @@ Vehicle {
      Offset -0.0036 -0.1256 -0.2335
      Angles 0 2.7371 0
      Prefab "{61A846D7093FF826}Prefabs/Vehicles/Mech/Mech_Parts/Hip.et"
-    }
-    EntitySlotInfo Right_Arm_Mount {
-     Offset 0.882 0.4179 -0.4025
-     Prefab "{284CF67ECBD5978E}Prefabs/Vehicles/Mech/Mech_Parts/Right_Arm_Mount.et"
-    }
-    EntitySlotInfo Las_Cannon_Arm {
-     Offset -0.8961 0.4898 -0.4025
-     Prefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Las_Cannon_Arm.et"
-    }
-    EntitySlotInfo Exhust {
-     Offset -0.2859 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
-    }
-    EntitySlotInfo Exhust2 {
-     Offset 0.2836 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
     }
     EntitySlotInfo Exta {
      Offset -0.0105 -0.9679 0.3266
@@ -978,6 +976,7 @@ Vehicle {
   Hierarchy "{C1B35219AA4F8E88}" {
   }
  }
- coords 77.12 8.229 61.058
+ coords 2138.333 58.333 2917.439
+ scale 1.4
  m_eVehicleType VEHICLE
 }

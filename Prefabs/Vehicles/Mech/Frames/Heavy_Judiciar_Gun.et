@@ -512,7 +512,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E501000000000046}" {
-    Offset 0 -4.727 -0.8832
+    Offset 0 -5.8807 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -606,8 +606,10 @@ Vehicle {
    m_fV2ReleaseDelay 0.08
   }
   CGS_TorsoTwistComponent "{E501000000000051}" {
+   m_fMaxTwist 45
+   m_fTwistSpeed 45
    m_TorsoPivotPoint PointInfo "{C627000000050005}" {
-    Offset 0 0 0
+    Offset 0 -0.1232 -0.1038
    }
    m_aTwistSlots {
     "Torso" "Exhust" "Exhust2" "Cockpit"
@@ -1006,7 +1008,7 @@ Vehicle {
   Hierarchy "{E50100000000008F}" {
   }
  }
- coords 2142.493 58.655 2914.947
- scale 1.3
+ coords 2132.589 59.293 2917.049
+ scale 1.7
  m_eVehicleType VEHICLE
 }

@@ -436,7 +436,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AA82E28A05F52EC}" {
-    Offset 0 -3.4558 -0.8832
+    Offset 0 -4.8018 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -530,13 +530,13 @@ Vehicle {
    m_fV2ReleaseDelay 0.08
   }
   CGS_TorsoTwistComponent "{6AA82E28A05F5B13}" {
+   m_fMaxTwist 45
+   m_fTwistSpeed 35
    m_TorsoPivotPoint PointInfo "{C627000000050003}" {
     Offset 0 0 0
    }
    m_aTwistSlots {
-    "Torso"
-    "Exhust"
-    "Exhust2"
+    "Torso" "Exhust" "Exhust2"
    }
    m_aTwistMounts {
    }
@@ -557,7 +557,7 @@ Vehicle {
    m_sFrameName "Warden"
    m_eWeightClass MEDIUM
    m_fMaxTons 55
-   m_fFrameTons 35
+   m_fFrameTons 30
    m_aHardpoints {
     RW_FrameHardpoint "{6AA82E28A05F640F}" {
      m_sHardpoint "ARM"
@@ -578,6 +578,11 @@ Vehicle {
      m_sHardpoint "BACK"
      m_eType MISSILE
      m_eMaxSize MEDIUM
+    }
+    RW_FrameHardpoint "{6AB626EB7D04EE96}" {
+     m_sHardpoint "ARM"
+     m_eType ANY
+     m_eMaxSize LARGE
     }
    }
    m_iStartExtraHeatsinks 0
@@ -635,7 +640,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{6AA82E28A05F6412}" {
      }
      PassengerPositionInfo EntitySlotInfo "{A1CB25848A3D93A8}" {
-      Offset 0 1.5338 0
+      Offset 0 0.7393 0.1511
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -750,13 +755,15 @@ Vehicle {
   SlotManagerComponent "{6AA82E28A05F65CD}" {
    Slots {
     EntitySlotInfo Cockpit {
+     Offset 0 0.4284 0
      MergePhysics 0
+     Prefab "{C49BCEA0ACB48275}Prefabs/Vehicles/Mech/Mech_Parts/Heavy_Cock_Pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
      Offset 0.8214 -0.8656 0.3085
@@ -927,6 +934,7 @@ Vehicle {
   Hierarchy "{6AA82E28A05FD1B5}" {
   }
  }
- coords 79.943 8.031 60.931
+ coords 2142.698 58.295 2892.499
+ scale 1.4
  m_eVehicleType VEHICLE
 }

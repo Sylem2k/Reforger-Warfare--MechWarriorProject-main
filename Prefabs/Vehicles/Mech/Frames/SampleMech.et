@@ -504,6 +504,9 @@ Vehicle {
    m_sAimStation "DRIVER"
    m_fMaxTwist 45
    m_fTwistSpeed 35
+   m_TorsoPivotPoint PointInfo "{6AB626F77B7124D3}" {
+    Offset 0 0 -0.2932
+   }
    m_aTwistSlots {
     "Torso"
    }
@@ -601,7 +604,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{6A8740653CE8FB1C}" {
      }
      PassengerPositionInfo EntitySlotInfo "{A1CB25848A3D93A8}" {
-      Offset 0 0.8243 -0.397
+      Offset 0 1.0838 -0.397
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -716,7 +719,7 @@ Vehicle {
   SlotManagerComponent "{6A8740653CE8FB7D}" {
    Slots {
     EntitySlotInfo Cockpit {
-     Offset 0 1.0407 -0.5679
+     Offset 0 1.228 -0.5679
      MergePhysics 0
      Prefab "{DD267E74E9C56DB0}Prefabs/Vehicles/Mech/Mech_Parts/Light_Cock_Pit.et"
      DisablePhysicsInteraction 1
