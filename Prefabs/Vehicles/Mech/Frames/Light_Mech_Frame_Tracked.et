@@ -455,6 +455,7 @@ Vehicle {
   }
   BFA_MechMovementComponent "{6AB64C95463A10D8}" {
    m_iLocomotionMode 1
+   m_bDebugLocomotionSound 1
    m_bTrackedADSteering 1
    m_sTrackClankEvent "SOUND_MECH_TRACK_CLANK"
    m_sTrackRumbleEvent "SOUND_MECH_TRACK_RUMBLE"
