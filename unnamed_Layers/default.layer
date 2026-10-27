@@ -1,14 +1,5 @@
-GenericEntity {
- components {
-  MeshObject "{6AB626F2FF6EB5FE}" {
-   Object "{D9C14CA501962E2D}Common/Models/Mech Body/Mech_Body.xob"
-  }
- }
- coords 2150.808 55.286 2926.38
- scale 1.8
-}
 Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/SampleMech.et" {
- coords 2147.638 55.635 2921.752
+ coords 2147.638 56.632 2921.637
 }
 GenericEntity : "{43AEDD6EDE9723BB}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Heavy.et" {
  coords 2131.407 53.574 2917.884
@@ -23,8 +14,5 @@ GenericEntity : "{C49BCEA0ACB48275}Prefabs/Vehicles/Mech/Mech_Parts/Heavy_Cock_P
  coords 2150.128 53.943 2914.393
 }
 Vehicle Light_Mech_Frame_B1 : "{D8B39EAE0BB68001}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_B.et" {
- coords 2150.054 55.228 2917.406
-}
-GenericEntity : "{DD267E74E9C56DB0}Prefabs/Vehicles/Mech/Mech_Parts/Light_Cock_Pit.et" {
- coords 2147.6 56.45 2921.27
+ coords 2153.094 56.264 2915.412
 }

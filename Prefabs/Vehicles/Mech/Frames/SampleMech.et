@@ -502,6 +502,8 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{C630000000020101}" {
    m_sAimStation "DRIVER"
+   m_fMaxTwist 45
+   m_fTwistSpeed 35
    m_aTwistSlots {
     "Torso"
    }
@@ -531,7 +533,7 @@ Vehicle {
   RW_MechFrameComponent "{9B1C4D875E39A77B}" {
    m_sFrameName "Cricket"
    m_eWeightClass LIGHT
-   m_fMaxTons 35
+   m_fMaxTons 25
    m_fFrameTons 25
    m_aHardpoints {
     RW_FrameHardpoint "{098B692C87D025B7}" {
@@ -599,7 +601,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{6A8740653CE8FB1C}" {
      }
      PassengerPositionInfo EntitySlotInfo "{A1CB25848A3D93A8}" {
-      Offset 0 1.5338 0
+      Offset 0 0.8243 -0.397
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -714,8 +716,9 @@ Vehicle {
   SlotManagerComponent "{6A8740653CE8FB7D}" {
    Slots {
     EntitySlotInfo Cockpit {
-     Offset 0 0.2111 -0.3469
+     Offset 0 1.0407 -0.5679
      MergePhysics 0
+     Prefab "{DD267E74E9C56DB0}Prefabs/Vehicles/Mech/Mech_Parts/Light_Cock_Pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
@@ -870,7 +873,6 @@ Vehicle {
   Hierarchy "{6A8740653CE8FB52}" {
   }
  }
- coords 2147.638 55.601 2921.752
- scale 1.8
+ coords 2147.638 56.632 2921.637
  m_eVehicleType VEHICLE
 }
