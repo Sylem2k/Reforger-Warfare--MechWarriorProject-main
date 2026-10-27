@@ -1,0 +1,39 @@
+OCTOBER 27, 2026 — CGS TRACK + HOVER SAMPLE MODELS INSTALLED
+
+I pushed four placeholder meshes into CGS-MW-Assets/main:
+- {6A673BE677191F67}Common/Models/Mech Track/CGS_Track_L.xob
+- {9B6C03B204462A8B}Common/Models/Mech Track/CGS_Track_R.xob
+- {08182C30B6AE4C3B}Common/Models/Mech Hover/CGS_HoverPad_L.xob
+- {F9131464C5F179D7}Common/Models/Mech Hover/CGS_HoverPad_R.xob
+
+I updated my existing MW part prefabs and kept their filenames:
+- New_Mech_Tracked.et now displays the LEFT tracked sample and retains its Tracked.acp SoundComponent and SCR_SoundDataComponent.
+- New_Mech_Hover.et now displays the LEFT hover sample and retains its Hover.acp sound components.
+I created two RIGHT-side variants, New_Mech_Tracked_R.et and New_Mech_Hover_R.et (with unique .meta resource IDs) because I have separate left and right XOB meshes.
+
+I updated all eight standard tracked and hover frames (Light, Medium, Heavy, Assault). Track_L1/L2 and HoverPad_L1/L2 still use the original left-side part prefabs; Track_R1/R2 and HoverPad_R1/R2 now use the respective right-side variants. The Assault frames have four equipped parts and the smaller frames have two. My root movement component still chooses one sound-equipped left-side part as the spatial sound emitter, preventing multiple identical engine sounds per mech.
+
+IMPORTANT TRACK ANIMATION NOTE
+The initial Blender generator joined ALL model geometry — belt, tread ribs, road wheels, hull plates and mounting socket — into one static mesh per XOB. No wheel bones, animated texture, animation graph or animation instance were imported. Attaching the XOBs makes the track pods move with the chassis, but neither road wheels nor tread belts spin visually.
+
+For the real moving-tread version I should use the original Blender generator as my modeling source, BEFORE its join_as_one() step, to preserve independent pieces:
+1. Keep armored frame/socket/skirt static.
+2. Extract four road wheels (plus their axle caps) as animatable wheel meshes, or bind each to wheel bones about the lateral X axle.
+3. Keep the rubber belt visually separate. Prefer a seamless UV layout around the oval belt, with scroll driven by the real observed track speed IF a verified Enfusion material shader supports scrolling. Otherwise rig a smaller number of tread links and animate their translation around the closed oval path in an Enfusion-supported animation graph.
+4. Left and right tracks must turn at different speeds. Forward/backward motion drives both the same, and hull pivot adds/subtracts speed; turning in place runs treads in opposite directions.
+5. Animate visual wheels/treads on each client using the replicated mech root speed/turn rate, without new step RPC messages. The current chassis is already server authoritative.
+6. Export rigged FBX for Workbench and implement a proper animation graph or verified UV scroll shader; do not assume a Blender F-curve or UV animation will automatically play in Arma Reforger.
+7. For now, moving-track SOUND_MECH_TRACK_CLANK and SOUND_MECH_TRACK_RUMBLE provide audio feedback even with static tread geometry.
+
+HOVER PAD VISUALS
+Hover pads don't need bones to move with the vehicle. To make hover feel alive, give the models appropriate emissive material and local thruster exhaust particles plus ground dust driven by the existing movement/clearance state. The imported CGS_Hover_Cyan_Emission.emat material currently contains only an empty MatPBRBasic declaration, so no emission setup has been validated.
+
+CONFIGURATION / TEST
+1. Run CGS-MW-Assets at main; the four .xob resources are present there.
+2. Run MW branch feat/track-hover-models-20261027 and Core main (or a matching validated descendant).
+3. Rebuild model resources and spawn a tracked Light and Hover Light.
+4. Check left and right geometry orientation, correct socket position, and sound emission. The slot offsets are inherited from prior legs and may require Workbench adjustments.
+5. Repeat for Heavy/Assault; verify no floating models or physical collision and no erroneous walking-leg IK.
+6. Only then proceed to animation/VFX authoring. I have not compiled or tested these changes inside Workbench.
+
+STATUS: Full MW prefab source and asset GUIDs checked; models are installed as STATIC meshes; no baked track animation exists yet; no main merge.
