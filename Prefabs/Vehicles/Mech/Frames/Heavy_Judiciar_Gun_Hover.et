@@ -15,7 +15,7 @@ Vehicle {
   }
   SoundComponent "{C627A00000000061}" {
    Filenames {
-    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+    "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
    }
   }
   AIKnowledgeComponent "{6AB64D2E7122EB67}" {
@@ -786,15 +786,15 @@ Vehicle {
   SCR_SoundDataComponent "{C627A00000000062}" {
    m_aAudioSourceConfiguration {
     SCR_AudioSourceConfiguration "{C627A00000000063}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
      m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
     }
     SCR_AudioSourceConfiguration "{C627A00000000064}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
      m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
     }
     SCR_AudioSourceConfiguration "{C627A00000000065}" {
-     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
      m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
     }
    }
