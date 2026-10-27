@@ -4,7 +4,7 @@ GenericEntity {
   SignalsManagerComponent "{6AB545F941D6469A}" {
   }
   MeshObject "{6AB545F941D631BF}" {
-   Object "{9C87AA3DDA0E8CB2}Common/Models/Mech/sen_Back.xob"
+   Object "{9C7B2EBF738A2E33}Common/Models/CockPit/Cock_pit.xob"
   }
   RigidBody "{6AB545F941D6318A}" {
    Enabled 0
@@ -22,5 +22,5 @@ GenericEntity {
   Hierarchy "{6AB545F941D63199}" {
   }
  }
- coords 115.746 1.111 109.293
+ coords 2149.19 53.632 2915.251
 }

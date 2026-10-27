@@ -607,9 +607,7 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{E501000000000051}" {
    m_aTwistSlots {
-    "Torso"
-    "Exhust"
-    "Exhust2"
+    "Torso" "Exhust" "Exhust2" "Cockpit"
    }
    m_aTwistMounts {
    }
@@ -728,7 +726,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{E50100000000006B}" {
      }
      PassengerPositionInfo EntitySlotInfo "{E50100000000006C}" {
-      Offset 0 1.5338 0
+      Offset 0.0811 0.0134 0.0833
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -843,13 +841,16 @@ Vehicle {
   SlotManagerComponent "{E50100000000007D}" {
    Slots {
     EntitySlotInfo Cockpit {
+     Offset 0.0374 -0.0091 -0.2241
+     Angles -31.893 1.3109 -0.6927
      MergePhysics 0
+     Prefab "{C49BCEA0ACB48275}Prefabs/Vehicles/Mech/Mech_Parts/Heavy_Cock_Pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
      Offset 0.8214 -0.8656 0.3085
@@ -1020,7 +1021,7 @@ Vehicle {
   Hierarchy "{E50100000000008F}" {
   }
  }
- coords 73.387 8.824 60.751
+ coords 2142.493 58.655 2914.947
  scale 1.3
  m_eVehicleType VEHICLE
 }
