@@ -497,13 +497,38 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  BFA_MechMovementComponent "{6AB64D2E71215C75}" {
-   m_aLegPairs {
-    BFA_MechLegPair "{6AB64D2E71215C78}" {
-     m_sLeftLegSlotName "Leg_L1"
-     m_sRightLegSlotName "Leg_R1"
+  SoundComponent "{C627A00000000061}" {
+   Filenames {
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+   }
+  }
+  SCR_SoundDataComponent "{C627A00000000062}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{C627A00000000063}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000064}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000065}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
     }
    }
+  }
+  BFA_MechMovementComponent "{6AB64D2E71215C75}" {
+   m_aLegPairs {
+   }
+   m_iLocomotionMode 2
+   m_sHoverThrustEvent "SOUND_MECH_HOVER_THRUST"
+   m_sHoverIdlePulseEvent "SOUND_MECH_HOVER_IDLE_PULSE"
+   m_sHoverIdleLoopEvent "SOUND_MECH_HOVER_IDLE"
+   m_fHoverClearance 1.25
+   m_fHoverBob 0.08
+   m_fHoverBobHz 0.65
+   m_fHoverGlideTime 0.35
    m_fSpeed 3.4
    m_bCanSprint 1
    m_fSprintSpeed 5.4
@@ -857,16 +882,16 @@ Vehicle {
      Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_R1 {
+    EntitySlotInfo HoverPad_R1 {
      Offset 0.8214 -0.8656 0.3085
      MergePhysics 0
-     Prefab "{ECC40896C6FE4B77}Prefabs/Vehicles/Mech/Mech_Parts/Med_Mech_Leg_Right.et"
+
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_L1 {
+    EntitySlotInfo HoverPad_L1 {
      Offset -0.7886 -0.7234 0.3735
      MergePhysics 0
-     Prefab "{ECC40896C6FE4B77}Prefabs/Vehicles/Mech/Mech_Parts/Med_Mech_Leg_Right.et"
+
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {

@@ -529,10 +529,34 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
+  SoundComponent "{C627A00000000081}" {
+   Filenames {
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+   }
+  }
+  SCR_SoundDataComponent "{C627A00000000082}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{C627A00000000083}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000084}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
+    }
+    SCR_AudioSourceConfiguration "{C627A00000000085}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
+    }
+   }
+  }
   BFA_MechMovementComponent "{6AB64C9524CDE072}" {
    m_aLegPairs {
    }
    m_iLocomotionMode 2
+   m_sHoverThrustEvent "SOUND_MECH_HOVER_THRUST"
+   m_sHoverIdlePulseEvent "SOUND_MECH_HOVER_IDLE_PULSE"
+   m_sHoverIdleLoopEvent "SOUND_MECH_HOVER_IDLE"
    m_fHoverClearance 1.25
    m_fHoverBob 0.08
    m_fHoverBobHz 0.65
