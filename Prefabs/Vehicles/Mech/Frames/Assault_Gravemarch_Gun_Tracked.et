@@ -617,7 +617,7 @@ Vehicle {
    m_bDebugSound 1
   }
   CGS_MechEngineComponent "{6AB706FA459DBA21}" {
-   m_bStartRunning 1
+   m_bStartRunning 0
    m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
     Offset 0 0 1.3625
    }
@@ -987,7 +987,9 @@ Vehicle {
      }
      ContextName "Start Mech"
      Position PointInfo "{6AB70BFACC745ACE}" {
+      Offset 0 1.1994 0
      }
+     Radius 1.5
     }
     UserActionContext "{6AB70BFABFB3E9E0}" {
      UIInfo UIInfo "{6AB70BFABFB3EAE8}" {
@@ -995,10 +997,30 @@ Vehicle {
      }
      ContextName "StopMech"
      Position PointInfo "{6AB70BFABFB3EAE6}" {
+      Offset 0.7789 1.1497 0
      }
+     Radius 1.5
     }
    }
    additionalActions {
+    CGS_MechEngineStartAction "{6AB70BF000001011}" {
+     ParentContextList {
+      "Start Mech"
+     }
+     UIInfo UIInfo "{6AB70BF000001012}" {
+      Name "ENGINE: START CORE"
+     }
+     VisibilityRange 4
+    }
+    CGS_MechEngineStopAction "{6AB70BF000001013}" {
+     ParentContextList {
+      "StopMech"
+     }
+     UIInfo UIInfo "{6AB70BF000001014}" {
+      Name "ENGINE: SHUT DOWN"
+     }
+     VisibilityRange 4
+    }
     CGS_MechCompanionOrderAction "{6AB64C955AF35D1B}" {
      ParentContextList {
       "default"
