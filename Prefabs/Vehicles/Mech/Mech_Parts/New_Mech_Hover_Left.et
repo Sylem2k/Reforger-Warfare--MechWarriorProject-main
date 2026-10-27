@@ -1,27 +1,27 @@
 GenericEntity {
- ID "6AB65961CE2730D9"
+ ID "6AB65961C9BE8155"
  components {
-  SignalsManagerComponent "{6AB65961CE273327}" {
+  SignalsManagerComponent "{6AB65961C9BE81A3}" {
   }
-  SoundComponent "{6AB65961CE273319}" {
+  SoundComponent "{6AB65961C9BE81B2}" {
    Filenames {
     "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
    }
   }
-  BFA_MechLegComponent "{6AB65961CE27331D}" {
+  BFA_MechLegComponent "{6AB65961C9BE81B1}" {
    m_fStepHeight 1
    m_fObstacleStepHeight 3
-   m_LastBone PointInfo "{6AB65961CE273366}" {
+   m_LastBone PointInfo "{6AB65961C9BE81B4}" {
     PivotID "J3"
    }
   }
-  MeshObject "{6AB65961CE27336B}" {
-   Object "{00BF568EACF0923C}Common/Models/Mech Leg/Light_Leg.xob"
+  MeshObject "{6AB65961C9BE81BA}" {
+   Object "{08182C30B6AE4C3B}Common/Models/Mech Hover/CGS_HoverPad_L.xob"
    RainOccluder 0
    WetnessOccluder 0
    ReceiveLight 0
   }
-  RigidBody "{6AB65961CE27336E}" {
+  RigidBody "{6AB65961C9BE81B8}" {
    Gravity 0
    Geometries {
     PhysicsBoxGeometry asd {
@@ -31,7 +31,7 @@ GenericEntity {
     }
    }
   }
-  SCR_DamageManagerComponent "{6AB65961CE273371}" {
+  SCR_DamageManagerComponent "{6AB65961C9BE81BC}" {
    "Additional hit zones" {
     BFA_MechPartHitZone Leg {
      HZDefault 1
@@ -47,23 +47,23 @@ GenericEntity {
     }
    }
   }
-  SCR_SoundDataComponent "{6AB65961CE27337A}" {
+  SCR_SoundDataComponent "{6AB65961C9BE8180}" {
    m_aAudioSourceConfiguration {
-    SCR_AudioSourceConfiguration "{6AB65961CE27337C}" {
+    SCR_AudioSourceConfiguration "{6AB65961C9BE8184}" {
      m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
      m_sSoundEventName "SOUND_MECH_STEP"
     }
    }
   }
-  AnimationControllerComponent "{6AB65961CE273343}" {
+  AnimationControllerComponent "{6AB65961C9BE8189}" {
    AnimGraph "{087ADD06D87386F4}Anims/Workspaces/Mech/IK_Arm.agr"
    AnimInstance "{E51088DDC47AD41A}Anims/Workspaces/Mech/IK_Arm.asi"
    StartNode "IK Chain to IK Target"
    AnimUpdate EOnFrame
   }
-  RplComponent "{6AB65961CE273346}" {
+  RplComponent "{6AB65961C9BE818C}" {
   }
-  Hierarchy "{6AB65961CE273344}" {
+  Hierarchy "{6AB65961C9BE8192}" {
   }
  }
  coords 2161.05 53.961 2916.4
