@@ -588,6 +588,9 @@ Vehicle {
    m_fCoolingPerSecond 21
   }
   CGS_TorsoTwistComponent "{E60B000000000052}" {
+   m_TorsoPivotPoint PointInfo "{C627000000050011}" {
+    Offset 0 0 0
+   }
    m_aTwistSlots {
     "Torso"
     "Exhust"

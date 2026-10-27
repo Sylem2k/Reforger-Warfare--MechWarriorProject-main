@@ -636,6 +636,9 @@ Vehicle {
    m_bV2TryPhysicsFlight 1
   }
   CGS_TorsoTwistComponent "{E503000000000057}" {
+   m_TorsoPivotPoint PointInfo "{C627000000050008}" {
+    Offset 0 0 0
+   }
    m_aTwistSlots {
     "Torso" "Exhust" "Exhust2"
    }
