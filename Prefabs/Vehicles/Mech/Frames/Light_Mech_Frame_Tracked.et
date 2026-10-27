@@ -450,11 +450,9 @@ Vehicle {
   }
   BFA_MechMovementComponent "{6AB64C95463A10D8}" {
    m_aLegPairs {
-    BFA_MechLegPair "{6AB64C95463A10DA}" {
-     m_sLeftLegSlotName "Leg_L1"
-     m_sRightLegSlotName "Leg_R1"
-    }
    }
+   m_iLocomotionMode 1
+   m_bTrackedADSteering 1
    m_fSpeed 5
    m_bCanSprint 1
    m_fSprintSpeed 8
@@ -778,16 +776,16 @@ Vehicle {
      Prefab "{C628000000020101}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Light.et"
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_R1 {
+    EntitySlotInfo Track_R1 {
      Offset 1.0879 -3.081 -1.7681
      MergePhysics 0
-     Prefab "{D9D8C5E3C437305D}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Leg_Right.et"
+
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_L1 {
+    EntitySlotInfo Track_L1 {
      Offset -1.458 -3.0665 -1.6038
      MergePhysics 0
-     Prefab "{D9D8C5E3C437305D}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Leg_Right.et"
+
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {

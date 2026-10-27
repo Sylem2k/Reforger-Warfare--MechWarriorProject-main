@@ -531,15 +531,9 @@ Vehicle {
   }
   BFA_MechMovementComponent "{6AB64C955AF35C57}" {
    m_aLegPairs {
-    BFA_MechLegPair "{6AB64C955AF35C55}" {
-     m_sLeftLegSlotName "Leg_L1"
-     m_sRightLegSlotName "Leg_R1"
-    }
-    BFA_MechLegPair "{6AB64C955AF35C4A}" {
-     m_sLeftLegSlotName "Leg_L2"
-     m_sRightLegSlotName "Leg_R2"
-    }
    }
+   m_iLocomotionMode 1
+   m_bTrackedADSteering 1
    m_fSpeed 2.8
    m_bCanSprint 1
    m_fSprintSpeed 4.4
@@ -900,18 +894,18 @@ Vehicle {
      Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_R1 {
+    EntitySlotInfo Track_R1 {
      Offset 0.5063 -2.3387 0.413
      Angles 0 48.144 0
      MergePhysics 0
-     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
+
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_L1 {
+    EntitySlotInfo Track_L1 {
      Offset -0.6609 -2.3309 0.24
      Angles 0 -43.7302 0
      MergePhysics 0
-     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
+
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
@@ -942,18 +936,18 @@ Vehicle {
      Angles 0 2.7371 0
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
     }
-    EntitySlotInfo Leg_R2 {
+    EntitySlotInfo Track_R2 {
      Offset 0.4923 -2.3299 -0.6229
      Angles 0 123.3269 0
      MergePhysics 0
-     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
+
      DisablePhysicsInteraction 1
     }
-    EntitySlotInfo Leg_L2 {
+    EntitySlotInfo Track_L2 {
      Offset -0.3812 -2.3674 -0.6842
      Angles 0 -123.374 0
      MergePhysics 0
-     Prefab "{A2CA0500DBBC77F5}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Left.et"
+
      DisablePhysicsInteraction 1
     }
    }
