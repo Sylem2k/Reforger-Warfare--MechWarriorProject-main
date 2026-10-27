@@ -28,6 +28,20 @@ GenericEntity {
   }
   SignalsManagerComponent "{6AB65DBA80CD57C1}" {
   }
+  SCR_DamageManagerComponent "{6A27010C00000101}" {
+   "Additional hit zones" {
+    BFA_MechPartHitZone Locomotion {
+     HZDefault 1
+     MaxHealth 700
+     DamageReduction 2
+     DamageThreshold 1
+     m_ePart LEG
+     m_fHullShare 0.25
+     m_sDisplayName "TRACK LEFT"
+     m_eHudSection AUTO
+    }
+   }
+  }
   RplComponent "{6AB65DBA80CD5609}" {
   }
   Hierarchy "{6AB65DBA80CE9395}" {
