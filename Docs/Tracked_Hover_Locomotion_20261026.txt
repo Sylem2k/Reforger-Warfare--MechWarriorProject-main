@@ -51,3 +51,22 @@ TEST ORDER
 4. Mode 2 should keep clearance while traveling up/down hills, strafe with A/D and turn Q/E.
 5. Add the starter audio and event project on each mech. Confirm stationary treads are silent while hovering is given a separate idle bed; verify correct event spatialization in two-client multiplayer.
 6. Profile multiple tracked and hover NPCs with 128 players and confirm no new per-step server RPCs; check root reconciliation.
+
+
+
+OCT 26 LATEST FRAME ALIGNMENT
+While I was adding the new Core locomotion logic, six tracked/hover frame copies were introduced on MW main. I preserved all six, their meta files and the concurrently updated resource database on this test branch instead of replacing or overwriting them.
+
+I configured the following six frame copies as actual movement-mode test templates:
+- Light_Mech_Frame_Tracked.et — mode 1
+- Light_Mech_Frame_Hover.et — mode 2
+- Med_Mech_Frame_Tracked.et — mode 1
+- Med_Mech_Frame_Hover.et — mode 2
+- Assault_Gravemarch_Gun_Tracked.et — mode 1
+- Assault_Gravemarch_Gun_Hover.et — mode 2
+
+In each template I cleared all m_aLegPairs entries, set the locomotion mode, removed leg-prefab references only from Leg_R1/Leg_L1 (and Leg_R2/Leg_L2 on assault), and renamed those EMPTY attachment slots to Track_R1/Track_L1 (Track_R2/Track_L2 on assault) or HoverPad_R1/HoverPad_L1 (R2/L2 on assault). I left the weapon groups, cockpit and torso parts, ground point, chassis, visuals for the upper body, and all existing combat systems intact.
+
+These are FRAME TEMPLATES. I have not yet supplied a tread/hover-pad 3D model. The empty slots deliberately show no walking legs until I attach the appropriate model prefab. Before judging hover height, I must reposition Ground Point to the bottom of the new pads/hull rather than the old foot soles.
+
+I can use the new original starter audio ZIP from the conversation for track rumble/clank and hover engine/pulse/thrust sounds. It is not imported to the repository or assigned to the audio editor yet.
