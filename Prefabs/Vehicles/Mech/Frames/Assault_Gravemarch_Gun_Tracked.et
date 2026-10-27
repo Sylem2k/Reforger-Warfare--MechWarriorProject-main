@@ -618,6 +618,7 @@ Vehicle {
   }
   CGS_MechEngineComponent "{6AB706FA459DBA21}" {
    m_bStartRunning 0
+   m_bDebugEngine 1
    m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
     Offset 0 0 1.3625
    }
