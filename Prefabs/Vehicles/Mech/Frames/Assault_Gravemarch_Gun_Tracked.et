@@ -1080,6 +1080,15 @@ Vehicle {
      }
      VisibilityRange 30
     }
+    CGS_MechEngineStatusProbeAction "{6AD1027E00001011}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6AD1027E00001012}" {
+      Name "ENGINE DIAG (CLICK TO LOG)"
+     }
+     VisibilityRange 30
+    }
     CGS_MechCompanionOrderAction "{6AB64C955AF35D1B}" {
      ParentContextList {
       "default"
