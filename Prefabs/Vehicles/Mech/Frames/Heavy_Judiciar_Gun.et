@@ -610,9 +610,7 @@ Vehicle {
     Offset 0 0 0
    }
    m_aTwistSlots {
-    "Torso"
-    "Exhust"
-    "Exhust2"
+    "Torso" "Exhust" "Exhust2" "Cockpit"
    }
    m_aTwistMounts {
    }
@@ -731,7 +729,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{E50100000000006B}" {
      }
      PassengerPositionInfo EntitySlotInfo "{E50100000000006C}" {
-      Offset 0 1.5338 0
+      Offset 0.0811 0.0134 0.0833
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -846,13 +844,16 @@ Vehicle {
   SlotManagerComponent "{E50100000000007D}" {
    Slots {
     EntitySlotInfo Cockpit {
+     Offset 0.0291 0.232 -0.5784
+     Angles -25.6657 2.2906 0
      MergePhysics 0
+     Prefab "{C49BCEA0ACB48275}Prefabs/Vehicles/Mech/Mech_Parts/Heavy_Cock_Pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
      Offset 0.8214 -0.8656 0.3085
@@ -870,24 +871,6 @@ Vehicle {
      Offset -0.0036 -0.1256 -0.2335
      Angles 0 2.7371 0
      Prefab "{61A846D7093FF826}Prefabs/Vehicles/Mech/Mech_Parts/Hip.et"
-    }
-    EntitySlotInfo Right_Arm_Mount {
-     Offset 0.882 0.4179 -0.4025
-     Prefab "{284CF67ECBD5978E}Prefabs/Vehicles/Mech/Mech_Parts/Right_Arm_Mount.et"
-    }
-    EntitySlotInfo Las_Cannon_Arm {
-     Offset -0.8961 0.4898 -0.4025
-     Prefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Las_Cannon_Arm.et"
-    }
-    EntitySlotInfo Exhust {
-     Offset -0.2859 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
-    }
-    EntitySlotInfo Exhust2 {
-     Offset 0.2836 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
     }
     EntitySlotInfo Exta {
      Offset -0.0105 -0.9679 0.3266
@@ -1023,7 +1006,7 @@ Vehicle {
   Hierarchy "{E50100000000008F}" {
   }
  }
- coords 73.387 8.824 60.751
+ coords 2142.493 58.655 2914.947
  scale 1.3
  m_eVehicleType VEHICLE
 }

@@ -1,0 +1,26 @@
+GenericEntity {
+ ID "6AB545F941D64689"
+ components {
+  SignalsManagerComponent "{6AB545F941D6469A}" {
+  }
+  MeshObject "{6AB545F941D631BF}" {
+   Object "{9C7B2EBF738A2E33}Common/Models/CockPit/Cock_pit.xob"
+  }
+  RigidBody "{6AB545F941D6318A}" {
+   Enabled 0
+   Gravity 0
+   Geometries {
+    PhysicsBoxGeometry asd {
+     LayerPreset "VehicleFireView"
+     Offset 0 1.5 0.133
+     Extents 1 3 2
+    }
+   }
+  }
+  RplComponent "{6AB545F941D6319B}" {
+  }
+  Hierarchy "{6AB545F941D63199}" {
+  }
+ }
+ coords 2149.19 53.632 2915.251
+}

@@ -500,6 +500,15 @@ Vehicle {
    m_fV2ReleaseHeight 1.2
    m_fV2ReleaseDelay 0.08
   }
+  CGS_TorsoTwistComponent "{C630000000020101}" {
+   m_sAimStation "DRIVER"
+   m_fMaxTwist 45
+   m_fTwistSpeed 35
+   m_aTwistSlots {
+    "Torso"
+   }
+   m_bHideRootMesh 1
+  }
   ChimeraAIPathfindingComponent "{69DD5BAD365BB085}" {
    NavmeshProject "BTRlike"
    "Use Road Network" 1
@@ -507,16 +516,6 @@ Vehicle {
   ColliderHistoryComponent "{7F8440542A8A1613}" {
   }
   ControllersManagerComponent "{6A8740653CE8FB22}" {
-  }
-  CGS_TorsoTwistComponent "{C630000000020101}" {
-   m_TorsoPivotPoint PointInfo "{C62700000005000A}" {
-    Offset 0 0 0
-   }
-   m_sAimStation "DRIVER"
-   m_aTwistSlots {
-    "Torso"
-   }
-   m_bHideRootMesh 1
   }
   MeshObject "{6A8740653CE8FB20}" {
    Object "{D9C14CA501962E2D}Common/Models/Mech Body/Mech_Body.xob"
@@ -534,7 +533,7 @@ Vehicle {
   RW_MechFrameComponent "{9B1C4D875E39A77B}" {
    m_sFrameName "Cricket"
    m_eWeightClass LIGHT
-   m_fMaxTons 35
+   m_fMaxTons 25
    m_fFrameTons 25
    m_aHardpoints {
     RW_FrameHardpoint "{098B692C87D025B7}" {
@@ -602,7 +601,7 @@ Vehicle {
      SwitchSeatAction SCR_SwitchSeatAction "{6A8740653CE8FB1C}" {
      }
      PassengerPositionInfo EntitySlotInfo "{A1CB25848A3D93A8}" {
-      Offset 0 1.5338 0
+      Offset 0 0.8243 -0.397
      }
      SkipCharacterDoorAnimationsFromSeat 1
      EjectUnconsciousAndDeadCharacters 1
@@ -717,28 +716,31 @@ Vehicle {
   SlotManagerComponent "{6A8740653CE8FB7D}" {
    Slots {
     EntitySlotInfo Cockpit {
+     Offset 0 1.0407 -0.5679
      MergePhysics 0
+     Prefab "{DD267E74E9C56DB0}Prefabs/Vehicles/Mech/Mech_Parts/Light_Cock_Pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
+     Offset 0 0 0.05
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{C628000000020102}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Light_Camo.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
-     Offset 0.6433 -2.477 -0.9805
+     Offset 0.6433 -2.477 -0.1897
      MergePhysics 0
      Prefab "{BA4602396DF2E15D}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -0.7273 -2.4902 -0.8678
+     Offset -0.6792 -2.4902 -0.2942
      MergePhysics 0
      Prefab "{BA4602396DF2E15D}Prefabs/Vehicles/Mech/Mech_Parts/Mech_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
-     Offset -0.0269 -0.2986 -0.7213
+     Offset 0.0066 -0.2986 -0.0229
      Angles 0 2.7371 0
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
     }
@@ -871,6 +873,6 @@ Vehicle {
   Hierarchy "{6A8740653CE8FB52}" {
   }
  }
- coords 84.551 7.17 61.505
+ coords 2147.638 56.632 2921.637
  m_eVehicleType VEHICLE
 }
