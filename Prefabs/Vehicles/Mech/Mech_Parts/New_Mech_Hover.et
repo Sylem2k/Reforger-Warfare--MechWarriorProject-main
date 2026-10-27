@@ -1,6 +1,9 @@
 GenericEntity {
  ID "6AB65961C9BE8155"
  components {
+  MeshObject "{6C277E2027100002}" {
+   Object "{08182C30B6AE4C3B}Common/Models/Mech Hover/CGS_HoverPad_L.xob"
+  }
   SignalsManagerComponent "{6AB65961C9BE81A3}" {
   }
   SoundComponent "{6AB65961C9BE81B2}" {
