@@ -625,25 +625,11 @@ Vehicle {
       Offset -1.85 -1.9 0.24
      }
     }
-    CGS_MechRepairSite "{6A001027D0000004}" {
-     m_sLabel "LEFT TRACK REAR"
-     m_sPartEntityName "Track_L2"
-     m_Position PointInfo "{6A001027D0000005}" {
-      Offset -1.85 -1.9 -0.6842
-     }
-    }
     CGS_MechRepairSite "{6A001027D0000006}" {
      m_sLabel "RIGHT TRACK FRONT"
      m_sPartEntityName "Track_R1"
      m_Position PointInfo "{6A001027D0000007}" {
       Offset 1.85 -1.9 0.413
-     }
-    }
-    CGS_MechRepairSite "{6A001027D0000008}" {
-     m_sLabel "RIGHT TRACK REAR"
-     m_sPartEntityName "Track_R2"
-     m_Position PointInfo "{6A001027D0000009}" {
-      Offset 1.85 -1.9 -0.6229
      }
     }
     CGS_MechRepairSite "{6A001027D0000010}" {
@@ -1022,20 +1008,6 @@ Vehicle {
      Offset -0.0105 -0.9679 0.3266
      Angles 0 2.7371 0
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
-    }
-    EntitySlotInfo Track_R2 {
-     Offset 1.3424 0.0844 -2.7213
-     Angles 0 -179.6019 0
-     MergePhysics 0
-     Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
-     DisablePhysicsInteraction 1
-    }
-    EntitySlotInfo Track_L2 {
-     Offset -0.6491 -0.2729 -2.9595
-     Angles 0 -173.2845 0
-     MergePhysics 0
-     Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
-     DisablePhysicsInteraction 1
     }
    }
   }
