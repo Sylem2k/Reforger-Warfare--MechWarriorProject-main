@@ -448,6 +448,10 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
+  CGS_MechDriveAudioComponent "{A2710C2700010001}" {
+   m_iDriveType 1
+   m_bDebugSound 1
+  }
   BFA_MechMovementComponent "{6AB64C95463A10D8}" {
    m_iLocomotionMode 1
    m_bTrackedADSteering 1

@@ -497,6 +497,9 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
+  CGS_MechDriveAudioComponent "{A2710C2700010006}" {
+   m_iDriveType 2
+  }
   BFA_MechMovementComponent "{6AB64D2E71215C75}" {
    m_iLocomotionMode 2
    m_fHoverClearance 1.25

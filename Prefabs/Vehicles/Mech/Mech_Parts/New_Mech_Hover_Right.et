@@ -4,6 +4,27 @@ GenericEntity {
   MeshObject "{7EC2702700040002}" {
    Object "{F9131464C5F179D7}Common/Models/Mech Hover/CGS_HoverPad_R.xob"
   }
+  SoundComponent "{A2710C2700000401}" {
+   Filenames {
+    "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+   }
+  }
+  SCR_SoundDataComponent "{A2710C2700000402}" {
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{A2710C2700000403}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE"
+    }
+    SCR_AudioSourceConfiguration "{A2710C2700000404}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_IDLE_PULSE"
+    }
+    SCR_AudioSourceConfiguration "{A2710C2700000405}" {
+     m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+     m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
+    }
+   }
+  }
   SignalsManagerComponent "{7EC2702700040003}" {
   }
   RplComponent "{7EC2702700040006}" {
