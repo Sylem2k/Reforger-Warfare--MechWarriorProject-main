@@ -540,7 +540,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AB64C955AF35C48}" {
-    Offset 0 -2.32 -0.1631
+    Offset 0 -1.9951 -0.1631
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -916,15 +916,15 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_R1 {
-     Offset 0.5063 -2.3387 0.413
-     Angles 0 48.144 0
+     Offset 1.24 -0.1903 0.4646
+     Angles 0 -4.0234 0
      MergePhysics 0
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
-     Offset -0.6609 -2.3309 0.24
-     Angles 0 -43.7302 0
+     Offset -0.6609 -0.2978 0.24
+     Angles 0 -0.8583 0
      MergePhysics 0
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
      DisablePhysicsInteraction 1
@@ -958,15 +958,15 @@ Vehicle {
      Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
     }
     EntitySlotInfo Track_R2 {
-     Offset 0.4923 -2.3299 -0.6229
-     Angles 0 123.3269 0
+     Offset 1.3424 0.0844 -2.7213
+     Angles 0 -179.6019 0
      MergePhysics 0
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L2 {
-     Offset -0.3812 -2.3674 -0.6842
-     Angles 0 -123.374 0
+     Offset -0.6491 -0.2729 -2.9595
+     Angles 0 -173.2845 0
      MergePhysics 0
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
      DisablePhysicsInteraction 1
@@ -988,9 +988,10 @@ Vehicle {
      }
      ContextName "Start Mech"
      Position PointInfo "{6AB70BFACC745ACE}" {
-      Offset 0 2.1406 0.6673
+      Offset -0.5697 2.1406 1.2681
+      Angles 0 0 0
      }
-     Radius 8
+     Radius 19.42
     }
     UserActionContext "{6AB70BFABFB3E9E0}" {
      UIInfo UIInfo "{6AB70BFABFB3EAE8}" {
@@ -998,9 +999,10 @@ Vehicle {
      }
      ContextName "StopMech"
      Position PointInfo "{6AB70BFABFB3EAE6}" {
-      Offset 0.352 1.8377 0.8343
+      Offset 0.2558 2.0278 0.8343
+      Angles 0 0 0
      }
-     Radius 8
+     Radius 22.37
     }
    }
    additionalActions {
