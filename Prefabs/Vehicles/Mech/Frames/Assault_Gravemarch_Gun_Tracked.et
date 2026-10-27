@@ -616,6 +616,80 @@ Vehicle {
    m_iDriveType 1
    m_bDebugSound 1
   }
+  CGS_MechRepairComponent "{6A001027D0000001}" {
+   m_aRepairSites {
+    CGS_MechRepairSite "{6A001027D0000002}" {
+     m_sLabel "LEFT TRACK FRONT"
+     m_sPartEntityName "Track_L1"
+     m_Position PointInfo "{6A001027D0000003}" {
+      Offset -0.6609 -2.3309 0.24
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000004}" {
+     m_sLabel "LEFT TRACK REAR"
+     m_sPartEntityName "Track_L2"
+     m_Position PointInfo "{6A001027D0000005}" {
+      Offset -0.3812 -2.3674 -0.6842
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000006}" {
+     m_sLabel "RIGHT TRACK FRONT"
+     m_sPartEntityName "Track_R1"
+     m_Position PointInfo "{6A001027D0000007}" {
+      Offset 0.5063 -2.3387 0.413
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000008}" {
+     m_sLabel "RIGHT TRACK REAR"
+     m_sPartEntityName "Track_R2"
+     m_Position PointInfo "{6A001027D0000009}" {
+      Offset 0.4923 -2.3299 -0.6229
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000010}" {
+     m_sLabel "LEFT ARM"
+     m_sPartEntityName "Las_Cannon_Arm"
+     m_Position PointInfo "{6A001027D0000011}" {
+      Offset -0.8961 0.4898 -0.4025
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000012}" {
+     m_sLabel "RIGHT ARM"
+     m_sPartEntityName "Right_Arm_Mount"
+     m_Position PointInfo "{6A001027D0000013}" {
+      Offset 0.882 0.4179 -0.4025
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000014}" {
+     m_sLabel "TORSO"
+     m_sPartEntityName "Torso"
+     m_Position PointInfo "{6A001027D0000015}" {
+      Offset 0 0 0
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000016}" {
+     m_sLabel "WEAPON ARM"
+     m_sHardpoint "ARM"
+     m_Position PointInfo "{6A001027D0000017}" {
+      Offset -1.8296 0.1426 -0.4025
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000018}" {
+     m_sLabel "WEAPON SHOULDER"
+     m_sHardpoint "SHOULDER"
+     m_Position PointInfo "{6A001027D0000019}" {
+      Offset 0.6161 0.9308 -1.0896
+     }
+    }
+    CGS_MechRepairSite "{6A001027D0000020}" {
+     m_sLabel "WEAPON RIGHT_ARM"
+     m_sHardpoint "RIGHT_ARM"
+     m_Position PointInfo "{6A001027D0000021}" {
+      Offset 1.409 0.733 -0.4025
+     }
+    }
+   }
+  }
   CGS_MechEngineComponent "{6AB706FA459DBA21}" {
    m_bStartRunning 0
    m_bDebugEngine 1
