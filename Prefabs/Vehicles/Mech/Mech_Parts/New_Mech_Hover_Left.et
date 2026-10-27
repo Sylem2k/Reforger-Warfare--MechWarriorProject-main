@@ -7,6 +7,7 @@ GenericEntity {
   SoundComponent "{A2710C2700000301}" {
    Filenames {
     "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
+    "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
    }
   }
   SCR_SoundDataComponent "{A2710C2700000302}" {
@@ -23,7 +24,11 @@ GenericEntity {
      m_sSoundProject "{4B8D1AB9C2FD05BE}Sounds/Hover.acp"
      m_sSoundEventName "SOUND_MECH_HOVER_THRUST"
     }
-   }
+       SCR_AudioSourceConfiguration "{A2710C2700020003}" {
+     m_sSoundProject "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
+     m_sSoundEventName "SOUND_MECH_STEP"
+    }
+}
   }
   SignalsManagerComponent "{6AB65961C9BE81A3}" {
   }
