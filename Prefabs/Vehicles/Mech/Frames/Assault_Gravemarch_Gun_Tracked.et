@@ -981,6 +981,22 @@ Vehicle {
      }
      Radius 50
     }
+    UserActionContext "{6AB70BFADE701996}" {
+     UIInfo UIInfo "{6AB70BFAC32B35C5}" {
+      Name "Start Mech"
+     }
+     ContextName "Start Mech"
+     Position PointInfo "{6AB70BFACC745ACE}" {
+     }
+    }
+    UserActionContext "{6AB70BFABFB3E9E0}" {
+     UIInfo UIInfo "{6AB70BFABFB3EAE8}" {
+      Name "Start Mech"
+     }
+     ContextName "StopMech"
+     Position PointInfo "{6AB70BFABFB3EAE6}" {
+     }
+    }
    }
    additionalActions {
     CGS_MechCompanionOrderAction "{6AB64C955AF35D1B}" {
@@ -1099,7 +1115,7 @@ Vehicle {
   Hierarchy "{6AB64C955AF376C2}" {
   }
  }
- coords 147.482 6.705 170.314
+ coords 151.994 1 189.938
  scale 1.6
  m_eVehicleType VEHICLE
 }
