@@ -844,7 +844,7 @@ Vehicle {
      Offset 0.8214 -0.8656 0.3085
      MergePhysics 0
      DisablePhysicsInteraction 1
-     Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked.et"
+     Prefab "{7F6BE7BE29EE589B}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_R.et"
     }
     EntitySlotInfo Track_L1 {
      Offset -0.7886 -0.7234 0.3735

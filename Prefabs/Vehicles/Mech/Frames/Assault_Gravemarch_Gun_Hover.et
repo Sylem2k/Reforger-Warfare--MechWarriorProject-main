@@ -924,7 +924,7 @@ Vehicle {
      Angles 0 48.144 0
      MergePhysics 0
      DisablePhysicsInteraction 1
-     Prefab "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover.et"
+     Prefab "{A233B9FCF4E68697}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_R.et"
     }
     EntitySlotInfo HoverPad_L1 {
      Offset -0.6609 -2.3309 0.24
@@ -966,7 +966,7 @@ Vehicle {
      Angles 0 123.3269 0
      MergePhysics 0
      DisablePhysicsInteraction 1
-     Prefab "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover.et"
+     Prefab "{A233B9FCF4E68697}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover_R.et"
     }
     EntitySlotInfo HoverPad_L2 {
      Offset -0.3812 -2.3674 -0.6842

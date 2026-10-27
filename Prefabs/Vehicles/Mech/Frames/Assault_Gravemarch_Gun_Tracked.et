@@ -916,7 +916,7 @@ Vehicle {
      Angles 0 48.144 0
      MergePhysics 0
      DisablePhysicsInteraction 1
-     Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked.et"
+     Prefab "{7F6BE7BE29EE589B}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_R.et"
     }
     EntitySlotInfo Track_L1 {
      Offset -0.6609 -2.3309 0.24
@@ -958,7 +958,7 @@ Vehicle {
      Angles 0 123.3269 0
      MergePhysics 0
      DisablePhysicsInteraction 1
-     Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked.et"
+     Prefab "{7F6BE7BE29EE589B}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_R.et"
     }
     EntitySlotInfo Track_L2 {
      Offset -0.3812 -2.3674 -0.6842
