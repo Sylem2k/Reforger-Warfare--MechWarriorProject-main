@@ -805,11 +805,13 @@ Vehicle {
      Offset 1.0879 -3.081 -1.7681
      MergePhysics 0
      DisablePhysicsInteraction 1
+     Prefab "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover.et"
     }
     EntitySlotInfo HoverPad_L1 {
      Offset -1.458 -3.0665 -1.6038
      MergePhysics 0
      DisablePhysicsInteraction 1
+     Prefab "{A233B9FCF4E68696}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Hover.et"
     }
     EntitySlotInfo Hip {
      Offset -0.0037 -0.83 -0.2334
