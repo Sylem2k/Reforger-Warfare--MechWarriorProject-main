@@ -622,28 +622,28 @@ Vehicle {
      m_sLabel "LEFT TRACK FRONT"
      m_sPartEntityName "Track_L1"
      m_Position PointInfo "{6A001027D0000003}" {
-      Offset -0.6609 -2.3309 0.24
+      Offset -1.85 -1.9 0.24
      }
     }
     CGS_MechRepairSite "{6A001027D0000004}" {
      m_sLabel "LEFT TRACK REAR"
      m_sPartEntityName "Track_L2"
      m_Position PointInfo "{6A001027D0000005}" {
-      Offset -0.3812 -2.3674 -0.6842
+      Offset -1.85 -1.9 -0.6842
      }
     }
     CGS_MechRepairSite "{6A001027D0000006}" {
      m_sLabel "RIGHT TRACK FRONT"
      m_sPartEntityName "Track_R1"
      m_Position PointInfo "{6A001027D0000007}" {
-      Offset 0.5063 -2.3387 0.413
+      Offset 1.85 -1.9 0.413
      }
     }
     CGS_MechRepairSite "{6A001027D0000008}" {
      m_sLabel "RIGHT TRACK REAR"
      m_sPartEntityName "Track_R2"
      m_Position PointInfo "{6A001027D0000009}" {
-      Offset 0.4923 -2.3299 -0.6229
+      Offset 1.85 -1.9 -0.6229
      }
     }
     CGS_MechRepairSite "{6A001027D0000010}" {
