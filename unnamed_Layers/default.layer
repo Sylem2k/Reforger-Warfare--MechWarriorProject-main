@@ -25,19 +25,19 @@ Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/SampleMech
  coords 2146.914 57.601 2915.938
 }
 Vehicle Med_Mech_Frame_Hover1 : "{4220812838528A42}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_Hover.et" {
- coords 2158.017 55.902 2933.337
+ coords 2158.017 57.671 2933.337
 }
 Vehicle Light_Mech_Frame_Hover1 : "{431525BE9AD0C40B}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_Hover.et" {
  coords 2167.784 55.422 2932.974
 }
 Vehicle Heavy_Judiciar_Gun_Tracked1 : "{46545A48AD2732E6}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Tracked.et" {
- coords 2184.938 56.094 2922.987
+ coords 2184.938 57.161 2922.987
 }
 Vehicle Heavy_Judiciar_Gun_Hover1 : "{7D74221909EB7DEA}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Hover.et" {
- coords 2178.872 56.122 2923.421
+ coords 2178.872 58.036 2923.421
 }
 Vehicle Med_Mech_Frame_Tracked1 : "{8502A8F9143803B8}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_Tracked.et" {
- coords 2152.187 55.823 2932.817
+ coords 2152.187 57.355 2932.817
 }
 Vehicle Assault_Gravemarch_Gun_Tracked1 : "{87EA5222BF2670A6}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Tracked.et" {
  coords 2167.997 57.168 2923.539

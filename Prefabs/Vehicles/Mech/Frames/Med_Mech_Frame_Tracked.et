@@ -496,7 +496,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AB626E9E54A1666}" {
-    Offset 0 -2.0219 -0.8833
+    Offset 0 -3.0546 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -843,14 +843,14 @@ Vehicle {
     EntitySlotInfo Track_R1 {
      Offset 0.8214 -0.8656 0.3085
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
      Offset -0.7886 -0.7234 0.3735
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
      Offset -0.0036 -0.1256 -0.2335
@@ -991,7 +991,7 @@ Vehicle {
   Hierarchy "{6AB626E9E54A096C}" {
   }
  }
- coords 2152.187 55.823 2932.817
+ coords 2152.187 57.355 2932.817
  scale 1.4
  m_eVehicleType VEHICLE
 }
