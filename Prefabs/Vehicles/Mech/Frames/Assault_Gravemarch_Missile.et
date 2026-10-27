@@ -552,7 +552,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{E50400000000004E}" {
-    Offset 0 -5.7899 -0.8833
+    Offset 0 -4.2871 -0.8832
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -650,7 +650,9 @@ Vehicle {
     Offset 0 0 0
    }
    m_aTwistSlots {
-    "Torso" "Exhust" "Exhust2"
+    "Torso"
+    "Exhust"
+    "Exhust2"
    }
    m_aTwistMounts {
    }
@@ -909,8 +911,8 @@ Vehicle {
     }
     EntitySlotInfo Torso {
      MergePhysics 0
-     Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
      DisablePhysicsInteraction 1
+     Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
     }
     EntitySlotInfo Leg_R1 {
      Offset 0.8214 -0.8656 0.3085
@@ -1081,7 +1083,7 @@ Vehicle {
   Hierarchy "{E50400000000009B}" {
   }
  }
- coords 2126.596 59.557 2917.28
- scale 1.7
+ coords 71.779 8.918 59.34
+ scale 1.3
  m_eVehicleType VEHICLE
 }
