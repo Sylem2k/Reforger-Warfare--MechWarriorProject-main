@@ -1026,11 +1026,9 @@ Vehicle {
      }
      ContextName "Start Mech"
      Position PointInfo "{6AB70BFACC745ACE}" {
-      Offset 0.0006 1.6727 0.8433
-      Angles 0 0 0
+      Offset 0 2.1406 0.6673
      }
-     Radius 19.42
-     FilterActionsUsingCache 0
+     Radius 8
     }
     UserActionContext "{6AB70BFABFB3E9E0}" {
      UIInfo UIInfo "{6AB70BFABFB3EAE8}" {
@@ -1038,11 +1036,9 @@ Vehicle {
      }
      ContextName "StopMech"
      Position PointInfo "{6AB70BFABFB3EAE6}" {
-      Offset 0.2558 1.5745 0.9012
-      Angles 0 0 0
+      Offset 0.352 1.8377 0.8343
      }
-     Radius 22.37
-     FilterActionsUsingCache 0
+     Radius 8
     }
    }
    additionalActions {
