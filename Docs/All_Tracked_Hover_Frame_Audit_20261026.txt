@@ -1,0 +1,40 @@
+OCTOBER 26, 2026 — ALL MECH CLASS TRACKED / HOVER FRAME FIX
+Branch: fix/all-classes-tracked-hover-20261026
+
+I audited all eight separate tracked and hover frame prefabs in my MW project after I added a tracked and hover copy for each weight class. The new movement system is BFA_MechMovementComponent in Mech-Core-CGS; its modes are 0 = walker, 1 = tracked, and 2 = hover.
+
+I found that all Light, Medium and Assault copies had already been converted on an earlier test branch and merged into MW main. The two Heavy Judiciar copies had NOT been configured: they still had a procedural BFA_MechLegPair and a walking-leg prefab attached, with locomotion mode defaulting to 0. That would keep them behaving like walkers.
+
+I repaired those two Heavy prefabs without renaming the files or changing their shared cockpit, weapon modules, torso twist, PointInfo, physics body, or UI:
+- Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Tracked.et: locomotion 1, tracked A/D steering enabled, m_aLegPairs empty, walking leg prefab references removed, empty Track_L1 and Track_R1 slots.
+- Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Hover.et: locomotion 2, hover clearance 1.25 m, hover bob 0.08 m, bob Hz 0.65, glide response 0.35 s, m_aLegPairs empty, walking leg prefab references removed, empty HoverPad_L1 and HoverPad_R1 slots.
+
+I then audited all EIGHT variants at the same branch tip:
+1. Light_Mech_Frame_Tracked.et — mode 1, Track_L1/R1
+2. Light_Mech_Frame_Hover.et — mode 2, HoverPad_L1/R1
+3. Med_Mech_Frame_Tracked.et — mode 1, Track_L1/R1
+4. Med_Mech_Frame_Hover.et — mode 2, HoverPad_L1/R1
+5. Heavy_Judiciar_Gun_Tracked.et — mode 1, Track_L1/R1
+6. Heavy_Judiciar_Gun_Hover.et — mode 2, HoverPad_L1/R1
+7. Assault_Gravemarch_Gun_Tracked.et — mode 1, Track_L1/R1 and Track_L2/R2
+8. Assault_Gravemarch_Gun_Hover.et — mode 2, HoverPad_L1/R1 and HoverPad_L2/R2
+
+All eight passed the source audit: movement mode is correct; procedural leg pair list is empty; all old Leg_L*/Leg_R* slots and attached IK leg prefabs are removed; each still has the Torso and Cockpit slots. The old WALKER frames are untouched.
+
+REMAINING WORK FOR IN-GAME RESULTS
+These are correctly configured locomotion FRAME PREFABS, not complete art/audio presentations. None of the track or hover-pad slots has a suitable 3D asset prefab attached because I have not yet imported those model assets into this repository. I need to install my left/right track assembly model into Track_L1/R1 (plus L2/R2 for Assault), or install skimmer pad/thruster models into HoverPad_L1/R1 (plus L2/R2 for Assault). Their slot offsets are inherited from former leg mounts and SHOULD be repositioned using the editor gizmos to fit the new models.
+
+The Ground Point gizmos still correspond to the old walker foot soles. I should move each point to the physical tread contact plane for tracked frames, or to the hull/pad underside for hover frames. Only then fine-tune the existing footprint probes and optional hover clearance for consistent terrain contact.
+
+The Core component already exposes m_sTrackClankEvent, m_sHoverThrustEvent, and m_sHoverIdlePulseEvent. I need to import the existing CGS_Tracked_Hover_Starter_Audio.zip to my Workbench sound project, create proper ACP events, and attach an appropriate sound-project component to each chassis. I left event fields empty rather than setting references to nonexistent audio and producing repeated missing-event logs. Continuous track rumble / hover hum requires dedicated looping sound-source setup; it is not automatic in the current script.
+
+NEXT TESTS
+1. Sync Core to main (which contains the tracked/hover movement component) and MW to fix/all-classes-tracked-hover-20261026. Compile Game scripts first.
+2. Spawn a Light Tracked and a Light Hover. Track: W/S throttle, A/D + Q/E turn, no sideways sliding. Hover: W/S move, A/D strafe, Q/E rotate, maintain clearance.
+3. Repeat with Medium, Heavy and Assault. None should report missing-leg errors or call procedural footstep sound events.
+4. Move Ground Point and attach art models. Verify collision bodies and visual attachments don't intersect terrain on slopes.
+5. Import the sound pack and configure audio events. Verify different track rolling sounds vs. hover engine/pulses in local and two-client dedicated MP.
+6. Verify special cases: jumps, Mech Bay, weapon groups, independent chest gun aim, torso twist, cockpit 1P/3P visibility, destruction and spawn persistence.
+7. Do not merge to main until Workbench compilation and multiplayer tests pass. This is a test-branch change only.
+
+STATUS: The eight prefab source configurations pass audits on GitHub. Enfusion Workbench compilation and gameplay/MP verification are still pending; the 3D/audio assets have not been installed.
