@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{7D74221909EB7DEA}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Hover.et"
+ Configurations {
+  EntityTemplateResourceClass PC {
+  }
+  EntityTemplateResourceClass XBOX_ONE : PC {
+  }
+  EntityTemplateResourceClass XBOX_SERIES : PC {
+  }
+  EntityTemplateResourceClass PS4 : PC {
+  }
+  EntityTemplateResourceClass PS5 : PC {
+  }
+  EntityTemplateResourceClass HEADLESS : PC {
+  }
+ }
+}
