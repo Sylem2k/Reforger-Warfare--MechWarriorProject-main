@@ -45,8 +45,6 @@ GenericEntity {
    m_fDamage 55
    m_fBeamSpeed 300
   }
-  RplComponent "{F171EBDA68C05DBF}" {
-  }
   Hierarchy "{6A8C29F2D0FE8424}" {
   }
   MeshObject "{6AAE3A1C02D08AA9}" {
