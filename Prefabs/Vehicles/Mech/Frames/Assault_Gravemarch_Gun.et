@@ -934,7 +934,7 @@ Vehicle {
      Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Right.et"
      DisablePhysicsInteraction 1
     }
-   EntitySlotInfo Cockpit {
+    EntitySlotInfo Cockpit {
      Offset 0 0.1143 0.1746
      Angles 0 0 0
      MergePhysics 0
