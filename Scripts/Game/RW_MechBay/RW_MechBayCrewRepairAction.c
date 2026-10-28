@@ -34,6 +34,11 @@ class RW_MechBayCrewRepairAction : ScriptedUserAction
 			SetCannotPerformReason("Crew repair already in progress");
 			return false;
 		}
+		if (!m_Bay.CanUseServiceConsole(user))
+		{
+			SetCannotPerformReason("Use the Mech Bay ground service station");
+			return false;
+		}
 		IEntity mech = m_Bay.FindParkedMech();
 		if (!mech)
 		{
@@ -53,10 +58,23 @@ class RW_MechBayCrewRepairAction : ScriptedUserAction
 		return true;
 	}
 
+	// The shield generator's proven pattern: local interaction -> caller's
+	// PlayerController -> reliable server RPC -> authoritative validation.
+	override bool HasLocalEffectOnlyScript()
+	{
+		return true;
+	}
+
 	override void PerformAction(IEntity pOwnerEntity, IEntity pUserEntity)
 	{
-		if (!Replication.IsServer() || !m_Bay)
+		if (!m_Bay || pUserEntity != SCR_PlayerController.GetLocalControlledEntity())
 			return;
-		m_Bay.ServerStartCrewRepair(pUserEntity);
+		SCR_PlayerController controller = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		if (!controller)
+			return;
+		RplComponent rpl = RplComponent.Cast(m_Bay.GetOwner().FindComponent(RplComponent));
+		if (!rpl)
+			return;
+		controller.RW_MB_RequestService(rpl.Id(), -1);
 	}
 }
