@@ -45,7 +45,10 @@ GenericEntity {
    m_fDamage 58
    m_fBeamSpeed 300
   }
-  RplComponent "{F171EBDA68C05DBF}" {
+  // Display mesh for the dynamically fitted weapon. Hitscan beam FX is
+  // still created per client by the replicated mech-root shot RPC.
+  MeshObject "{E202610280000A2}" {
+   Object "{6D9E6C15CFDF9CAA}Common/Models/sen_Las_Cannon.xob"
   }
   Hierarchy "{6A8C29F2D0FE8424}" {
   }
