@@ -75,18 +75,80 @@ GenericEntity {
     }
    }
    m_fBuildCooldown 20
+   m_fCrewSecondsPerMissingPercent 0.75
+   m_fCrewMinRepairSeconds 10
   }
   ActionsManagerComponent "{F337AFC7C60E18AE}" {
    ActionContexts {
     UserActionContext "{797332C738417C81}" {
+     UIInfo UIInfo "{A028B0C000001001}" {
+      Name "MECH BAY SERVICE CONSOLE"
+     }
      ContextName "default"
      Position PointInfo "{F4109CFF22AB3F09}" {
       Offset 6.7073 1.2 -10.3398
      }
-     Radius 3
+     Radius 4
+     Omnidirectional 1
+     VisibilityAngle 180
+     FilterActionsUsingCache 0
     }
    }
    additionalActions {
+    RW_MechBayManualRepairAction "{A028B0C000002011}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A028B0C000002012}" {
+      Name "WRENCH REPAIR LEFT TRACK"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 0
+    }
+    RW_MechBayManualRepairAction "{A028B0C000002013}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A028B0C000002014}" {
+      Name "WRENCH REPAIR RIGHT TRACK"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 1
+    }
+    RW_MechBayManualRepairAction "{A028B0C000002015}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A028B0C000002016}" {
+      Name "WRENCH REPAIR LEFT ARM"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 2
+    }
+    RW_MechBayManualRepairAction "{A028B0C000002017}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A028B0C000002018}" {
+      Name "WRENCH REPAIR RIGHT ARM"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 3
+    }
+    RW_MechBayCrewRepairAction "{A028B0C000000011}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A028B0C000000012}" {
+      Name "ORDER CREW REPAIR"
+     }
+     VisibilityRange 6
+     Duration 1
+    }
     RW_MechBayOpenAction "{39F3B3DF5A1A0A4B}" {
      ParentContextList {
       "default"

@@ -46,6 +46,20 @@ class RW_MechBayComponent : ScriptComponent
 	[Attribute("0.5", UIWidgets.Auto, "The new mech appears this many metres above the ground at the parking spot.", category: "Frames")]
 	protected float m_fSpawnHeight;
 
+	[Attribute("0.75", UIWidgets.Auto, "Crew repair duration, seconds per missing HP percent on each installed track or test arm. Eg 100% damage = 75s for one part.", category: "Repair")]
+	protected float m_fCrewSecondsPerMissingPercent;
+
+	[Attribute("10", UIWidgets.Auto, "Minimum crew repair order duration in seconds.", category: "Repair")]
+	protected float m_fCrewMinRepairSeconds;
+
+	// Replicated informational job status; HP remains on original hit zones.
+	[RplProp()]
+	protected bool m_bCrewRepairing;
+	[RplProp()]
+	protected int m_iCrewRepairEndMs;
+	protected IEntity m_pCrewRepairMech;
+
+
 	// Last bay message (built / refused and why), shown in the order screen.
 	[RplProp()]
 	protected string m_sBayMessage;
@@ -75,7 +89,10 @@ class RW_MechBayComponent : ScriptComponent
 	override void OnDelete(IEntity owner)
 	{
 		if (GetGame() && GetGame().GetCallqueue())
+		{
 			GetGame().GetCallqueue().Remove(ApplyPendingBuild);
+			GetGame().GetCallqueue().Remove(ServerFinishCrewRepair);
+		}
 		if (s_aBays)
 			s_aBays.RemoveItem(this);
 		super.OnDelete(owner);
@@ -95,6 +112,56 @@ class RW_MechBayComponent : ScriptComponent
 	bool NoToolNeeded()
 	{
 		return m_bNoToolNeeded;
+	}
+
+	// One repair station by the bay's existing ground-level control point.
+	// Never require reaching the individual arm/track while in the bay.
+	bool CanUseServiceConsole(IEntity operator)
+	{
+		if (!operator || !ChimeraCharacter.Cast(operator) || !GetOwner())
+			return false;
+		return vector.Distance(operator.GetOrigin(), GetOwner().GetOrigin()) <= m_fRadius + 10.0;
+	}
+
+	// Called ONLY from authenticated requesting PlayerController server RPC.
+	// Manual repairs always require the actual Mech Wrench; refit settings
+	// (m_bNoToolNeeded) do not waive the repair-tool requirement.
+	bool ServerRepairParkedPart(IEntity operator, int siteIndex)
+	{
+		if (!Replication.IsServer() || !CanUseServiceConsole(operator) || m_bCrewRepairing)
+			return false;
+		if (siteIndex < 0 || siteIndex > 3)
+			return false;
+
+		IEntity mech = FindParkedMech();
+		if (!mech || !Contains(mech) || BFA_MechExtension.IsMechDestroyed(mech))
+			return false;
+
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		PlayerManager players = GetGame().GetPlayerManager();
+		int playerId = 0;
+		if (players)
+			playerId = players.GetPlayerIdFromControlledEntity(operator);
+		if (playerId <= 0 || (frame && frame.IsBayReservedForOtherPlayer(playerId)))
+			return false;
+
+		if (!RW_MechWrench.HasTool(operator, RW_MechWrench.DEFAULT_TOOL))
+			return false;
+
+		Physics physics = mech.GetPhysics();
+		if (physics && physics.GetVelocity().Length() > 0.5)
+			return false;
+
+		CGS_MechRepairComponent repair = CGS_MechRepairComponent.Cast(mech.FindComponent(CGS_MechRepairComponent));
+		if (!repair || siteIndex >= repair.GetRepairSiteCount())
+			return false;
+		if (!repair.IsTrackSite(siteIndex) && !repair.IsArmSite(siteIndex))
+			return false;
+
+		bool success = repair.ServerRepairPartAtBay(siteIndex, operator);
+		if (success)
+			Print(string.Format("[RW MECH BAY REPAIR] MANUAL %1: 15%% restored", repair.GetRepairSiteLabel(siteIndex)));
+		return success;
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -141,6 +208,135 @@ class RW_MechBayComponent : ScriptComponent
 	static bool IsAtBay(IEntity mech)
 	{
 		return FindBayFor(mech) != null;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	// Crew repair: one server-authoritative timed order at this bay.
+	// Only tested structural tracks/arms are included for now. Do not modify
+	// swappable weapon loadout, frame, or hull.
+	bool IsCrewRepairing()
+	{
+		return m_bCrewRepairing;
+	}
+
+	int GetCrewRepairSecondsRemaining()
+	{
+		if (!m_bCrewRepairing || !GetGame() || !GetGame().GetWorld())
+			return 0;
+		return Math.Max(0, (int)Math.Ceil((m_iCrewRepairEndMs - GetGame().GetWorld().GetWorldTime()) * 0.001));
+	}
+
+	// Damage percentages are summed so more damaged components take longer.
+	// The client uses this for the button; the server recalculates on request.
+	float GetCrewRepairWorkPercent(IEntity mech)
+	{
+		if (!mech)
+			return 0;
+		CGS_MechRepairComponent repair = CGS_MechRepairComponent.Cast(mech.FindComponent(CGS_MechRepairComponent));
+		if (!repair)
+			return 0;
+		float missingPercent = 0;
+		for (int i = 0; i < repair.GetRepairSiteCount(); i++)
+		{
+			if (!repair.IsTrackSite(i) && !repair.IsArmSite(i))
+				continue;
+			float health01 = repair.GetRepairTargetHealth01(i);
+			if (health01 < 0)
+				continue;
+			missingPercent += (1.0 - health01) * 100.0;
+		}
+		return missingPercent;
+	}
+
+	bool ServerStartCrewRepair(IEntity user)
+	{
+		if (!Replication.IsServer() || !CanUseServiceConsole(user) || m_bCrewRepairing)
+			return false;
+
+		IEntity mech = FindParkedMech();
+		if (!mech || !Contains(mech) || !CanOperate(user, mech) || BFA_MechExtension.IsMechDestroyed(mech))
+			return false;
+
+		// Authoritative owner permissions and stationary/no-crew checks.
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		PlayerManager players = GetGame().GetPlayerManager();
+		int playerId = 0;
+		if (players)
+			playerId = players.GetPlayerIdFromControlledEntity(user);
+		if (playerId <= 0 || (frame && frame.IsBayReservedForOtherPlayer(playerId)))
+			return false;
+
+		Physics physics = mech.GetPhysics();
+		if (physics && physics.GetVelocity().Length() > 0.5)
+			return false;
+
+		BaseCompartmentManagerComponent seats = BaseCompartmentManagerComponent.Cast(mech.FindComponent(BaseCompartmentManagerComponent));
+		if (!seats)
+			return false;
+		array<BaseCompartmentSlot> compartments = {};
+		seats.GetCompartments(compartments);
+		foreach (BaseCompartmentSlot compartment : compartments)
+		{
+			if (compartment && compartment.GetOccupant())
+				return false;
+		}
+
+		float missing = GetCrewRepairWorkPercent(mech);
+		if (missing <= 0.001)
+			return false;
+		int jobMs = (int)(Math.Max(m_fCrewMinRepairSeconds, missing * Math.Max(0.01, m_fCrewSecondsPerMissingPercent)) * 1000.0);
+		m_pCrewRepairMech = mech;
+		m_bCrewRepairing = true;
+		m_iCrewRepairEndMs = GetGame().GetWorld().GetWorldTime() + jobMs;
+		Replication.BumpMe();
+		Print(string.Format("[CGS BAY CREW] START: missing summed=%1%%, duration=%2s", missing, jobMs * 0.001));
+		ServerBayMessage(string.Format("Crew repairing %1 - %2 seconds", mech.GetName(), jobMs * 0.001));
+		GetGame().GetCallqueue().Remove(ServerFinishCrewRepair);
+		GetGame().GetCallqueue().CallLater(ServerFinishCrewRepair, jobMs, false);
+		return true;
+	}
+
+	protected void ServerFinishCrewRepair()
+	{
+		if (!Replication.IsServer() || !m_bCrewRepairing)
+			return;
+
+		IEntity mech = m_pCrewRepairMech;
+		m_pCrewRepairMech = null;
+		m_bCrewRepairing = false;
+		m_iCrewRepairEndMs = 0;
+		Replication.BumpMe();
+
+		if (!mech || !Contains(mech) || BFA_MechExtension.IsMechDestroyed(mech))
+		{
+			ServerBayMessage("Crew repair canceled: mech left bay or was destroyed");
+			return;
+		}
+
+		Physics physics = mech.GetPhysics();
+		if (physics && physics.GetVelocity().Length() > 0.5)
+		{
+			ServerBayMessage("Crew repair canceled: mech is moving");
+			return;
+		}
+
+		CGS_MechRepairComponent repair = CGS_MechRepairComponent.Cast(mech.FindComponent(CGS_MechRepairComponent));
+		if (!repair)
+		{
+			ServerBayMessage("Crew repair canceled: no repair system");
+			return;
+		}
+
+		int repaired = 0;
+		for (int i = 0; i < repair.GetRepairSiteCount(); i++)
+		{
+			if (!repair.IsTrackSite(i) && !repair.IsArmSite(i))
+				continue;
+			if (repair.ServerCrewRepairPart(i))
+				repaired++;
+		}
+		ServerBayMessage(string.Format("Crew repair completed: %1 parts restored", repaired));
 	}
 
 	//------------------------------------------------------------------------------------------------

@@ -100,12 +100,19 @@ class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 	[Attribute("{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/Mech Wrench.et", UIWidgets.ResourceNamePicker, "Required Mech Wrench item.", "et")]
 	protected ResourceName m_sTool;
 
-	[Attribute("175", UIWidgets.Auto, "Hit points restored per completed wrench action.", category: "Repair")]
+	[Attribute("175", UIWidgets.Auto, "Legacy amount (unused): Core enforces 2% per field use or 15% per bay use.", category: "Repair")]
 	protected float m_fRepairAmount;
 
 	override bool GetActionNameScript(out string outName)
 	{
-		outName = string.Format("WRENCH REPAIR %1 (%2%% HP)", GetTrackLabel(), GetHealthPercent());
+		// Show the repair rate appropriate to the CURRENT parking location.
+		IEntity mech = GetOwner();
+		if (mech)
+			mech = mech.GetRootParent();
+		string rate = "2%";
+		if (RW_MechBayComponent.FindBayFor(mech))
+			rate = "15%";
+		outName = string.Format("WRENCH REPAIR %1 %2 (%3%% HP)", rate, GetTrackLabel(), GetHealthPercent());
 		return true;
 	}
 
@@ -114,6 +121,13 @@ class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 	// Tool and actual missing HP are checked only when trying to perform repair.
 	override bool CanBeShownScript(IEntity user)
 	{
+		// In a Mech Bay, all parts are serviced from the single ground-level
+		// service console instead of inaccessible tall-mech access points.
+		IEntity mech = GetOwner();
+		if (mech)
+			mech = mech.GetRootParent();
+		if (RW_MechBayComponent.FindBayFor(mech))
+			return false;
 		return ValidTrack(user);
 	}
 
@@ -129,9 +143,17 @@ class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 			SetCannotPerformReason("Mech Wrench required");
 			return false;
 		}
-		if (GetHealthPercent() >= 100)
+		IEntity mech = GetOwner();
+		if (mech)
+			mech = mech.GetRootParent();
+		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
+		float allowed = 25.0;
+		if (bay)
+			allowed = 100.0;
+		CGS_MechRepairComponent repair = GetRepair();
+		if (!repair || repair.GetRepairTargetHealth01(m_iRepairSiteIndex) * 100.0 >= allowed - 0.001)
 		{
-			SetCannotPerformReason("Track already fully repaired");
+			SetCannotPerformReason(bay ? "Track already fully repaired" : "Field repairs capped at 25% - use a Mech Bay");
 			return false;
 		}
 		return true;
@@ -142,7 +164,16 @@ class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 		if (!Replication.IsServer() || !RW_MechWrench.HasTool(pUserEntity, m_sTool))
 			return;
 		CGS_MechRepairComponent repair = GetRepair();
-		if (repair)
-			repair.ServerRepairPart(m_iRepairSiteIndex, pUserEntity, m_fRepairAmount);
+		if (!repair)
+			return;
+		// Determine bay status on the server, never from client action text.
+		IEntity mech = GetOwner();
+		if (mech)
+			mech = mech.GetRootParent();
+		RW_MechBayComponent bay = RW_MechBayComponent.FindBayFor(mech);
+		if (bay)
+			repair.ServerRepairPartAtBay(m_iRepairSiteIndex, pUserEntity);
+		else
+			repair.ServerRepairPart(m_iRepairSiteIndex, pUserEntity, 0);
 	}
 }
