@@ -63,12 +63,19 @@ class RW_MechArmWrenchRepairAction : RW_MechArmServiceActionBase
 	[Attribute("{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/Mech Wrench.et", UIWidgets.ResourceNamePicker, "Required Mech Wrench item.", "et")]
 	protected ResourceName m_sTool;
 
-	[Attribute("175", UIWidgets.Auto, "HP restored to this one structural arm mount.", category: "Repair")]
+	[Attribute("175", UIWidgets.Auto, "Legacy amount (unused): Core enforces 2% per field use or 15% per bay use.", category: "Repair")]
 	protected float m_fRepairAmount;
 
 	override bool GetActionNameScript(out string outName)
 	{
-		outName = string.Format("WRENCH REPAIR 2%% %1 (%2%% HP)", GetTrackLabel(), GetHealthPercent());
+		// Show the repair rate appropriate to the CURRENT parking location.
+		IEntity mech = GetOwner();
+		if (mech)
+			mech = mech.GetRootParent();
+		string rate = "2%";
+		if (RW_MechBayComponent.FindBayFor(mech))
+			rate = "15%";
+		outName = string.Format("WRENCH REPAIR %1 %2 (%3%% HP)", rate, GetTrackLabel(), GetHealthPercent());
 		return true;
 	}
 
