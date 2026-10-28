@@ -1,0 +1,37 @@
+// Structural arm-mount health target for the Assault Tracked damage test.
+// No MeshObject: this does NOT install or replace the swappable weapon.
+GenericEntity {
+ ID "A0281028ABCD0001"
+ components {
+  SCR_DamageManagerComponent "{A0281028ABCD0101}" {
+   "Additional hit zones" {
+    BFA_MechPartHitZone Arm {
+     HZDefault 1
+     MaxHealth 600
+     DamageReduction 2
+     DamageThreshold 1
+     m_ePart WEAPON
+     m_fHullShare 0.25
+     m_sDisplayName "LEFT ARM MOUNT"
+     m_eHudSection AUTO
+     m_bKeepRepairableAtCriticalHP 1
+     m_bLogHits 1
+    }
+   }
+  }
+  // Provisional projectile collider. Tune to visible mounted arm silhouette in Workbench.
+  RigidBody "{A0281028ABCD0201}" {
+   Gravity 0
+   Geometries {
+    PhysicsBoxGeometry Box {
+     LayerPreset "VehicleFireView"
+     Extents 1 1.4 1.6
+    }
+   }
+  }
+  RplComponent "{A0281028ABCD0301}" {
+  }
+  Hierarchy "{A0281028ABCD0401}" {
+  }
+ }
+}
