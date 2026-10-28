@@ -26,7 +26,7 @@ class RW_MechTrackServiceActionBase : ScriptedUserAction
 	protected bool ValidTrack(IEntity user)
 	{
 		CGS_MechRepairComponent repair = GetRepair();
-		return repair && repair.IsTrackSite(m_iRepairSiteIndex) && repair.CanService(user, m_iRepairSiteIndex) && repair.GetRepairTargetHealth01(m_iRepairSiteIndex) >= 0;
+		return repair && repair.IsLocomotionSite(m_iRepairSiteIndex) && repair.CanService(user, m_iRepairSiteIndex) && repair.GetRepairTargetHealth01(m_iRepairSiteIndex) >= 0;
 	}
 
 	protected string GetTrackLabel()
