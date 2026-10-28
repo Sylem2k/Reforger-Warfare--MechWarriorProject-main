@@ -1060,33 +1060,6 @@ Vehicle {
      }
      VisibilityRange 14
     }
-    CGS_MechEngineStartAction "{6AD1027E00001001}" {
-     ParentContextList {
-      "default"
-     }
-     UIInfo UIInfo "{6AD1027E00001002}" {
-      Name "ENGINE START (TEST FALLBACK)"
-     }
-     VisibilityRange 30
-    }
-    CGS_MechEngineStopAction "{6AD1027E00001003}" {
-     ParentContextList {
-      "default"
-     }
-     UIInfo UIInfo "{6AD1027E00001004}" {
-      Name "ENGINE STOP (TEST FALLBACK)"
-     }
-     VisibilityRange 30
-    }
-    CGS_MechEngineStatusProbeAction "{6AD1027E00001011}" {
-     ParentContextList {
-      "default"
-     }
-     UIInfo UIInfo "{6AD1027E00001012}" {
-      Name "ENGINE DIAG (CLICK TO LOG)"
-     }
-     VisibilityRange 30
-    }
     CGS_MechCompanionOrderAction "{6AB64C955AF35D1B}" {
      ParentContextList {
       "default"
