@@ -114,6 +114,56 @@ class RW_MechBayComponent : ScriptComponent
 		return m_bNoToolNeeded;
 	}
 
+	// One repair station by the bay's existing ground-level control point.
+	// Never require reaching the individual arm/track while in the bay.
+	bool CanUseServiceConsole(IEntity operator)
+	{
+		if (!operator || !ChimeraCharacter.Cast(operator) || !GetOwner())
+			return false;
+		return vector.Distance(operator.GetOrigin(), GetOwner().GetOrigin()) <= m_fRadius + 10.0;
+	}
+
+	// Called ONLY from authenticated requesting PlayerController server RPC.
+	// Manual repairs always require the actual Mech Wrench; refit settings
+	// (m_bNoToolNeeded) do not waive the repair-tool requirement.
+	bool ServerRepairParkedPart(IEntity operator, int siteIndex)
+	{
+		if (!Replication.IsServer() || !CanUseServiceConsole(operator) || m_bCrewRepairing)
+			return false;
+		if (siteIndex < 0 || siteIndex > 3)
+			return false;
+
+		IEntity mech = FindParkedMech();
+		if (!mech || !Contains(mech) || BFA_MechExtension.IsMechDestroyed(mech))
+			return false;
+
+		RW_MechFrameComponent frame = RW_MechFrameComponent.Find(mech);
+		PlayerManager players = GetGame().GetPlayerManager();
+		int playerId = 0;
+		if (players)
+			playerId = players.GetPlayerIdFromControlledEntity(operator);
+		if (playerId <= 0 || (frame && frame.IsBayReservedForOtherPlayer(playerId)))
+			return false;
+
+		if (!RW_MechWrench.HasTool(operator, RW_MechWrench.DEFAULT_TOOL))
+			return false;
+
+		Physics physics = mech.GetPhysics();
+		if (physics && physics.GetVelocity().Length() > 0.5)
+			return false;
+
+		CGS_MechRepairComponent repair = CGS_MechRepairComponent.Cast(mech.FindComponent(CGS_MechRepairComponent));
+		if (!repair || siteIndex >= repair.GetRepairSiteCount())
+			return false;
+		if (!repair.IsTrackSite(siteIndex) && !repair.IsArmSite(siteIndex))
+			return false;
+
+		bool success = repair.ServerRepairPartAtBay(siteIndex, operator);
+		if (success)
+			Print(string.Format("[RW MECH BAY REPAIR] MANUAL %1: 15%% restored", repair.GetRepairSiteLabel(siteIndex)));
+		return success;
+	}
+
 	//------------------------------------------------------------------------------------------------
 	vector GetParkingSpot()
 	{
@@ -201,7 +251,7 @@ class RW_MechBayComponent : ScriptComponent
 
 	bool ServerStartCrewRepair(IEntity user)
 	{
-		if (!Replication.IsServer() || !user || !ChimeraCharacter.Cast(user) || m_bCrewRepairing)
+		if (!Replication.IsServer() || !CanUseServiceConsole(user) || m_bCrewRepairing)
 			return false;
 
 		IEntity mech = FindParkedMech();
