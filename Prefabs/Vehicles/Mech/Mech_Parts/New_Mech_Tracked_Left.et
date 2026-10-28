@@ -28,6 +28,17 @@ GenericEntity {
   }
   SignalsManagerComponent "{6AB65DBA80CD57C1}" {
   }
+  // TEST: projectile/vehicle fire collider covering this track entity.
+  // Tune Extents against the actual track silhouette in Workbench before production.
+  RigidBody "{6A27010C00000111}" {
+   Gravity 0
+   Geometries {
+    PhysicsBoxGeometry Box {
+     LayerPreset "VehicleFireView"
+     Extents 0.9 1.2 2.6
+    }
+   }
+  }
   SCR_DamageManagerComponent "{6A27010C00000101}" {
    "Additional hit zones" {
     BFA_MechPartHitZone Locomotion {
@@ -38,6 +49,7 @@ GenericEntity {
      m_ePart LEG
      m_fHullShare 0.25
      m_sDisplayName "TRACK LEFT"
+     m_bLogHits 1
      m_eHudSection AUTO
     }
    }
