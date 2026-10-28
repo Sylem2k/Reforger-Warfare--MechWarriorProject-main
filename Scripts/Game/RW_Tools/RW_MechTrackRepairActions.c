@@ -121,6 +121,13 @@ class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 	// Tool and actual missing HP are checked only when trying to perform repair.
 	override bool CanBeShownScript(IEntity user)
 	{
+		// In a Mech Bay, all parts are serviced from the single ground-level
+		// service console instead of inaccessible tall-mech access points.
+		IEntity mech = GetOwner();
+		if (mech)
+			mech = mech.GetRootParent();
+		if (RW_MechBayComponent.FindBayFor(mech))
+			return false;
 		return ValidTrack(user);
 	}
 
