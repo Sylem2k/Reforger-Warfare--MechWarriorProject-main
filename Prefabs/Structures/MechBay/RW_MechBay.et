@@ -41,6 +41,38 @@ GenericEntity {
      m_sName "Assault Gravemarch-M"
      m_sPrefab "{B6F0C0A020260004}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Missile.et"
     }
+    RW_BayFrameEntry "{6AB817BA6B1B9EF1}" {
+     m_sName "Cricket (Light)"
+     m_sPrefab "{8502A8F9143803B8}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_Tracked.et"
+    }
+    RW_BayFrameEntry "{6AB817BA73AA4F80}" {
+     m_sName "Cricket (Light)"
+     m_sPrefab "{4220812838528A42}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_Hover.et"
+    }
+    RW_BayFrameEntry "{6AB817BA78ADF216}" {
+     m_sName "Warden (Medium)"
+     m_sPrefab "{8502A8F9143803B8}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_Tracked.et"
+    }
+    RW_BayFrameEntry "{6AB817BA41266569}" {
+     m_sName "Warden (Medium)"
+     m_sPrefab "{4220812838528A42}Prefabs/Vehicles/Mech/Frames/Med_Mech_Frame_Hover.et"
+    }
+    RW_BayFrameEntry "{6AB817BA4C4E9DBD}" {
+     m_sName "Heavy Judiciar - Gun"
+     m_sPrefab "{46545A48AD2732E6}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Tracked.et"
+    }
+    RW_BayFrameEntry "{6AB817BA56098F76}" {
+     m_sName "Heavy Judiciar - Gun"
+     m_sPrefab "{7D74221909EB7DEA}Prefabs/Vehicles/Mech/Frames/Heavy_Judiciar_Gun_Hover.et"
+    }
+    RW_BayFrameEntry "{6AB817BB9E85770D}" {
+     m_sName "Assault Gravemarch-M"
+     m_sPrefab "{87EA5222BF2670A6}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Tracked.et"
+    }
+    RW_BayFrameEntry "{6AB817BA6274116D}" {
+     m_sName "Assault Gravemarch-M"
+     m_sPrefab "{9C2752184FA09715}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Hover.et"
+    }
    }
    m_fBuildCooldown 20
   }
@@ -69,5 +101,5 @@ GenericEntity {
   RplComponent "{CD2EED750F10A415}" {
   }
  }
- coords 2139.899 54.119 2936.497
+ coords 74.943 3.906 39.413
 }

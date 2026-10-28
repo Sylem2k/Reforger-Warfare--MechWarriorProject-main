@@ -7,8 +7,8 @@ $grp GenericEntity : "{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_0
  }
 }
 Vehicle Assault_Gravemarch_Gun_Tracked1 : "{87EA5222BF2670A6}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Tracked.et" {
- coords 74.433 7.852 54.42
+ coords 74.69 7.493 38.777
 }
-Vehicle Assault_Gravemarch_Gun_Hover1 : "{9C2752184FA09715}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Hover.et" {
- coords 80.76 10.364 51.755
+GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
+ coords 74.943 3.906 39.413
 }
