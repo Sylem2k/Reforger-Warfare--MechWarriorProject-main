@@ -617,7 +617,7 @@ Vehicle {
    m_bDebugSound 1
   }
   CGS_MechEngineComponent "{6AB706FA459DBA21}" {
-   m_bStartRunning 0
+   m_bStartRunning 1
    m_bDebugEngine 1
    m_EnginePoint PointInfo "{6AB706FA49DFF759}" {
     Offset 0 0 1.3625
@@ -640,16 +640,18 @@ Vehicle {
    m_fCoolingPerSecond 28
   }
   CGS_MechRepairComponent "{6A001027D0000001}" {
+   m_bEnableTrackDamageTest 1
+   m_fRepairReach 5
    m_aRepairSites {
     CGS_MechRepairSite "{6A001027D0000002}" {
-     m_sLabel "LEFT TRACK FRONT"
+     m_sLabel "LEFT TRACK"
      m_sPartEntityName "Track_L1"
      m_Position PointInfo "{6A001027D0000003}" {
       Offset -1.85 -1.9 0.24
      }
     }
     CGS_MechRepairSite "{6A001027D0000006}" {
-     m_sLabel "RIGHT TRACK FRONT"
+     m_sLabel "RIGHT TRACK"
      m_sPartEntityName "Track_R1"
      m_Position PointInfo "{6A001027D0000007}" {
       Offset 1.85 -1.9 0.413
@@ -1020,9 +1022,9 @@ Vehicle {
      }
      Radius 50
     }
-    UserActionContext "{6AB70BFADE701996}" {
-     UIInfo UIInfo "{6AB70BFAC32B35C5}" {
-      Name "Start Mech"
+    UserActionContext "{6A27010C00001001}" {
+     UIInfo UIInfo "{6A27010C00001002}" {
+      Name "LEFT TRACK SERVICE"
      }
      ContextName "Start Mech"
      Position PointInfo "{6AB70BFACC745ACE}" {
@@ -1032,9 +1034,9 @@ Vehicle {
      Omnidirectional 1
      VisibilityAngle 180
     }
-    UserActionContext "{6AB70BFABFB3E9E0}" {
-     UIInfo UIInfo "{6AB70BFABFB3EAE8}" {
-      Name "Stop Mech"
+    UserActionContext "{6A27010C00001004}" {
+     UIInfo UIInfo "{6A27010C00001005}" {
+      Name "RIGHT TRACK SERVICE"
      }
      ContextName "StopMech"
      Position PointInfo "{6AB70BFABFB3EAE6}" {
@@ -1047,21 +1049,33 @@ Vehicle {
     }
    }
    additionalActions {
-    CGS_MechEngineStartAction "{6AB70BF000001011}" {
+    RW_MechTrackDamageTestAction "{6A27010C00001011}" {
      ParentContextList {
-      "Start Mech"
+      "TrackServiceLeft"
      }
-     UIInfo UIInfo "{6AB70BF000001012}" {
-      Name "ENGINE: START CORE"
+     UIInfo UIInfo "{6A27010C00001012}" {
+      Name "TEST DAMAGE LEFT TRACK"
+     }
+     VisibilityRange 9
+     Duration 1
+     m_iRepairSiteIndex 0
+     m_fTestDamage 175
+    }
+    RW_MechTrackWrenchRepairAction "{6A27010C00001013}" {
+     ParentContextList {
+      "TrackServiceLeft"
+     }
+     UIInfo UIInfo "{6A27010C00001014}" {
+      Name "REPAIR LEFT TRACK"
      }
      VisibilityRange -1
     }
-    CGS_MechEngineStopAction "{6AB70BF000001013}" {
+    RW_MechTrackWrenchRepairAction "{6A27010C00001017}" {
      ParentContextList {
-      "StopMech"
+      "TrackServiceRight"
      }
-     UIInfo UIInfo "{6AB70BF000001014}" {
-      Name "ENGINE: SHUT DOWN"
+     UIInfo UIInfo "{6A27010C00001018}" {
+      Name "REPAIR RIGHT TRACK"
      }
      VisibilityRange -1
     }
