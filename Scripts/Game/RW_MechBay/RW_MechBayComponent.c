@@ -130,7 +130,7 @@ class RW_MechBayComponent : ScriptComponent
 	{
 		if (!Replication.IsServer() || !CanUseServiceConsole(operator) || m_bCrewRepairing)
 			return false;
-		if (siteIndex < 0 || siteIndex > 3)
+		if (siteIndex < 0 || siteIndex > 21)
 			return false;
 
 		IEntity mech = FindParkedMech();
