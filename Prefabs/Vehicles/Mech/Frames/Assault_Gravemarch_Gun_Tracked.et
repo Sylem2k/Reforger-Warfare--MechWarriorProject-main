@@ -1026,11 +1026,11 @@ Vehicle {
      UIInfo UIInfo "{6A27010C00001002}" {
       Name "LEFT TRACK SERVICE"
      }
-     ContextName "Start Mech"
-     Position PointInfo "{6AB70BFACC745ACE}" {
-      Offset -0.2108 1.8464 0.3272
+     ContextName "TrackServiceLeft"
+     Position PointInfo "{6A27010C00001003}" {
+      Offset -1.85 -1.9 0.24
      }
-     Radius 8
+     Radius 3
      Omnidirectional 1
      VisibilityAngle 180
     }
@@ -1038,11 +1038,11 @@ Vehicle {
      UIInfo UIInfo "{6A27010C00001005}" {
       Name "RIGHT TRACK SERVICE"
      }
-     ContextName "StopMech"
-     Position PointInfo "{6AB70BFABFB3EAE6}" {
-      Offset 0.1552 1.7657 0.3743
+     ContextName "TrackServiceRight"
+     Position PointInfo "{6A27010C00001006}" {
+      Offset 1.85 -1.9 0.413
      }
-     Radius 8
+     Radius 3
      Omnidirectional 1
      VisibilityAngle 180
      FilterActionsUsingCache 0
@@ -1068,7 +1068,22 @@ Vehicle {
      UIInfo UIInfo "{6A27010C00001014}" {
       Name "REPAIR LEFT TRACK"
      }
-     VisibilityRange -1
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 0
+     m_fRepairAmount 175
+    }
+    RW_MechTrackDamageTestAction "{6A27010C00001015}" {
+     ParentContextList {
+      "TrackServiceRight"
+     }
+     UIInfo UIInfo "{6A27010C00001016}" {
+      Name "TEST DAMAGE RIGHT TRACK"
+     }
+     VisibilityRange 9
+     Duration 1
+     m_iRepairSiteIndex 1
+     m_fTestDamage 175
     }
     RW_MechTrackWrenchRepairAction "{6A27010C00001017}" {
      ParentContextList {
@@ -1077,7 +1092,10 @@ Vehicle {
      UIInfo UIInfo "{6A27010C00001018}" {
       Name "REPAIR RIGHT TRACK"
      }
-     VisibilityRange -1
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 1
+     m_fRepairAmount 175
     }
     CGS_MechCompanionOrderAction "{6AB64C955AF35D1B}" {
      ParentContextList {
