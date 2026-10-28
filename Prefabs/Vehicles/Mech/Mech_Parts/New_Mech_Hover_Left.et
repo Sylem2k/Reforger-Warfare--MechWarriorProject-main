@@ -32,6 +32,16 @@ GenericEntity {
   }
   SignalsManagerComponent "{6AB65961C9BE81A3}" {
   }
+  // Broad projectile collider on the hover pad. Tune extents in Workbench.
+  RigidBody "{A0281028ABCD8801}" {
+   Gravity 0
+   Geometries {
+    PhysicsBoxGeometry Box {
+     LayerPreset "VehicleFireView"
+     Extents 0.9 0.55 1.4
+    }
+   }
+  }
   SCR_DamageManagerComponent "{6A27010C00000103}" {
    "Additional hit zones" {
     BFA_MechPartHitZone Locomotion {
@@ -43,6 +53,7 @@ GenericEntity {
      m_fHullShare 0.25
      m_sDisplayName "HOVER PAD LEFT"
      m_eHudSection AUTO
+     m_bKeepRepairableAtCriticalHP 1
     }
    }
   }
