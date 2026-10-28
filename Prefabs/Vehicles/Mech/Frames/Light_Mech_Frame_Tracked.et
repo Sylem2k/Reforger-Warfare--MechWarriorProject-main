@@ -50,6 +50,7 @@ Vehicle {
    m_bBindAuxFire 1
   }
   BFA_MechHardpointComponent "{6AB64C95463933E2}" {
+   m_bUseArmMountDamage 1
    m_aHardpoints {
     BFA_MechHardpointDefinition "{6AB64C95463AED12}" {
      m_sName "ARM"
@@ -586,6 +587,39 @@ Vehicle {
   MeshObject "{6AB64C95463A230E}" {
    Object "{D9C14CA501962E2D}Common/Models/Mech Body/Mech_Body.xob"
   }
+  CGS_MechRepairComponent "{A2026102800C0000}" {
+   m_fRepairReach 6
+   m_aRepairSites {
+    CGS_MechRepairSite "{A2026102800C0001}" {
+     m_sLabel "LEFT TRACK"
+     m_sPartEntityName "Track_L1"
+     m_Position PointInfo "{A2026102800C0002}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A2026102800C0003}" {
+     m_sLabel "RIGHT TRACK"
+     m_sPartEntityName "Track_R1"
+     m_Position PointInfo "{A2026102800C0004}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A2026102800C0005}" {
+     m_sLabel "LEFT ARM"
+     m_sPartEntityName "Arm_L"
+     m_Position PointInfo "{A2026102800C0006}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A2026102800C0007}" {
+     m_sLabel "RIGHT ARM"
+     m_sPartEntityName "Arm_R"
+     m_Position PointInfo "{A2026102800C0008}" {
+      Offset 0 0 1.841
+     }
+    }
+   }
+  }
   RW_MechFrameComponent "{6AB64C95463A2308}" {
    m_sFrameName "Cricket - Alt"
    m_eWeightClass LIGHT
@@ -787,6 +821,18 @@ Vehicle {
   }
   SlotManagerComponent "{6AB64C95463B79C1}" {
    Slots {
+    EntitySlotInfo Arm_L {
+     Offset -1.6233 1.2724 -0.937
+     MergePhysics 0
+     Prefab "{A0281028ABCD0501}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Left.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo Arm_R {
+     Offset 1.6355 1.3029 -0.8015
+     MergePhysics 0
+     Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Right.et"
+     DisablePhysicsInteraction 1
+    }
     EntitySlotInfo Cockpit {
      Offset 0 0.9664 -0.8235
      MergePhysics 0
@@ -829,6 +875,19 @@ Vehicle {
   }
   ActionsManagerComponent "{6AB64C95463B79CA}" {
    ActionContexts {
+    UserActionContext "{A2026102800C000A}" {
+     UIInfo UIInfo "{A2026102800C000B}" {
+      Name "MECH FIELD REPAIR"
+     }
+     ContextName "FleetFieldRepair"
+     Position PointInfo "{A2026102800C000C}" {
+      Offset 0 0 1.841
+     }
+     Radius 4
+     Omnidirectional 1
+     VisibilityAngle 180
+     FilterActionsUsingCache 0
+    }
     UserActionContext "{6AB64C95463B79C8}" {
      ContextName "default"
      Position PointInfo "{6AB64C95463CCA15}" {
@@ -852,6 +911,50 @@ Vehicle {
     }
    }
    additionalActions {
+    RW_MechTrackWrenchRepairAction "{A2026102800C0014}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800C0015}" {
+      Name "FIELD REPAIR LEFT TRACK"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 0
+    }
+    RW_MechTrackWrenchRepairAction "{A2026102800C0016}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800C0017}" {
+      Name "FIELD REPAIR RIGHT TRACK"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 1
+    }
+    RW_MechArmWrenchRepairAction "{A2026102800C0018}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800C0019}" {
+      Name "FIELD REPAIR LEFT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 2
+    }
+    RW_MechArmWrenchRepairAction "{A2026102800C001A}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800C001B}" {
+      Name "FIELD REPAIR RIGHT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 3
+    }
     CGS_MechEngineStartAction "{C62710270002000B}" {
      ParentContextList {
       "CGS_EngineStart"
