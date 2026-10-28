@@ -49,6 +49,7 @@ GenericEntity {
      m_ePart LEG
      m_fHullShare 0.25
      m_sDisplayName "TRACK LEFT"
+     m_bKeepRepairableAtCriticalHP 1
      m_bLogHits 1
      m_eHudSection AUTO
     }
