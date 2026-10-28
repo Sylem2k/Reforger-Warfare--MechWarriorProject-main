@@ -60,7 +60,7 @@ class RW_MechBayManualRepairAction : ScriptedUserAction
 			return true;
 		}
 		int percentage = (int)Math.Round(health01 * 100.0);
-		outName = string.Format("WRENCH REPAIR 15%% %1 (%2%% HP)", name, percentage);
+		outName = "WRENCH REPAIR 15% " + name + " (" + percentage + "% HP)";
 		return true;
 	}
 
