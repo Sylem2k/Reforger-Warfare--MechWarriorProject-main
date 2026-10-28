@@ -50,6 +50,7 @@ Vehicle {
    m_bBindAuxFire 1
   }
   BFA_MechHardpointComponent "{6AAE3A15B74EC7B1}" {
+   m_bUseArmMountDamage 1
    m_aHardpoints {
     BFA_MechHardpointDefinition "{6AAE3A15B74EC7B4}" {
      m_sName "ARM"
@@ -631,6 +632,39 @@ Vehicle {
   MeshObject "{6AAE3A15B74EC671}" {
    Object "{528115F7F8BA3093}Common/Models/Titan_War_Lord/War_Lord_Body.xob"
   }
+  CGS_MechRepairComponent "{A202610280080000}" {
+   m_fRepairReach 6
+   m_aRepairSites {
+    CGS_MechRepairSite "{A202610280080001}" {
+     m_sLabel "LEFT LEG"
+     m_sPartEntityName "Leg_L1"
+     m_Position PointInfo "{A202610280080002}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A202610280080003}" {
+     m_sLabel "RIGHT LEG"
+     m_sPartEntityName "Leg_R1"
+     m_Position PointInfo "{A202610280080004}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A202610280080005}" {
+     m_sLabel "LEFT ARM"
+     m_sPartEntityName "Arm_L"
+     m_Position PointInfo "{A202610280080006}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A202610280080007}" {
+     m_sLabel "RIGHT ARM"
+     m_sPartEntityName "Arm_R"
+     m_Position PointInfo "{A202610280080008}" {
+      Offset 0 0 1.841
+     }
+    }
+   }
+  }
   RW_MechFrameComponent "{6AAE3A15B74EC677}" {
    m_sFrameName "Judiciar - Missile"
    m_eWeightClass HEAVY
@@ -847,6 +881,18 @@ Vehicle {
   }
   SlotManagerComponent "{6AAE3A15B74EC6CA}" {
    Slots {
+    EntitySlotInfo Arm_L {
+     Offset -4.4828 6.5366 46.6993
+     MergePhysics 0
+     Prefab "{A0281028ABCD0501}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Left.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo Arm_R {
+     Offset 0.882 0.4179 -0.4025
+     MergePhysics 0
+     Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Right.et"
+     DisablePhysicsInteraction 1
+    }
     EntitySlotInfo Cockpit {
      MergePhysics 0
      DisablePhysicsInteraction 1
@@ -895,6 +941,19 @@ Vehicle {
   }
   ActionsManagerComponent "{6AAE3A15B74EC6D2}" {
    ActionContexts {
+    UserActionContext "{A20261028008000A}" {
+     UIInfo UIInfo "{A20261028008000B}" {
+      Name "MECH FIELD REPAIR"
+     }
+     ContextName "FleetFieldRepair"
+     Position PointInfo "{A20261028008000C}" {
+      Offset 0 0 1.841
+     }
+     Radius 4
+     Omnidirectional 1
+     VisibilityAngle 180
+     FilterActionsUsingCache 0
+    }
     UserActionContext "{6AAE3A15B74EC6D1}" {
      ContextName "default"
      Position PointInfo "{6AAE3A15B74EC6D7}" {
@@ -904,6 +963,50 @@ Vehicle {
     }
    }
    additionalActions {
+    RW_MechTrackWrenchRepairAction "{A202610280080014}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A202610280080015}" {
+      Name "FIELD REPAIR LEFT LEG"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 0
+    }
+    RW_MechTrackWrenchRepairAction "{A202610280080016}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A202610280080017}" {
+      Name "FIELD REPAIR RIGHT LEG"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 1
+    }
+    RW_MechArmWrenchRepairAction "{A202610280080018}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A202610280080019}" {
+      Name "FIELD REPAIR LEFT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 2
+    }
+    RW_MechArmWrenchRepairAction "{A20261028008001A}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A20261028008001B}" {
+      Name "FIELD REPAIR RIGHT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 3
+    }
     CGS_MechTacticalThrowAction "{6AAE3A15B74EC6D8}" {
      ParentContextList {
       "default"

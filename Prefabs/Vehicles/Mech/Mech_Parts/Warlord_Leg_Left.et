@@ -45,6 +45,7 @@ GenericEntity {
      "Explosive multiplier" 1
      "Incendiary multiplier" 0.5
      m_fHullShare 0.6
+     m_bKeepRepairableAtCriticalHP 1
     }
    }
   }

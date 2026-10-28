@@ -50,6 +50,7 @@ Vehicle {
    m_bBindAuxFire 1
   }
   BFA_MechHardpointComponent "{6AB64C95533BD259}" {
+   m_bUseArmMountDamage 1
    m_aHardpoints {
     BFA_MechHardpointDefinition "{6AB64C95533BD25A}" {
      m_sName "ARM"
@@ -613,6 +614,39 @@ Vehicle {
   MeshObject "{6AB64C95533BD3E3}" {
    Object "{8EB3D751DE396B39}Common/Models/Mech Body/Mech_Med_Body.xob"
   }
+  CGS_MechRepairComponent "{A2026102800F0000}" {
+   m_fRepairReach 6
+   m_aRepairSites {
+    CGS_MechRepairSite "{A2026102800F0001}" {
+     m_sLabel "LEFT HOVER PAD"
+     m_sPartEntityName "HoverPad_L1"
+     m_Position PointInfo "{A2026102800F0002}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A2026102800F0003}" {
+     m_sLabel "RIGHT HOVER PAD"
+     m_sPartEntityName "HoverPad_R1"
+     m_Position PointInfo "{A2026102800F0004}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A2026102800F0005}" {
+     m_sLabel "LEFT ARM"
+     m_sPartEntityName "Arm_L"
+     m_Position PointInfo "{A2026102800F0006}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{A2026102800F0007}" {
+     m_sLabel "RIGHT ARM"
+     m_sPartEntityName "Arm_R"
+     m_Position PointInfo "{A2026102800F0008}" {
+      Offset 0 0 1.841
+     }
+    }
+   }
+  }
   RW_MechFrameComponent "{6AB64C95533BD3ED}" {
    m_sFrameName "Warden - Alt"
    m_eWeightClass MEDIUM
@@ -817,6 +851,18 @@ Vehicle {
   }
   SlotManagerComponent "{6AB64C95533BD35E}" {
    Slots {
+    EntitySlotInfo Arm_L {
+     Offset -2.4512 1.7157 -0.4026
+     MergePhysics 0
+     Prefab "{A0281028ABCD0501}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Left.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo Arm_R {
+     Offset 2.3513 1.8111 -0.1826
+     MergePhysics 0
+     Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Right.et"
+     DisablePhysicsInteraction 1
+    }
     EntitySlotInfo Cockpit {
      Offset 0 0.1425 0.1714
      MergePhysics 0
@@ -854,6 +900,19 @@ Vehicle {
   }
   ActionsManagerComponent "{6AB64C95533BD35B}" {
    ActionContexts {
+    UserActionContext "{A2026102800F000A}" {
+     UIInfo UIInfo "{A2026102800F000B}" {
+      Name "MECH FIELD REPAIR"
+     }
+     ContextName "FleetFieldRepair"
+     Position PointInfo "{A2026102800F000C}" {
+      Offset 0 0 1.841
+     }
+     Radius 4
+     Omnidirectional 1
+     VisibilityAngle 180
+     FilterActionsUsingCache 0
+    }
     UserActionContext "{6AB64C95533BD364}" {
      ContextName "default"
      Position PointInfo "{6AB64C95533BD365}" {
@@ -863,6 +922,50 @@ Vehicle {
     }
    }
    additionalActions {
+    RW_MechTrackWrenchRepairAction "{A2026102800F0014}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800F0015}" {
+      Name "FIELD REPAIR LEFT HOVER PAD"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 0
+    }
+    RW_MechTrackWrenchRepairAction "{A2026102800F0016}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800F0017}" {
+      Name "FIELD REPAIR RIGHT HOVER PAD"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 1
+    }
+    RW_MechArmWrenchRepairAction "{A2026102800F0018}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800F0019}" {
+      Name "FIELD REPAIR LEFT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 2
+    }
+    RW_MechArmWrenchRepairAction "{A2026102800F001A}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{A2026102800F001B}" {
+      Name "FIELD REPAIR RIGHT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 3
+    }
     CGS_MechTacticalThrowAction "{6AB64C95533BD360}" {
      ParentContextList {
       "default"

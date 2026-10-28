@@ -19,7 +19,6 @@ GenericEntity {
    Object "{F6BA7D9E35B65FE2}Common/Models/Mech Leg/Spider_Leg.xob"
   }
   RigidBody "{6A92124701F6F9FB}" {
-   Enabled 0
    Gravity 0
    Geometries {
     PhysicsBoxGeometry asd {
@@ -42,6 +41,7 @@ GenericEntity {
      "Explosive multiplier" 1
      "Incendiary multiplier" 0.5
      m_fHullShare 0.6
+     m_bKeepRepairableAtCriticalHP 1
     }
    }
   }
