@@ -689,6 +689,69 @@ Vehicle {
       Offset 0 0 1.841
      }
     }
+    CGS_MechRepairSite "{D202610280010104}" {
+     m_sLabel "HARDPOINT SHOULDER"
+     m_sPartEntityName "MountHP_1"
+     m_Position PointInfo "{D202610280010105}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D20261028001010C}" {
+     m_sLabel "HARDPOINT BACK_L"
+     m_sPartEntityName "MountHP_3"
+     m_Position PointInfo "{D20261028001010D}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D202610280010110}" {
+     m_sLabel "HARDPOINT BACK_R"
+     m_sPartEntityName "MountHP_4"
+     m_Position PointInfo "{D202610280010111}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D202610280010114}" {
+     m_sLabel "HARDPOINT TORSO_GUN_L"
+     m_sPartEntityName "MountHP_5"
+     m_Position PointInfo "{D202610280010115}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D202610280010118}" {
+     m_sLabel "HARDPOINT TORSO_GUN_R"
+     m_sPartEntityName "MountHP_6"
+     m_Position PointInfo "{D202610280010119}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D20261028001011C}" {
+     m_sLabel "HARDPOINT CHEST_GUN"
+     m_sPartEntityName "MountHP_7"
+     m_Position PointInfo "{D20261028001011D}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D202610280010120}" {
+     m_sLabel "HARDPOINT WAIST_ENERGY_L"
+     m_sPartEntityName "MountHP_8"
+     m_Position PointInfo "{D202610280010121}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D202610280010124}" {
+     m_sLabel "HARDPOINT WAIST_ENERGY_R"
+     m_sPartEntityName "MountHP_9"
+     m_Position PointInfo "{D202610280010125}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D202610280010128}" {
+     m_sLabel "HARDPOINT BACK_CENTER"
+     m_sPartEntityName "MountHP_10"
+     m_Position PointInfo "{D202610280010129}" {
+      Offset 0 0 1.841
+     }
+    }
    }
   }
   RW_MechFrameComponent "{E50300000000005E}" {
@@ -922,6 +985,60 @@ Vehicle {
   }
   SlotManagerComponent "{E503000000000086}" {
    Slots {
+    EntitySlotInfo MountHP_1 {
+     Offset 0.6161 0.9308 -1.0896
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_3 {
+     Offset -0.7796 1.4454 -1
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_4 {
+     Offset 0.7526 1.1318 -1.3822
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_5 {
+     Offset -0.5564 1.1282 -0.0691
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_6 {
+     Offset 0.5463 1.26 0.15
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_7 {
+     Offset 0.023 0.5223 1.069
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_8 {
+     Offset -0.82 -0.2127 0.62
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_9 {
+     Offset 0.82 -0.2003 0.62
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_10 {
+     Offset 0 1.2403 -1.23
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
      EntitySlotInfo Arm_L {
      Offset -1.8296 0.1426 -0.4025
      MergePhysics 0
@@ -1028,6 +1145,105 @@ Vehicle {
     }
    }
    additionalActions {
+    RW_MechArmWrenchRepairAction "{D202610280010106}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D202610280010107}" {
+      Name "FIELD REPAIR HARDPOINT SHOULDER"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 4
+    }
+    RW_MechArmWrenchRepairAction "{D20261028001010E}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D20261028001010F}" {
+      Name "FIELD REPAIR HARDPOINT BACK_L"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 5
+    }
+    RW_MechArmWrenchRepairAction "{D202610280010112}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D202610280010113}" {
+      Name "FIELD REPAIR HARDPOINT BACK_R"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 6
+    }
+    RW_MechArmWrenchRepairAction "{D202610280010116}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D202610280010117}" {
+      Name "FIELD REPAIR HARDPOINT TORSO_GUN_L"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 7
+    }
+    RW_MechArmWrenchRepairAction "{D20261028001011A}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D20261028001011B}" {
+      Name "FIELD REPAIR HARDPOINT TORSO_GUN_R"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 8
+    }
+    RW_MechArmWrenchRepairAction "{D20261028001011E}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D20261028001011F}" {
+      Name "FIELD REPAIR HARDPOINT CHEST_GUN"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 9
+    }
+    RW_MechArmWrenchRepairAction "{D202610280010122}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D202610280010123}" {
+      Name "FIELD REPAIR HARDPOINT WAIST_ENERGY_L"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 10
+    }
+    RW_MechArmWrenchRepairAction "{D202610280010126}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D202610280010127}" {
+      Name "FIELD REPAIR HARDPOINT WAIST_ENERGY_R"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 11
+    }
+    RW_MechArmWrenchRepairAction "{D20261028001012A}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D20261028001012B}" {
+      Name "FIELD REPAIR HARDPOINT BACK_CENTER"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 12
+    }
     RW_MechTrackWrenchRepairAction "{A202610280010014}" {
      ParentContextList {
       "FleetFieldRepair"

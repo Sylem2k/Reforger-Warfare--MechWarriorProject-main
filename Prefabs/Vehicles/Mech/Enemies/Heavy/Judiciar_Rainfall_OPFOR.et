@@ -653,6 +653,48 @@ Vehicle {
       Offset 0 0 1.841
      }
     }
+    CGS_MechRepairSite "{D2026102801A0104}" {
+     m_sLabel "HARDPOINT SHOULDER"
+     m_sPartEntityName "MountHP_1"
+     m_Position PointInfo "{D2026102801A0105}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D2026102801A010C}" {
+     m_sLabel "HARDPOINT BACK_L"
+     m_sPartEntityName "MountHP_3"
+     m_Position PointInfo "{D2026102801A010D}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D2026102801A0110}" {
+     m_sLabel "HARDPOINT BACK_R"
+     m_sPartEntityName "MountHP_4"
+     m_Position PointInfo "{D2026102801A0111}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D2026102801A0114}" {
+     m_sLabel "HARDPOINT RACK_L"
+     m_sPartEntityName "MountHP_5"
+     m_Position PointInfo "{D2026102801A0115}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D2026102801A0118}" {
+     m_sLabel "HARDPOINT RACK_C"
+     m_sPartEntityName "MountHP_6"
+     m_Position PointInfo "{D2026102801A0119}" {
+      Offset 0 0 1.841
+     }
+    }
+    CGS_MechRepairSite "{D2026102801A011C}" {
+     m_sLabel "HARDPOINT RACK_R"
+     m_sPartEntityName "MountHP_7"
+     m_Position PointInfo "{D2026102801A011D}" {
+      Offset 0 0 1.841
+     }
+    }
    }
   }
   RW_MechFrameComponent "{E60B000000000059}" {
@@ -871,6 +913,42 @@ Vehicle {
   }
   SlotManagerComponent "{E60B00000000007E}" {
    Slots {
+    EntitySlotInfo MountHP_1 {
+     Offset 0.3661 1.034 0
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_3 {
+     Offset -0.45 1.2994 -1
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_4 {
+     Offset 0.45 1.2994 -1
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_5 {
+     Offset -1.1 1.56 -1.15
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_6 {
+     Offset 0 1.72 -1.25
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo MountHP_7 {
+     Offset 1.1 1.56 -1.15
+     MergePhysics 0
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     DisablePhysicsInteraction 1
+    }
     EntitySlotInfo Arm_L {
      Offset -0.8961 0.4898 -0.4025
      MergePhysics 0
@@ -958,6 +1036,72 @@ Vehicle {
     }
    }
    additionalActions {
+    RW_MechArmWrenchRepairAction "{D2026102801A0106}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D2026102801A0107}" {
+      Name "FIELD REPAIR HARDPOINT SHOULDER"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 4
+    }
+    RW_MechArmWrenchRepairAction "{D2026102801A010E}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D2026102801A010F}" {
+      Name "FIELD REPAIR HARDPOINT BACK_L"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 5
+    }
+    RW_MechArmWrenchRepairAction "{D2026102801A0112}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D2026102801A0113}" {
+      Name "FIELD REPAIR HARDPOINT BACK_R"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 6
+    }
+    RW_MechArmWrenchRepairAction "{D2026102801A0116}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D2026102801A0117}" {
+      Name "FIELD REPAIR HARDPOINT RACK_L"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 7
+    }
+    RW_MechArmWrenchRepairAction "{D2026102801A011A}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D2026102801A011B}" {
+      Name "FIELD REPAIR HARDPOINT RACK_C"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 8
+    }
+    RW_MechArmWrenchRepairAction "{D2026102801A011E}" {
+     ParentContextList {
+      "FleetFieldRepair"
+     }
+     UIInfo UIInfo "{D2026102801A011F}" {
+      Name "FIELD REPAIR HARDPOINT RACK_R"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 9
+    }
     RW_MechTrackWrenchRepairAction "{A2026102801A0014}" {
      ParentContextList {
       "FleetFieldRepair"

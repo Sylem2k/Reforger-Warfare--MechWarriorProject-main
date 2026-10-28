@@ -66,9 +66,12 @@ class RW_MechBayManualRepairAction : ScriptedUserAction
 
 	override bool CanBeShownScript(IEntity user)
 	{
-		// The bay console is always discoverable, including when a mech is
-		// healthy or a player does not have the wrench.
-		return m_Bay != null;
+		// Show ONLY installed configured service targets, not the 18 empty
+		// fallback slots. Healthy parts remain visible without a wrench.
+		CGS_MechRepairComponent repair = FindRepair();
+		return repair && m_iRepairSiteIndex >= 0
+			&& m_iRepairSiteIndex < repair.GetRepairSiteCount()
+			&& repair.GetRepairTargetHealth01(m_iRepairSiteIndex) >= 0;
 	}
 
 	override bool CanBePerformedScript(IEntity user)
@@ -94,7 +97,7 @@ class RW_MechBayManualRepairAction : ScriptedUserAction
 			SetCannotPerformReason("Repair target is not configured");
 			return false;
 		}
-		if (!repair.IsLocomotionSite(m_iRepairSiteIndex) && !repair.IsArmSite(m_iRepairSiteIndex))
+		if (!repair.IsLocomotionSite(m_iRepairSiteIndex) && !repair.IsWeaponMountSite(m_iRepairSiteIndex))
 		{
 			SetCannotPerformReason("Part is not enabled for repairs yet");
 			return false;

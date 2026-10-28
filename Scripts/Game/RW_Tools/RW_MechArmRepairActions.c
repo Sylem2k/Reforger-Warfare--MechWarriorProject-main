@@ -7,7 +7,7 @@ class RW_MechArmServiceActionBase : RW_MechTrackServiceActionBase
 	protected bool ValidArm(IEntity user)
 	{
 		CGS_MechRepairComponent repair = GetRepair();
-		return repair && repair.IsArmSite(m_iRepairSiteIndex) && repair.CanService(user, m_iRepairSiteIndex) && repair.GetRepairTargetHealth01(m_iRepairSiteIndex) >= 0;
+		return repair && repair.IsWeaponMountSite(m_iRepairSiteIndex) && repair.CanService(user, m_iRepairSiteIndex) && repair.GetRepairTargetHealth01(m_iRepairSiteIndex) >= 0;
 	}
 }
 
@@ -128,7 +128,7 @@ class RW_MechArmWrenchRepairAction : RW_MechArmServiceActionBase
 			return;
 
 		CGS_MechRepairComponent repair = GetRepair();
-		if (!repair || !repair.IsArmSite(m_iRepairSiteIndex))
+		if (!repair || !repair.IsWeaponMountSite(m_iRepairSiteIndex))
 			return;
 		// Determine bay status on the server, never from client action text.
 		IEntity mech = GetOwner();

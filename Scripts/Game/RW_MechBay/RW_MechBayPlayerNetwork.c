@@ -21,7 +21,7 @@ modded class SCR_PlayerController
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RW_MB_RpcService(RplId bayId, int siteIndex)
 	{
-		if (siteIndex < -1 || siteIndex > 3)
+		if (siteIndex < -1 || siteIndex > 21)
 			return;
 
 		int now = System.GetTickCount();

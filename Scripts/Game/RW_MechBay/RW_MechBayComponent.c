@@ -130,7 +130,7 @@ class RW_MechBayComponent : ScriptComponent
 	{
 		if (!Replication.IsServer() || !CanUseServiceConsole(operator) || m_bCrewRepairing)
 			return false;
-		if (siteIndex < 0 || siteIndex > 3)
+		if (siteIndex < 0 || siteIndex > 21)
 			return false;
 
 		IEntity mech = FindParkedMech();
@@ -155,7 +155,7 @@ class RW_MechBayComponent : ScriptComponent
 		CGS_MechRepairComponent repair = CGS_MechRepairComponent.Cast(mech.FindComponent(CGS_MechRepairComponent));
 		if (!repair || siteIndex >= repair.GetRepairSiteCount())
 			return false;
-		if (!repair.IsLocomotionSite(siteIndex) && !repair.IsArmSite(siteIndex))
+		if (!repair.IsLocomotionSite(siteIndex) && !repair.IsWeaponMountSite(siteIndex))
 			return false;
 
 		bool success = repair.ServerRepairPartAtBay(siteIndex, operator);
@@ -239,7 +239,7 @@ class RW_MechBayComponent : ScriptComponent
 		float missingPercent = 0;
 		for (int i = 0; i < repair.GetRepairSiteCount(); i++)
 		{
-			if (!repair.IsLocomotionSite(i) && !repair.IsArmSite(i))
+			if (!repair.IsLocomotionSite(i) && !repair.IsWeaponMountSite(i))
 				continue;
 			float health01 = repair.GetRepairTargetHealth01(i);
 			if (health01 < 0)
@@ -331,7 +331,7 @@ class RW_MechBayComponent : ScriptComponent
 		int repaired = 0;
 		for (int i = 0; i < repair.GetRepairSiteCount(); i++)
 		{
-			if (!repair.IsLocomotionSite(i) && !repair.IsArmSite(i))
+			if (!repair.IsLocomotionSite(i) && !repair.IsWeaponMountSite(i))
 				continue;
 			if (repair.ServerCrewRepairPart(i))
 				repaired++;
