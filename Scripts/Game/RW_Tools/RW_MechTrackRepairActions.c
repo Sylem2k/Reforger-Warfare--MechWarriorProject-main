@@ -45,7 +45,7 @@ class RW_MechTrackServiceActionBase : ScriptedUserAction
 		float ratio = repair.GetRepairTargetHealth01(m_iRepairSiteIndex);
 		if (ratio < 0)
 			return -1;
-		return Math.Round(ratio * 100.0);
+		return (int)Math.Round(ratio * 100.0);
 	}
 }
 
@@ -97,7 +97,7 @@ class RW_MechTrackDamageTestAction : RW_MechTrackServiceActionBase
 // This never changes weapon loadout or installs a replacement track.
 class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 {
-	[Attribute("{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/Mech Wrench.et", UIWidgets.ResourceNamePicker, "Required Mech Wrench item.", "et", category: "Repair")]
+	[Attribute("{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/Mech Wrench.et", UIWidgets.ResourceNamePicker, "Required Mech Wrench item.", "et")]
 	protected ResourceName m_sTool;
 
 	[Attribute("175", UIWidgets.Auto, "Hit points restored per completed wrench action.", category: "Repair")]
