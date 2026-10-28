@@ -109,16 +109,24 @@ class RW_MechTrackWrenchRepairAction : RW_MechTrackServiceActionBase
 		return true;
 	}
 
+	// The service point is ALWAYS shown for a present track, including at 100% HP
+	// and to players not holding the wrench (vanilla-style discoverability).
+	// Tool and actual missing HP are checked only when trying to perform repair.
 	override bool CanBeShownScript(IEntity user)
 	{
-		return ValidTrack(user) && RW_MechWrench.HasToolCached(user, m_sTool);
+		return ValidTrack(user);
 	}
 
 	override bool CanBePerformedScript(IEntity user)
 	{
 		if (!CanBeShownScript(user))
 		{
-			SetCannotPerformReason("Stand beside the track with the Mech Wrench");
+			SetCannotPerformReason("Stand next to this track while the mech is stationary");
+			return false;
+		}
+		if (!RW_MechWrench.HasToolCached(user, m_sTool))
+		{
+			SetCannotPerformReason("Mech Wrench required");
 			return false;
 		}
 		if (GetHealthPercent() >= 100)
