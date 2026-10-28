@@ -63,6 +63,204 @@ GenericEntity {
     }
    }
    additionalActions {
+    RW_MechBayManualRepairAction "{C20261028B001008}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001009}" {
+      Name "WRENCH REPAIR HARDPOINT 1"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 4
+    }
+    RW_MechBayManualRepairAction "{C20261028B00100A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00100B}" {
+      Name "WRENCH REPAIR HARDPOINT 2"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 5
+    }
+    RW_MechBayManualRepairAction "{C20261028B00100C}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00100D}" {
+      Name "WRENCH REPAIR HARDPOINT 3"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 6
+    }
+    RW_MechBayManualRepairAction "{C20261028B00100E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00100F}" {
+      Name "WRENCH REPAIR HARDPOINT 4"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 7
+    }
+    RW_MechBayManualRepairAction "{C20261028B001010}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001011}" {
+      Name "WRENCH REPAIR HARDPOINT 5"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 8
+    }
+    RW_MechBayManualRepairAction "{C20261028B001012}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001013}" {
+      Name "WRENCH REPAIR HARDPOINT 6"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 9
+    }
+    RW_MechBayManualRepairAction "{C20261028B001014}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001015}" {
+      Name "WRENCH REPAIR HARDPOINT 7"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 10
+    }
+    RW_MechBayManualRepairAction "{C20261028B001016}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001017}" {
+      Name "WRENCH REPAIR HARDPOINT 8"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 11
+    }
+    RW_MechBayManualRepairAction "{C20261028B001018}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001019}" {
+      Name "WRENCH REPAIR HARDPOINT 9"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 12
+    }
+    RW_MechBayManualRepairAction "{C20261028B00101A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00101B}" {
+      Name "WRENCH REPAIR HARDPOINT 10"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 13
+    }
+    RW_MechBayManualRepairAction "{C20261028B00101C}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00101D}" {
+      Name "WRENCH REPAIR HARDPOINT 11"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 14
+    }
+    RW_MechBayManualRepairAction "{C20261028B00101E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00101F}" {
+      Name "WRENCH REPAIR HARDPOINT 12"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 15
+    }
+    RW_MechBayManualRepairAction "{C20261028B001020}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001021}" {
+      Name "WRENCH REPAIR HARDPOINT 13"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 16
+    }
+    RW_MechBayManualRepairAction "{C20261028B001022}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001023}" {
+      Name "WRENCH REPAIR HARDPOINT 14"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 17
+    }
+    RW_MechBayManualRepairAction "{C20261028B001024}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001025}" {
+      Name "WRENCH REPAIR HARDPOINT 15"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 18
+    }
+    RW_MechBayManualRepairAction "{C20261028B001026}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001027}" {
+      Name "WRENCH REPAIR HARDPOINT 16"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 19
+    }
+    RW_MechBayManualRepairAction "{C20261028B001028}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B001029}" {
+      Name "WRENCH REPAIR HARDPOINT 17"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 20
+    }
+    RW_MechBayManualRepairAction "{C20261028B00102A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{C20261028B00102B}" {
+      Name "WRENCH REPAIR HARDPOINT 18"
+     }
+     VisibilityRange 10
+     Duration 2
+     m_iRepairSiteIndex 21
+    }
     RW_MechBayManualRepairAction "{A028B0C000002011}" {
      ParentContextList {
       "default"
