@@ -474,6 +474,12 @@ Vehicle {
    }
   }
   BFA_MechMovementComponent "{6AB64C9540338DB3}" {
+   // Independent vertical collective, enabled for every non-Titan hover frame.
+   // These are editable per-frame in Workbench under Hover Collective.
+   m_bHoverCollectiveEnabled 1
+   m_fHoverCollectiveRiseSpeed 6
+   m_fHoverCollectiveFallSpeed 4.5
+   m_fHoverCollectiveMaxHeight 45
    m_iLocomotionMode 2
    m_fHoverClearance 1.25
    m_fHoverBob 0.08
