@@ -1,0 +1,38 @@
+// Persistent, independent hardpoint mounting-fixture health for ALL non-arm
+// mount positions (shoulders, rocket/missile pods, back, torso, waist, chest).
+// Refit/swap the actual weapon freely: this entity and its HP never move
+// between weapon modules. Titan/giant bosses do not use this prefab.
+// Physics-box dimensions are PROVISIONAL and need Workbench projectile tests.
+GenericEntity {
+ ID "C20261028C0DE002"
+ components {
+  SCR_DamageManagerComponent "{C20261028C0DE003}" {
+   "Additional hit zones" {
+    BFA_MechPartHitZone Mount {
+     HZDefault 1
+     MaxHealth 600
+     DamageReduction 2
+     DamageThreshold 1
+     m_ePart WEAPON
+     m_fHullShare 0.25
+     m_sDisplayName "HARDPOINT MOUNT"
+     m_eHudSection AUTO
+     m_bKeepRepairableAtCriticalHP 1
+    }
+   }
+  }
+  RigidBody "{C20261028C0DE004}" {
+   Gravity 0
+   Geometries {
+    PhysicsBoxGeometry Box {
+     LayerPreset "VehicleFireView"
+     Extents 0.55 0.55 0.65
+    }
+   }
+  }
+  RplComponent "{C20261028C0DE005}" {
+  }
+  Hierarchy "{C20261028C0DE006}" {
+  }
+ }
+}
