@@ -43,6 +43,8 @@ GenericEntity {
     }
    }
    m_fBuildCooldown 20
+   m_fCrewSecondsPerMissingPercent 0.75
+   m_fCrewMinRepairSeconds 10
   }
   ActionsManagerComponent "{F337AFC7C60E18AE}" {
    ActionContexts {
@@ -55,6 +57,16 @@ GenericEntity {
     }
    }
    additionalActions {
+    RW_MechBayCrewRepairAction "{A028B0C000000011}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{A028B0C000000012}" {
+      Name "ORDER CREW REPAIR"
+     }
+     VisibilityRange 6
+     Duration 1
+    }
     RW_MechBayOpenAction "{39F3B3DF5A1A0A4B}" {
      ParentContextList {
       "default"
