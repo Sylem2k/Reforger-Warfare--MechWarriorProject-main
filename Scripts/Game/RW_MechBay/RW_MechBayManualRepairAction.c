@@ -94,7 +94,7 @@ class RW_MechBayManualRepairAction : ScriptedUserAction
 			SetCannotPerformReason("Repair target is not configured");
 			return false;
 		}
-		if (!repair.IsTrackSite(m_iRepairSiteIndex) && !repair.IsArmSite(m_iRepairSiteIndex))
+		if (!repair.IsLocomotionSite(m_iRepairSiteIndex) && !repair.IsArmSite(m_iRepairSiteIndex))
 		{
 			SetCannotPerformReason("Part is not enabled for repairs yet");
 			return false;
