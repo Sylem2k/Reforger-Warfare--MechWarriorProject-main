@@ -113,7 +113,10 @@ class RW_MechArmWrenchRepairAction : RW_MechArmServiceActionBase
 		CGS_MechRepairComponent repair = GetRepair();
 		if (!repair || repair.GetRepairTargetHealth01(m_iRepairSiteIndex) * 100.0 >= allowed - 0.001)
 		{
-			SetCannotPerformReason(bay ? "Arm mount already fully repaired" : "Field repairs capped at 25% - use a Mech Bay");
+			if (bay)
+				SetCannotPerformReason("Arm mount already fully repaired");
+			else
+				SetCannotPerformReason("Field repairs capped at 25% - use a Mech Bay");
 			return false;
 		}
 		return true;
