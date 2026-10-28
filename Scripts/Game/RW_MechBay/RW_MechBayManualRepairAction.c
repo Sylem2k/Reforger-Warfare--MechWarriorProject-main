@@ -13,9 +13,9 @@ class RW_MechBayManualRepairAction : ScriptedUserAction
 
 	protected RW_MechBayComponent m_Bay;
 
-	override void Init(IEntity owner, GenericComponent manager)
+	override void Init(IEntity pOwnerEntity, GenericComponent pManagerComponent)
 	{
-		m_Bay = RW_MechBayComponent.Cast(owner.FindComponent(RW_MechBayComponent));
+		m_Bay = RW_MechBayComponent.Cast(pOwnerEntity.FindComponent(RW_MechBayComponent));
 	}
 
 	protected CGS_MechRepairComponent FindRepair()
