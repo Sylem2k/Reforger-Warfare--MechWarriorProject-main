@@ -50,6 +50,7 @@ Vehicle {
    m_bBindAuxFire 1
   }
   BFA_MechHardpointComponent "{6AB64C955AF35BC5}" {
+   m_bUseArmMountDamage 1
    m_aHardpoints {
     BFA_MechHardpointDefinition "{6AB64C955AF35C3B}" {
      m_sName "ARM"
@@ -641,6 +642,7 @@ Vehicle {
   }
   CGS_MechRepairComponent "{6A001027D0000001}" {
    m_bEnableTrackDamageTest 1
+   m_bEnableArmDamageTest 1
    m_fRepairReach 5
    m_aRepairSites {
     CGS_MechRepairSite "{6A001027D0000002}" {
@@ -659,14 +661,14 @@ Vehicle {
     }
     CGS_MechRepairSite "{6A001027D0000010}" {
      m_sLabel "LEFT ARM"
-     m_sPartEntityName "Las_Cannon_Arm"
+     m_sPartEntityName "Arm_L"
      m_Position PointInfo "{6A001027D0000011}" {
       Offset -0.8961 0.4898 -0.4025
      }
     }
     CGS_MechRepairSite "{6A001027D0000012}" {
      m_sLabel "RIGHT ARM"
-     m_sPartEntityName "Right_Arm_Mount"
+     m_sPartEntityName "Arm_R"
      m_Position PointInfo "{6A001027D0000013}" {
       Offset 0.882 0.4179 -0.4025
      }
@@ -991,6 +993,18 @@ Vehicle {
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
      DisablePhysicsInteraction 1
     }
+    EntitySlotInfo Arm_L {
+     Offset -1.8296 0.1426 -0.4025
+     MergePhysics 0
+     Prefab "{A0281028ABCD0501}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Left.et"
+     DisablePhysicsInteraction 1
+    }
+    EntitySlotInfo Arm_R {
+     Offset 1.409 0.733 -0.4025
+     MergePhysics 0
+     Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Right.et"
+     DisablePhysicsInteraction 1
+    }
     EntitySlotInfo Hip {
      Offset -0.0036 -0.1256 -0.2335
      Angles 0 2.7371 0
@@ -1047,8 +1061,78 @@ Vehicle {
      VisibilityAngle 180
      FilterActionsUsingCache 0
     }
+    UserActionContext "{A0281028ABCD1001}" {
+     UIInfo UIInfo "{A0281028ABCD1002}" {
+      Name "LEFT ARM SERVICE"
+     }
+     ContextName "ArmServiceLeft"
+     Position PointInfo "{A0281028ABCD1003}" {
+      Offset -0.8961 0.4898 -0.4025
+     }
+     Radius 3
+     Omnidirectional 1
+     VisibilityAngle 180
+    }
+    UserActionContext "{A0281028ABCD1004}" {
+     UIInfo UIInfo "{A0281028ABCD1005}" {
+      Name "RIGHT ARM SERVICE"
+     }
+     ContextName "ArmServiceRight"
+     Position PointInfo "{A0281028ABCD1006}" {
+      Offset 0.882 0.4179 -0.4025
+     }
+     Radius 3
+     Omnidirectional 1
+     VisibilityAngle 180
+    }
    }
    additionalActions {
+    RW_MechArmDamageTestAction "{A0281028ABCD1011}" {
+     ParentContextList {
+      "ArmServiceLeft"
+     }
+     UIInfo UIInfo "{A0281028ABCD1012}" {
+      Name "TEST DAMAGE LEFT ARM"
+     }
+     VisibilityRange 9
+     Duration 1
+     m_iRepairSiteIndex 2
+     m_fTestDamage 175
+    }
+    RW_MechArmWrenchRepairAction "{A0281028ABCD1013}" {
+     ParentContextList {
+      "ArmServiceLeft"
+     }
+     UIInfo UIInfo "{A0281028ABCD1014}" {
+      Name "REPAIR LEFT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 2
+    }
+    RW_MechArmDamageTestAction "{A0281028ABCD1015}" {
+     ParentContextList {
+      "ArmServiceRight"
+     }
+     UIInfo UIInfo "{A0281028ABCD1016}" {
+      Name "TEST DAMAGE RIGHT ARM"
+     }
+     VisibilityRange 9
+     Duration 1
+     m_iRepairSiteIndex 3
+     m_fTestDamage 175
+    }
+    RW_MechArmWrenchRepairAction "{A0281028ABCD1017}" {
+     ParentContextList {
+      "ArmServiceRight"
+     }
+     UIInfo UIInfo "{A0281028ABCD1018}" {
+      Name "REPAIR RIGHT ARM"
+     }
+     VisibilityRange 9
+     Duration 2
+     m_iRepairSiteIndex 3
+    }
     RW_MechTrackDamageTestAction "{6A27010C00001011}" {
      ParentContextList {
       "TrackServiceLeft"
