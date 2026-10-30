@@ -1,9 +1,12 @@
-Vehicle Light_Mech_Frame_Tracked1 : "{2917CB126F6B6F88}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_Tracked.et" {
+Vehicle Light_Mech_Frame_Tracked1 : "{2917CB126F6B6F88}Prefabs/Vehicles/Mech/Frames/Light/Light_Mech_Frame_Tracked.et" {
  coords 75.303 6.445 67.188
 }
-Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/SampleMech.et" {
+Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/Medium/SampleMech.et" {
  coords 86.009 8.378 68.229
 }
-Vehicle Light_Mech_Frame_Hover1 : "{431525BE9AD0C40B}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_Hover.et" {
+Vehicle Light_Mech_Frame_Hover1 : "{431525BE9AD0C40B}Prefabs/Vehicles/Mech/Frames/Light/Light_Mech_Frame_Hover.et" {
  coords 79.582 6.783 67.563
+}
+GenericEntity : "{87B60EE0FD2C4EAF}Prefabs/Vehicles/Mech/Mech_Parts/Shoulders/Small_Cannon_Shoulder.et" {
+ coords 83.776 5.769 60.364
 }

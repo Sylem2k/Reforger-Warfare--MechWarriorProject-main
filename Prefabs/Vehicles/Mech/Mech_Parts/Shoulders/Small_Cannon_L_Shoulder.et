@@ -1,0 +1,15 @@
+GenericEntity {
+ ID "6ABC24E8E5DE4B1B"
+ components {
+  SignalsManagerComponent "{6ABC24E8E5DE4B67}" {
+  }
+  MeshObject "{6ABC24E8E5DE4B71}" {
+   Object "{03F672333375808F}Common/Models/Mech Misc/Right_Top_Cannon.xob"
+  }
+  RW_GaussWeapon "{6ABC24E8E5DE4B74}" {
+  }
+  Hierarchy "{6ABC24E8E5DE4B7B}" {
+  }
+ }
+ coords 87.911 4.536 76.742
+}
