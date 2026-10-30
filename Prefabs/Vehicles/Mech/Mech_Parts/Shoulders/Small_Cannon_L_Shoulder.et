@@ -4,7 +4,7 @@ GenericEntity {
   SignalsManagerComponent "{6ABC24E8E5DE4B67}" {
   }
   MeshObject "{6ABC24E8E5DE4B71}" {
-   Object "{03F672333375808F}Common/Models/Mech Misc/Right_Top_Cannon.xob"
+   Object "{910F3E1C1B72FAFE}Common/Models/Mech Misc/Left_Top_Cannon.xob"
   }
   // Small shoulder weapon, fitted locally from the mech's replicated loadout.
   // Uses shared RW_GaussWeapon; no duplicate shoulder-only script or RPL.
