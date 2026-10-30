@@ -1,14 +1,9 @@
-$grp GenericEntity : "{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/Mech Wrench.et" {
- {
-  coords 77.948 4.785 61.048
- }
- {
-  coords 80.073 4.975 62.765
- }
+Vehicle Light_Mech_Frame_Tracked1 : "{2917CB126F6B6F88}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_Tracked.et" {
+ coords 75.303 6.445 67.188
 }
-Vehicle Assault_Gravemarch_Gun_Tracked1 : "{87EA5222BF2670A6}Prefabs/Vehicles/Mech/Frames/Assault_Gravemarch_Gun_Tracked.et" {
- coords 74.69 7.493 38.777
+Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/SampleMech.et" {
+ coords 86.009 8.378 68.229
 }
-GenericEntity : "{95039F3CB89CB4B2}Prefabs/Structures/MechBay/RW_MechBay.et" {
- coords 74.943 3.906 39.413
+Vehicle Light_Mech_Frame_Hover1 : "{431525BE9AD0C40B}Prefabs/Vehicles/Mech/Frames/Light_Mech_Frame_Hover.et" {
+ coords 79.582 6.783 67.563
 }

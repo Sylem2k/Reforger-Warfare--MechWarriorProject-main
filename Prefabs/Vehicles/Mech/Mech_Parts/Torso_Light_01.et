@@ -1,0 +1,13 @@
+GenericEntity {
+ ID "6ABC24F0FF28C226"
+ components {
+  MeshObject "{6ABC24F0FF28C22C}" {
+   Object "{D3994C067239617A}Common/Models/Mech Body/Light/Mech_Light_01_Body.xob"
+  }
+  RplComponent "{6ABC24F0FF28C238}" {
+  }
+  Hierarchy "{6ABC24F0FF28C23F}" {
+  }
+ }
+ coords 75.987 5.556 63.182
+}

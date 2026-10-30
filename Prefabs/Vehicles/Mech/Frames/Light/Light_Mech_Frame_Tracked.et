@@ -50,7 +50,6 @@ Vehicle {
    m_bBindAuxFire 1
   }
   BFA_MechHardpointComponent "{6AB64C95463933E2}" {
-   m_bUseArmMountDamage 1
    m_aHardpoints {
     BFA_MechHardpointDefinition "{6AB64C95463AED12}" {
      m_sName "ARM"
@@ -109,6 +108,7 @@ Vehicle {
      m_iWeaponGroup 3
     }
    }
+   m_bUseArmMountDamage 1
    m_aModules {
     BFA_MechModuleDefinition "{6AB64C95463A5CDB}" {
      m_iId 1
@@ -449,30 +449,6 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  CGS_MechDriveAudioComponent "{A2710C2700010001}" {
-   m_iDriveType 1
-   m_bDebugSound 1
-  }
-  CGS_MechEngineComponent "{C627102700020001}" {
-   m_fStartDuration 3
-   m_bStartRunning 0
-   m_bDebugEngine 1
-   m_EnginePoint PointInfo "{C627102700020002}" {
-    Offset 0 1.1 -1.3
-   }
-   m_StartButtonPoint PointInfo "{C627102700020003}" {
-    Offset -0.35 1.05 -0.8
-   }
-   m_StopButtonPoint PointInfo "{C627102700020004}" {
-    Offset 0.35 1.05 -0.8
-   }
-   m_FuelPoint PointInfo "{C627102700020005}" {
-    Offset -1.1 0.7 -1.5
-   }
-   m_RepairPoint PointInfo "{C627102700020006}" {
-    Offset 1.1 0.7 -1.5
-   }
-  }
   BFA_MechMovementComponent "{6AB64C95463A10D8}" {
    m_iLocomotionMode 1
    m_bTrackedADSteering 1
@@ -484,7 +460,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 1
    m_GroundPoint PointInfo "{6AB64C95463A10DC}" {
-    Offset 0 -1.2508 -0.8833
+    Offset 0 -1.567 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -544,51 +520,35 @@ Vehicle {
   }
   CGS_MechDeathComponent "{6AB64C95463A10AC}" {
   }
+  CGS_MechDriveAudioComponent "{A2710C2700010001}" {
+   m_iDriveType 1
+   m_bDebugSound 1
+  }
+  CGS_MechEngineComponent "{C627102700020001}" {
+   m_fStartDuration 3
+   m_bStartRunning 1
+   m_bDebugEngine 0
+   m_EnginePoint PointInfo "{C627102700020002}" {
+    Offset 0 0.3573 -1.3
+   }
+   m_StartButtonPoint PointInfo "{C627102700020003}" {
+    Offset -0.35 1.05 -0.8
+   }
+   m_StopButtonPoint PointInfo "{C627102700020004}" {
+    Offset 0.35 1.05 -0.8
+   }
+   m_FuelPoint PointInfo "{C627102700020005}" {
+    Offset -1.1 -0.3967 -0.643
+   }
+   m_RepairPoint PointInfo "{C627102700020006}" {
+    Offset 1.1 0.7 -1.5
+   }
+  }
   CGS_MechHeatComponent "{6AB64C95463A2318}" {
    m_fMaxHeat 200
    m_fCoolingPerSecond 5
   }
-  CGS_MechTacticalThrowComponent "{6AB64C95463A231A}" {
-   m_bEnabled 1
-   m_bAllowUnprotectedTest 1
-   m_fDistance 50
-   m_fArcHeight 16
-   m_fCooldown 20
-   m_fUseDistance 6
-   m_ThrowPoint PointInfo "{6AB64C95463A2314}" {
-    Offset 0 1.1894 1.1948
-   }
-   m_bV2TryPhysicsFlight 1
-   m_bAllowMarkedTarget 1
-   m_fMarkMaximumDistance 75
-   m_bV2GroundRelease 1
-   m_fV2ReleaseHeight 1.2
-   m_fV2ReleaseDelay 0.08
-  }
-  CGS_TorsoTwistComponent "{6AB64C95463A2316}" {
-   m_TorsoPivotPoint PointInfo "{6AB64C95463A2310}" {
-    Offset 0 0 -0.5876
-   }
-   m_aTwistSlots {
-    "Torso" "Exhust" "Exhust2"
-   }
-   m_aTwistMounts {
-   }
-   m_bHideRootMesh 1
-  }
-  ChimeraAIPathfindingComponent "{6AB64C95463A2312}" {
-   NavmeshProject "BTRlike"
-   "Use Road Network" 1
-  }
-  ColliderHistoryComponent "{6AB64C95463A230D}" {
-  }
-  ControllersManagerComponent "{6AB64C95463A230F}" {
-  }
-  MeshObject "{6AB64C95463A230E}" {
-   Object "{D9C14CA501962E2D}Common/Models/Mech Body/Mech_Body.xob"
-  }
   CGS_MechRepairComponent "{A2026102800C0000}" {
-   m_fRepairReach 6
    m_aRepairSites {
     CGS_MechRepairSite "{A2026102800C0001}" {
      m_sLabel "LEFT TRACK"
@@ -640,6 +600,46 @@ Vehicle {
      }
     }
    }
+   m_fRepairReach 6
+  }
+  CGS_MechTacticalThrowComponent "{6AB64C95463A231A}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+   m_fDistance 50
+   m_fArcHeight 16
+   m_fCooldown 20
+   m_fUseDistance 6
+   m_ThrowPoint PointInfo "{6AB64C95463A2314}" {
+    Offset 0 1.1894 1.1948
+   }
+   m_bV2TryPhysicsFlight 1
+   m_bAllowMarkedTarget 1
+   m_fMarkMaximumDistance 75
+   m_bV2GroundRelease 1
+   m_fV2ReleaseHeight 1.2
+   m_fV2ReleaseDelay 0.08
+  }
+  CGS_TorsoTwistComponent "{6AB64C95463A2316}" {
+   m_TorsoPivotPoint PointInfo "{6AB64C95463A2310}" {
+    Offset 0 0 -0.5876
+   }
+   m_aTwistSlots {
+    "Torso" "Exhust" "Exhust2"
+   }
+   m_aTwistMounts {
+   }
+   m_bHideRootMesh 1
+  }
+  ChimeraAIPathfindingComponent "{6AB64C95463A2312}" {
+   NavmeshProject "BTRlike"
+   "Use Road Network" 1
+  }
+  ColliderHistoryComponent "{6AB64C95463A230D}" {
+  }
+  ControllersManagerComponent "{6AB64C95463A230F}" {
+  }
+  MeshObject "{6AB64C95463A230E}" {
+   Object "{D9C14CA501962E2D}Common/Models/Mech Body/Med/Mech_Body.xob"
   }
   RW_MechFrameComponent "{6AB64C95463A2308}" {
    m_sFrameName "Cricket - Alt"
@@ -884,16 +884,16 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_R1 {
-     Offset 1.0879 -3.081 -1.7681
+     Offset 1.1069 -0.5435 -0.4925
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
-     Offset -1.458 -3.0665 -1.6038
+     Offset -1.1463 -0.435 -0.4233
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
      Offset -0.0037 -0.83 -0.2334
@@ -933,20 +933,6 @@ Vehicle {
       Offset 0 1.0526 0
      }
      Radius 50
-    }
-    UserActionContext "{C627102700020007}" {
-     ContextName "CGS_EngineStart"
-     Position PointInfo "{C627102700020008}" {
-      Offset -0.35 1.05 -0.8
-     }
-     Radius 0.9
-    }
-    UserActionContext "{C627102700020009}" {
-     ContextName "CGS_EngineStop"
-     Position PointInfo "{C62710270002000A}" {
-      Offset 0.35 1.05 -0.8
-     }
-     Radius 0.9
     }
    }
    additionalActions {
@@ -1161,6 +1147,6 @@ Vehicle {
   Hierarchy "{6AB64C95463C5706}" {
   }
  }
- coords 2164.165 55.722 2933.33
+ coords 75.303 6.445 67.188
  m_eVehicleType VEHICLE
 }
