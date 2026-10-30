@@ -6,7 +6,44 @@ GenericEntity {
   MeshObject "{6ABC24E8E5DE4B71}" {
    Object "{910F3E1C1B72FAFE}Common/Models/Mech Misc/Left_Top_Cannon.xob"
   }
+  // Small shoulder weapon, fitted locally from the mech's replicated loadout.
+  // Uses shared RW_GaussWeapon; no duplicate shoulder-only script or RPL.
   RW_GaussWeapon "{6ABC24E8E5DE4B74}" {
+   m_sModuleId "SMALL_SHOULDER_GAUSS"
+   m_sDisplayName "Small Gauss Cannon (Left)"
+   m_sControlStation "GUNNER"
+   m_iWeaponGroup 2
+   m_eDamageKind KINETIC
+   m_fDamageVsInfantry 1.5
+   m_fDamageVsVehicles 1.25
+   m_fInfantryArmourFloor 0.4
+   m_fArmorPenetrationPercent 28
+   m_bSupportsHeldFire 1
+   m_bSupportsPulseFire 1
+   m_FX BFA_MechWeaponFX "{6ABC24E8E5DE4B75}" {
+    m_sMuzzleParticle "{7D4D61DB49505CB6}Particles/Weapon/Muzzle_NSV.ptc"
+    m_sSoundProject "{B6942A3F864142C5}Sounds/Weapons/HeavyWeapons/NSV/Weapons_HeavyWeapons_NSV_Shot.acp"
+    m_sImpactParticle "{36DB8CF2DAB471DD}Particles/Weapon/Explosion_APDS.ptc"
+    m_sImpactSoundProject "{25FCE4141ECBD633}Sounds/Weapons/Machineguns/UK59/LasCannon.acp"
+    m_sProjectilePrefab "{D52D998FF0829639}Prefabs/Particles/RocketTrace.et"
+    m_fProjectileSpeed 0
+    m_bDebugTracer 0
+   }
+   m_fHeatPerShot 0.2
+   m_Crosshair BFA_MechCrosshair "{6ABC24E8E5DE4B76}" {
+   }
+   // No hard-coded arm muzzle point: use this small model's front bounds.
+   // The hardpoint handles pitch/yaw when mounted to shoulders/back/torso.
+   m_bAutoMuzzleFromBounds 1
+   m_fMuzzleClearance 0.05
+   m_bFireAtAimPoint 1
+   m_fMaxAimCorrection 110
+   m_fShotsPerMinute 60
+   m_iMagazineSize 40
+   m_fReloadTime 4
+   m_eCgsSplash MIXED
+   m_fRange 1800
+   m_fDamage 110
   }
   Hierarchy "{6ABC24E8E5DE4B7B}" {
   }
