@@ -50,7 +50,6 @@ Vehicle {
    m_bBindAuxFire 1
   }
   BFA_MechHardpointComponent "{6AB626E9E54A1723}" {
-   m_bUseArmMountDamage 1
    m_aHardpoints {
     BFA_MechHardpointDefinition "{6AB626E9E54A1721}" {
      m_sName "ARM"
@@ -121,6 +120,7 @@ Vehicle {
      m_iWeaponGroup 3
     }
    }
+   m_bUseArmMountDamage 1
    m_aModules {
     BFA_MechModuleDefinition "{D2026102901E0001}" {
      m_iId 900
@@ -145,7 +145,7 @@ Vehicle {
      m_sLabel "Las Cannon"
      m_iClass 0
      m_sWeaponModuleId "LAS_CANNON"
-     m_sPrefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Las_Cannon_Arm.et"
+     m_sPrefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Cannons/Las_Cannon_Arm.et"
      m_fWeightTons 0
      m_fSwapTime 3
     }
@@ -163,7 +163,7 @@ Vehicle {
      m_sLabel "Rocket Launcher"
      m_iClass 0
      m_sWeaponModuleId "ROCKET_LAUNCHER"
-     m_sPrefab "{CB5C94C5AA239DE3}Prefabs/Vehicles/Mech/Mech_Parts/Rocket_Launcher_Arm.et"
+     m_sPrefab "{CB5C94C5AA239DE3}Prefabs/Vehicles/Mech/Mech_Parts/Missiles/Rocket_Launcher_Arm.et"
      m_fWeightTons 0
      m_fSwapTime 3
     }
@@ -172,7 +172,7 @@ Vehicle {
      m_sLabel "Laser Missiles"
      m_iClass 0
      m_sWeaponModuleId "LASER_MISSILE"
-     m_sPrefab "{9B26F6D6DB5836BB}Prefabs/Vehicles/Mech/Mech_Parts/Laser_Missile_Arm.et"
+     m_sPrefab "{9B26F6D6DB5836BB}Prefabs/Vehicles/Mech/Mech_Parts/Missiles/Laser_Missile_Arm.et"
      m_fWeightTons 0
      m_fSwapTime 3
     }
@@ -181,7 +181,7 @@ Vehicle {
      m_sLabel "Target Designator"
      m_iClass 0
      m_sWeaponModuleId "TARGET_DESIGNATOR"
-     m_sPrefab "{30C768727C5E0C67}Prefabs/Vehicles/Mech/Mech_Parts/Target_Designator.et"
+     m_sPrefab "{30C768727C5E0C67}Prefabs/Vehicles/Mech/Mech_Parts/Shoulders/Target_Designator.et"
      m_fWeightTons 0
      m_fSwapTime 2
     }
@@ -190,7 +190,7 @@ Vehicle {
      m_sLabel "Right Cannon"
      m_iClass 0
      m_sWeaponModuleId "RIGHT_CANNON"
-     m_sPrefab "{250CB28327A7B233}Prefabs/Vehicles/Mech/Mech_Parts/New_Cannon_Right.et"
+     m_sPrefab "{250CB28327A7B233}Prefabs/Vehicles/Mech/Mech_Parts/Cannons/New_Cannon_Right.et"
      m_fWeightTons 1
      m_fSwapTime 3
     }
@@ -199,7 +199,7 @@ Vehicle {
      m_sLabel "Missile Pods"
      m_iClass 0
      m_sWeaponModuleId "POD_MISSILE"
-     m_sPrefab "{841BA03BCCA31C8B}Prefabs/Vehicles/Mech/Mech_Parts/4_Missile_Pods.et"
+     m_sPrefab "{841BA03BCCA31C8B}Prefabs/Vehicles/Mech/Mech_Parts/Missiles/4_Missile_Pods.et"
      m_fWeightTons 0
      m_fSwapTime 4
     }
@@ -497,10 +497,6 @@ Vehicle {
    m_fSwapMaxSpeed 0.5
    m_fMinSwapTime 1
   }
-  CGS_MechDriveAudioComponent "{A2710C2700010003}" {
-   m_iDriveType 1
-   m_bDebugSound 1
-  }
   BFA_MechMovementComponent "{6AB626E9E54A161A}" {
    m_iLocomotionMode 1
    m_bTrackedADSteering 1
@@ -512,7 +508,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AB626E9E54A1666}" {
-    Offset 0 -3.0546 -0.8833
+    Offset 0 -2.8266 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -584,53 +580,15 @@ Vehicle {
   }
   CGS_MechDeathComponent "{6AB626E9E54A1642}" {
   }
+  CGS_MechDriveAudioComponent "{A2710C2700010003}" {
+   m_iDriveType 1
+   m_bDebugSound 1
+  }
   CGS_MechHeatComponent "{6AB626E9E54A1640}" {
    m_fMaxHeat 250
    m_fCoolingPerSecond 12
   }
-  CGS_MechTacticalThrowComponent "{6AB626E9E54A1647}" {
-   m_bEnabled 1
-   m_bAllowUnprotectedTest 1
-   m_fDistance 50
-   m_fArcHeight 16
-   m_fCooldown 20
-   m_fUseDistance 6
-   m_ThrowPoint PointInfo "{6AB626E9E54A164B}" {
-    Offset 0 2 0
-   }
-   m_bV2TryPhysicsFlight 1
-   m_bAllowMarkedTarget 1
-   m_fMarkMaximumDistance 75
-   m_bV2GroundRelease 1
-   m_fV2ReleaseHeight 1.2
-   m_fV2ReleaseDelay 0.08
-  }
-  CGS_TorsoTwistComponent "{6AB626E9E54A164E}" {
-   m_fMaxTwist 35
-   m_fTwistSpeed 25
-   m_TorsoPivotPoint PointInfo "{6AB626E9E54A164C}" {
-    Offset 0 0 -0.0537
-   }
-   m_aTwistSlots {
-    "Torso" "Exhust" "Exhust2"
-   }
-   m_aTwistMounts {
-   }
-   m_bHideRootMesh 1
-  }
-  ChimeraAIPathfindingComponent "{6AB626E9E54A1653}" {
-   NavmeshProject "BTRlike"
-   "Use Road Network" 1
-  }
-  ColliderHistoryComponent "{6AB626E9E54A1657}" {
-  }
-  ControllersManagerComponent "{6AB626E9E54A1658}" {
-  }
-  MeshObject "{6AB626E9E54A165F}" {
-   Object "{8EB3D751DE396B39}Common/Models/Mech Body/Mech_Med_Body.xob"
-  }
   CGS_MechRepairComponent "{A202610280100000}" {
-   m_fRepairReach 6
    m_aRepairSites {
     CGS_MechRepairSite "{A202610280100001}" {
      m_sLabel "LEFT TRACK"
@@ -689,6 +647,48 @@ Vehicle {
      }
     }
    }
+   m_fRepairReach 6
+  }
+  CGS_MechTacticalThrowComponent "{6AB626E9E54A1647}" {
+   m_bEnabled 1
+   m_bAllowUnprotectedTest 1
+   m_fDistance 50
+   m_fArcHeight 16
+   m_fCooldown 20
+   m_fUseDistance 6
+   m_ThrowPoint PointInfo "{6AB626E9E54A164B}" {
+    Offset 0 2 0
+   }
+   m_bV2TryPhysicsFlight 1
+   m_bAllowMarkedTarget 1
+   m_fMarkMaximumDistance 75
+   m_bV2GroundRelease 1
+   m_fV2ReleaseHeight 1.2
+   m_fV2ReleaseDelay 0.08
+  }
+  CGS_TorsoTwistComponent "{6AB626E9E54A164E}" {
+   m_fMaxTwist 35
+   m_fTwistSpeed 25
+   m_TorsoPivotPoint PointInfo "{6AB626E9E54A164C}" {
+    Offset 0 0 -0.0537
+   }
+   m_aTwistSlots {
+    "Torso" "Exhust" "Exhust2"
+   }
+   m_aTwistMounts {
+   }
+   m_bHideRootMesh 1
+  }
+  ChimeraAIPathfindingComponent "{6AB626E9E54A1653}" {
+   NavmeshProject "BTRlike"
+   "Use Road Network" 1
+  }
+  ColliderHistoryComponent "{6AB626E9E54A1657}" {
+  }
+  ControllersManagerComponent "{6AB626E9E54A1658}" {
+  }
+  MeshObject "{6AB626E9E54A165F}" {
+   Object "{8EB3D751DE396B39}Common/Models/Mech Body/Med/Mech_Med_Body.xob"
   }
   RW_MechFrameComponent "{6AB626E9E54A165D}" {
    m_sFrameName "Warden - Alt"
@@ -897,71 +897,71 @@ Vehicle {
     EntitySlotInfo MountHP_1 {
      Offset 1.0046 2.3562 0.8369
      MergePhysics 0
-     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/HardPoint_Dmg_Points/CGS_HardpointMount_Damage.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo MountHP_3 {
      Offset -1.0012 2.5307 -1.0776
      MergePhysics 0
-     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/HardPoint_Dmg_Points/CGS_HardpointMount_Damage.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo MountHP_4 {
      Offset 0.8899 2.9894 -0.6089
      MergePhysics 0
-     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/HardPoint_Dmg_Points/CGS_HardpointMount_Damage.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo MountHP_5 {
      Offset -0.0288 3.0749 -1.1033
      MergePhysics 0
-     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/CGS_HardpointMount_Damage.et"
+     Prefab "{C20261028C0DE001}Prefabs/Vehicles/Mech/Mech_Parts/HardPoint_Dmg_Points/CGS_HardpointMount_Damage.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Arm_L {
      Offset -2.4512 1.7157 -0.4026
      MergePhysics 0
-     Prefab "{A0281028ABCD0501}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Left.et"
+     Prefab "{A0281028ABCD0501}Prefabs/Vehicles/Mech/Mech_Parts/HardPoint_Dmg_Points/CGS_ArmMount_Test_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Arm_R {
      Offset 2.3513 1.8111 -0.1826
      MergePhysics 0
-     Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/CGS_ArmMount_Test_Right.et"
+     Prefab "{A0281028ABCD0502}Prefabs/Vehicles/Mech/Mech_Parts/HardPoint_Dmg_Points/CGS_ArmMount_Test_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Cockpit {
      Offset 0 0.1425 0.1714
      MergePhysics 0
-     Prefab "{96D0BD05A703D475}Prefabs/Vehicles/Mech/Mech_Parts/Cock_pit.et"
+     Prefab "{96D0BD05A703D475}Prefabs/Vehicles/Mech/Mech_Parts/CockPits/Cock_pit.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Torso {
      MergePhysics 0
-     Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Medium.et"
+     Prefab "{C628000000020103}Prefabs/Vehicles/Mech/Mech_Parts/Torso/Torso_Medium.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_R1 {
-     Offset 0.8214 -0.8656 0.3085
+     Offset 0.967 -0.8155 0.3085
      MergePhysics 0
-     Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Right.et"
+     Prefab "{7F6BE7BE29EE589A}Prefabs/Vehicles/Mech/Mech_Parts/Tracks/New_Mech_Tracked_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Track_L1 {
-     Offset -0.7886 -0.7234 0.3735
+     Offset -0.9045 -0.8273 0.3735
      MergePhysics 0
-     Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/New_Mech_Tracked_Left.et"
+     Prefab "{D9463F96159C6C8F}Prefabs/Vehicles/Mech/Mech_Parts/Tracks/New_Mech_Tracked_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Hip {
      Offset -0.0036 -0.1256 -0.2335
      Angles 0 2.7371 0
-     Prefab "{61A846D7093FF826}Prefabs/Vehicles/Mech/Mech_Parts/Hip.et"
+     Prefab "{61A846D7093FF826}Prefabs/Vehicles/Mech/Mech_Parts/Hips/Hip.et"
     }
     EntitySlotInfo Exta {
      Offset -0.0105 -0.9679 0.3266
      Angles 0 2.7371 0
-     Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hip2.et"
+     Prefab "{9BB5275571625070}Prefabs/Vehicles/Mech/Mech_Parts/Hips/Hip2.et"
     }
    }
   }
@@ -1193,7 +1193,7 @@ Vehicle {
   Hierarchy "{6AB626E9E54A096C}" {
   }
  }
- coords 2152.187 57.355 2932.817
+ coords 79.286 7.594 67.049
  scale 1.4
  m_eVehicleType VEHICLE
 }
