@@ -75,10 +75,28 @@ Vehicle {
    }
    m_bUseArmMountDamage 1
    m_aModules {
+    BFA_MechModuleDefinition "{D2026102901F0001}" {
+     m_iId 900
+     m_sLabel "Small Gauss Cannon (L)"
+     m_iClass 0
+     m_sWeaponModuleId "SMALL_SHOULDER_GAUSS"
+     m_sPrefab "{3FB64C0A6FE137DA}Prefabs/Vehicles/Mech/Mech_Parts/Shoulders/Small_Cannon_L_Shoulder.et"
+     m_fWeightTons 0.5
+     m_fSwapTime 3
+    }
+    BFA_MechModuleDefinition "{D2026102901F0002}" {
+     m_iId 901
+     m_sLabel "Small Gauss Cannon (R)"
+     m_iClass 0
+     m_sWeaponModuleId "SMALL_SHOULDER_GAUSS"
+     m_sPrefab "{87B60EE0FD2C4EAF}Prefabs/Vehicles/Mech/Mech_Parts/Shoulders/Small_Cannon_R_Shoulder.et"
+     m_fWeightTons 0.5
+     m_fSwapTime 3
+    }
     BFA_MechModuleDefinition "{A10E6E18F05FA5F9}" {
      m_iId 1
      m_sLabel "Las Cannon"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "LAS_CANNON"
      m_sPrefab "{7B0F048CEF6B4439}Prefabs/Vehicles/Mech/Mech_Parts/Las_Cannon_Arm.et"
      m_fWeightTons 0
@@ -87,7 +105,7 @@ Vehicle {
     BFA_MechModuleDefinition "{2881A1D6C59C92E1}" {
      m_iId 2
      m_sLabel "Autocannon"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "AUTOCANNON"
      m_sPrefab "{CBBAB4D632239450}Prefabs/Vehicles/Mech/Weapons/Autocannon/Mech_Autocannon.et"
      m_fWeightTons 0
@@ -96,7 +114,7 @@ Vehicle {
     BFA_MechModuleDefinition "{72DAA50050DDA00A}" {
      m_iId 3
      m_sLabel "Rocket Launcher"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "ROCKET_LAUNCHER"
      m_sPrefab "{CB5C94C5AA239DE3}Prefabs/Vehicles/Mech/Mech_Parts/Rocket_Launcher_Arm.et"
      m_fWeightTons 0
@@ -105,7 +123,7 @@ Vehicle {
     BFA_MechModuleDefinition "{C91B163C84BE8FDB}" {
      m_iId 4
      m_sLabel "Laser Missiles"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "LASER_MISSILE"
      m_sPrefab "{9B26F6D6DB5836BB}Prefabs/Vehicles/Mech/Mech_Parts/Laser_Missile_Arm.et"
      m_fWeightTons 0
@@ -114,7 +132,7 @@ Vehicle {
     BFA_MechModuleDefinition "{F2889F4A15BE587B}" {
      m_iId 5
      m_sLabel "Target Designator"
-     m_iClass 2
+     m_iClass 0
      m_sWeaponModuleId "TARGET_DESIGNATOR"
      m_sPrefab "{30C768727C5E0C67}Prefabs/Vehicles/Mech/Mech_Parts/Target_Designator.et"
      m_fWeightTons 0
@@ -123,7 +141,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000000E2000000}" {
      m_iId 6
      m_sLabel "Small Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "SMALL_LASER"
      m_sPrefab "{BFAA0504A7710742}Prefabs/Vehicles/Mech/Weapons/MW4/SMALL_LASER.et"
      m_fWeightTons 0
@@ -132,7 +150,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000001E2000001}" {
      m_iId 7
      m_sLabel "Medium Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "MEDIUM_LASER"
      m_sPrefab "{BFAA0569A7710879}Prefabs/Vehicles/Mech/Weapons/MW4/MEDIUM_LASER.et"
      m_fWeightTons 0
@@ -141,7 +159,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000002E2000002}" {
      m_iId 8
      m_sLabel "Large Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "LARGE_LASER"
      m_sPrefab "{BFAA05CEA77109B0}Prefabs/Vehicles/Mech/Weapons/MW4/LARGE_LASER.et"
      m_fWeightTons 0
@@ -150,7 +168,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000003E2000003}" {
      m_iId 9
      m_sLabel "ER Medium Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "ER_MEDIUM_LASER"
      m_sPrefab "{BFAA0633A7710AE7}Prefabs/Vehicles/Mech/Weapons/MW4/ER_MEDIUM_LASER.et"
      m_fWeightTons 0
@@ -159,7 +177,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000004E2000004}" {
      m_iId 10
      m_sLabel "ER Large Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "ER_LARGE_LASER"
      m_sPrefab "{BFAA0698A7710C1E}Prefabs/Vehicles/Mech/Weapons/MW4/ER_LARGE_LASER.et"
      m_fWeightTons 0
@@ -168,7 +186,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000005E2000005}" {
      m_iId 11
      m_sLabel "Small Pulse Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "SMALL_PULSE_LASER"
      m_sPrefab "{BFAA06FDA7710D55}Prefabs/Vehicles/Mech/Weapons/MW4/SMALL_PULSE_LASER.et"
      m_fWeightTons 0
@@ -177,7 +195,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000006E2000006}" {
      m_iId 12
      m_sLabel "Medium Pulse Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "MEDIUM_PULSE_LASER"
      m_sPrefab "{BFAA0762A7710E8C}Prefabs/Vehicles/Mech/Weapons/MW4/MEDIUM_PULSE_LASER.et"
      m_fWeightTons 0
@@ -186,7 +204,7 @@ Vehicle {
     BFA_MechModuleDefinition "{E1000007E2000007}" {
      m_iId 13
      m_sLabel "Large Pulse Laser"
-     m_iClass 1
+     m_iClass 0
      m_sWeaponModuleId "LARGE_PULSE_LASER"
      m_sPrefab "{BFAA07C7A7710FC3}Prefabs/Vehicles/Mech/Weapons/MW4/LARGE_PULSE_LASER.et"
      m_fWeightTons 0
