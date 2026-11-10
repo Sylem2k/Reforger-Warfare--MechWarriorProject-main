@@ -48,7 +48,7 @@ GenericEntity {
    "Additional hit zones" {
     BFA_MechPartHitZone Leg {
      HZDefault 1
-     MaxHealth 10000
+     MaxHealth 120000
      DamageReduction 2
      DamageThreshold 1
      "Melee multiplier" 0.01

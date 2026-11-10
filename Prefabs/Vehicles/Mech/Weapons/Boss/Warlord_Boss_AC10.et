@@ -7,9 +7,13 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_sControlStation "DRIVER"
    m_iWeaponGroup 3
    m_eDamageKind KINETIC
-   m_fDamageVsInfantry 2
-   m_fDamageVsVehicles 1.2
-   m_fInfantryArmourFloor 0.4
+   m_fDamageVsInfantry 0.08
+   m_fDamageVsVehicles 2.8
+   m_fInfantryArmourFloor 0
+   m_fCgsArmorPiercing 0.45
+   m_fCrewShareKinetic 0
+   m_fCrewShareExplosive 0
+   m_bKillCrewOnDestroy 0
    m_fArmorPenetrationPercent 26
    m_fDamage 105
    m_fSpread 0.35

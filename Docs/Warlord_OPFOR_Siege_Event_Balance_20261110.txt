@@ -1,0 +1,94 @@
+NOVEMBER 10, 2026 - WARLORD OPFOR WORLD BOSS EVENT BALANCE
+==========================================================
+I have ONE Warlord boss: GUID {D60000000000000F}, Titan_WarLord_OPFOR.et.
+I am not restoring the deleted BOSS_128_Test prefab.
+
+MY OBJECTIVE
+------------
+I want a long, fair fight for a 128-player milsim event. TOS-1 and M777
+artillery must hurt the boss without destroying it in seconds. The
+Warlord should focus on vehicles, destroy tanks before their crews,
+and give infantry time to use cover instead of instantly killing them.
+
+SIEGE DURABILITY (OPFOR ONLY)
+-----------------------------
+I changed hull MaxHealth: 125000 -> 600000.
+I changed shield MaxShield: 45000 -> 150000.
+I changed shield regeneration: 325 -> 600 HP/s.
+I changed shield bleed-through: 0.015 -> 0.01.
+I kept hit/restart delays at 10 / 27 seconds.
+I kept hull phase shield restores at 75%, 50%, and 25%.
+
+I changed RW_WarlordBossDamageComponent damage caps to:
+  Heavy hull 1600/s; small-arms hull 100/s
+  Heavy limb 1000/s; small-arms limb 65/s
+  Heavy overflow 0.035; small-arms overflow 0.01.
+I kept heavy-kinetic classification so cannon hits use the heavy
+rather than the small-arms budget.
+
+I raised Warlord-only part health:
+  Left and right cannon arms: 8000 -> 90000 HP each
+  Left and right giant legs: 10000 -> 90000 HP each
+  Hips: 10000 -> 120000 HP.
+I left ordinary mech scripts and part prefabs unchanged.
+
+WEAPONS AND TARGETING
+---------------------
+My main Warlord AI stations now choose an unclaimed visible enemy
+vehicle first, then a claimed visible vehicle, then dismounted infantry.
+I preserved the enemy-faction, distance, existing LOS and burst checks.
+
+My 12 extra Omni turrets now default to vehicle-only targeting.
+I added m_bAllowInfantry to the Warlord Omni script to permit later
+tuning if desired, but set it OFF on Omni cannon and laser prefabs.
+The normal boss arm/AC/LRM banks can still fire on infantry at much
+lower damage. Dedicated AA continues attacking aircraft.
+
+On all relevant Warlord gun prefabs, I set the CGS crew-damage shares
+for kinetic and explosive damage to 0 and disabled CGS's additional
+forced crew killing when vehicles are destroyed. Native vehicle
+destruction mechanics still apply. I increased anti-vehicle damage
+and armor piercing of the Omni cannons/lasers, AC10, LRM10/15, arm
+cannons and flak while reducing their infantry damage substantially.
+
+I reduced the two Warlord-only lascannon arms from their inherited
+380 RPM to 90 RPM, scaled infantry hits down to 4% of base damage,
+and disabled their legacy true-damage fallback. Anti-vehicle armor
+piercing is enabled independently. The stomper now deals 20 instead
+of 75 damage to infantry and 850 instead of 450 to vehicles.
+
+ARM / TORSO VISUAL BUG
+----------------------
+I previously put the torso yaw pivot at the HIPS SLOT origin:
+(-0.2807, -4.0441, 0.8762).
+This was NOT the original Warlord torso rotation point. It causes
+upper-body parts, including the arms, to orbit away as they turn.
+I restored the previous boss twist pivot (-0.217, 12.339, 7.567).
+The arms keep 0 independent yaw and -20/+40 pitch.
+I need to check the actual waist mesh seam in Workbench and adjust
+the PointInfo there if the new model origin differs.
+
+WORKBENCH AND DEDICATED SERVER TESTS
+------------------------------------
+1. Pull test branch, compile scripts, and spawn a fresh OPFOR boss.
+2. Check maximum hull 600000 and shield 150000; use CGS BOSS logs.
+3. Use TOS-1 and M777 strikes to check shield/hull survival duration.
+4. Hit both giant legs, the hip, and arms; check part health and loss.
+5. With US tanks present, Omni and main guns should prioritize and
+   damage the vehicle hull. Crew should not be damaged just by CGS
+   weapon crew-share while the tank is intact.
+6. With only infantry, the Omni guns stay quiet. Main arms, ACs and
+   missiles still fire but should not instantly kill exposed soldiers.
+7. Stand behind a collidable building; confirm LOS prevents firing or
+   splash through valid walls. Then test open sight reacquisition.
+8. Observe arm alignment relative to torso at yaw 0, +/-40, +/-80;
+   hips and legs should not twist. Check the PointInfo waist seam.
+9. Confirm remote-client shots, 18 ordinary + 12 autonomous weapon
+   modules, and dedicated-server FPS with increasing player/AI load.
+10. Adjust balance based on observed encounter duration, not guesses.
+
+BRANCH / STATUS
+---------------
+fix/warlord-opfor-building-los-20261110
+PR #119 is draft and not merged. These values are test settings, not
+a claim that I compiled and validated the event in Workbench yet.

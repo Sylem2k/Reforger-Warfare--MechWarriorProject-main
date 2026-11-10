@@ -112,3 +112,64 @@ FILES
 - Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Torso_Warlord_Camo.et.meta
 
 I do not use or recreate Titan_WarLord_BOSS_128_Test.et.
+
+NOVEMBER 10 - WARLORD LINE-OF-SIGHT / SHOOTING THROUGH BUILDINGS
+-----------------------------------------------------------------
+I found two independent cover problems in the original anti-air/Omni
+weapon behavior.
+
+1. CGS_AntiAirModuleComponent chose and fired at targets without any
+   physical line-of-sight check. Its flak shells detonated at a future
+   predicted target point even if their flight path crossed a building.
+2. Core splash damage relied on a non-null TraceEnt to reject cover.
+   Static WORLD collisions often have a null TraceEnt, allowing a blast
+   behind a building to damage a player on the other side.
+
+I fixed both without changing shared Mech Core. The Warlord-only
+RW_WarlordCoverVisibility uses WORLD+ENTS projectile physics traces
+and the existing terrain guard, ignoring only self-collisions and
+failing closed on other buildings, vehicles, terrain, and world hits.
+
+RW_WarlordCoverAwareFlakComponent now:
+- checks the real muzzle-to-target path before every autonomous shot;
+- clips each simulated shell detonation to the first physical
+  obstruction along its trajectory;
+- checks each potential splash-damaged target against physical cover
+  before applying authoritative server damage.
+
+My RW_WarlordOmniTurret now inherits these checks and only selects
+visible candidates. I updated BOTH Warlord flak prefab variants to
+use this specialized subclass, without editing the shared CGS AA
+component or the working hardpoint IDs/GUIDs.
+
+The original OPFOR main gunner stations already use BFA_MechAICrew
+HasLineOfSight before firing. This boss-only fix targets the missing
+checks in Omni/AA modules. If normal las-cannon or missile damage is
+still penetrating a particular building, I need its prefab name and
+a gameplay log, because that building may lack Projectile collision
+geometry, or another weapon type may be responsible.
+
+TEST IN WORKBENCH 1.9
+- Compile Game scripts; check the new cover-aware class and Omni
+  subclass resolve.
+- Place US enemy infantry BEHIND a solid building. Omni/flak must not
+  shoot through it or deal damage through the wall.
+- Move the same soldier into open line of sight. Omni turrets should
+  acquire and engage again without requiring a new boss spawn.
+- Move around a building MID-BURST. The next shot must stop when the
+  soldier disappears behind cover.
+- Test shell detonation and splash around walls, windows, and corners.
+  Blast on the attacker's side should not hurt an entirely sheltered
+  target on the other side.
+- Test dedicated server and remote player; I must see muzzle effects,
+  bullet/beam impacts, correct hit/damage, and no new script errors.
+- A map prop with no appropriate collision cannot block a physics
+  ray; I must validate its geometry rather than bypassing physics.
+
+FILES FOR THIS COVER FIX
+- Scripts/Game/RW_Boss/RW_WarlordCoverAwareFlak.c (new)
+- Scripts/Game/RW_Boss/RW_WarlordOmniTurret.c
+- Prefabs/Vehicles/Mech/Enemies/Assault/Warlord_AA_Flak.et
+- Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et
+
+This test PR stays unmerged until compilation and gameplay validation.

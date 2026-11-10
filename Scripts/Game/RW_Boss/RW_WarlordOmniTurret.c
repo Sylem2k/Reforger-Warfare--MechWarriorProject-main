@@ -3,11 +3,11 @@
 // and per-client turret rotation. Never runs targeting on multiplayer clients.
 // Requires Mech-Core-CGS (already an MW project dependency).
 [ComponentEditorProps(category: "Reforger Warfare/Boss", description: "Independent 360-degree ground defense (infantry and ground vehicles).")]
-class RW_WarlordOmniTurretClass : CGS_AntiAirModuleComponentClass
+class RW_WarlordOmniTurretClass : RW_WarlordCoverAwareFlakComponentClass
 {
 }
 
-class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
+class RW_WarlordOmniTurret : RW_WarlordCoverAwareFlakComponent
 {
     [Attribute("10", UIWidgets.Auto, "Highest permitted ground vehicle altitude above terrain (metres).", category: "Warlord Targeting")]
     protected float m_fGroundVehicleMaxAltitude;
@@ -21,12 +21,17 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
     [Attribute("6", UIWidgets.Auto, "Minimum seconds on a valid target before picking a new target.", category: "Warlord Targeting")]
     protected float m_fTargetHoldSeconds;
 
+    // Heavy 128-player siege batteries should attack enemy armour, not farm
+    // dismounted infantry. The original boss's main guns still engage soldiers.
+    [Attribute("false", UIWidgets.CheckBox, "Allow these heavy Omni turrets to engage infantry; OFF keeps them vehicle-only.", category: "Warlord Targeting")]
+    protected bool m_bAllowInfantry;
+
     protected float m_fCanRetargetAt;
 
     // The CGS anti-air base only gathers vehicles. Include dismounted infantry.
     override protected bool CollectEntity(IEntity entity)
     {
-        if (entity && (Vehicle.Cast(entity) || ChimeraCharacter.Cast(entity)))
+        if (entity && (Vehicle.Cast(entity) || (m_bAllowInfantry && ChimeraCharacter.Cast(entity))))
             s_aCollect.Insert(entity);
         return true;
     }
@@ -44,8 +49,9 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
         if (!isVehicle && !isSoldier)
             return false;
 
-        // Vehicle occupants are handled by targeting the vehicle itself.
-        if (isSoldier && entity.GetParent())
+        // Auxiliary Omni guns are anti-vehicle by default. Even when enabled,
+        // seated occupants are never independent targets.
+        if (isSoldier && (!m_bAllowInfantry || entity.GetParent()))
             return false;
 
         SCR_DamageManagerComponent damage = SCR_DamageManagerComponent.Cast(entity.FindComponent(SCR_DamageManagerComponent));
@@ -92,7 +98,8 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
         float now = Now();
         // Don't chase a different nearby player each scan. This also gives the
         // existing CGS yaw/pitch animation time to traverse to the target.
-        if (m_pTarget && now < m_fCanRetargetAt && IsValidTarget(m_pTarget, ourFaction))
+        if (m_pTarget && Vehicle.Cast(m_pTarget) && now < m_fCanRetargetAt && IsValidTarget(m_pTarget, ourFaction)
+            && RW_WarlordCoverVisibility.IsClear(m_pMechOwner, GetOwner(), GetShotStart(), RW_WarlordCoverVisibility.AimPoint(m_pTarget), m_pTarget))
             return m_pTarget;
 
         s_aCollect.Clear();
@@ -100,8 +107,10 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
 
         int sector = Math.Mod(Math.Max(m_iHardpointIndex, 0) * 3 + 1, 8);
         float sectorYaw = sector * 45.0 - 180.0;
-        IEntity best;
-        float bestScore = m_fRange * 10.0;
+        IEntity bestVehicle;
+        IEntity bestInfantry;
+        float bestVehicleScore = m_fRange * 10.0;
+        float bestInfantryScore = m_fRange * 10.0;
         vector pivot = GetOwner().GetOrigin();
 
         foreach (IEntity candidate : s_aCollect)
@@ -120,14 +129,39 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
 
             float distance = worldDirection.Length();
             float score = distance + Math.AbsFloat(delta) * Math.Max(m_fSectorBias, 0);
-            if (score < bestScore)
+            // Always prefer armoured targets over infantry, even if an infantry
+            // target happens to be closer. Keep the nearest exposed vehicle per
+            // gun sector to avoid every battery tracking the same target.
+            bool vehicle = Vehicle.Cast(candidate) != null;
+            if (vehicle && score >= bestVehicleScore)
+                continue;
+            if (!vehicle && score >= bestInfantryScore)
+                continue;
+
+            // Only spend a physics ray on a candidate able to improve its
+            // class score, preserving performance with many players nearby.
+            if (!RW_WarlordCoverVisibility.IsClear(
+                m_pMechOwner, GetOwner(), GetShotStart(),
+                RW_WarlordCoverVisibility.AimPoint(candidate), candidate))
+                continue;
+
+            if (vehicle)
             {
-                best = candidate;
-                bestScore = score;
+                bestVehicle = candidate;
+                bestVehicleScore = score;
+            }
+            else
+            {
+                bestInfantry = candidate;
+                bestInfantryScore = score;
             }
         }
 
         s_aCollect.Clear();
+        IEntity best = bestVehicle;
+        if (!best)
+            best = bestInfantry;
+
         if (best)
             m_fCanRetargetAt = now + Math.Max(m_fTargetHoldSeconds, 0);
         return best;
