@@ -532,7 +532,7 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.85
    m_GroundPoint PointInfo "{6AAE3A15B74EC63E}" {
-    Offset 0 -14.6266 0.478
+    Offset 0 -43.1667 0.478
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -928,7 +928,7 @@ Vehicle {
    m_fVehicleDestroyDamage 10000
   }
   SCR_VehicleFactionAffiliationComponent "{6AAE3A15B74EC6FF}" {
-   "faction affiliation" "US"
+   "faction affiliation" "USSR"
   }
   SCR_VehicleSpawnProtectionComponent "{6AAE3A15B74EC6FD}" {
   }
@@ -1018,17 +1018,8 @@ Vehicle {
     }
     EntitySlotInfo Las_Cannon_Arm {
      Offset -10.8799 5.2574 -0.4025
-     Prefab "{85D8BBD3AA930882}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Titan_Saw_Arm.et"
-    }
-    EntitySlotInfo Exhust {
-     Offset -9.014 23.5921 32.4993
-     Angles 0 0 0
-     Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
-    }
-    EntitySlotInfo Exhust2 {
-     Offset 0.2836 0.6321 -0.7401
-     Angles 53.8107 180 -180
-     Prefab "{26A2B16B5127C7C3}Prefabs/Vehicles/Mech/Mech_Parts/Exhust.et"
+     Angles 0 0 15.5462
+     Prefab "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Titan_Cannon_Arm.et"
     }
    }
   }
@@ -1282,6 +1273,7 @@ Vehicle {
   Hierarchy "{6AAE3A15B74EB91F}" {
   }
  }
- coords 7015.834 107.907 6506.109
+ coords 7015.834 142.333 6506.109
+ scale 3
  m_eVehicleType VEHICLE
 }
