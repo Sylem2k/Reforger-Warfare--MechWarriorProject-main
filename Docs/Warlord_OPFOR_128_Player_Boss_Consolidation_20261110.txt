@@ -1,0 +1,114 @@
+NOVEMBER 10, 2026 - SINGLE WARLORD OPFOR WORLD BOSS CONSOLIDATION
+===================================================================
+
+I am keeping only the real, complete, working Warlord boss:
+{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et
+
+I have already retired Titan_WarLord_BOSS_128_Test.et. I must not restore
+that duplicate. Its missing combat capabilities belong on OPFOR.
+
+128-PLAYER BOSS STATS I PORTED
+-------------------------------
+- Hull HP: 40000 -> 125000.
+- Hull DamageReduction: 1 -> 2; threshold: 0 -> 1.
+- Hull multipliers: kinetic 0.1; fragmentation 0.05; explosive 1.0;
+  incendiary 0.7; melee 0.01.
+- Vehicle destroy damage: 10000 -> 250000.
+- Shield: 30000 -> 45000; regen 250 -> 325 HP/s; recharge delay
+  20 -> 10s; broken delay 40 -> 27s; bleed-through 0.03 -> 0.015.
+- Shield radius stays 35m and I preserve OPFOR's beam-blocking and
+  damage-type shield costs, visual flash, and specialized recharge behavior.
+- Heavy hull cap 2200 -> 2500 per second; small arms 60 -> 125.
+- Heavy part cap 850 -> 1200; small-arms part cap 30 -> 65.
+- Excess heavy damage multiplier 0.1 -> 0.2; excess small arms 0 -> 0.025.
+- Shield phase restores at 75%, 50%, and 25% hull remaining.
+- Heat capacity 1850 -> 2400; cooling 105 -> 225 per second.
+- I preserve OPFOR's special RW_WarlordBossDamageComponent so heavy
+  kinetic cannon hits still count toward the heavy bucket.
+
+WEAPON MIGRATION / CORE REPLICATION LIMIT
+------------------------------------------
+I found Mech Core's BFA_MechHardpointComponent.BFA_MAX_HARDPOINTS = 18,
+with 6 replicated 10-bit loadout words. I will NOT increase that globally.
+The real OPFOR already needs all 18 original hardpoints.
+
+I added a boss-only RW_WarlordAuxiliaryBatteryComponent. It attaches
+the old independent turret prefabs as locally spawned Torso children,
+with stable virtual indices 18-29 for shot FX. Only the server does
+AI targeting and real damage, while the boss-only weapon router maps
+virtual indices for FX on clients.
+
+The extra 12 autonomous mounts are:
+1.  OMNI_SHOULDER_FLAK
+2.  OMNI_RACK_OUTER_L
+3.  OMNI_RACK_INNER_L
+4.  OMNI_RACK_INNER_R
+5.  OMNI_RACK_OUTER_R
+6.  OMNI_RACK_TOP_L
+7.  OMNI_SIDE_L_FRONT
+8.  OMNI_SIDE_R_FRONT
+9.  OMNI_SIDE_L_REAR
+10. OMNI_SIDE_R_REAR
+11. OMNI_DORSAL_AA
+12. OMNI_TAIL_AA
+
+The OPFOR's original two arm guns, AC10s, missiles, anti-air weapons,
+stomp pulse, point defense, multi-station boss AI, and all eighteen
+physical hardpoint positions remain. The old prototype's duplicate
+stomp and empty LRM/Arrow rack variants are not separately spawned;
+the original stomp is active and LRM20/Arrow IV remain available as
+optional modules.
+
+I copied module definitions 900-917 into the OPFOR module catalog.
+I corrected five OPFOR module IDs which exceeded the 1023 limit:
+1200->920, 1201->921, 1202->922, 1203->923, 1210->924.
+Existing OPFOR default loadout references were updated accordingly.
+No shared Core script, network serialization, or normal mech was changed.
+
+TORSO / ARM MECHANICS
+---------------------
+I retained the split torso and hips changes in this test branch:
+- Lower hips and both legs stay aligned with the root chassis.
+- Upper Torso, head, and upper cannon visuals follow torso twist.
+- Each arm follows torso yaw at the original mounting angle; its own
+  independent horizontal yaw is locked to 0. Vertical pitch stays -20..40.
+- The new auxiliary turrets attach to the Torso child so they inherit
+  torso twist once without needing changes to shared TorsoTwist code.
+- Waist PointInfo placement still needs real model alignment testing.
+
+THE WORKING OPFOR AI BEHAVIOR REMAINS INTENTIONALLY UNCHANGED:
+It is a stationary HOLD/FIRE_AT_WILL world boss, with the existing
+hidden hostile AI pilot and virtual gunners. I did not blindly restore
+the stripped prototype's HUNT/driving behavior, because doing so could
+break the already working firing and position of a massive siege boss.
+
+WORKBENCH 1.9 TEST BEFORE MERGING
+---------------------------------
+1. Load this feature branch, reload scripts, and inspect for compilation
+   failures mentioning RW_WarlordAuxiliaryBatteryComponent or router.
+2. Spawn the single OPFOR boss GUID D60000000000000F, not a saved old entity.
+3. Confirm [RW WARLORD AUX] 12 autonomous turret modules attached.
+4. Confirm all 18 physical hardpoints bind/appear with IDs <=1023;
+   especially AC10, AA turrets, stomp, and point defense.
+5. Check upper torso rotates independently while hips/legs stay fixed.
+   Correct the waist pivot PointInfo if the torso or arms shift.
+6. Confirm the arms retain authored 90-degree posture relative to torso
+   and only pitch up/down.
+7. Spawn multiple hostile US infantry, ground vehicles, and aircraft;
+   confirm both the core boss guns and the extra Omni guns fire.
+8. Test remote-client tracer, beam, muzzle and impact FX, especially
+   extra virtual hardpoints 18-29.
+9. Damage the boss: confirm 125000 maximum hull, 45000 maximum shield,
+   75/50/25% phase recharge, broken-shield recharge delay, and death.
+10. Stress-test increasing player/AI counts. Measure dedicated-server
+    FPS and verify no repeated battery spawns or replication errors.
+11. Keep this PR as draft until these checks are complete. Main and
+    the working OPFOR configuration stay protected.
+
+FILES
+-----
+- Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et
+- Scripts/Game/RW_Boss/RW_WarlordAuxiliaryBatteryComponent.c
+- Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Torso_Warlord_Camo.et.meta
+
+I do not use or recreate Titan_WarLord_BOSS_128_Test.et.

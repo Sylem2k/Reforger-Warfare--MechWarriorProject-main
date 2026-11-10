@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{C628000000020106}Prefabs/Vehicles/Mech/Mech_Parts/Torso_Warlord_Camo.et"
+ Name "{C628000000020106}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Torso_Warlord_Camo.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }
