@@ -3,11 +3,11 @@
 // and per-client turret rotation. Never runs targeting on multiplayer clients.
 // Requires Mech-Core-CGS (already an MW project dependency).
 [ComponentEditorProps(category: "Reforger Warfare/Boss", description: "Independent 360-degree ground defense (infantry and ground vehicles).")]
-class RW_WarlordOmniTurretClass : CGS_AntiAirModuleComponentClass
+class RW_WarlordOmniTurretClass : RW_WarlordCoverAwareFlakComponentClass
 {
 }
 
-class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
+class RW_WarlordOmniTurret : RW_WarlordCoverAwareFlakComponent
 {
     [Attribute("10", UIWidgets.Auto, "Highest permitted ground vehicle altitude above terrain (metres).", category: "Warlord Targeting")]
     protected float m_fGroundVehicleMaxAltitude;
@@ -92,7 +92,8 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
         float now = Now();
         // Don't chase a different nearby player each scan. This also gives the
         // existing CGS yaw/pitch animation time to traverse to the target.
-        if (m_pTarget && now < m_fCanRetargetAt && IsValidTarget(m_pTarget, ourFaction))
+        if (m_pTarget && now < m_fCanRetargetAt && IsValidTarget(m_pTarget, ourFaction)
+            && RW_WarlordCoverVisibility.IsClear(m_pMechOwner, GetOwner(), GetShotStart(), RW_WarlordCoverVisibility.AimPoint(m_pTarget), m_pTarget))
             return m_pTarget;
 
         s_aCollect.Clear();
@@ -120,7 +121,11 @@ class RW_WarlordOmniTurret : CGS_AntiAirModuleComponent
 
             float distance = worldDirection.Length();
             float score = distance + Math.AbsFloat(delta) * Math.Max(m_fSectorBias, 0);
-            if (score < bestScore)
+            // Only spend a physics trace on candidates that could win the
+            // nearest/sector score. Avoid scanning cover for every entity every tick.
+            if (score < bestScore && RW_WarlordCoverVisibility.IsClear(
+                m_pMechOwner, GetOwner(), GetShotStart(),
+                RW_WarlordCoverVisibility.AimPoint(candidate), candidate))
             {
                 best = candidate;
                 bestScore = score;
