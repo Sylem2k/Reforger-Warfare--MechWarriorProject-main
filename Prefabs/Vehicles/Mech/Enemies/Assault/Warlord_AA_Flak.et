@@ -3,7 +3,7 @@ GenericEntity {
  components {
   SignalsManagerComponent "{A600202610230102}" {
   }
-  CGS_AntiAirModuleComponent "{D600202610230102}" {
+  RW_WarlordCoverAwareFlakComponent "{D600202610230102}" {
    m_sModuleId "WARLORD_AA"
    m_sDisplayName "Warlord Valk Hunter Flak"
    m_sControlStation "DRIVER"
