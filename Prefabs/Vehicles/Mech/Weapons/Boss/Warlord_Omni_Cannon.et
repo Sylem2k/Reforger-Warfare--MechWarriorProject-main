@@ -13,7 +13,7 @@ GenericEntity {
    m_fCgsArmorPiercing 0.6
    m_fCrewShareKinetic 0
    m_fCrewShareExplosive 0
-   m_bKillCrewOnDestroy 1
+   m_bKillCrewOnDestroy 0
    m_bAllowInfantry 0
    m_fRange 1000
    m_fScanInterval 1.1
