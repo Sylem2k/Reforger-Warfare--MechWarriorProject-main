@@ -150,6 +150,24 @@ class RW_WarlordCoverAwareFlakComponentClass : CGS_AntiAirModuleComponentClass
 // Omni guns. Normal CGS_AntiAirModuleComponent is NOT modified.
 class RW_WarlordCoverAwareFlakComponent : CGS_AntiAirModuleComponent
 {
+    // The Omni laser is hitscan, while the boss cannon and flak remain
+    // simulated projectiles. Enable only on the actual beam-laser prefab.
+    [Attribute("false", UIWidgets.CheckBox, "Make beam impact and damage happen at shot time instead of waiting for simulated shell flight. For beam weapons only.", category: "Warlord Timing")]
+    protected bool m_bInstantBeamImpact;
+
+    // A beam hits the target's CURRENT position. Do not lead the target as
+    // if the laser travelled at the shell velocity; keep turret aim aligned
+    // with the authoritative instant ray and impact effect.
+    override protected vector PredictAimPoint(vector start)
+    {
+        if (!m_bInstantBeamImpact || !m_pTarget || !m_FX || m_FX.m_sBeamPrefab.IsEmpty())
+            return super.PredictAimPoint(start);
+
+        vector mins, maxs;
+        m_pTarget.GetWorldBounds(mins, maxs);
+        return (mins + maxs) * 0.5;
+    }
+
     // Direct per-shot check, not only at target selection time: a player who
     // runs behind a building during a burst must immediately be protected.
     override protected bool TryFireShot(IEntity instigator)
@@ -189,10 +207,21 @@ class RW_WarlordCoverAwareFlakComponent : CGS_AntiAirModuleComponent
         vector wanted = lead + scatter * miss;
 
         vector burst = RW_WarlordCoverVisibility.ClipImpact(m_pMechOwner, GetOwner(), start, wanted);
-        float flight = vector.Distance(start, burst) / speed;
 
+        // The client draws a beam across its full length immediately. For a
+        // hitscan laser, detonate on the SERVER in the same shot tick, too.
+        // This keeps visible impact, damage and beam aligned even at 1 km.
+        // Still use the physics-clipped burst point: walls and roofs block it.
         BroadcastShot(start, burst, true, speed, m_fTracerLength, m_fTracerThickness);
+        if (m_bInstantBeamImpact && m_FX && !m_FX.m_sBeamPrefab.IsEmpty())
+        {
+            Detonate(burst, instigator, m_iShellToken);
+            return;
+        }
 
+        // Physical flak and autocannons keep the normal range-dependent
+        // travel delay and their wall-clipped detonation positions.
+        float flight = vector.Distance(start, burst) / speed;
         int delayMs = (int)(flight * 1000);
         if (delayMs < 20)
         {
