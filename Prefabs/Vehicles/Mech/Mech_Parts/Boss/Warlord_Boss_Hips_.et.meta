@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{FE37C2C97CDEB011}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Hips_.et"
+ Configurations {
+  EntityTemplateResourceClass PC {
+  }
+  EntityTemplateResourceClass XBOX_ONE : PC {
+  }
+  EntityTemplateResourceClass XBOX_SERIES : PC {
+  }
+  EntityTemplateResourceClass PS4 : PC {
+  }
+  EntityTemplateResourceClass PS5 : PC {
+  }
+  EntityTemplateResourceClass HEADLESS : PC {
+  }
+ }
+}
