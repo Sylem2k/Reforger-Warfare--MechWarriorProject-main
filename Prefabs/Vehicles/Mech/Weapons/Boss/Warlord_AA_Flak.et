@@ -7,6 +7,13 @@ GenericEntity {
    m_sModuleId "Warlord_AA_Flak"
    m_sDisplayName "Warlord_AA_Flak"
    m_bRequiresCrew 0
+   m_fDamageVsInfantry 0.08
+   m_fDamageVsVehicles 2
+   m_fInfantryArmourFloor 0
+   m_fCgsArmorPiercing 0.55
+   m_fCrewShareKinetic 0
+   m_fCrewShareExplosive 0
+   m_bKillCrewOnDestroy 1
    m_fRange 1500
    m_fScanInterval 0.8
    m_fShellSpeed 1000
