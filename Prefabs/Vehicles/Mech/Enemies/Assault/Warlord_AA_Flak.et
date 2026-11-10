@@ -22,7 +22,7 @@ GenericEntity {
    m_fCgsArmorPiercing 0.55
    m_fCrewShareKinetic 0
    m_fCrewShareExplosive 0
-   m_bKillCrewOnDestroy 1
+   m_bKillCrewOnDestroy 0
    m_fShellSpeed 1050
    m_fBurstDamage 320
    m_fBurstRadius 12
