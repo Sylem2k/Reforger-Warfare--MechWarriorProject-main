@@ -1004,10 +1004,11 @@ Vehicle {
    m_fTwistSpeed 26
    m_fDeadzone 6
    m_bCentreWhenEmpty 0
-   // Adjustable waist axis: initially aligned to the authored hip slot origin.
-   // Move this PointInfo to the actual waist seam in Workbench after visual test.
+   // Restore the Warlord's original torso axis. The hips SLOT offset is NOT the waist pivot;
+   // using it pulled the torso/arms far from the chassis during yaw.
+   // Fine-adjust this gizmo to the actual model waist seam after Workbench inspection.
    m_TorsoPivotPoint PointInfo "{A7F0B05520261110}" {
-    Offset -0.2807 -4.0441 0.8762
+    Offset -0.217 12.339 7.567
    }
    m_vPivot -0.217 12.339 7.567
    m_aTwistSlots {
@@ -1146,12 +1147,12 @@ Vehicle {
    m_fLoadSlowdown 0.02
   }
   RW_WarlordBossDamageComponent "{E60F0000000000AD}" {
-   m_fHeavyPerSecond 2500
-   m_fSmallArmsPerSecond 125
-   m_fPartHeavyPerSecond 1200
+   m_fHeavyPerSecond 1600
+   m_fSmallArmsPerSecond 100
+   m_fPartHeavyPerSecond 1000
    m_fPartSmallArmsPerSecond 65
-   m_fOverCapMultiplier 0.2
-   m_fSmallArmsOverCap 0.025
+   m_fOverCapMultiplier 0.035
+   m_fSmallArmsOverCap 0.01
    m_fHeavyHitMin 120
    m_aShieldPhases {
     0.75 0.5 0.25
@@ -1172,12 +1173,12 @@ Vehicle {
    m_bFireAllGroups 1
   }
   RW_WarlordShieldComponent "{E60F0000000000AB}" {
-   m_fMaxShield 45000
-   m_fRegenPerSecond 325
+   m_fMaxShield 150000
+   m_fRegenPerSecond 600
    m_fRegenDelay 10
    m_fBrokenDelay 27
    m_fReactivateAt 0.4
-   m_fBleedThrough 0.015
+   m_fBleedThrough 0.01
    m_fKineticCost 1
    m_fExplosiveCost 1.2
    m_fEnergyCost 1.1
@@ -1311,7 +1312,7 @@ Vehicle {
    "Additional hit zones" {
     BFA_MechHitZone Hull {
      HZDefault 1
-     MaxHealth 125000
+     MaxHealth 600000
      DamageReduction 2
      DamageThreshold 1
      "Melee multiplier" 0.01
