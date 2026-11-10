@@ -92,3 +92,34 @@ BRANCH / STATUS
 fix/warlord-opfor-building-los-20261110
 PR #119 is draft and not merged. These values are test settings, not
 a claim that I compiled and validated the event in Workbench yet.
+
+LASER BEAM / EXPLOSION TIMING FIX
+--------------------------------
+I found that the Warlord's autonomous Omni laser had a visible instant
+beam, but the SERVER scheduled its damage explosion after the simulated
+flak-shell flight time: distance / 1000 metres per second. At 1000 m this
+made the beam and damage explosion roughly one second apart.
+
+I added an opt-in m_bInstantBeamImpact setting on the Warlord-only
+RW_WarlordCoverAwareFlakComponent and enabled it ONLY for the actual
+Warlord_Omni_Laser.et. That module now aims at the current target
+position, sends the beam event, and applies its clipped impact damage
+in the same server shot tick. I also assigned Explosion_API.ptc as an
+immediate visual impact particle on the beam endpoint.
+
+I kept m_bInstantBeamImpact disabled for kinetic Omni cannons, AA/flak
+and other physical rounds; these still travel and explode on impact.
+The cover checks and first-obstruction clipping remain in place, so
+the new instant laser cannot pass through a valid building.
+
+To validate in Workbench 1.9:
+1. Compile and spawn the OPFOR Warlord with hostile US ground vehicles.
+2. Test the Omni laser at roughly 100 m, 500 m and 1000 m. The beam and
+   impact explosion should visually coincide, allowing for networking.
+3. Confirm tank HP changes at the moment the server fires the beam, not
+   after shell travel time.
+4. Test from behind buildings: beam and damage must remain blocked.
+5. Test an Omni cannon and the dedicated flak: both must retain their
+   ordinary projectile impact delay.
+6. Test a remote client; effects should coincide at the received shot
+   event. The script has not yet been compiled by me in Workbench.
