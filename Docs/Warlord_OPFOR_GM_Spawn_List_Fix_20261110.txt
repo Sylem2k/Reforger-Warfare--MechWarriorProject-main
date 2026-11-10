@@ -1,0 +1,54 @@
+WARLORD OPFOR - GAME MASTER SPAWN LIST FIX
+=========================================
+I keep ONE Warlord boss. I do not recreate the deleted BOSS_128_Test.
+Live boss resource:
+{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et
+
+WHY I COULD NOT FIND MY WARLORD
+-------------------------------
+The prefab's SCR_EditableVehicleUIInfo still said
+"OPFOR Gravemarch - Tempest" and described an unrelated nine-weapon
+assault mech. Searching "Warlord" in Game Master could not find it.
+
+The dedicated EnemyMechs registry was also missing the explicit
+m_sAddon identifier. The project ID in addon.gproj is
+ReforgerWarfareMWProject.
+
+The Warlord appeared multiple times in the US entity catalog.
+The custom EditorModeEdit prefab references both EnemyMechs and
+BFA_Mech_Entities, which also separately registered this same boss.
+
+CHANGES
+-------
+I renamed the SCR_EditableVehicleUIInfo to:
+  OPFOR Warlord - Siege Overlord
+I gave it an accurate world-boss description.
+I kept m_bAutoRegister ALWAYS, the original prefab GUID, USSR faction,
+all its weapons, shield, AI, torso, health, and scripts unchanged.
+
+I registered the boss once in:
+  Configs/Editor/PlaceableEntities/Vehicles/EnemyMechs.conf
+and explicitly used m_sAddon "ReforgerWarfareMWProject".
+I removed its duplicate registration from the general
+BFA_Mech_Entities.conf so it is listed in only one editor registry.
+I kept one US Vehicles_EntityCatalog_US.conf Warlord entry instead of three.
+I left the eight normal player-mech registry entries untouched.
+
+WORKBENCH / GM CHECK
+--------------------
+1. Check out this branch and reload resources. If necessary rebuild the
+   mod and restart the GM scenario so its registries are refreshed.
+2. Open Game Master, show all modded vehicles / USSR enemy faction,
+   clear existing filters, and search "Warlord".
+3. Expect: "OPFOR Warlord - Siege Overlord".
+4. Spawn that entry and verify original working boss guns, health and
+   torso movement. There is no additional 128-player prefab.
+5. If other enemy mechs have stopped showing, inspect the separately
+   edited EnemyMechs registry: this branch does not restore or delete
+   the other enemy prefabs.
+6. If the boss is still absent, inspect Game Master registry loading
+   errors and confirm the scenario uses the custom EditorModeEdit.
+   An unrelated vanilla GM mode might not load that modified registry.
+
+The Game Master UI and Workbench compile cannot be verified via the
+GitHub file API alone. Do not merge before checking it locally.

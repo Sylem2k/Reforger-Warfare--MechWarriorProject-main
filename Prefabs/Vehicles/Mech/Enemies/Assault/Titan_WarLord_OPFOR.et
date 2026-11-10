@@ -1266,8 +1266,8 @@ Vehicle {
   }
   SCR_EditableVehicleComponent "{E60F00000000007B}" : "{AC79C9DD1CF681B3}Prefabs/Editor/Components/Vehicle_SCR_EditableEntityComponent.ct" {
    m_UIInfo SCR_EditableVehicleUIInfo "{E60F00000000007C}" {
-    Name "OPFOR Gravemarch - Tempest"
-    Description "CGS autonomous Assault HUNT mech, 9 weapons, 99 of 100 tons. Temporary model."
+    Name "OPFOR Warlord - Siege Overlord"
+    Description "Warlord Titan - autonomous siege world boss with torso-mounted weapons, shields, multiple AI gunner banks, and vehicle-priority combat. Designed for large multiplayer encounters."
     Icon "{A489F552FB7489C3}UI/Textures/Editor/EditableEntities/Characters/EditableEntity_Character_Custom.edds"
     IconSetName "USSR"
     m_Image "{245E7174AF6965E1}Common/Models/Data/AmmoBox_roughness.edds"
