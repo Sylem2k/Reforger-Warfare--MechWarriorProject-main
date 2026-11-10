@@ -8,9 +8,6 @@ Vehicle Titan_WarLord_BOSS_128_Test1 {
  angles 0 -140.455 0
 }
 Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
- coords 6984.333 135.685 6531.551
- angles 0 42.819 0
-}
-GenericEntity : "{FE37C2C97CDEB011}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Hips_.et" {
- coords 6972.283 132.57 6564.504
+ coords 7090.643 164.029 6053.243
+ angles 0 -44.787 0
 }

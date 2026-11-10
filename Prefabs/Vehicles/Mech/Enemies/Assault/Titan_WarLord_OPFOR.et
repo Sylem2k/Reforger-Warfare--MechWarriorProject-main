@@ -136,7 +136,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 5
      m_Point PointInfo "{E60F000000000011}" {
-      Offset -7.9829 21.6033 -1.0812
+      Offset -7.111 25.0651 5.7944
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 2
@@ -147,6 +147,9 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
+     m_Point PointInfo "{6AD41E8E29EAA86A}" {
+      Offset 20.8167 -3.027 30.7854
+     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -156,7 +159,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 9
      m_Point PointInfo "{E60F000000000015}" {
-      Offset 3.148 20.348 -0.8847
+      Offset 6.5755 25.1976 5.883
       Angles 0 0 0
      }
      m_sControlStation "BOSS_LRM_L1"
@@ -167,7 +170,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 9
      m_Point PointInfo "{E60F000000000017}" {
-      Offset -3.6403 22.264 0.715
+      Offset 14.8821 31.0475 23.7502
       Angles 0 -0.375 0
      }
      m_sControlStation "BOSS_LRM_R1"
@@ -178,7 +181,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 924
      m_Point PointInfo "{E60F00000000001B}" {
-      Offset 6.4765 22.123 1.7533
+      Offset 6.4762 28.045 5.8557
      }
      m_sControlStation "BOSS_AC_L"
      m_iWeaponGroup 3
@@ -188,7 +191,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F00000000001D}" {
-      Offset -1.05 14.5117 7.2024
+      Offset -0.8845 13.5566 17.4204
      }
      m_sControlStation "BOSS_LRM_L2"
      m_iWeaponGroup 3
@@ -198,7 +201,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F00000000001F}" {
-      Offset -12.1396 6.745 12.9869
+      Offset 1.8416 13.7565 17.1809
      }
      m_sControlStation "BOSS_LRM_R2"
      m_iWeaponGroup 3
@@ -208,7 +211,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 924
      m_Point PointInfo "{E60F000000000021}" {
-      Offset 11.2251 5.2887 13.7287
+      Offset 20.2306 3.411 16.5481
      }
      m_sControlStation "BOSS_AC_R"
      m_iWeaponGroup 3
@@ -218,7 +221,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000023}" {
-      Offset 0.9415 14.4258 6.7368
+      Offset -16.5826 33.0219 23.457
      }
      m_sControlStation "BOSS_LRM_L2"
      m_iWeaponGroup 3
@@ -228,7 +231,7 @@ Vehicle {
      m_iClass 3
      m_iDefaultModuleId 10
      m_Point PointInfo "{E60F000000000025}" {
-      Offset -11.9318 7.1945 13.3134
+      Offset -21.0381 1.619 34.0678
      }
      m_sControlStation "BOSS_LRM_R3"
      m_iWeaponGroup 3
@@ -238,7 +241,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 920
      m_Point PointInfo "{E60F0000000000A1}" {
-      Offset -7.4 21.75 1.2
+      Offset 0.2669 25.9001 -9.5471
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 9
@@ -248,7 +251,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 923
      m_Point PointInfo "{E60F0000000000A3}" {
-      Offset 7.4 21.75 1.2
+      Offset 6.7057 27.941 5.5082
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 9
@@ -258,7 +261,7 @@ Vehicle {
      m_iClass 4
      m_iDefaultModuleId 921
      m_Point PointInfo "{E60F0000000000A5}" {
-      Offset 0 -16 -1
+      Offset -0.0001 -44.1312 -1.0002
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 8
@@ -268,7 +271,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 923
      m_Point PointInfo "{E60F0000000000AF}" {
-      Offset -7.35 21.5 -6.8
+      Offset -6.894 27.5086 5.0066
       Angles 0 180 0
      }
      m_sControlStation "DRIVER"
@@ -279,7 +282,7 @@ Vehicle {
      m_iClass 2
      m_iDefaultModuleId 923
      m_Point PointInfo "{E60F0000000000B1}" {
-      Offset 7.35 21.5 -6.8
+      Offset 7.0618 27.2025 5.2958
       Angles 0 180 0
      }
      m_sControlStation "DRIVER"
@@ -290,7 +293,7 @@ Vehicle {
      m_iClass 4
      m_iDefaultModuleId 922
      m_Point PointInfo "{E60F0000000000B3}" {
-      Offset -9 8.5 3
+      Offset -12.9968 33.886 25.2799
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 4
@@ -300,7 +303,7 @@ Vehicle {
      m_iClass 4
      m_iDefaultModuleId 922
      m_Point PointInfo "{E60F0000000000B5}" {
-      Offset 9 8.5 3
+      Offset 10.3037 1.1105 8.0165
      }
      m_sControlStation "DRIVER"
      m_iWeaponGroup 4
@@ -853,7 +856,7 @@ Vehicle {
    m_fAngularSpeed 0.52
    m_fSizeScale 2.8
    m_GroundPoint PointInfo "{E60F00000000004F}" {
-    Offset 0 -16.5867 -0.8832
+    Offset -1.134 -44.668 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -862,8 +865,6 @@ Vehicle {
    m_fGroundRiseSpeed 6
    m_fGroundFallSpeed 4
    m_fGroundFollowGain 4
-  }
-  RW_WarlordBossWeaponRouterComponent "{E60F000000000050}" {
   }
   BFA_MechWeaponMountComponent "{E60F000000000051}" {
    m_aMounts {
@@ -932,72 +933,6 @@ Vehicle {
    m_fMaxHeat 2400
    m_fCoolingPerSecond 225
   }
-  // Auxiliary autonomous 128-player gun bank: no extra core hardpoints, follows the torso.
-  RW_WarlordAuxiliaryBatteryComponent "{BADA202611100001}" {
-   m_sParentSlot "Torso"
-   m_aWeapons {
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100101}" {
-     m_sName "OMNI_SHOULDER_FLAK"
-     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
-     m_vLocalOffset -3.6187 21.6033 2.5351
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100102}" {
-     m_sName "OMNI_RACK_OUTER_L"
-     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
-     m_vLocalOffset 2.8063 22.123 5.6138
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100103}" {
-     m_sName "OMNI_RACK_INNER_L"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset -1.05 14.5117 8.7268
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100104}" {
-     m_sName "OMNI_RACK_INNER_R"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset -12.1396 6.745 15.1885
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100105}" {
-     m_sName "OMNI_RACK_OUTER_R"
-     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
-     m_vLocalOffset 11.2251 5.2887 14.6656
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100106}" {
-     m_sName "OMNI_RACK_TOP_L"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset 0.74 14.4258 8.6535
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100107}" {
-     m_sName "OMNI_SIDE_L_FRONT"
-     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
-     m_vLocalOffset -10 17 7
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100108}" {
-     m_sName "OMNI_SIDE_R_FRONT"
-     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
-     m_vLocalOffset 10 17 7
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100109}" {
-     m_sName "OMNI_SIDE_L_REAR"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset -10 19 -6
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA20261110010A}" {
-     m_sName "OMNI_SIDE_R_REAR"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset 10 19 -6
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA20261110010B}" {
-     m_sName "OMNI_DORSAL_AA"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset 0 24 0
-    }
-    RW_WarlordAuxiliaryWeaponDefinition "{BADA20261110010C}" {
-     m_sName "OMNI_TAIL_AA"
-     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
-     m_vLocalOffset 0 18 -12
-    }
-   }
-  }
   CGS_TorsoTwistComponent "{E60F00000000005A}" {
    m_sAimStation "DRIVER"
    m_fMaxTwist 80
@@ -1014,7 +949,6 @@ Vehicle {
    m_aTwistSlots {
     "Torso" "Exta" "Cannon_top_R" "Cannon_top_L"
    }
-   // Arm slots are intentionally NOT in m_aTwistSlots: these two mounts already rotate them.
    m_aTwistMounts {
     "SENTINEL_LAS" "RIGHT_ARM_MOUNT"
    }
@@ -1146,6 +1080,71 @@ Vehicle {
    m_bSwapOnlyAtMechBay 1
    m_fLoadSlowdown 0.02
   }
+  RW_WarlordAuxiliaryBatteryComponent "{BADA202611100001}" {
+   m_sParentSlot "Torso"
+   m_aWeapons {
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100101}" {
+     m_sName "OMNI_SHOULDER_FLAK"
+     m_sPrefab "{E8A100000000FA01}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_AA_Flak.et"
+     m_vLocalOffset -3.619 21.603 2.535
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100102}" {
+     m_sName "OMNI_RACK_OUTER_L"
+     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
+     m_vLocalOffset 2.806 22.123 5.614
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100103}" {
+     m_sName "OMNI_RACK_INNER_L"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset -1.05 14.512 8.727
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100104}" {
+     m_sName "OMNI_RACK_INNER_R"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset -12.14 6.745 15.189
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100105}" {
+     m_sName "OMNI_RACK_OUTER_R"
+     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
+     m_vLocalOffset 11.225 5.289 14.666
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100106}" {
+     m_sName "OMNI_RACK_TOP_L"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset 0.74 14.426 8.653
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100107}" {
+     m_sName "OMNI_SIDE_L_FRONT"
+     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
+     m_vLocalOffset -10 17 7
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100108}" {
+     m_sName "OMNI_SIDE_R_FRONT"
+     m_sPrefab "{E8A100000000FA02}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Cannon.et"
+     m_vLocalOffset 10 17 7
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611100109}" {
+     m_sName "OMNI_SIDE_L_REAR"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset -10 19 -6
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA20261110010A}" {
+     m_sName "OMNI_SIDE_R_REAR"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset 10 19 -6
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA20261110010B}" {
+     m_sName "OMNI_DORSAL_AA"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset 0 24 0
+    }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA20261110010C}" {
+     m_sName "OMNI_TAIL_AA"
+     m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
+     m_vLocalOffset 0 18 -12
+    }
+   }
+  }
   RW_WarlordBossDamageComponent "{E60F0000000000AD}" {
    m_fHeavyPerSecond 1600
    m_fSmallArmsPerSecond 100
@@ -1158,6 +1157,8 @@ Vehicle {
     0.75 0.5 0.25
    }
    m_bDebug 1
+  }
+  RW_WarlordBossWeaponRouterComponent "{E60F000000000050}" {
   }
   RW_WarlordMultiTargetAICrewComponent "{E60F000000000007}" {
    m_bAIDriver 0
@@ -1386,12 +1387,10 @@ Vehicle {
   }
   SlotManagerComponent "{E60F00000000008A}" {
    Slots {
-    // Visible upper body: same mesh/materials as the previous root visual,
-    // but now independently rotates around the waist while the hips stay fixed.
     EntitySlotInfo Torso {
      MergePhysics 0
-     DisablePhysicsInteraction 1
      Prefab "{C628000000020106}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Torso_Warlord_Camo.et"
+     DisablePhysicsInteraction 1
     }
     EntitySlotInfo HB_Chest {
      Offset 0 5 0
@@ -1444,12 +1443,12 @@ Vehicle {
      Prefab "{3BC88C1B5DE393A2}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Head.et"
     }
     EntitySlotInfo Cannon_top_R {
-     Offset 6.2069 14.8564 2.9496
+     Offset 7.2419 14.8564 2.9003
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
     EntitySlotInfo Cannon_top_L {
-     Offset -7.8375 15.7598 2.7907
+     Offset -7.1304 14.7704 2.757
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
@@ -1548,7 +1547,8 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 6984.333 135.685 6531.551
- angles 0 42.819 0
+ coords 7090.643 164.029 6053.243
+ angles 0 -44.787 0
+ scale 2
  m_eVehicleType VEHICLE
 }
