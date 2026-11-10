@@ -1,3 +1,13 @@
-Vehicle Heavy_War_Lord1 : "{AA94214325213AA3}Prefabs/Vehicles/Mech/Frames/WarLord/Heavy_War_Lord.et" {
- coords 7015.834 142.333 6506.109
+Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
+ coords 6984.333 120.895 6531.551
+ angles 0 42.819 0
+}
+Vehicle Titan_WarLord_BOSS_128_Test1 : "{E8A100000000B128}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_BOSS_128_Test.et" {
+ components {
+  CGS_MechBrainComponent "{E60F00000000009D}" {
+   m_sFaction "US"
+  }
+ }
+ coords 7043.908 124.841 6598.397
+ angles 0 -140.455 0
 }
