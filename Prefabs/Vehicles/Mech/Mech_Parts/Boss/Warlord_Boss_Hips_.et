@@ -29,7 +29,7 @@ GenericEntity {
    m_fStepCameraShake 0.2
   }
   MeshObject "{6AD40AA0704D5A41}" {
-   Object "{BD016348D7396FEF}Common/Models/Titan_War_Lord/War_Lord_Left_Leg.xob"
+   Object "{F48F636EE161C85C}Common/Models/Titan_War_Lord/War_Lord_Hips/War_Lord_Hips.xob"
    RainOccluder 0
    WetnessOccluder 0
    ReceiveLight 0
@@ -79,5 +79,5 @@ GenericEntity {
   Hierarchy "{6AD40AA0704D5AAB}" {
   }
  }
- coords 72.413 21.805 38.982
+ coords 6972.283 132.57 6564.504
 }

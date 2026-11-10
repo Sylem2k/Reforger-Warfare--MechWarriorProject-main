@@ -1,8 +1,4 @@
-Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
- coords 6984.333 120.895 6531.551
- angles 0 42.819 0
-}
-Vehicle Titan_WarLord_BOSS_128_Test1 : "{E8A100000000B128}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_BOSS_128_Test.et" {
+Vehicle Titan_WarLord_BOSS_128_Test1 {
  components {
   CGS_MechBrainComponent "{E60F00000000009D}" {
    m_sFaction "US"
@@ -10,4 +6,11 @@ Vehicle Titan_WarLord_BOSS_128_Test1 : "{E8A100000000B128}Prefabs/Vehicles/Mech/
  }
  coords 7043.908 124.841 6598.397
  angles 0 -140.455 0
+}
+Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
+ coords 6984.333 135.685 6531.551
+ angles 0 42.819 0
+}
+GenericEntity : "{FE37C2C97CDEB011}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Hips_.et" {
+ coords 6972.283 132.57 6564.504
 }

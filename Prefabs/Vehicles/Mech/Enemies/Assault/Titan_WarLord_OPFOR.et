@@ -1190,7 +1190,7 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo HB_Torso {
-     Offset 0 0 0
+     Offset 0 7.8052 0
      MergePhysics 0
      Prefab "{A8D8ACAB7C339EED}Prefabs/Vehicles/Mech/HitBoxes/Titan/Titan_HB_Body_Torso.et"
      DisablePhysicsInteraction 1
@@ -1208,40 +1208,44 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
-     Offset 2.7706 -15.2045 0.3085
+     Offset 3.9538 -23.1415 0.3086
      MergePhysics 0
      Prefab "{EA31000000001102}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -3.6375 3.0121 0.3735
+     Offset -4.3532 -4.2985 1.0161
      MergePhysics 0
      Prefab "{EA31000000001101}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Right_Arm_Mount {
-     Offset 10.9578 4.4392 0.0913
+     Offset 10.2014 -1.9352 0.0914
      Prefab "{ED24000000000032}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_DamageTest_Arm_Right.et"
     }
     EntitySlotInfo Las_Cannon_Arm {
-     Offset -12.6374 4.3165 0.8766
+     Offset -12.681 -2.0302 1.4466
      Angles 5.1116 2.2621 23.9108
      Prefab "{ED24000000000031}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_DamageTest_Arm_Left.et"
     }
     EntitySlotInfo Exta {
-     Offset -0.2166 12.339 7.5671
+     Offset -0.2166 4.6032 7.5671
      Angles 0 2.7371 0
      Prefab "{3BC88C1B5DE393A2}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Head.et"
     }
     EntitySlotInfo Cannon_top_R {
-     Offset 7.3847 21.8601 0.5664
+     Offset 6.2069 14.8564 2.9496
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
     EntitySlotInfo Cannon_top_L {
-     Offset -7.1076 22.1054 0.0686
+     Offset -7.8375 15.7598 2.7907
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
+    }
+    EntitySlotInfo Hips {
+     Offset -0.2807 -4.0441 0.8762
+     Prefab "{FE37C2C97CDEB011}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Hips_.et"
     }
    }
   }
@@ -1334,7 +1338,7 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 6984.333 120.895 6531.551
+ coords 6984.333 135.685 6531.551
  angles 0 42.819 0
  m_eVehicleType VEHICLE
 }
