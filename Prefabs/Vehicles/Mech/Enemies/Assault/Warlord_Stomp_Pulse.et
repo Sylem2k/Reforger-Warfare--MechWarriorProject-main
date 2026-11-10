@@ -20,8 +20,8 @@ GenericEntity : "{3764FA8EDD9C9864}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Stomp_
    m_fSpin 1.4
    m_bKnockDownInfantry 1
    m_bPushFriendlies 0
-   m_fVehicleDamage 450
-   m_fInfantryDamage 75
+   m_fVehicleDamage 850
+   m_fInfantryDamage 20
    m_iRingCount 16
    m_bDebug 0
   }
