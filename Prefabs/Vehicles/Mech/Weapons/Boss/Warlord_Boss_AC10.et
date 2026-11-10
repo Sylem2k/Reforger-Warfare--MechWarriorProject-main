@@ -13,7 +13,7 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
    m_fCgsArmorPiercing 0.45
    m_fCrewShareKinetic 0
    m_fCrewShareExplosive 0
-   m_bKillCrewOnDestroy 1
+   m_bKillCrewOnDestroy 0
    m_fArmorPenetrationPercent 26
    m_fDamage 105
    m_fSpread 0.35
