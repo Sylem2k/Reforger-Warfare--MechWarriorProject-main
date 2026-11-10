@@ -8,7 +8,7 @@ GenericEntity {
    m_sDisplayName "LRM-15"
    m_sControlStation "DRIVER"
    m_iWeaponGroup 3
-   m_fDamageVsInfantry 0.12
+   m_fDamageVsInfantry 0.05
    m_fDamageVsVehicles 2.5
    m_fInfantryArmourFloor 0
    m_fCgsArmorPiercing 0.5
