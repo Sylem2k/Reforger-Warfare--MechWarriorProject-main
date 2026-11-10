@@ -744,8 +744,8 @@ Vehicle {
      m_sSlotName "Las_Cannon_Arm"
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
-     m_fYawMin -45
-     m_fYawMax 45
+     m_fYawMin 0
+     m_fYawMax 0
      m_fPitchMin -20
      m_fPitchMax 40
      m_bInvertPitch 0
@@ -756,8 +756,8 @@ Vehicle {
      m_sSlotName "Right_Arm_Mount"
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
-     m_fYawMin -45
-     m_fYawMax 45
+     m_fYawMin 0
+     m_fYawMax 0
      m_fPitchMin -20
      m_fPitchMax 40
      m_bInvertPitch 0
@@ -810,14 +810,22 @@ Vehicle {
    m_fTwistSpeed 26
    m_fDeadzone 6
    m_bCentreWhenEmpty 0
+   // Adjustable waist axis: initially aligned to the authored hip slot origin.
+   // Move this PointInfo to the actual waist seam in Workbench after visual test.
+   m_TorsoPivotPoint PointInfo "{A7F0B05520261110}" {
+    Offset -0.2807 -4.0441 0.8762
+   }
    m_vPivot -0.217 12.339 7.567
    m_aTwistSlots {
-    "Exta"
+    "Torso" "Exta" "Cannon_top_R" "Cannon_top_L"
    }
+   // Arm slots are intentionally NOT in m_aTwistSlots: these two mounts already rotate them.
    m_aTwistMounts {
+    "SENTINEL_LAS" "RIGHT_ARM_MOUNT"
    }
+   m_bTwistRootMountedWeapons 1
    m_bAimRootMountedWeapons 0
-   m_bHideRootMesh 0
+   m_bHideRootMesh 1
   }
   ChimeraAIPathfindingComponent "{E60F00000000005B}" {
    NavmeshProject "BTRlike"
@@ -1183,6 +1191,13 @@ Vehicle {
   }
   SlotManagerComponent "{E60F00000000008A}" {
    Slots {
+    // Visible upper body: same mesh/materials as the previous root visual,
+    // but now independently rotates around the waist while the hips stay fixed.
+    EntitySlotInfo Torso {
+     MergePhysics 0
+     DisablePhysicsInteraction 1
+     Prefab "{C628000000020106}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Torso_Warlord_Camo.et"
+    }
     EntitySlotInfo HB_Chest {
      Offset 0 5 0
      MergePhysics 0
