@@ -7,3 +7,6 @@ Vehicle Titan_WarLord_BOSS_128_Test1 {
  coords 7043.908 124.841 6598.397
  angles 0 -140.455 0
 }
+Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
+ coords 7073.004 164.674 6042.66
+}

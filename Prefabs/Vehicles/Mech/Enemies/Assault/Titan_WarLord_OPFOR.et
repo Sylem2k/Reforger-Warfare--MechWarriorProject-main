@@ -127,6 +127,9 @@ Vehicle {
      m_sAimMountId "SENTINEL_LAS"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
+     m_Point PointInfo "{6AD472202C9AB729}" {
+      Offset 20.4731 0.9378 30.6079
+     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -856,7 +859,7 @@ Vehicle {
    m_fAngularSpeed 0.52
    m_fSizeScale 2.8
    m_GroundPoint PointInfo "{E60F00000000004F}" {
-    Offset -1.134 -44.668 -0.8833
+    Offset -1.1338 -47.5395 -0.8833
    }
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
@@ -939,13 +942,10 @@ Vehicle {
    m_fTwistSpeed 26
    m_fDeadzone 6
    m_bCentreWhenEmpty 0
-   // Restore the Warlord's original torso axis. The hips SLOT offset is NOT the waist pivot;
-   // using it pulled the torso/arms far from the chassis during yaw.
-   // Fine-adjust this gizmo to the actual model waist seam after Workbench inspection.
    m_TorsoPivotPoint PointInfo "{A7F0B05520261110}" {
-    Offset -0.217 12.339 7.567
+    Offset -0.2168 0.3412 0.2891
    }
-   m_vPivot -0.217 12.339 7.567
+   m_vPivot 0 0 0
    m_aTwistSlots {
     "Torso" "Exta" "Cannon_top_R" "Cannon_top_L"
    }
@@ -1188,7 +1188,7 @@ Vehicle {
    m_Center PointInfo "{E60F0000000000AC}" {
     Offset 0 13 0
    }
-   m_fRadius 35
+   m_fRadius 70
    m_bBlockBeams 1
    m_sBubblePrefab "{E8A100000000B136}Prefabs/Vehicles/Mech/Shield/Warlord_Boss_Shield_Bubble.et"
    m_bBubbleAlwaysVisible 1
@@ -1417,43 +1417,43 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
-     Offset 3.9538 -23.1415 0.3086
+     Offset 6.6646 -46.7115 0.3086
      MergePhysics 0
      Prefab "{EA31000000001102}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -4.3532 -4.2985 1.0161
+     Offset -8.5024 -9.6889 1.0161
      MergePhysics 0
      Prefab "{EA31000000001101}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Right_Arm_Mount {
-     Offset 10.2014 -1.9352 0.0914
+     Offset 20.1021 -1.9352 0.0913
      Prefab "{ED24000000000032}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_DamageTest_Arm_Right.et"
     }
     EntitySlotInfo Las_Cannon_Arm {
-     Offset -12.681 -2.0302 1.4466
+     Offset -24.0459 -1.3474 1.8345
      Angles 5.1116 2.2621 23.9108
      Prefab "{ED24000000000031}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_DamageTest_Arm_Left.et"
     }
     EntitySlotInfo Exta {
-     Offset -0.2166 4.6032 7.5671
+     Offset 0.1509 9.5097 15.2598
      Angles 0 2.7371 0
      Prefab "{3BC88C1B5DE393A2}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Head.et"
     }
     EntitySlotInfo Cannon_top_R {
-     Offset 7.2419 14.8564 2.9003
+     Offset 14.4219 27.8961 2.5566
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
     EntitySlotInfo Cannon_top_L {
-     Offset -7.1304 14.7704 2.757
+     Offset -15.9639 26.9389 0.5625
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
     EntitySlotInfo Hips {
-     Offset -0.2807 -4.0441 0.8762
+     Offset -0.2808 -8.2273 0.876
      Prefab "{FE37C2C97CDEB011}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_Boss_Hips_.et"
     }
    }
@@ -1547,8 +1547,6 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 7090.643 164.029 6053.243
- angles 0 -44.787 0
- scale 2
+ coords 7073.004 164.674 6042.66
  m_eVehicleType VEHICLE
 }
