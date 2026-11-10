@@ -26,13 +26,13 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
         if (!forState || !m_bSpreadTargets)
             return super.FindBestTarget(forState);
 
-        // An unchanged target needs time for heavy guns to physically traverse.
-        // Keep it instead of bouncing between players at every 1.2 s scan.
+        // Keep an existing vehicle target so the heavy arms can settle and
+        // damage the hull. Infantry never blocks acquisition of a visible tank.
         IEntity held = forState.m_pTarget;
-        if (held && forState.m_fTargetTime < Math.Max(m_fMinimumTargetHoldSeconds, 0))
+        if (held && Vehicle.Cast(held) && forState.m_fTargetTime < Math.Max(m_fMinimumTargetHoldSeconds, 0))
         {
-            Faction currentFaction = GetMechFaction();
-            if (currentFaction && IsValidTarget(held) && IsHostile(held, currentFaction) && HasLineOfSight(GetAimPoint(held), held))
+            Faction heldFaction = GetMechFaction();
+            if (heldFaction && IsValidTarget(held) && IsHostile(held, heldFaction) && HasLineOfSight(GetAimPoint(held), held))
                 return held;
         }
 
@@ -43,8 +43,16 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
             return super.FindBestTarget(forState);
 
         float range = Math.Max(m_fEngageRange, 10.0);
-        float nearestSq = range * range;
-        IEntity best;
+        float rangeSq = range * range;
+        float freeVehicleDistance = rangeSq;
+        float sharedVehicleDistance = rangeSq;
+        float freeInfantryDistance = rangeSq;
+        float sharedInfantryDistance = rangeSq;
+
+        IEntity freeVehicle;
+        IEntity sharedVehicle;
+        IEntity freeInfantry;
+        IEntity sharedInfantry;
 
         m_aQuery.Clear();
         world.QueryEntitiesBySphere(owner.GetOrigin(), range, CollectQueryEntity, null, EQueryEntitiesFlags.DYNAMIC);
@@ -59,33 +67,79 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
             if (!soldier && !vehicle)
                 continue;
 
+            // Vehicle crew are never direct AI targets while seated.
             if (soldier && candidate.GetParent())
                 continue;
-
             if (!IsAlive(candidate) || !IsHostile(candidate, mechFaction))
                 continue;
 
-            // Reserve current targets of other boss gunner stations.
-            if (IsTargetTakenByOtherStation(candidate, forState))
+            float distanceSq = vector.DistanceSq(candidate.GetOrigin(), owner.GetOrigin());
+            if (distanceSq >= rangeSq)
                 continue;
 
-            float distanceSq = vector.DistanceSq(candidate.GetOrigin(), owner.GetOrigin());
-            if (distanceSq >= nearestSq)
-                continue;
+            bool alreadyTaken = IsTargetTakenByOtherStation(candidate, forState);
+
+            // Skip expensive visibility traces if this target cannot improve
+            // the corresponding vehicle/infantry and free/shared tier.
+            if (vehicle)
+            {
+                if (!alreadyTaken && distanceSq >= freeVehicleDistance)
+                    continue;
+                if (alreadyTaken && distanceSq >= sharedVehicleDistance)
+                    continue;
+            }
+            else
+            {
+                if (!alreadyTaken && distanceSq >= freeInfantryDistance)
+                    continue;
+                if (alreadyTaken && distanceSq >= sharedInfantryDistance)
+                    continue;
+            }
 
             if (!HasLineOfSight(GetAimPoint(candidate), candidate))
                 continue;
 
-            nearestSq = distanceSq;
-            best = candidate;
+            if (vehicle)
+            {
+                if (alreadyTaken)
+                {
+                    sharedVehicleDistance = distanceSq;
+                    sharedVehicle = candidate;
+                }
+                else
+                {
+                    freeVehicleDistance = distanceSq;
+                    freeVehicle = candidate;
+                }
+            }
+            else
+            {
+                if (alreadyTaken)
+                {
+                    sharedInfantryDistance = distanceSq;
+                    sharedInfantry = candidate;
+                }
+                else
+                {
+                    freeInfantryDistance = distanceSq;
+                    freeInfantry = candidate;
+                }
+            }
         }
 
         m_aQuery.Clear();
 
-        if (best)
-            return best;
+        // Target an exposed hostile vehicle first, even when other stations
+        // are already attacking it. Only engage infantry when no tank is seen.
+        if (freeVehicle)
+            return freeVehicle;
+        if (sharedVehicle)
+            return sharedVehicle;
+        if (freeInfantry)
+            return freeInfantry;
+        if (sharedInfantry)
+            return sharedInfantry;
 
-        // Lone target: all stations may engage it. Do not leave two banks idle.
-        return super.FindBestTarget(forState);
+        return null;
     }
 }
