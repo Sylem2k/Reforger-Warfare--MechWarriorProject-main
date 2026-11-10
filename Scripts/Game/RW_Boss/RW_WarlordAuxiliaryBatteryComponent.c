@@ -140,7 +140,7 @@ class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
                 continue;
             }
 
-            torso.AddChild(gun);
+           torso.AddChild(gun, -1);
 
             vector local[4];
             Math3D.AnglesToMatrix(definition.m_vLocalAngles, local);
