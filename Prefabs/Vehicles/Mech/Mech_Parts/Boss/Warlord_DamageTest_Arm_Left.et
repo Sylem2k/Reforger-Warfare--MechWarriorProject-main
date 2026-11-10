@@ -5,7 +5,9 @@ GenericEntity : "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon
  components {
   BFA_MechLasCannonModuleComponent "{6AAE3A126AD58E22}" {
    m_bFireAtAimPoint 1
-   m_fDamageVsInfantry 0.1
+   m_fDamageVsInfantry 0.04
+   m_fRoundsPerMinute 90
+   m_bArmorPiercingFallback 0
    m_fDamageVsVehicles 2.5
    m_fInfantryArmourFloor 0
    m_fCgsArmorPiercing 0.5
