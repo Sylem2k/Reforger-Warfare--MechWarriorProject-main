@@ -15,6 +15,8 @@ GenericEntity {
    m_fCrewShareExplosive 0
    m_bKillCrewOnDestroy 0
    m_bAllowInfantry 0
+   // This is an instant beam, not a simulated 1000 m/s shell.
+   m_bInstantBeamImpact 1
    m_fRange 1300
    m_fScanInterval 1.1
    m_fTargetHoldSeconds 6
@@ -34,6 +36,8 @@ GenericEntity {
    m_fBarrelLength 0.3
    m_FX BFA_MechWeaponFX "{E8A30000000000A5}" {
     m_sBeamPrefab "{F9F15A6E70B2C046}Prefabs/Vehicles/Mech/Weapons/CGS_LaserBeam.et"
+    // Client impact particle plays at the beam endpoint on the next FX frame.
+    m_sImpactParticle "{AD69C17360EE596B}Particles/Weapon/Explosion_API.ptc"
     m_fBeamDuration 0.16
     m_fBeamWidth 0.13
     m_fProjectileSpeed 1500
