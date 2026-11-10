@@ -16,6 +16,13 @@ GenericEntity {
    m_fMinAltitude 5
    m_fScanInterval 0.5
    m_bRequiresCrew 0
+   m_fDamageVsInfantry 0.08
+   m_fDamageVsVehicles 2
+   m_fInfantryArmourFloor 0
+   m_fCgsArmorPiercing 0.55
+   m_fCrewShareKinetic 0
+   m_fCrewShareExplosive 0
+   m_bKillCrewOnDestroy 1
    m_fShellSpeed 1050
    m_fBurstDamage 320
    m_fBurstRadius 12
