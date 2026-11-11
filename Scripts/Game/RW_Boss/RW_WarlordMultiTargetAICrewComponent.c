@@ -21,6 +21,29 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
     [Attribute("7", UIWidgets.Auto, "Minimum seconds to stay locked on a valid visible target. Prevents turrets switching every scan.", category: "Warlord Targeting")]
     protected float m_fMinimumTargetHoldSeconds;
 
+    // Warlord-only staggered firing; shared Mech Core and player control stay unchanged.
+    [Attribute("true", UIWidgets.CheckBox, "Use staggered, randomized AI battery volleys instead of synchronized bursts.", category: "Warlord Firing")]
+    protected bool m_bStaggeredBatteryFire;
+
+    [Attribute("0.3", UIWidgets.Auto, "Minimum extra delay after acquiring a new target (seconds).", category: "Warlord Firing")]
+    protected float m_fOpeningDelayMin;
+    [Attribute("3.0", UIWidgets.Auto, "Maximum extra delay after acquiring a new target (seconds).", category: "Warlord Firing")]
+    protected float m_fOpeningDelayMax;
+
+    [Attribute("1.3", UIWidgets.Auto, "Minimum active firing burst duration (seconds).", category: "Warlord Firing")]
+    protected float m_fBurstLengthMin;
+    [Attribute("2.7", UIWidgets.Auto, "Maximum active firing burst duration (seconds).", category: "Warlord Firing")]
+    protected float m_fBurstLengthMax;
+
+    [Attribute("3.5", UIWidgets.Auto, "Minimum pause between bursts (seconds).", category: "Warlord Firing")]
+    protected float m_fVolleyPauseMin;
+    [Attribute("7.5", UIWidgets.Auto, "Maximum pause between bursts (seconds).", category: "Warlord Firing")]
+    protected float m_fVolleyPauseMax;
+
+    // The DRIVER alternates its arm-cannon group (1) and shoulder group (2).
+    // Other virtual gunners keep their own assigned weapon group and target.
+    protected int m_iNextDriverAttackGroup = 1;
+
     override protected IEntity FindBestTarget(BFA_MechAIStationState forState = null)
     {
         if (!forState || !m_bSpreadTargets)
@@ -142,4 +165,122 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
 
         return null;
     }
+
+    // Keep one consistent, nonnegative range even if an editor enters reversed limits.
+    protected float RandomFiringTime(float minimum, float maximum)
+    {
+        float low = Math.Max(minimum, 0.0);
+        float high = Math.Max(maximum, low);
+        return Math.RandomFloat(low, high);
+    }
+
+    protected int ChooseSequencedGroup(BFA_MechAIStationState state)
+    {
+        if (!state || !m_pCore)
+            return 0;
+
+        // Each virtual boss gunner has a dedicated offensive group. Preserve
+        // that group's normal weapon routing and existing vehicle-first targeting.
+        if (state.m_sStationId != "DRIVER")
+            return ChooseWeaponGroup(state.m_sStationId, state.m_pTarget);
+
+        // Group 1 is the arm pair, group 2 the shoulder. Toggle per burst
+        // so disabling Fire All Groups does not permanently silence one bank.
+        array<int> available = {};
+        m_pCore.GetUsableWeaponGroups("DRIVER", available);
+        bool arms = available.Contains(1) && GroupHasOffensiveWeapons("DRIVER", 1);
+        bool shoulder = available.Contains(2) && GroupHasOffensiveWeapons("DRIVER", 2);
+
+        if (arms && shoulder)
+        {
+            int selected = m_iNextDriverAttackGroup;
+            if (selected != 1 && selected != 2)
+                selected = 1;
+            m_iNextDriverAttackGroup = selected == 1 ? 2 : 1;
+            return selected;
+        }
+        if (arms)
+            return 1;
+        if (shoulder)
+            return 2;
+
+        return ChooseWeaponGroup("DRIVER", state.m_pTarget);
+    }
+
+    // Boss-only version of the base station burst loop. Target checks, LOS,
+    // replication and fire routing are the same; only the firing schedule changes.
+    override protected void TickStation(BFA_MechAIStationState state, float dt)
+    {
+        if (!m_bStaggeredBatteryFire)
+        {
+            super.TickStation(state, dt);
+            return;
+        }
+
+        if (!state || !m_pAim || !m_pRouter || !m_pCore)
+            return;
+
+        state.m_fRescanTimer -= dt;
+        if (!IsValidTarget(state.m_pTarget) || state.m_fRescanTimer <= 0)
+        {
+            state.m_fRescanTimer = Math.Max(m_fScanInterval, 0.1);
+            IEntity next = FindBestTarget(state);
+            if (next != state.m_pTarget)
+            {
+                CeaseFire(state);
+                state.m_pTarget = next;
+                state.m_fTargetTime = 0;
+                // Every bank starts on a different clock, including reacquisition.
+                state.m_fBurstTimer = RandomFiringTime(m_fOpeningDelayMin, m_fOpeningDelayMax);
+                if (m_bDebug && next)
+                    Print(string.Format("[RW WARLORD FIRE] %1 target=%2 openingDelay=%3",
+                        state.m_sStationId, next, state.m_fBurstTimer));
+            }
+        }
+
+        if (!state.m_pTarget)
+        {
+            CeaseFire(state);
+            return;
+        }
+
+        vector aimWorld = GetAimPoint(state.m_pTarget);
+        m_pAim.ServerSetStationAim(state.m_sStationId, GetOwner().CoordToLocal(aimWorld));
+
+        state.m_fTargetTime += dt;
+        if (state.m_fTargetTime < Math.Max(m_fAimSettleTime, 0.0))
+            return;
+
+        if (!HasLineOfSight(aimWorld, state.m_pTarget))
+        {
+            CeaseFire(state);
+            return;
+        }
+
+        state.m_fBurstTimer -= dt;
+        if (state.m_iFiringGroup == 0)
+        {
+            if (state.m_fBurstTimer > 0)
+                return;
+
+            int group = ChooseSequencedGroup(state);
+            if (group < 1)
+                return;
+
+            m_pCore.ServerSelectWeaponGroup(state.m_sStationId, group);
+            m_pRouter.ServerSetFireHeld(state.m_sStationId, group, true);
+            state.m_iFiringGroup = group;
+            state.m_fBurstTimer = Math.Max(RandomFiringTime(m_fBurstLengthMin, m_fBurstLengthMax), 0.1);
+
+            if (m_bDebug)
+                Print(string.Format("[RW WARLORD FIRE] %1 group=%2 burst=%3",
+                    state.m_sStationId, group, state.m_fBurstTimer));
+        }
+        else if (state.m_fBurstTimer <= 0)
+        {
+            CeaseFire(state);
+            state.m_fBurstTimer = Math.Max(RandomFiringTime(m_fVolleyPauseMin, m_fVolleyPauseMax), 0.1);
+        }
+    }
+
 }
