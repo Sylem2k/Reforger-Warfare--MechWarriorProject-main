@@ -920,7 +920,7 @@ Vehicle {
    m_bGunners 1
    m_eMode HOLD
    m_sFaction "USSR"
-   m_eFireMode FIRE_AT_WILL
+   m_eFireMode RETURN_FIRE
    m_bFollowGroupMode 0
    m_sPilotPrefab "{C56A957843F590E5}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/REDFOR_BRAIN.et"
    m_sPilotGroupPrefab ""
@@ -933,7 +933,7 @@ Vehicle {
   CGS_MechDeathComponent "{E60F000000000058}" {
   }
   CGS_MechHeatComponent "{E60F000000000059}" {
-   m_fMaxHeat 2400
+   m_fMaxHeat 12400
    m_fCoolingPerSecond 225
   }
   CGS_TorsoTwistComponent "{E60F00000000005A}" {
@@ -1175,7 +1175,7 @@ Vehicle {
   }
   RW_WarlordShieldComponent "{E60F0000000000AB}" {
    m_fMaxShield 150000
-   m_fRegenPerSecond 600
+   m_fRegenPerSecond 400
    m_fRegenDelay 10
    m_fBrokenDelay 27
    m_fReactivateAt 0.4
@@ -1186,13 +1186,14 @@ Vehicle {
    m_fEmpCost 3
    m_fOtherCost 1.15
    m_Center PointInfo "{E60F0000000000AC}" {
-    Offset 0 13 0
+    Offset -1.1089 -1.4157 0
    }
    m_fRadius 70
    m_bBlockBeams 1
    m_sBubblePrefab "{E8A100000000B136}Prefabs/Vehicles/Mech/Shield/Warlord_Boss_Shield_Bubble.et"
    m_bBubbleAlwaysVisible 1
    m_fBubbleFlashTime 0.85
+   m_sHitParticle "{C7C126B8FC38B083}Particles/Smoke_Building_Shop.ptc"
   }
   RW_WarlordSmoothAimComponent "{E60F000000000008}" {
    m_fReticleAimDistance 1000
@@ -1297,7 +1298,7 @@ Vehicle {
    m_vIconPos 0 3 0
   }
   SCR_VehicleCameraDataComponent "{E60F000000000080}" {
-   m_fHeight 3
+   m_fHeight 9.1
    m_fBobScale 0.25
    m_fShakeScale 0.1
    m_fDist_Max 14
@@ -1443,12 +1444,12 @@ Vehicle {
      Prefab "{3BC88C1B5DE393A2}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Head.et"
     }
     EntitySlotInfo Cannon_top_R {
-     Offset 14.4219 27.8961 2.5566
+     Offset 14.1479 28.4597 2.5698
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
     EntitySlotInfo Cannon_top_L {
-     Offset -15.9639 26.9389 0.5625
+     Offset -14.979 28.6716 0.5156
      Angles 0 2.7371 0
      Prefab "{6AD9E00E174AF606}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_top_Cannon_Right.et"
     }
@@ -1547,6 +1548,6 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 7073.004 164.674 6042.66
+ coords 6578.874 209.635 6507.229
  m_eVehicleType VEHICLE
 }
