@@ -23,6 +23,7 @@ GenericEntity {
    m_fMaxFootLead 1.5
    m_fMaxSideLead 0.2
    m_fNoCrossMargin 0.82
+   m_bFootRestAtLastBone 1
    m_fStepCameraShake 0.23
    m_LastBone PointInfo "{EA31000000000515}" {
     PivotID "J3"
