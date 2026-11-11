@@ -84,6 +84,11 @@ class RW_WarlordWarhornComponent : ScriptComponent
         if (!Replication.IsServer() || !m_bEnabled || !GetOwner())
             return;
 
+        // Do not broadcast the boss horn after the Warlord is destroyed.
+        DamageManagerComponent damage = DamageManagerComponent.Cast(GetOwner().FindComponent(DamageManagerComponent));
+        if (damage && damage.GetState() == EDamageState.DESTROYED)
+            return;
+
         if (!System.IsConsoleApp())
             PlayWarhornLocal();
 
