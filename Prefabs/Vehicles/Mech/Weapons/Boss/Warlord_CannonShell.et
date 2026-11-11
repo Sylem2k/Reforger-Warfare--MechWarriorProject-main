@@ -1,0 +1,17 @@
+// Warlord kinetic cannon visible shell, local client FX only (not a laser beam).
+// The Core lasbolt mesh is a short capsule, rotated and moved by Mech Core shot FX.
+GenericEntity {
+ ID "EA61110000000111"
+ components {
+  MeshObject "{EA61110000000112}" {
+   Object "{C4E113BF121624B3}Assets/Weapons/lasbolt.xob"
+   Materials {
+    MaterialAssignClass "{EA61110000000113}" {
+     SourceMaterial "lasbolt"
+     AssignedMaterial "{EA61110000000004}Common/Models/Titan_War_Lord/Data/Warlord_CannonShell.emat"
+    }
+   }
+  }
+ }
+ scale 4
+}
