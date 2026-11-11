@@ -9,20 +9,20 @@ GenericEntity {
    }
   }
   BFA_MechLegComponent "{EA31000000000514}" {
-   m_fStepHeight 0.78
+   m_fStepHeight 0.6
    m_fObstacleStepHeight 3.2
    m_fSwingFraction 0.43
    m_fSizeScale 2.8
    m_fMotionDeadZone 0.13
-   m_fStrideLength 4.6
+   m_fStrideLength 3.8
    m_fStrideRefSpeed 5.0
-   m_fStrideMin 2.6
-   m_fStrideMax 5.8
-   m_fMinCadence 0.23
-   m_fMaxCadence 0.78
-   m_fMaxFootLead 3.2
-   m_fMaxSideLead 0.5
-   m_fNoCrossMargin 0.55
+   m_fStrideMin 2.1
+   m_fStrideMax 4.6
+   m_fMinCadence 0.32
+   m_fMaxCadence 0.9
+   m_fMaxFootLead 1.5
+   m_fMaxSideLead 0.2
+   m_fNoCrossMargin 0.82
    m_fStepCameraShake 0.23
    m_LastBone PointInfo "{EA31000000000515}" {
     PivotID "J3"
