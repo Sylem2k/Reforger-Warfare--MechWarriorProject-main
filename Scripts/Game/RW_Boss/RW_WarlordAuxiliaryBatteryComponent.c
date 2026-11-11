@@ -198,8 +198,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 
     // The base router broadcasts this float to all clients as a debug tracer
     // length. For non-beam guns that length is otherwise presentation-only.
-    // A negative value means: play the shot sound, muzzle and impact as usual,
-    // but do not spawn a visible shell mesh/trail.
+    // A negative value means: use a dim kinetic shell visual (all shots still
+    // render); every fourth shot uses the bright projectile/tracer FX.
     override int ServerBroadcastModuleShot(
         BFA_MechWeaponModuleComponent module,
         vector start, vector end, bool hit, float speed,
@@ -251,11 +251,12 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
             return;
         }
 
-        // Temporarily hide only the travelling projectile on non-tracer shells.
-        // Base shot FX still plays the muzzle sound, impact and hit effects.
+        // Every cannon round now gets a visible travelling shell.
+        // Only shot 4/8/12/... uses the brighter amber tracer prefab.
+        // Do not turn non-tracers into invisible shots.
         ResourceName savedProjectile = fx.m_sProjectilePrefab;
         ResourceName savedTrail = fx.m_sTrailParticle;
-        fx.m_sProjectilePrefab = "";
+        fx.m_sProjectilePrefab = "{EA61110000000002}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_CannonShell.et";
         fx.m_sTrailParticle = "";
         super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
             speed, Math.AbsFloat(length), thickness);
