@@ -44,6 +44,33 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
     // Other virtual gunners keep their own assigned weapon group and target.
     protected int m_iNextDriverAttackGroup = 1;
 
+    // The separately slotted top cannons are NOT core hardpoint modules.
+    // Let their boss-only fire controller reuse the DRIVER's verified AI target
+    // rather than performing two more expensive scans across 128 players.
+    IEntity GetWarlordDriverTarget()
+    {
+        Faction bossFaction = GetMechFaction();
+        if (!bossFaction)
+            return null;
+
+        foreach (BFA_MechAIStationState state : m_aStations)
+        {
+            if (!state || state.m_sStationId != "DRIVER")
+                continue;
+
+            IEntity target = state.m_pTarget;
+            if (!target || !IsValidTarget(target) || !IsHostile(target, bossFaction))
+                return null;
+
+            if (!HasLineOfSight(GetAimPoint(target), target))
+                return null;
+
+            return target;
+        }
+
+        return null;
+    }
+
     override protected IEntity FindBestTarget(BFA_MechAIStationState forState = null)
     {
         if (!forState || !m_bSpreadTargets)
