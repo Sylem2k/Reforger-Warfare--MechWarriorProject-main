@@ -111,9 +111,14 @@ class RW_WarlordWarhornComponent : ScriptComponent
         if (!boss || m_sSoundProject.IsEmpty() || m_sSoundEvent.IsEmpty())
             return;
 
+        // Use the owner's world-space basis to place the audio emitter
+        // at its configured local offset without the unavailable CoordToWorld().
         vector soundMat[4];
-        Math3D.MatrixIdentity4(soundMat);
-        soundMat[3] = boss.CoordToWorld(m_vHornOffset);
+        boss.GetWorldTransform(soundMat);
+        soundMat[3] = soundMat[3]
+            + soundMat[0] * m_vHornOffset[0]
+            + soundMat[1] * m_vHornOffset[1]
+            + soundMat[2] * m_vHornOffset[2];
 
         BFA_MechWeaponModuleComponent.BFA_MechPlaySound(m_sSoundProject, m_sSoundEvent, soundMat);
 
