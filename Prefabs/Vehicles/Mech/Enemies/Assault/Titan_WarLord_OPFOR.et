@@ -849,17 +849,18 @@ Vehicle {
    m_bWalkerADSteering 1
    m_bWalkerFollowTorso 1
    m_bWalkerPivotToTorso 1
-   m_fWalkerFollowStartDeg 45
+   m_fWalkerFollowStartDeg 55
    m_fWalkerFollowFullDeg 78
-   m_fWalkerFollowMaxInput 0.5
+   m_fWalkerFollowMaxInput 0.35
    m_fSpeed 3.1
    m_bCanSprint 1
    m_fSprintSpeed 4.8
    m_fStrafeSpeed 0
    m_fSprintStrafeSpeed 0
    m_fAvgHeightSpeed 2
-   m_fAngularSpeed 0.52
+   m_fAngularSpeed 0.36
    m_fSizeScale 2.8
+   m_bTerrainSupport 1
    m_GroundPoint PointInfo "{E60F00000000004F}" {
     Offset -1.1338 -46.9585 -0.8833
    }
