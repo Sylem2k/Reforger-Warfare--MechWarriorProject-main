@@ -1175,6 +1175,17 @@ Vehicle {
    m_fVolleyPauseMin 3.5
    m_fVolleyPauseMax 7.5
   }
+  RW_WarlordWarhornComponent "{A6111111000AA003}" {
+   m_bEnabled 1
+   m_sSoundProject "{A6111111000AA002}Sounds/Warlord/Warlord_Warhorn.acp"
+   m_sSoundEvent "SOUND_WARLORD_HORN"
+   m_vHornOffset 0 20 0
+   m_fFirstDelayMin 35
+   m_fFirstDelayMax 95
+   m_fRepeatDelayMin 120
+   m_fRepeatDelayMax 310
+   m_fLongSilenceChance 0.25
+  }
   RW_WarlordShieldComponent "{E60F0000000000AB}" {
    m_fMaxShield 150000
    m_fRegenPerSecond 400
