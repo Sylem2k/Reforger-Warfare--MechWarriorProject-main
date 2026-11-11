@@ -189,7 +189,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (!module)
             return false;
 
-        if (RW_WarlordBossAutocannon.Cast(module))
+        if (RW_WarlordBossAutocannon.Cast(module) || CGS_Titan_Cannon.Cast(module))
             return true;
 
         // This class also handles energy Omni beams; exclude those.
