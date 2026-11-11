@@ -38,6 +38,9 @@ class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
     // Keep this above Mech Core's 0..17 real hardpoints. The boss-only weapon
     // router maps 18+ directly to these locally created modules for shot FX.
     static const int FIRST_VIRTUAL_HARDPOINT = 18;
+    // Keep outside the auxiliary 18-29 range and outside the 18 core slots.
+    static const int TOP_RIGHT_VIRTUAL_HARDPOINT = 48;
+    static const int TOP_LEFT_VIRTUAL_HARDPOINT = 49;
 
     [Attribute("Torso", UIWidgets.EditBox, "Upper body slot whose yaw the battery follows.", category: "Auxiliary Battery")]
     protected string m_sParentSlot;
@@ -50,17 +53,44 @@ class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
     protected bool m_bBuilt;
     protected int m_iResolveAttempts;
 
+    // Both large top guns already exist in SlotManager. Bind the existing
+    // slotted CGS Titan Cannon modules instead of spawning duplicate geometry.
+    [Attribute("true", UIWidgets.CheckBox, "Enable the two existing Warlord top Titan cannons as independent boss siege guns.", category: "Warlord Top Cannons")]
+    protected bool m_bEnableTopCannons;
+    [Attribute("5.5", UIWidgets.Auto, "Minimum seconds between individual top-cannon attacks.", category: "Warlord Top Cannons")]
+    protected float m_fTopCannonPauseMin;
+    [Attribute("9.5", UIWidgets.Auto, "Maximum seconds between individual top-cannon attacks.", category: "Warlord Top Cannons")]
+    protected float m_fTopCannonPauseMax;
+
+    protected CGS_Titan_Cannon m_pTopRight;
+    protected CGS_Titan_Cannon m_pTopLeft;
+    protected int m_iTopBindAttempts;
+    protected bool m_bTopFireTickRunning;
+    protected int m_iTopRightNextMs;
+    protected int m_iTopLeftNextMs;
+
     override void OnPostInit(IEntity owner)
     {
         super.OnPostInit(owner);
         if (GetGame() && GetGame().GetCallqueue())
+        {
             GetGame().GetCallqueue().CallLater(BuildBattery, 150, false);
+            if (m_bEnableTopCannons)
+                GetGame().GetCallqueue().CallLater(BindTopCannons, 350, false);
+        }
     }
 
     override void OnDelete(IEntity owner)
     {
         if (GetGame() && GetGame().GetCallqueue())
+        {
             GetGame().GetCallqueue().Remove(BuildBattery);
+            GetGame().GetCallqueue().Remove(BindTopCannons);
+            GetGame().GetCallqueue().Remove(TickTopCannons);
+        }
+        m_bTopFireTickRunning = false;
+        m_pTopRight = null;
+        m_pTopLeft = null;
 
         // All locally-created modules are children of the torso slot and are
         // destroyed with it. Never delete another mod's weapon or a core slot.
@@ -76,6 +106,120 @@ class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
         if (slot < 0 || slot >= m_aLiveModules.Count())
             return null;
         return m_aLiveModules[slot];
+    }
+
+
+    BFA_MechWeaponModuleComponent GetTopCannonModuleForVirtualIndex(int index)
+    {
+        if (index == TOP_RIGHT_VIRTUAL_HARDPOINT)
+            return m_pTopRight;
+        if (index == TOP_LEFT_VIRTUAL_HARDPOINT)
+            return m_pTopLeft;
+        return null;
+    }
+
+    protected void BindTopCannons()
+    {
+        if (!GetOwner() || !GetGame())
+            return;
+
+        SlotManagerComponent slots = SlotManagerComponent.Cast(GetOwner().FindComponent(SlotManagerComponent));
+        if (slots)
+        {
+            EntitySlotInfo rightSlot = slots.GetSlotByName("Cannon_top_R");
+            EntitySlotInfo leftSlot = slots.GetSlotByName("Cannon_top_L");
+
+            if (!m_pTopRight && rightSlot && rightSlot.GetAttachedEntity())
+            {
+                m_pTopRight = CGS_Titan_Cannon.Cast(
+                    rightSlot.GetAttachedEntity().FindComponent(CGS_Titan_Cannon));
+                if (m_pTopRight)
+                    m_pTopRight.BindToHardpoint(GetOwner(), TOP_RIGHT_VIRTUAL_HARDPOINT,
+                        "WARLORD_TOP_RIGHT", BFA_EMechHardpointClass.UTILITY, "DRIVER", 2);
+            }
+
+            if (!m_pTopLeft && leftSlot && leftSlot.GetAttachedEntity())
+            {
+                m_pTopLeft = CGS_Titan_Cannon.Cast(
+                    leftSlot.GetAttachedEntity().FindComponent(CGS_Titan_Cannon));
+                if (m_pTopLeft)
+                    m_pTopLeft.BindToHardpoint(GetOwner(), TOP_LEFT_VIRTUAL_HARDPOINT,
+                        "WARLORD_TOP_LEFT", BFA_EMechHardpointClass.UTILITY, "DRIVER", 2);
+            }
+        }
+
+        // Only the server simulates and decides to fire. All clients bind
+        // locally so the existing module-shot RPC can resolve the right FX.
+        if (Replication.IsServer() && !m_bTopFireTickRunning && (m_pTopRight || m_pTopLeft))
+        {
+            m_bTopFireTickRunning = true;
+            int now = System.GetTickCount();
+            m_iTopRightNextMs = now + 2000;
+            m_iTopLeftNextMs = now + 4000;
+            GetGame().GetCallqueue().CallLater(TickTopCannons, 500, true);
+        }
+
+        if ((!m_pTopRight || !m_pTopLeft) && m_iTopBindAttempts < 40)
+        {
+            m_iTopBindAttempts++;
+            GetGame().GetCallqueue().CallLater(BindTopCannons, 250, false);
+        }
+        else if ((!m_pTopRight || !m_pTopLeft) && m_iTopBindAttempts >= 40)
+        {
+            Print("[RW WARLORD CANNON] One or both Cannon_top slots are missing or have no CGS_Titan_Cannon.", LogLevel.WARNING);
+        }
+    }
+
+    protected int NextTopCannonDelayMs()
+    {
+        float pause = Math.RandomFloat(
+            Math.Max(m_fTopCannonPauseMin, 1.0),
+            Math.Max(m_fTopCannonPauseMax, Math.Max(m_fTopCannonPauseMin, 1.0)));
+        return (int)(pause * 1000.0);
+    }
+
+    // Reuse the verified DRIVER target. No separate 128-player entity query.
+    // Each of the two slotted heavy guns fires on its own randomized clock.
+    protected void TickTopCannons()
+    {
+        if (!Replication.IsServer() || !GetOwner() || !m_bEnableTopCannons)
+            return;
+
+        RW_WarlordMultiTargetAICrewComponent ai = RW_WarlordMultiTargetAICrewComponent.Cast(
+            GetOwner().FindComponent(RW_WarlordMultiTargetAICrewComponent));
+        if (!ai)
+            return;
+
+        IEntity target = ai.GetWarlordDriverTarget();
+        if (!target)
+            return;
+
+        vector targetPoint = RW_WarlordCoverVisibility.AimPoint(target);
+        int now = System.GetTickCount();
+
+        if (m_pTopRight && m_pTopRight.IsBoundToHardpoint() && now >= m_iTopRightNextMs)
+        {
+            IEntity gunRight = m_pTopRight.GetOwner();
+            if (gunRight && RW_WarlordCoverVisibility.IsClear(
+                GetOwner(), gunRight, gunRight.GetOrigin(), targetPoint, target))
+            {
+                m_pTopRight.ServerTriggerDown(null);
+                m_pTopRight.ServerTriggerUp(null);
+                m_iTopRightNextMs = now + NextTopCannonDelayMs();
+            }
+        }
+
+        if (m_pTopLeft && m_pTopLeft.IsBoundToHardpoint() && now >= m_iTopLeftNextMs)
+        {
+            IEntity gunLeft = m_pTopLeft.GetOwner();
+            if (gunLeft && RW_WarlordCoverVisibility.IsClear(
+                GetOwner(), gunLeft, gunLeft.GetOrigin(), targetPoint, target))
+            {
+                m_pTopLeft.ServerTriggerDown(null);
+                m_pTopLeft.ServerTriggerUp(null);
+                m_iTopLeftNextMs = now + NextTopCannonDelayMs();
+            }
+        }
     }
 
     protected void BuildBattery()
@@ -272,7 +416,12 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
                 GetOwner().FindComponent(RW_WarlordAuxiliaryBatteryComponent)
             );
             if (battery)
+            {
+                BFA_MechWeaponModuleComponent top = battery.GetTopCannonModuleForVirtualIndex(hardpointIndex);
+                if (top)
+                    return top;
                 return battery.GetModuleForVirtualIndex(hardpointIndex);
+            }
         }
 
         return super.FindLocalModule(hardpointIndex);
