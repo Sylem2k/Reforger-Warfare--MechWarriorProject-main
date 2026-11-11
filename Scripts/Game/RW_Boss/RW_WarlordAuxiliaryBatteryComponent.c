@@ -178,6 +178,91 @@ class RW_WarlordBossWeaponRouterComponentClass : BFA_MechWeaponComponentClass
 
 class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 {
+    // Count only physical cannon shells. The server puts a visual-only flag in
+    // the unused tracer-length field of the EXISTING shot RPC. Thus every client
+    // agrees on exactly which shell is a tracer, even with packet loss.
+    // No extra RPC, network entity, damage, or shared Mech Core change.
+    protected ref array<int> m_aCannonShotCounts = {};
+
+    protected bool IsBossKineticCannon(BFA_MechWeaponModuleComponent module)
+    {
+        if (!module)
+            return false;
+
+        if (RW_WarlordBossAutocannon.Cast(module) || CGS_Titan_Cannon.Cast(module))
+            return true;
+
+        // This class also handles energy Omni beams; exclude those.
+        return RW_WarlordOmniTurret.Cast(module) && module.GetModuleId() == "Warlord_Omni_Cannon";
+    }
+
+    // The base router broadcasts this float to all clients as a debug tracer
+    // length. For non-beam guns that length is otherwise presentation-only.
+    // A negative value means: play the shot sound, muzzle and impact as usual,
+    // but do not spawn a visible shell mesh/trail.
+    override int ServerBroadcastModuleShot(
+        BFA_MechWeaponModuleComponent module,
+        vector start, vector end, bool hit, float speed,
+        float length, float thickness, bool serverImpact = false)
+    {
+        if (Replication.IsServer() && IsBossKineticCannon(module))
+        {
+            int hp = module.GetHardpointIndex();
+            if (hp >= 0 && hp < 64)
+            {
+                while (m_aCannonShotCounts.Count() <= hp)
+                    m_aCannonShotCounts.Insert(0);
+
+                int shots = m_aCannonShotCounts[hp] + 1;
+                m_aCannonShotCounts[hp] = shots;
+                if (Math.Mod(shots, 4) != 0)
+                    length = -Math.Max(Math.AbsFloat(length), 1.0);
+            }
+        }
+
+        return super.ServerBroadcastModuleShot(module, start, end, hit, speed,
+            length, thickness, serverImpact);
+    }
+
+    override protected void PlayShotLocal(
+        int hardpointIndex, int shotId, vector start, vector end,
+        int flags, float speed, float length, float thickness)
+    {
+        if (length >= 0)
+        {
+            super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+                speed, length, thickness);
+            return;
+        }
+
+        BFA_MechWeaponModuleComponent module = FindLocalModule(hardpointIndex);
+        if (!IsBossKineticCannon(module))
+        {
+            super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+                speed, Math.AbsFloat(length), thickness);
+            return;
+        }
+
+        BFA_MechWeaponFX fx = module.GetFX();
+        if (!fx)
+        {
+            super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+                speed, Math.AbsFloat(length), thickness);
+            return;
+        }
+
+        // Temporarily hide only the travelling projectile on non-tracer shells.
+        // Base shot FX still plays the muzzle sound, impact and hit effects.
+        ResourceName savedProjectile = fx.m_sProjectilePrefab;
+        ResourceName savedTrail = fx.m_sTrailParticle;
+        fx.m_sProjectilePrefab = "";
+        fx.m_sTrailParticle = "";
+        super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+            speed, Math.AbsFloat(length), thickness);
+        fx.m_sProjectilePrefab = savedProjectile;
+        fx.m_sTrailParticle = savedTrail;
+    }
+
     override protected BFA_MechWeaponModuleComponent FindLocalModule(int hardpointIndex)
     {
         if (hardpointIndex >= RW_WarlordAuxiliaryBatteryComponent.FIRST_VIRTUAL_HARDPOINT)

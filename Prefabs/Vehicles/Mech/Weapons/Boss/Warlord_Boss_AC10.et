@@ -25,7 +25,8 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
     m_sImpactParticle "{6FE5C11AEE0A28A1}Particles/Weapon/Explosion_HEI.ptc"
     m_sTrailParticle ""
     m_fProjectileSpeed 0
-    m_sImpactSoundProject "{25FCE4141ECBD633}Sounds/Weapons/Machineguns/UK59/LasCannon.acp"
+    m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
+    m_sImpactSoundEvent "SOUND_HIT_VEHICLE"
     m_sProjectilePrefab "{D52D998FF0829639}Prefabs/Particles/RocketTrace.et"
     m_bDebugTracer 0
    }

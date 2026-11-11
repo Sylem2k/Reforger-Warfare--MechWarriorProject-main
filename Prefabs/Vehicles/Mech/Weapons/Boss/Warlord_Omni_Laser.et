@@ -38,6 +38,8 @@ GenericEntity {
     m_sBeamPrefab "{F9F15A6E70B2C046}Prefabs/Vehicles/Mech/Weapons/CGS_LaserBeam.et"
     // Client impact particle plays at the beam endpoint on the next FX frame.
     m_sImpactParticle "{AD69C17360EE596B}Particles/Weapon/Explosion_API.ptc"
+    m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
+    m_sImpactSoundEvent "SOUND_HIT"
     m_fBeamDuration 0.16
     m_fBeamWidth 0.13
     m_fProjectileSpeed 1500

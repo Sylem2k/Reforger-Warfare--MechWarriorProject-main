@@ -24,6 +24,8 @@ GenericEntity {
     m_sSoundProject "{4623A5BCFEA997F1}Sounds/Weapons/AircraftWeapons/RocketPods/Weapons_RocketPods_Generic_Shot.acp"
     m_sTrailParticle "{BAA54A138D448E09}Particles/Logistics/Explosion/Trails/Smoke_Trail_Small.ptc"
     m_sImpactParticle "{636C188C0D4E6074}Particles/Weapon/Explosion_S5KO.ptc"
+    m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
+    m_sImpactSoundEvent "SOUND_HIT"
     m_sProjectilePrefab "{557C851E5BF78457}Prefabs/Vehicles/Mech/Weapons/SenMissile/Sen_Missile_Visual.et"
     m_fLinger 1
     m_fImpactPrefabLifetime 2
