@@ -196,7 +196,10 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
             int selected = m_iNextDriverAttackGroup;
             if (selected != 1 && selected != 2)
                 selected = 1;
-            m_iNextDriverAttackGroup = selected == 1 ? 2 : 1;
+            if (selected == 1)
+                m_iNextDriverAttackGroup = 2;
+            else
+                m_iNextDriverAttackGroup = 1;
             return selected;
         }
         if (arms)
