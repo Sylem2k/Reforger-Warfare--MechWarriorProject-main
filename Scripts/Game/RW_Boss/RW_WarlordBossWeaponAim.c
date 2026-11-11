@@ -10,6 +10,38 @@ class RW_WarlordBossLRMClass : RW_LRMWeaponClass
 
 class RW_WarlordBossLRM : RW_LRMWeapon
 {
+    // One bass-heavy accent for each missile volley, not one accent for every
+    // missile in the salvo. The original rocket launch sound remains intact.
+    [Attribute("{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp", UIWidgets.ResourceNamePicker, "Optional launch accent project. Existing local cannon thump is an initial placeholder until a dedicated missile recording is supplied.", params: "acp", category: "Warlord Audio")]
+    protected ResourceName m_sLaunchAccentProject;
+
+    [Attribute("SOUND_SHOT_2", UIWidgets.EditBox, "Event within the launch accent audio project.", category: "Warlord Audio")]
+    protected string m_sLaunchAccentEvent;
+
+    [Attribute("1.2", UIWidgets.Auto, "Minimum seconds between heavy launch accents on this rack.", category: "Warlord Audio")]
+    protected float m_fLaunchAccentCooldown;
+
+    protected int m_iNextAccentTick;
+
+    override void ClientOnShot(vector start, vector end)
+    {
+        super.ClientOnShot(start, end);
+
+        if (!GetOwner() || m_sLaunchAccentProject.IsEmpty() || m_sLaunchAccentEvent.IsEmpty())
+            return;
+
+        int now = System.GetTickCount();
+        if (now < m_iNextAccentTick)
+            return;
+
+        m_iNextAccentTick = now + (int)(Math.Max(m_fLaunchAccentCooldown, 0.1) * 1000.0);
+        vector soundMat[4];
+        Math3D.MatrixIdentity4(soundMat);
+        soundMat[3] = start;
+        BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
+            m_sLaunchAccentProject, m_sLaunchAccentEvent, soundMat);
+    }
+
     override protected void ApplyFireAtAimPoint(vector start, inout vector direction)
     {
         if (!m_bFireAtAimPoint || !m_pMechOwner)
