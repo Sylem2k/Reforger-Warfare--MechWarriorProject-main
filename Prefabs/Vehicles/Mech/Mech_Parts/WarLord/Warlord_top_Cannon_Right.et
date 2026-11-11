@@ -12,7 +12,7 @@ GenericEntity {
     m_sMuzzleParticle "{254588526C5E861A}Particles/Weapon/Muzzle_KPVT.ptc"
     m_sSoundProject "{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp"
     m_sFireSoundEvent "SOUND_SHOT"
-    m_sProjectilePrefab "{D52D998FF0829639}Prefabs/Particles/RocketTrace.et"
+    m_sProjectilePrefab "{EA61110000000001}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_CannonTracer.et"
     m_sImpactParticle "{6FE5C11AEE0A28A1}Particles/Weapon/Explosion_HEI.ptc"
     m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
     m_sImpactSoundEvent "SOUND_HIT_VEHICLE"
