@@ -127,9 +127,6 @@ Vehicle {
      m_sAimMountId "SENTINEL_LAS"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
-     m_Point PointInfo "{6AD472202C9AB729}" {
-      Offset 20.4731 0.9378 30.6079
-     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
@@ -150,9 +147,6 @@ Vehicle {
      m_sAimMountId "RIGHT_ARM_MOUNT"
      m_bBindExistingAimMount 1
      m_iDefaultModuleId 1
-     m_Point PointInfo "{6AD41E8E29EAA86A}" {
-      Offset 20.8167 -3.027 30.7854
-     }
      m_bRightSide 0
      m_sControlStation "DRIVER"
      m_iWeaponGroup 1
