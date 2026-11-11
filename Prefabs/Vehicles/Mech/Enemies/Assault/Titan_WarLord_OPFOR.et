@@ -917,7 +917,7 @@ Vehicle {
   CGS_MechBrainComponent "{E60F00000000009D}" {
    m_bEnabled 1
    m_bDrive 0
-   m_bGunners 1
+   m_bGunners 0
    m_eMode HOLD
    m_sFaction "USSR"
    m_eFireMode RETURN_FIRE
@@ -1548,6 +1548,6 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 6578.874 209.635 6507.229
+ coords 6627.313 203.858 6441.492
  m_eVehicleType VEHICLE
 }
