@@ -44,14 +44,30 @@ class RW_WarlordWarhornComponent : ScriptComponent
     {
         super.OnPostInit(owner);
 
-        if (!Replication.IsServer() || !m_bEnabled || !GetGame() || !GetGame().GetCallqueue())
-            return;
+        if (m_bDebugWarhorn)
+        {
+            Print(string.Format("[RW WARLORD HORN][INIT] server=%1 enabled=%2 console=%3",
+                Replication.IsServer(), m_bEnabled, System.IsConsoleApp()));
+            Print(string.Format("[RW WARLORD HORN][INIT] project=%1 event=%2",
+                m_sSoundProject, m_sSoundEvent));
+        }
 
+        if (!Replication.IsServer() || !m_bEnabled || !GetGame() || !GetGame().GetCallqueue())
+        {
+            if (m_bDebugWarhorn)
+                Print("[RW WARLORD HORN][INIT] no scheduler on this instance (client, disabled, or no callqueue)");
+            return;
+        }
+
+        if (m_bDebugWarhorn)
+            Print("[RW WARLORD HORN][SERVER] scheduler starting");
         ScheduleWarhorn(m_fFirstDelayMin, m_fFirstDelayMax);
     }
 
     override void OnDelete(IEntity owner)
     {
+        if (m_bDebugWarhorn)
+            Print("[RW WARLORD HORN][DELETE] owner deleted, timer stopped");
         if (GetGame() && GetGame().GetCallqueue())
             GetGame().GetCallqueue().Remove(TriggerWarhorn);
 
@@ -72,24 +88,40 @@ class RW_WarlordWarhornComponent : ScriptComponent
             delay += Math.RandomFloat(60.0, 155.0);
 
         if (m_bDebugWarhorn)
-            Print(string.Format("[RW WARLORD HORN] next horn in %1 seconds", delay));
+            Print(string.Format("[RW WARLORD HORN][SERVER][SCHEDULE] next horn in %1 seconds", delay));
 
         GetGame().GetCallqueue().CallLater(TriggerWarhorn, (int)(delay * 1000.0), false);
     }
 
     protected void TriggerWarhorn()
     {
+        if (m_bDebugWarhorn)
+            Print(string.Format("[RW WARLORD HORN][SERVER][TRIGGER] server=%1 enabled=%2 owner=%3",
+                Replication.IsServer(), m_bEnabled, GetOwner()));
+
         if (!Replication.IsServer() || !m_bEnabled || !GetOwner())
+        {
+            if (m_bDebugWarhorn)
+                Print("[RW WARLORD HORN][SERVER][SKIP] cannot trigger");
             return;
+        }
 
         // Do not broadcast the boss horn after the Warlord is destroyed.
         DamageManagerComponent damage = DamageManagerComponent.Cast(GetOwner().FindComponent(DamageManagerComponent));
         if (damage && damage.GetState() == EDamageState.DESTROYED)
+        {
+            if (m_bDebugWarhorn)
+                Print("[RW WARLORD HORN][SERVER][SKIP] boss destroyed");
             return;
+        }
 
         if (!System.IsConsoleApp())
             PlayWarhornLocal();
+        else if (m_bDebugWarhorn)
+            Print("[RW WARLORD HORN][SERVER] dedicated server: local playback skipped (expected)");
 
+        if (m_bDebugWarhorn)
+            Print("[RW WARLORD HORN][SERVER][RPC SEND] broadcasting horn event to listeners");
         Rpc(RpcDo_WarlordWarhorn);
 
         // Server keeps the single timer; clients never schedule a horn.
@@ -99,6 +131,9 @@ class RW_WarlordWarhornComponent : ScriptComponent
     [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
     protected void RpcDo_WarlordWarhorn()
     {
+        if (m_bDebugWarhorn)
+            Print(string.Format("[RW WARLORD HORN][RPC RECEIVED] server=%1 console=%2",
+                Replication.IsServer(), System.IsConsoleApp()));
         if (!System.IsConsoleApp())
             PlayWarhornLocal();
     }
@@ -107,7 +142,21 @@ class RW_WarlordWarhornComponent : ScriptComponent
     {
         IEntity boss = GetOwner();
         if (!boss || m_sSoundProject.IsEmpty() || m_sSoundEvent.IsEmpty())
+        {
+            if (m_bDebugWarhorn)
+                Print(string.Format("[RW WARLORD HORN][AUDIO SKIP] boss=%1 project=%2 event=%3",
+                    boss, m_sSoundProject, m_sSoundEvent));
             return;
+        }
+
+        if (m_bDebugWarhorn)
+        {
+            Resource soundProject = Resource.Load(m_sSoundProject);
+            if (!soundProject || !soundProject.IsValid())
+                Print(string.Format("[RW WARLORD HORN][AUDIO ERROR] resource missing/invalid: %1", m_sSoundProject), LogLevel.WARNING);
+            else
+                Print(string.Format("[RW WARLORD HORN][AUDIO RESOURCE OK] %1", m_sSoundProject));
+        }
 
         // Use the owner's world-space basis to place the audio emitter
         // at its configured local offset without the unavailable CoordToWorld().
@@ -118,9 +167,13 @@ class RW_WarlordWarhornComponent : ScriptComponent
             + soundMat[1] * m_vHornOffset[1]
             + soundMat[2] * m_vHornOffset[2];
 
+        if (m_bDebugWarhorn)
+            Print(string.Format("[RW WARLORD HORN][PLAY REQUEST] position=%1 event=%2",
+                soundMat[3], m_sSoundEvent));
+
         BFA_MechWeaponModuleComponent.BFA_MechPlaySound(m_sSoundProject, m_sSoundEvent, soundMat);
 
         if (m_bDebugWarhorn)
-            Print("[RW WARLORD HORN] local sound submitted");
+            Print("[RW WARLORD HORN][PLAY SUBMITTED] AudioSystem.PlayEvent called; this does not confirm audibility");
     }
 }
