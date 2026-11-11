@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{BA910374BDD34503}Common/Models/Titan_War_Lord/Data/Ashtray_01_glass_green.emat"
+ Configurations {
+  EMATResourceClass PC {
+  }
+  EMATResourceClass XBOX_ONE : PC {
+  }
+  EMATResourceClass XBOX_SERIES : PC {
+  }
+  EMATResourceClass PS4 : PC {
+  }
+  EMATResourceClass PS5 : PC {
+  }
+  EMATResourceClass HEADLESS : PC {
+  }
+ }
+}

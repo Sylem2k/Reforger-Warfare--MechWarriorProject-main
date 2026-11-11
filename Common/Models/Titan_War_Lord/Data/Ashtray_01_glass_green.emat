@@ -1,0 +1,34 @@
+MatPBRBasicGlass {
+ DiffuseIBL 0.558 0.558 0.558 1
+ Diffuse 0.018 0.018 0.018 1
+ Emissive 0 0.502 0.125 1
+ EmissiveLV 0.174
+ EmissiveAbsoluteLV 0
+ ApplyAlbedoToEmissive 1
+ ZWrite 0
+ Cull none
+ Sort translucent
+ CastShadow 0
+ NoDecals 1
+ SurfaceProperties "{3DC7C8A918E3F4A5}Common/Materials/Game/glass.gamemat"
+ AlphaMul 0.03
+ BlendMode AlphaBlend
+ RoughnessScale 0.99
+ MetalnessScale 0.764
+ CavityFromAO 0.1
+ NormalPower 0
+ NMOMap "{5E9B5A9AF633BD94}Assets/_SharedData/Metal/ST_Steel_Battered_NMO.edds"
+ GlobalMapsUVTransform MatUVTransform "{6050C48DAA5F19EC}" {
+  TilingU 5
+  TilingV 5
+ }
+ DetailNormalMapUVTransform MatUVTransform "{6050C48D27D97F3F}" {
+  TilingU 2
+  TilingV 2
+  Rotation 240
+ }
+ FresnelPower 5
+ Backscatterig 0
+ RefractionIntensity 0.001
+ RefractionColor 0.071 0.561 0.561 1
+}
