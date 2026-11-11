@@ -105,7 +105,32 @@ AudioClass {
    name "Amplitude Warlord Horn"
    version 5
    tl 250 -223
-   curve Linear
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 15
+     Y 1
+    }
+    CurvePoint "2" {
+     X 200
+     Y 0.96
+    }
+    CurvePoint "3" {
+     X 500
+     Y 0.82
+    }
+    CurvePoint "4" {
+     X 750
+     Y 0.68
+    }
+    CurvePoint "5" {
+     X 1000
+     Y 0.53
+    }
+    CurvePoint "6" {
+     X 1250
+    }
+   }
   }
  }
  frequency {
