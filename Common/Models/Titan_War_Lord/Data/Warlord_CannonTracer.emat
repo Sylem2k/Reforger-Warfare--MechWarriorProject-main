@@ -1,0 +1,14 @@
+// Visual-only Warlord cannon round. Does not influence physics or damage.
+MatPBRBasicGlass {
+ Color 1 0.55 0.12 1
+ Emissive 1 0.42 0.03 1
+ EmissiveLV 4.5
+ EmissiveAbsoluteLV 0
+ AlphaMul 0.97
+ BlendMode AlphaBlend
+ NormalPower 0
+ FresnelPower 1
+ Backscatterig 0
+ RefractionIntensity 0
+ DimIntensity 1
+}

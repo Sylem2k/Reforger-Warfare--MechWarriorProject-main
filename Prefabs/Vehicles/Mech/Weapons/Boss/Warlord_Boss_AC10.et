@@ -27,7 +27,7 @@ GenericEntity : "{8942F09222374843}Prefabs/Vehicles/Mech/Core/Mech_Module_Base.e
     m_fProjectileSpeed 0
     m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
     m_sImpactSoundEvent "SOUND_HIT_VEHICLE"
-    m_sProjectilePrefab "{D52D998FF0829639}Prefabs/Particles/RocketTrace.et"
+    m_sProjectilePrefab "{EA61110000000001}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_CannonTracer.et"
     m_bDebugTracer 0
    }
    m_fHeatPerShot 1.4
