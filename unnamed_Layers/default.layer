@@ -1,4 +1,10 @@
 Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
+ components {
+  RW_WarlordWarhornComponent "{A6111111000AA003}" {
+   m_fRepeatDelayMax 90
+   m_bDebugWarhorn 0
+  }
+ }
  coords 74.868 48.816 233.081
  angles 0 168.776 0
 }
