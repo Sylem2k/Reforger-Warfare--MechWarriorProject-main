@@ -1,6 +1,4 @@
-//------------------------------------------------------------------------------------------------
-// Warlord OPFOR world boss: occasional long-range warhorn.
-// Audio file supplied by the mod author, extracted from their complete video.
+//
 // The server schedules one cue and broadcasts a small reliable event.
 // Every listening client plays the same 3D cue locally. No looping,
 // per-frame ticking, extra entities, or effects on AI/weapon balance.
