@@ -539,6 +539,16 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         PlayBossCombatAudioLocal(position, eventName);
     }
 
+    // Core Titan LRMs/rockets resolve impacts using this authoritative call,
+    // not the initial shot event. Send sound at the actual detonation position.
+    // This complements the Warlord's hitscan and autonomous flak paths.
+    override void ServerBroadcastModuleImpact(ResourceName particle, vector position, int shotId = 0, int hardpointIndex = -1)
+    {
+        super.ServerBroadcastModuleImpact(particle, position, shotId, hardpointIndex);
+        if (Replication.IsServer())
+            ServerBroadcastBossImpactAudio(position, 2);
+    }
+
     // Reuse this router's established replication path: its shot/audio RPCs
     // already reach the Warlord's multiplayer clients. The warhorn component
     // handles timing and audio; this only transports a reliable event cue.
