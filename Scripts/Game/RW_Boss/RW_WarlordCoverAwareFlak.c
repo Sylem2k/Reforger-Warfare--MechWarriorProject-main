@@ -231,6 +231,25 @@ class RW_WarlordCoverAwareFlakComponent : CGS_AntiAirModuleComponent
         GetGame().GetCallqueue().CallLater(Detonate, delayMs, false, burst, instigator, m_iShellToken);
     }
 
+    // Actual server detonation for autonomous Warlord AA/flak. The Core AA
+    // class applies damage but does not broadcast its explosion sound. The
+    // separate Omni override handles its own kinetic/energy damage profile.
+    override protected void Detonate(vector position, IEntity instigator, int token)
+    {
+        if (!Replication.IsServer() || token != m_iShellToken)
+            return;
+
+        super.Detonate(position, instigator, token);
+
+        if (!m_pMechOwner)
+            return;
+
+        RW_WarlordBossWeaponRouterComponent router = RW_WarlordBossWeaponRouterComponent.Cast(
+            m_pMechOwner.FindComponent(RW_WarlordBossWeaponRouterComponent));
+        if (router)
+            router.ServerBroadcastBossImpactAudio(position, 2);
+    }
+
     // Core splash damage checks blocker != null, but a static WORLD hit has
     // TraceEnt == null. This extra boss-only gate blocks that damage path.
     // The impact point is supplied by the parent splash code as hitPos.
