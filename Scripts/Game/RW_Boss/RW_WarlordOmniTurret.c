@@ -27,6 +27,82 @@ class RW_WarlordOmniTurret : RW_WarlordCoverAwareFlakComponent
     protected bool m_bAllowInfantry;
 
     protected float m_fCanRetargetAt;
+    protected bool m_bLaserChargeArmed;
+    protected float m_fLaserChargeReadyAt;
+    protected IEntity m_pLaserChargeTarget;
+    protected int m_iChargeLogs;
+
+    override void OnPostInit(IEntity owner)
+    {
+        super.OnPostInit(owner);
+
+        if (m_iImpactType != 1 || !m_FX)
+            return;
+
+        // Each local replicated Warlord laser module plays its shot sound.
+        // The Warlord's reliable router owns the one authoritative impact cue.
+        m_FX.m_sSoundProject = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
+        m_FX.m_sFireSoundEvent = "SOUND_WARLORD_LASER_FIRE";
+        m_FX.m_sImpactSoundEvent = "";
+    }
+
+    // Three rising hum pulses before the first shot of each 3-shot Omni
+    // burst. Shots 2/3 retain the original weapon's configured cadence.
+    override protected bool TryFireShot(IEntity instigator)
+    {
+        if (m_iImpactType != 1 || !m_pMechOwner || !m_pTarget)
+        {
+            m_bLaserChargeArmed = false;
+            return super.TryFireShot(instigator);
+        }
+
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(m_pMechOwner);
+        if (!director || !director.GetLaserChargeEnabled())
+        {
+            m_bLaserChargeArmed = false;
+            return super.TryFireShot(instigator);
+        }
+
+        // Never charge a target blocked by hard cover or a disabled weapon profile.
+        if (!StoryAllowsFire() || !RW_WarlordCoverVisibility.IsClear(
+            m_pMechOwner, GetOwner(), GetShotStart(),
+            RW_WarlordCoverVisibility.AimPoint(m_pTarget), m_pTarget))
+        {
+            m_bLaserChargeArmed = false;
+            return false;
+        }
+
+        if (m_iShotsInBurst > 0)
+            return super.TryFireShot(instigator);
+
+        float now = Now();
+        if (!m_bLaserChargeArmed || m_pLaserChargeTarget != m_pTarget)
+        {
+            m_bLaserChargeArmed = true;
+            m_pLaserChargeTarget = m_pTarget;
+            m_fLaserChargeReadyAt = now + director.GetLaserChargeSeconds();
+            RW_WarlordBossWeaponRouterComponent router = RW_WarlordBossWeaponRouterComponent.Cast(
+                m_pMechOwner.FindComponent(RW_WarlordBossWeaponRouterComponent));
+            if (router)
+                router.ServerBroadcastWarlordLaserCharge(GetShotStart());
+
+            if (m_iChargeLogs < 6)
+            {
+                Print(string.Format("[RW WARLORD LASER][OMNI CHARGE] mount=%1 delay=%2",
+                    m_iHardpointIndex, director.GetLaserChargeSeconds()));
+                m_iChargeLogs++;
+            }
+            return false;
+        }
+
+        if (now < m_fLaserChargeReadyAt)
+            return false;
+
+        bool fired = super.TryFireShot(instigator);
+        if (fired)
+            m_bLaserChargeArmed = false;
+        return fired;
+    }
 
     // The CGS anti-air base only gathers vehicles. Include dismounted infantry.
     override protected bool CollectEntity(IEntity entity)
