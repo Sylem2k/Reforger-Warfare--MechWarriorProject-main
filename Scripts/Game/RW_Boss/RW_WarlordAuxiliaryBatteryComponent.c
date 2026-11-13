@@ -631,7 +631,16 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         // Hitscan cannons and beams have no later server-impact callback.
         // Schedule their audio at the actual endpoint after visual travel.
         // Server-simulated LRMs and flak send audio on actual detonation instead.
-        if (Replication.IsServer() && hit && !serverImpact && module
+        // TraceShot can return a terrain endpoint without an entity. Allow
+        // ground hits to make a sound, but never explode at a pure sky miss.
+        bool groundImpact = false;
+        if (!hit && module && GetGame() && GetGame().GetWorld())
+        {
+            BaseWorld world = GetGame().GetWorld();
+            groundImpact = end[1] <= world.GetSurfaceY(end[0], end[2]) + 1.0;
+        }
+
+        if (Replication.IsServer() && (hit || groundImpact) && !serverImpact && module
             && !RW_WarlordCoverAwareFlakComponent.Cast(module))
         {
             int kind = 0;
