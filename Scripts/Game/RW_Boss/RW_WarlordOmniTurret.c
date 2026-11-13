@@ -180,5 +180,22 @@ class RW_WarlordOmniTurret : RW_WarlordCoverAwareFlakComponent
             DealSplashDamage(position, m_fBurstDamage, m_fBurstRadius, EDamageType.EXPLOSIVE, instigator);
         else
             DealSplashDamage(position, m_fBurstDamage, m_fBurstRadius, EDamageType.KINETIC, instigator);
+
+        // The Omni replaces the base Detonate method to select its damage
+        // type, so it must explicitly send the boss-only impact-audio cue.
+        if (m_pMechOwner)
+        {
+            RW_WarlordBossWeaponRouterComponent router = RW_WarlordBossWeaponRouterComponent.Cast(
+                m_pMechOwner.FindComponent(RW_WarlordBossWeaponRouterComponent));
+            if (router)
+            {
+                int soundKind = 0;
+                if (m_iImpactType == 1)
+                    soundKind = 1;
+                else if (m_iImpactType == 2)
+                    soundKind = 2;
+                router.ServerBroadcastBossImpactAudio(position, soundKind);
+            }
+        }
     }
 }
