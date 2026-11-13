@@ -649,7 +649,7 @@ AudioClass {
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
-     Filename "{0FA93D6A78FE76D9}Sounds/Weapons/Machineguns/UK59/cannon 2.wav"
+     Filename "{A6111111000AA013}Sounds/Warlord/Warlord_SiegeImpact.wav"
     }
    }
   }
