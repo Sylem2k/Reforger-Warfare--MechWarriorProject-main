@@ -21,6 +21,54 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
     [Attribute("7", UIWidgets.Auto, "Minimum seconds to stay locked on a valid visible target. Prevents turrets switching every scan.", category: "Warlord Targeting")]
     protected float m_fMinimumTargetHoldSeconds;
 
+    protected bool m_bLoggedGMWaypointMissing;
+
+    protected RW_WarlordGMDirectorComponent StoryDirector()
+    {
+        return RW_WarlordGMDirectorComponentClass.Find(GetOwner());
+    }
+
+    // Game Master storyline movement orders override the random patrol only
+    // for the autonomous hidden pilot. A real player driver keeps control.
+    override protected void TickDriver(float dt)
+    {
+        RW_WarlordGMDirectorComponent director = StoryDirector();
+        if (director && m_pCore)
+        {
+            IEntity driver = m_pCore.GetStationOccupant("DRIVER");
+            CGS_MechBrainComponent brain = CGS_MechBrainComponent.Find(GetOwner());
+            if (!driver || (brain && driver == brain.GetPilot()))
+            {
+                int order = director.GetMovementOrder();
+                if (order == 1)
+                {
+                    m_bLoggedGMWaypointMissing = false;
+                    StopDriver();
+                    return;
+                }
+                if (order == 2)
+                {
+                    string reason;
+                    if (!driver || !GetDriverWaypoint(driver, reason))
+                    {
+                        if (!m_bLoggedGMWaypointMissing)
+                        {
+                            Print(string.Format("[RW WARLORD GM][MOVE] waiting for GM group Move waypoint; driver=%1 reason=%2", driver, reason), LogLevel.WARNING);
+                            m_bLoggedGMWaypointMissing = true;
+                        }
+                        StopDriver();
+                        return;
+                    }
+                    if (m_bLoggedGMWaypointMissing)
+                        Print("[RW WARLORD GM][MOVE] GM waypoint acquired; moving");
+                    m_bLoggedGMWaypointMissing = false;
+                    m_fArriveDistance = director.GetWaypointArrival();
+                }
+            }
+        }
+        super.TickDriver(dt);
+    }
+
     // Warlord-only staggered firing; shared Mech Core and player control stay unchanged.
     [Attribute("true", UIWidgets.CheckBox, "Use staggered, randomized AI battery volleys instead of synchronized bursts.", category: "Warlord Firing")]
     protected bool m_bStaggeredBatteryFire;
@@ -208,8 +256,22 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
 
         // Each virtual boss gunner has a dedicated offensive group. Preserve
         // that group's normal weapon routing and existing vehicle-first targeting.
+        RW_WarlordGMDirectorComponent director = StoryDirector();
         if (state.m_sStationId != "DRIVER")
-            return ChooseWeaponGroup(state.m_sStationId, state.m_pTarget);
+        {
+            int selectedGroup = ChooseWeaponGroup(state.m_sStationId, state.m_pTarget);
+            if (director && !director.AllowsStationGroup(state.m_sStationId, selectedGroup))
+                return 0;
+            return selectedGroup;
+        }
+
+        if (director && director.GetWeaponProfile() != 0)
+        {
+            // Default DRIVER group 1 = arm lasers; group 2 is a designator.
+            if (director.AllowsStationGroup("DRIVER", 1))
+                return 1;
+            return 0;
+        }
 
         // Group 1 is the arm pair, group 2 the shoulder. Toggle per burst
         // so disabling Fire All Groups does not permanently silence one bank.
@@ -241,13 +303,39 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
     // replication and fire routing are the same; only the firing schedule changes.
     override protected void TickStation(BFA_MechAIStationState state, float dt)
     {
-        if (!m_bStaggeredBatteryFire)
+        if (!state)
+            return;
+
+        RW_WarlordGMDirectorComponent director = StoryDirector();
+        if (director && director.GetWeaponProfile() != 0)
+        {
+            // Stop any old held trigger immediately when the GM switches profile.
+            if (state.m_iFiringGroup > 0 &&
+                !director.AllowsStationGroup(state.m_sStationId, state.m_iFiringGroup))
+                CeaseFire(state);
+
+            // An inactive weapon bank must not keep engaging after a change.
+            int permitted = 0;
+            if (state.m_sStationId == "DRIVER")
+                permitted = 1;
+            else
+                permitted = 3;
+            if (!director.AllowsStationGroup(state.m_sStationId, permitted))
+            {
+                CeaseFire(state);
+                return;
+            }
+        }
+
+        // Keep the normal legacy option when all guns are enabled. A narrowed
+        // GM profile always uses the boss-specific station/group filter.
+        if (!m_bStaggeredBatteryFire && (!director || director.GetWeaponProfile() == 0))
         {
             super.TickStation(state, dt);
             return;
         }
 
-        if (!state || !m_pAim || !m_pRouter || !m_pCore)
+        if (!m_pAim || !m_pRouter || !m_pCore)
             return;
 
         state.m_fRescanTimer -= dt;
@@ -275,7 +363,11 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
         }
 
         vector aimWorld = GetAimPoint(state.m_pTarget);
-        m_pAim.ServerSetStationAim(state.m_sStationId, GetOwner().CoordToLocal(aimWorld));
+        vector gunnerAim = aimWorld;
+        if (director)
+            gunnerAim = director.AddAimError(aimWorld, GetOwner().GetOrigin(),
+                state.m_fTargetTime, m_aStations.Find(state));
+        m_pAim.ServerSetStationAim(state.m_sStationId, GetOwner().CoordToLocal(gunnerAim));
 
         state.m_fTargetTime += dt;
         if (state.m_fTargetTime < Math.Max(m_fAimSettleTime, 0.0))

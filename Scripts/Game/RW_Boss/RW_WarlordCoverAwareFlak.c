@@ -168,11 +168,41 @@ class RW_WarlordCoverAwareFlakComponent : CGS_AntiAirModuleComponent
         return (mins + maxs) * 0.5;
     }
 
+    protected RW_WarlordGMDirectorComponent StoryDirector()
+    {
+        return RW_WarlordGMDirectorComponentClass.Find(m_pMechOwner);
+    }
+
+    // Autonomous Omni guns and AA flak fire without a crew station, so filter
+    // them here instead of trying to filter weapon groups in the AI crew.
+    protected bool StoryAllowsFire()
+    {
+        RW_WarlordGMDirectorComponent director = StoryDirector();
+        if (!director)
+            return true;
+        RW_WarlordOmniTurret omni = RW_WarlordOmniTurret.Cast(this);
+        if (omni)
+            return director.AllowsAutoBattery(m_FX && !m_FX.m_sBeamPrefab.IsEmpty(),
+                !m_FX || m_FX.m_sBeamPrefab.IsEmpty());
+        return director.AllowsAutoBattery(false, true); // Warlord AA flak.
+    }
+
+    // The native spread multiplier is already used by the AA and Omni shell
+    // simulation. Increase it live when the GM reduces accuracy.
+    override protected float GetSpreadScale()
+    {
+        float spread = super.GetSpreadScale();
+        RW_WarlordGMDirectorComponent director = StoryDirector();
+        if (director)
+            spread = spread * director.GetInaccuracy();
+        return spread;
+    }
+
     // Direct per-shot check, not only at target selection time: a player who
     // runs behind a building during a burst must immediately be protected.
     override protected bool TryFireShot(IEntity instigator)
     {
-        if (!m_pTarget || !m_pMechOwner)
+        if (!m_pTarget || !m_pMechOwner || !StoryAllowsFire())
             return false;
 
         if (!RW_WarlordCoverVisibility.IsClear(

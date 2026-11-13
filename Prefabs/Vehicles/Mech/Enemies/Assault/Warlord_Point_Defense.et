@@ -1,7 +1,7 @@
 GenericEntity : "{13EAD5AB3E4F2AA8}Prefabs/Vehicles/Mech/Mech_Parts/Point_Defense_Module.et" {
  ID "A600202610230301"
  components {
-  BFA_MechPointDefenseModuleComponent "{ABB842CF8BB1C2B2}" {
+  RW_WarlordGMPointDefense "{ABB842CF8BB1C2B2}" {
    m_sModuleId "POINT_DEFENSE"
    m_sDisplayName "Warlord Interceptor Array"
    m_sControlStation "DRIVER"
