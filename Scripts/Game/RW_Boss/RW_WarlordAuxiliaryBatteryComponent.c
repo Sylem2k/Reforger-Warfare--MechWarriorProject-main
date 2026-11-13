@@ -328,6 +328,124 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     // No extra RPC, network entity, damage, or shared Mech Core change.
     protected ref array<int> m_aCannonShotCounts = {};
 
+    // Dedicated boss-only impact cue. A shot RPC may be dropped on an MP
+    // client, and the core impact path needs a local hardpoint module.
+    // This reliable audio-only message carries the actual impact location.
+    // Effects and authoritative damage remain in the existing weapon system.
+    protected int m_iLastImpactKineticMs;
+    protected int m_iLastImpactEnergyMs;
+    protected int m_iLastImpactExplosiveMs;
+    protected int m_iImpactAudioLogs;
+
+    // 0 = kinetic, 1 = energy, 2 = explosive. Group nearby impacts to avoid
+    // reliable-RPC floods from the Warlord's many simultaneous batteries.
+    void ServerBroadcastBossImpactAudio(vector position, int kind)
+    {
+        if (!Replication.IsServer())
+            return;
+
+        int now = System.GetTickCount();
+        int previous = 0;
+        int minGap = 100;
+        if (kind == 1)
+        {
+            previous = m_iLastImpactEnergyMs;
+            minGap = 130;
+        }
+        else if (kind == 2)
+        {
+            previous = m_iLastImpactExplosiveMs;
+            minGap = 180;
+        }
+        else
+        {
+            previous = m_iLastImpactKineticMs;
+        }
+
+        if (previous > 0 && now - previous < minGap)
+            return;
+
+        if (kind == 1)
+            m_iLastImpactEnergyMs = now;
+        else if (kind == 2)
+            m_iLastImpactExplosiveMs = now;
+        else
+            m_iLastImpactKineticMs = now;
+
+        if (m_iImpactAudioLogs < 12)
+        {
+            Print(string.Format("[RW WARLORD IMPACT][SERVER SEND] kind=%1 at=%2", kind, position));
+            m_iImpactAudioLogs++;
+        }
+
+        if (!System.IsConsoleApp())
+            PlayBossImpactAudioLocal(position, kind);
+
+        Rpc(RpcDo_BossImpactAudio, position, kind);
+    }
+
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_BossImpactAudio(vector position, int kind)
+    {
+        // Hosted server already played its own local sound.
+        if (Replication.IsServer() || System.IsConsoleApp())
+            return;
+
+        PlayBossImpactAudioLocal(position, kind);
+    }
+
+    protected void PlayBossImpactAudioLocal(vector position, int kind)
+    {
+        if (System.IsConsoleApp())
+            return;
+
+        vector audioTransform[4];
+        Math3D.MatrixIdentity4(audioTransform);
+        audioTransform[3] = position;
+
+        if (m_iImpactAudioLogs < 12)
+        {
+            ResourceName audioProject = "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp";
+            string audioEvent = "SOUND_HIT_VEHICLE";
+            if (kind == 1)
+                audioEvent = "SOUND_HIT";
+            if (kind == 2)
+            {
+                audioProject = "{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp";
+                audioEvent = "SOUND_SHOT_2";
+            }
+
+            Resource resource = Resource.Load(audioProject);
+            bool resourceOK = resource && resource.IsValid();
+            float audible = AudioSystem.IsAudible(audioProject, audioEvent, position);
+            Print(string.Format("[RW WARLORD IMPACT][CLIENT PLAY] kind=%1 pos=%2 valid=%3 audible=%4 event=%5",
+                kind, position, resourceOK, audible, audioEvent));
+            m_iImpactAudioLogs++;
+        }
+
+        if (kind == 1)
+        {
+            BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
+                "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp",
+                "SOUND_HIT", audioTransform);
+        }
+        else if (kind == 2)
+        {
+            // First-pass heavy percussive accent using an existing local ACP.
+            // A custom explosive impact sample can replace this later.
+            BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
+                "{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp",
+                "SOUND_SHOT_2", audioTransform);
+        }
+        else
+        {
+            BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
+                "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp",
+                "SOUND_HIT_VEHICLE", audioTransform);
+        }
+    }
+
+
     // Reuse this router's established replication path: its shot/audio RPCs
     // already reach the Warlord's multiplayer clients. The warhorn component
     // handles timing and audio; this only transports a reliable event cue.
@@ -404,8 +522,33 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
             }
         }
 
-        return super.ServerBroadcastModuleShot(module, start, end, hit, speed,
+        int shotId = super.ServerBroadcastModuleShot(module, start, end, hit, speed,
             length, thickness, serverImpact);
+
+        // Hitscan cannons and beams have no later server-impact callback.
+        // Schedule their audio at the actual endpoint after visual travel.
+        // Server-simulated LRMs and flak send audio on actual detonation instead.
+        if (Replication.IsServer() && hit && !serverImpact && module
+            && !RW_WarlordCoverAwareFlakComponent.Cast(module))
+        {
+            int kind = 0;
+            BFA_MechWeaponFX fx = module.GetFX();
+            if (fx && !fx.m_sBeamPrefab.IsEmpty())
+                kind = 1;
+
+            int delayMs = 0;
+            if (kind != 1)
+            {
+                float travel = vector.Distance(start, end) / Math.Max(speed, 1.0);
+                delayMs = Math.Clamp((int)(travel * 1000.0), 0, 3000);
+            }
+
+            if (delayMs > 0 && GetGame() && GetGame().GetCallqueue())
+                GetGame().GetCallqueue().CallLater(ServerBroadcastBossImpactAudio, delayMs, false, end, kind);
+            else
+                ServerBroadcastBossImpactAudio(end, kind);
+        }
+        return shotId;
     }
 
     override protected void PlayShotLocal(

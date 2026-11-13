@@ -42,6 +42,21 @@ class RW_WarlordBossLRM : RW_LRMWeapon
             m_sLaunchAccentProject, m_sLaunchAccentEvent, soundMat);
     }
 
+    // Server-confirmed LRM explosion. Audio goes over the Warlord root router
+    // rather than relying on a locally spawned rocket component on each client.
+    override protected void BroadcastImpact(vector position, IEntity mechOwner, int shotId = 0)
+    {
+        super.BroadcastImpact(position, mechOwner, shotId);
+
+        if (!Replication.IsServer() || !mechOwner)
+            return;
+
+        RW_WarlordBossWeaponRouterComponent router = RW_WarlordBossWeaponRouterComponent.Cast(
+            mechOwner.FindComponent(RW_WarlordBossWeaponRouterComponent));
+        if (router)
+            router.ServerBroadcastBossImpactAudio(position, 2);
+    }
+
     override protected void ApplyFireAtAimPoint(vector start, inout vector direction)
     {
         if (!m_bFireAtAimPoint || !m_pMechOwner)
