@@ -41,7 +41,7 @@ AudioClass {
     }
    }
    outState 8203
-   outStatePort 79879
+   outStatePort 79880
   }
   SoundClass "7179" {
    id 7179
@@ -62,7 +62,7 @@ AudioClass {
     }
    }
    outState 8203
-   outStatePort 79879
+   outStatePort 79881
   }
   SoundClass "7180" {
    id 7180
@@ -83,7 +83,7 @@ AudioClass {
     }
    }
    outState 8203
-   outStatePort 79879
+   outStatePort 79882
   }
   SoundClass "7181" {
    id 7181
@@ -104,7 +104,7 @@ AudioClass {
     }
    }
    outState 8203
-   outStatePort 79879
+   outStatePort 79883
   }
  }
  mixers {
@@ -124,18 +124,38 @@ AudioClass {
        id 7177
        port 65
       }
+     }
+    }
+    ConnectionsClass "con:79880" {
+     id 79880
+     links {
       ConnectionClass "7178:65" {
        id 7178
        port 65
       }
+     }
+    }
+    ConnectionsClass "con:79881" {
+     id 79881
+     links {
       ConnectionClass "7179:65" {
        id 7179
        port 65
       }
+     }
+    }
+    ConnectionsClass "con:79882" {
+     id 79882
+     links {
       ConnectionClass "7180:65" {
        id 7180
        port 65
       }
+     }
+    }
+    ConnectionsClass "con:79883" {
+     id 79883
+     links {
       ConnectionClass "7181:65" {
        id 7181
        port 65
@@ -396,11 +416,25 @@ AudioClass {
    tl 250 -223
    curve Custom
    AttenuationCurve {
-    CurvePoint "1" { X 10 Y 1 }
-    CurvePoint "2" { X 130 Y 0.95 }
-    CurvePoint "3" { X 400 Y 0.75 }
-    CurvePoint "4" { X 850 Y 0.4 }
-    CurvePoint "5" { X 1400 }
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
    }
   }
   AmplitudeClass "4116" {
@@ -410,11 +444,25 @@ AudioClass {
    tl 250 -223
    curve Custom
    AttenuationCurve {
-    CurvePoint "1" { X 10 Y 1 }
-    CurvePoint "2" { X 130 Y 0.95 }
-    CurvePoint "3" { X 400 Y 0.75 }
-    CurvePoint "4" { X 850 Y 0.4 }
-    CurvePoint "5" { X 1400 }
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
    }
   }
   AmplitudeClass "4117" {
@@ -424,11 +472,25 @@ AudioClass {
    tl 250 -223
    curve Custom
    AttenuationCurve {
-    CurvePoint "1" { X 10 Y 1 }
-    CurvePoint "2" { X 130 Y 0.95 }
-    CurvePoint "3" { X 400 Y 0.75 }
-    CurvePoint "4" { X 850 Y 0.4 }
-    CurvePoint "5" { X 1400 }
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
    }
   }
   AmplitudeClass "4118" {
@@ -438,11 +500,25 @@ AudioClass {
    tl 250 -223
    curve Custom
    AttenuationCurve {
-    CurvePoint "1" { X 10 Y 1 }
-    CurvePoint "2" { X 130 Y 0.95 }
-    CurvePoint "3" { X 400 Y 0.75 }
-    CurvePoint "4" { X 850 Y 0.4 }
-    CurvePoint "5" { X 1400 }
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
    }
   }
   AmplitudeClass "4119" {
@@ -452,11 +528,25 @@ AudioClass {
    tl 250 -223
    curve Custom
    AttenuationCurve {
-    CurvePoint "1" { X 10 Y 1 }
-    CurvePoint "2" { X 130 Y 0.95 }
-    CurvePoint "3" { X 400 Y 0.75 }
-    CurvePoint "4" { X 850 Y 0.4 }
-    CurvePoint "5" { X 1400 }
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
    }
   }
  }
