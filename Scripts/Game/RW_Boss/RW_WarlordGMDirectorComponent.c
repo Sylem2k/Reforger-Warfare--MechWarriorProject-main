@@ -140,9 +140,9 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         float metres = Math.Clamp(vector.Distance(mechPos, worldAim) * 0.015, 3.0, 24.0);
         float error = (m_fInaccuracy - 1.0) * metres;
         float phase = targetTime * 0.45 + stationNumber * 1.91;
-        worldAim[0] += Math.Sin(phase) * error;
-        worldAim[1] += Math.Sin(phase * 0.63) * error * 0.25;
-        worldAim[2] += Math.Cos(phase * 0.77) * error;
+        worldAim[0] = worldAim[0] + Math.Sin(phase) * error;
+        worldAim[1] = worldAim[1] + Math.Sin(phase * 0.63) * error * 0.25;
+        worldAim[2] = worldAim[2] + Math.Cos(phase * 0.77) * error;
         return worldAim;
     }
 }
