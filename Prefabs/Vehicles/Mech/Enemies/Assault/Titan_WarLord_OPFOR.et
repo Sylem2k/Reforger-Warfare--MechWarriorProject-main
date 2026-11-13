@@ -1329,6 +1329,7 @@ Vehicle {
     }
    }
    m_bAutoRegister ALWAYS
+   m_Flags 773
    m_vIconPos 0 3 0
   }
   SCR_VehicleCameraDataComponent "{E60F000000000080}" {
