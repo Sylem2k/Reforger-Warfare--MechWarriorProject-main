@@ -405,7 +405,21 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 
         if (m_iImpactAudioLogs < 12)
         {
-            Print(string.Format("[RW WARLORD IMPACT][CLIENT PLAY] kind=%1 at=%2", kind, position));
+            ResourceName audioProject = "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp";
+            string audioEvent = "SOUND_HIT_VEHICLE";
+            if (kind == 1)
+                audioEvent = "SOUND_HIT";
+            if (kind == 2)
+            {
+                audioProject = "{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp";
+                audioEvent = "SOUND_SHOT_2";
+            }
+
+            Resource resource = Resource.Load(audioProject);
+            bool resourceOK = resource && resource.IsValid();
+            float audible = AudioSystem.IsAudible(audioProject, audioEvent, position);
+            Print(string.Format("[RW WARLORD IMPACT][CLIENT PLAY] kind=%1 pos=%2 valid=%3 audible=%4 event=%5",
+                kind, position, resourceOK, audible, audioEvent));
             m_iImpactAudioLogs++;
         }
 
