@@ -514,7 +514,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         // Hitscan cannons and beams have no later server-impact callback.
         // Schedule their audio at the actual endpoint after visual travel.
         // Server-simulated LRMs and flak send audio on actual detonation instead.
-        if (Replication.IsServer() && hit && !serverImpact && module)
+        if (Replication.IsServer() && hit && !serverImpact && module
+            && !RW_WarlordCoverAwareFlakComponent.Cast(module))
         {
             int kind = 0;
             BFA_MechWeaponFX fx = module.GetFX();
