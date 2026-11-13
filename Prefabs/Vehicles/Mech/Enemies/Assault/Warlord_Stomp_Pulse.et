@@ -1,7 +1,7 @@
 GenericEntity : "{3764FA8EDD9C9864}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Stomp_Pulse.et" {
  ID "D600202610230201"
  components {
-  CGS_ForcePulseModuleComponent "{A5ADE4175BAF8327}" {
+  RW_WarlordGMStomp "{A5ADE4175BAF8327}" {
    m_sModuleId "FORCE_PULSE"
    m_sDisplayName "Warlord Seismic Stomp"
    m_sControlStation "DRIVER"
