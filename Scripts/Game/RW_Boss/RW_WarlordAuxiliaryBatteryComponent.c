@@ -185,6 +185,10 @@ class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
         if (!Replication.IsServer() || !GetOwner() || !m_bEnableTopCannons)
             return;
 
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(GetOwner());
+        if (director && !director.AllowsTopCannons())
+            return;
+
         RW_WarlordMultiTargetAICrewComponent ai = RW_WarlordMultiTargetAICrewComponent.Cast(
             GetOwner().FindComponent(RW_WarlordMultiTargetAICrewComponent));
         if (!ai)
