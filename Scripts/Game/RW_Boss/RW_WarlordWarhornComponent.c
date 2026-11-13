@@ -120,22 +120,43 @@ class RW_WarlordWarhornComponent : ScriptComponent
         else if (m_bDebugWarhorn)
             Print("[RW WARLORD HORN][SERVER] dedicated server: local playback skipped (expected)");
 
-        if (m_bDebugWarhorn)
-            Print("[RW WARLORD HORN][SERVER][RPC SEND] broadcasting horn event to listeners");
-        Rpc(RpcDo_WarlordWarhorn);
+        RW_WarlordBossWeaponRouterComponent router = RW_WarlordBossWeaponRouterComponent.Cast(
+            GetOwner().FindComponent(RW_WarlordBossWeaponRouterComponent));
+
+        if (router)
+        {
+            if (m_bDebugWarhorn)
+                Print("[RW WARLORD HORN][SERVER][RPC SEND] using replicated Warlord weapon router");
+            router.ServerBroadcastWarlordWarhorn();
+        }
+        else
+        {
+            Print("[RW WARLORD HORN][SERVER][RPC ERROR] Warlord weapon router missing; client sound not delivered", LogLevel.WARNING);
+        }
 
         // Server keeps the single timer; clients never schedule a horn.
         ScheduleWarhorn(m_fRepeatDelayMin, m_fRepeatDelayMax);
     }
 
-    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-    protected void RpcDo_WarlordWarhorn()
+    // Invoked by the Warlord's already-replicated weapon router on client
+    // machines. The horn component itself sends no RPCs (dedicated MP fix).
+    void ClientPlayFromRouterRpc()
     {
+        if (Replication.IsServer())
+            return;
+
         if (m_bDebugWarhorn)
-            Print(string.Format("[RW WARLORD HORN][RPC RECEIVED] server=%1 console=%2",
-                Replication.IsServer(), System.IsConsoleApp()));
-        if (!System.IsConsoleApp())
-            PlayWarhornLocal();
+            Print(string.Format("[RW WARLORD HORN][CLIENT][RPC RECEIVED] console=%1 project=%2 event=%3",
+                System.IsConsoleApp(), m_sSoundProject, m_sSoundEvent));
+
+        if (System.IsConsoleApp())
+        {
+            if (m_bDebugWarhorn)
+                Print("[RW WARLORD HORN][CLIENT][AUDIO SKIP] console instance has no audio output");
+            return;
+        }
+
+        PlayWarhornLocal();
     }
 
     protected void PlayWarhornLocal()
@@ -168,8 +189,13 @@ class RW_WarlordWarhornComponent : ScriptComponent
             + soundMat[2] * m_vHornOffset[2];
 
         if (m_bDebugWarhorn)
+        {
+            float audible = AudioSystem.IsAudible(m_sSoundProject, m_sSoundEvent, soundMat[3]);
+            Print(string.Format("[RW WARLORD HORN][CLIENT][AUDIO AUDIBILITY] result=%1 (negative means unavailable or inaudible) position=%2",
+                audible, soundMat[3]));
             Print(string.Format("[RW WARLORD HORN][PLAY REQUEST] position=%1 event=%2",
                 soundMat[3], m_sSoundEvent));
+        }
 
         BFA_MechWeaponModuleComponent.BFA_MechPlaySound(m_sSoundProject, m_sSoundEvent, soundMat);
 

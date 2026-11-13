@@ -328,6 +328,46 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     // No extra RPC, network entity, damage, or shared Mech Core change.
     protected ref array<int> m_aCannonShotCounts = {};
 
+    // Reuse this router's established replication path: its shot/audio RPCs
+    // already reach the Warlord's multiplayer clients. The warhorn component
+    // handles timing and audio; this only transports a reliable event cue.
+    void ServerBroadcastWarlordWarhorn()
+    {
+        if (!Replication.IsServer())
+            return;
+
+        Print("[RW WARLORD HORN][ROUTER][SERVER SEND] broadcasting warhorn cue through weapon router");
+        Rpc(RpcDo_WarlordWarhornToClients);
+    }
+
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_WarlordWarhornToClients()
+    {
+        // Dedicated server has no speakers; a hosted server plays its own cue
+        // in the scheduler. Only client replicas play the broadcasted cue.
+        if (Replication.IsServer())
+            return;
+
+        Print("[RW WARLORD HORN][ROUTER][CLIENT RECEIVED] warhorn RPC arrived");
+
+        IEntity boss = GetOwner();
+        if (!boss)
+        {
+            Print("[RW WARLORD HORN][ROUTER][CLIENT ERROR] boss entity unavailable", LogLevel.WARNING);
+            return;
+        }
+
+        RW_WarlordWarhornComponent warhorn = RW_WarlordWarhornComponent.Cast(
+            boss.FindComponent(RW_WarlordWarhornComponent));
+        if (!warhorn)
+        {
+            Print("[RW WARLORD HORN][ROUTER][CLIENT ERROR] warhorn component unavailable", LogLevel.WARNING);
+            return;
+        }
+
+        warhorn.ClientPlayFromRouterRpc();
+    }
+
     protected bool IsBossKineticCannon(BFA_MechWeaponModuleComponent module)
     {
         if (!module)
