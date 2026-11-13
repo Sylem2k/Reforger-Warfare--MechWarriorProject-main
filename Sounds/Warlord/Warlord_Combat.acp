@@ -1,0 +1,695 @@
+// Dedicated Warlord boss only; sound events are played on clients at muzzle/impact.
+AudioClass {
+ sounds {
+  SoundClass "7177" {
+   id 7177
+   name "SOUND_WARLORD_LASER_CHARGE"
+   comment "Laser Charge 1 2 3"
+   version 5
+   tl 462.727 -27.273
+   ctl 0 -21
+   ins {
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "3090:65" {
+       id 3090
+       port 65
+      }
+     }
+    }
+   }
+   outState 8203
+   outStatePort 79879
+  }
+  SoundClass "7178" {
+   id 7178
+   name "SOUND_WARLORD_LASER_FIRE"
+   comment "Heavy Laser Fire"
+   version 5
+   tl 462.727 -27.273
+   ctl 0 -21
+   ins {
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "3091:65" {
+       id 3091
+       port 65
+      }
+     }
+    }
+   }
+   outState 8203
+   outStatePort 79880
+  }
+  SoundClass "7179" {
+   id 7179
+   name "SOUND_WARLORD_IMPACT_ENERGY"
+   comment "Energy Impact"
+   version 5
+   tl 462.727 -27.273
+   ctl 0 -21
+   ins {
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "3092:65" {
+       id 3092
+       port 65
+      }
+     }
+    }
+   }
+   outState 8203
+   outStatePort 79881
+  }
+  SoundClass "7180" {
+   id 7180
+   name "SOUND_WARLORD_IMPACT_KINETIC"
+   comment "Kinetic Impact"
+   version 5
+   tl 462.727 -27.273
+   ctl 0 -21
+   ins {
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "3093:65" {
+       id 3093
+       port 65
+      }
+     }
+    }
+   }
+   outState 8203
+   outStatePort 79882
+  }
+  SoundClass "7181" {
+   id 7181
+   name "SOUND_WARLORD_IMPACT_EXPLOSIVE"
+   comment "Siege Explosion"
+   version 5
+   tl 462.727 -27.273
+   ctl 0 -21
+   ins {
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "3094:65" {
+       id 3094
+       port 65
+      }
+     }
+    }
+   }
+   outState 8203
+   outStatePort 79883
+  }
+ }
+ mixers {
+  MixerClass "8203" {
+   id 8203
+   name "OutputState 8"
+   comment "Type of sound, used in player settings"
+   version 4
+   tl 697.727 -18.455
+   ctl 0 -24
+   res "{B764D803219C775E}Sounds/FinalMix.afm"
+   ins {
+    ConnectionsClass "con:79879" {
+     id 79879
+     links {
+      ConnectionClass "7177:65" {
+       id 7177
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:79880" {
+     id 79880
+     links {
+      ConnectionClass "7178:65" {
+       id 7178
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:79881" {
+     id 79881
+     links {
+      ConnectionClass "7179:65" {
+       id 7179
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:79882" {
+     id 79882
+     links {
+      ConnectionClass "7180:65" {
+       id 7180
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:79883" {
+     id 79883
+     links {
+      ConnectionClass "7181:65" {
+       id 7181
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    8192 0
+   }
+   inputs {
+    "WPN_Handling" "WPN_Shots" "WPN_Explosions" "WNP_BulletHits" "CHAR" "ENV_AMB_2D" "VEH_Animations" "Impacts" "Dialog" "ENV_Doors" "VEH_Engine" "VEH_Tires" "VON" "SFX" "SFX_Reverb_OBSOLETE" "VON_Reverb_Small" "Dialog_Reverb" "Impacts_EXT" "ENV_AMB_3D" "WPN_SonicCracks" "CHAR_Gear" "PA" "SFX_Reverb_Exterior" "ENV_AMB_3D_Reverb_Exterior" "SFX_Direct" "SFX_Reverb_Small" "SFX_Reverb_Medium" "SFX_Reverb_Large" "WPN_Shots_Player" "Dialog_Reverb_Small" "Dialog_Reverb_Medium" "Dialog_Reverb_Large" "WPN_TravelingProjectile" "Dialog_Delay_Exterior" "SFX_Reverb_InCabin" "VON_Reverb_Medium" "VON_Reverb_Large"
+   }
+  }
+ }
+ shaders {
+  ShaderClass "3090" {
+   id 3090
+   name "Shader Laser Charge 1 2 3"
+   version 5
+   tl 241.818 -41.818
+   ins {
+    ConnectionsClass "con:0" {
+     id 0
+     links {
+      ConnectionClass "5148:65" {
+       id 5148
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:1" {
+     id 1
+     links {
+      ConnectionClass "4115:65" {
+       id 4115
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:2" {
+     id 2
+     links {
+      ConnectionClass "6165:65" {
+       id 6165
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "2052:65" {
+       id 2052
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    7 0
+   }
+  }
+  ShaderClass "3091" {
+   id 3091
+   name "Shader Heavy Laser Fire"
+   version 5
+   tl 241.818 -41.818
+   ins {
+    ConnectionsClass "con:0" {
+     id 0
+     links {
+      ConnectionClass "5149:65" {
+       id 5149
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:1" {
+     id 1
+     links {
+      ConnectionClass "4116:65" {
+       id 4116
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:2" {
+     id 2
+     links {
+      ConnectionClass "6166:65" {
+       id 6166
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "2053:65" {
+       id 2053
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    7 0
+   }
+  }
+  ShaderClass "3092" {
+   id 3092
+   name "Shader Energy Impact"
+   version 5
+   tl 241.818 -41.818
+   ins {
+    ConnectionsClass "con:0" {
+     id 0
+     links {
+      ConnectionClass "5150:65" {
+       id 5150
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:1" {
+     id 1
+     links {
+      ConnectionClass "4117:65" {
+       id 4117
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:2" {
+     id 2
+     links {
+      ConnectionClass "6167:65" {
+       id 6167
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "2054:65" {
+       id 2054
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    7 0
+   }
+  }
+  ShaderClass "3093" {
+   id 3093
+   name "Shader Kinetic Impact"
+   version 5
+   tl 241.818 -41.818
+   ins {
+    ConnectionsClass "con:0" {
+     id 0
+     links {
+      ConnectionClass "5151:65" {
+       id 5151
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:1" {
+     id 1
+     links {
+      ConnectionClass "4118:65" {
+       id 4118
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:2" {
+     id 2
+     links {
+      ConnectionClass "6168:65" {
+       id 6168
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "2055:65" {
+       id 2055
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    7 0
+   }
+  }
+  ShaderClass "3094" {
+   id 3094
+   name "Shader Siege Explosion"
+   version 5
+   tl 241.818 -41.818
+   ins {
+    ConnectionsClass "con:0" {
+     id 0
+     links {
+      ConnectionClass "5152:65" {
+       id 5152
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:1" {
+     id 1
+     links {
+      ConnectionClass "4119:65" {
+       id 4119
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:2" {
+     id 2
+     links {
+      ConnectionClass "6169:65" {
+       id 6169
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "2056:65" {
+       id 2056
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    7 0
+   }
+  }
+ }
+ amplitudes {
+  AmplitudeClass "4115" {
+   id 4115
+   name "Amplitude Laser Charge 1 2 3"
+   version 5
+   tl 250 -223
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
+   }
+  }
+  AmplitudeClass "4116" {
+   id 4116
+   name "Amplitude Heavy Laser Fire"
+   version 5
+   tl 250 -223
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
+   }
+  }
+  AmplitudeClass "4117" {
+   id 4117
+   name "Amplitude Energy Impact"
+   version 5
+   tl 250 -223
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
+   }
+  }
+  AmplitudeClass "4118" {
+   id 4118
+   name "Amplitude Kinetic Impact"
+   version 5
+   tl 250 -223
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
+   }
+  }
+  AmplitudeClass "4119" {
+   id 4119
+   name "Amplitude Siege Explosion"
+   version 5
+   tl 250 -223
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 10
+     Y 1
+    }
+    CurvePoint "2" {
+     X 130
+     Y 0.95
+    }
+    CurvePoint "3" {
+     X 400
+     Y 0.75
+    }
+    CurvePoint "4" {
+     X 850
+     Y 0.4
+    }
+    CurvePoint "5" {
+     X 1400
+    }
+   }
+  }
+ }
+ frequency {
+  FrequencyClass "6165" {
+   id 6165
+   name "Frequency Laser Charge 1 2 3"
+   version 5
+   tl 242.727 -136.364
+   enableDistanceAtt 1
+  }
+  FrequencyClass "6166" {
+   id 6166
+   name "Frequency Heavy Laser Fire"
+   version 5
+   tl 242.727 -136.364
+   enableDistanceAtt 1
+  }
+  FrequencyClass "6167" {
+   id 6167
+   name "Frequency Energy Impact"
+   version 5
+   tl 242.727 -136.364
+   enableDistanceAtt 1
+  }
+  FrequencyClass "6168" {
+   id 6168
+   name "Frequency Kinetic Impact"
+   version 5
+   tl 242.727 -136.364
+   enableDistanceAtt 1
+  }
+  FrequencyClass "6169" {
+   id 6169
+   name "Frequency Siege Explosion"
+   version 5
+   tl 242.727 -136.364
+   enableDistanceAtt 1
+  }
+ }
+ banks_local {
+  BankLocalClass "2052" {
+   id 2052
+   name "Laser Charge 1 2 3"
+   version 7
+   tl 0 -32
+   Volume 0
+   "Pitch variance" 0
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{A6111111000AA011}Sounds/Warlord/Warlord_LaserCharge_123.wav"
+    }
+   }
+  }
+  BankLocalClass "2053" {
+   id 2053
+   name "Heavy Laser Fire"
+   version 7
+   tl 0 -32
+   Volume -2
+   "Pitch variance" 0
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{A810F7CF1FD11DBD}Sounds/Weapons/Machineguns/UK59/las_cannon.wav"
+    }
+   }
+  }
+  BankLocalClass "2054" {
+   id 2054
+   name "Energy Impact"
+   version 7
+   tl 0 -32
+   Volume 6
+   "Pitch variance" 0
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{F487145888100301}Sounds/Samples/Las/Las_Impact_Hard_01.wav"
+    }
+   }
+  }
+  BankLocalClass "2055" {
+   id 2055
+   name "Kinetic Impact"
+   version 7
+   tl 0 -32
+   Volume 6
+   "Pitch variance" 0
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{F487145888100302}Sounds/Samples/Las/Las_Impact_Hard_02.wav"
+    }
+   }
+  }
+  BankLocalClass "2056" {
+   id 2056
+   name "Siege Explosion"
+   version 7
+   tl 0 -32
+   Volume 5
+   "Pitch variance" 0
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{A6111111000AA013}Sounds/Warlord/Warlord_SiegeImpact.wav"
+    }
+   }
+  }
+ }
+ spatialities {
+  SpatialityClass "5148" {
+   id 5148
+   name "Spatiality Laser Charge 1 2 3"
+   version 5
+   tl 246 -297.909
+   spatialFactor 1
+  }
+  SpatialityClass "5149" {
+   id 5149
+   name "Spatiality Heavy Laser Fire"
+   version 5
+   tl 246 -297.909
+   spatialFactor 1
+  }
+  SpatialityClass "5150" {
+   id 5150
+   name "Spatiality Energy Impact"
+   version 5
+   tl 246 -297.909
+   spatialFactor 1
+  }
+  SpatialityClass "5151" {
+   id 5151
+   name "Spatiality Kinetic Impact"
+   version 5
+   tl 246 -297.909
+   spatialFactor 1
+  }
+  SpatialityClass "5152" {
+   id 5152
+   name "Spatiality Siege Explosion"
+   version 5
+   tl 246 -297.909
+   spatialFactor 1
+  }
+ }
+ version 2
+}

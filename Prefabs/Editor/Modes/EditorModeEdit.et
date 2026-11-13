@@ -1,14 +1,6 @@
 SCR_EditorModeEntity : "{E56F54E533ACE527}Prefabs/Editor/Modes/EditorModeBase.et" {
  ID "54F0A77282A3AA3B"
  components {
-  // Keep all standard Game Master attribute lists and append the Warlord-only rows.
-  // Do not override the shared vanilla Edit.conf path: other mods use it too.
-  SCR_AttributesManagerEditorComponent "{54C8DACDCD4AE14E}" {
-   m_AttributeLists + {
-    SCR_EditorAttributeList "{AB12112600000021}" : "{AB12112600000002}Configs/Editor/AttributeLists/RW_Warlord_Edit.conf" {
-    }
-   }
-  }
   SCR_PlacingEditorComponent "{5145484399BAA2E7}" {
    m_Registries {
     SCR_PlaceableEntitiesRegistry "{62D50D1E4E26AF2D}" : "{2DA412452F22AF0B}Configs/Editor/BFA_Mech_Entities.conf" {

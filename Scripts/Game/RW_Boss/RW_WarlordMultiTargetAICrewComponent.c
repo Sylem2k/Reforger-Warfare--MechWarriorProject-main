@@ -121,7 +121,9 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
 
     override protected IEntity FindBestTarget(BFA_MechAIStationState forState = null)
     {
-        if (!forState || !m_bSpreadTargets)
+        RW_WarlordGMDirectorComponent story = StoryDirector();
+        bool vehicleOnly = story && story.GetVehicleTargetsOnly();
+        if (!forState || (!m_bSpreadTargets && !vehicleOnly))
             return super.FindBestTarget(forState);
 
         // Keep an existing vehicle target so the heavy arms can settle and
@@ -166,7 +168,7 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
                 continue;
 
             // Vehicle crew are never direct AI targets while seated.
-            if (soldier && candidate.GetParent())
+            if (soldier && (candidate.GetParent() || vehicleOnly))
                 continue;
             if (!IsAlive(candidate) || !IsHostile(candidate, mechFaction))
                 continue;
@@ -307,6 +309,12 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
             return;
 
         RW_WarlordGMDirectorComponent director = StoryDirector();
+        if (director && director.GetVehicleTargetsOnly() && state.m_pTarget && !Vehicle.Cast(state.m_pTarget))
+        {
+            CeaseFire(state);
+            state.m_pTarget = null;
+            state.m_fRescanTimer = 0;
+        }
         if (director && director.GetWeaponProfile() != 0)
         {
             // Stop any old held trigger immediately when the GM switches profile.
@@ -370,7 +378,10 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
         m_pAim.ServerSetStationAim(state.m_sStationId, GetOwner().CoordToLocal(gunnerAim));
 
         state.m_fTargetTime += dt;
-        if (state.m_fTargetTime < Math.Max(m_fAimSettleTime, 0.0))
+        float settleTime = Math.Max(m_fAimSettleTime, 0.0);
+        if (director)
+            settleTime += director.GetAimSettleExtraSeconds();
+        if (state.m_fTargetTime < settleTime)
             return;
 
         if (!HasLineOfSight(aimWorld, state.m_pTarget))
@@ -401,7 +412,10 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
         else if (state.m_fBurstTimer <= 0)
         {
             CeaseFire(state);
-            state.m_fBurstTimer = Math.Max(RandomFiringTime(m_fVolleyPauseMin, m_fVolleyPauseMax), 0.1);
+            float pauseScale = 1.0;
+            if (director)
+                pauseScale = director.GetVolleyPauseScale();
+            state.m_fBurstTimer = Math.Max(RandomFiringTime(m_fVolleyPauseMin, m_fVolleyPauseMax) * pauseScale, 0.1);
         }
     }
 

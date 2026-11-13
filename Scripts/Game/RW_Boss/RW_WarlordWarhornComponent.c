@@ -106,6 +106,16 @@ class RW_WarlordWarhornComponent : ScriptComponent
             return;
         }
 
+        // GM may mute the warhorn without disabling the component timer.
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(GetOwner());
+        if (director && !director.GetWarhornEnabled())
+        {
+            if (m_bDebugWarhorn)
+                Print("[RW WARLORD HORN][SERVER][SKIP] muted by GM storyline");
+            ScheduleWarhorn(m_fRepeatDelayMin, m_fRepeatDelayMax);
+            return;
+        }
+
         // Do not broadcast the boss horn after the Warlord is destroyed.
         DamageManagerComponent damage = DamageManagerComponent.Cast(GetOwner().FindComponent(DamageManagerComponent));
         if (damage && damage.GetState() == EDamageState.DESTROYED)

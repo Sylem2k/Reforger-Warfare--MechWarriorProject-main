@@ -922,6 +922,14 @@ Vehicle {
    m_fInaccuracy 1
    m_iMovementOrder 0
    m_fWaypointArrival 10
+   m_bVehicleTargetsOnly 0
+   m_bTopCannonsEnabled 1
+   m_bDefensesEnabled 1
+   m_bWarhornEnabled 1
+   m_bLaserChargeEnabled 1
+   m_fLaserChargeSeconds 1.25
+   m_fVolleyPauseScale 1
+   m_fAimSettleExtraSeconds 0
   }
   CGS_MechBrainComponent "{E60F00000000009D}" {
    m_bEnabled 1

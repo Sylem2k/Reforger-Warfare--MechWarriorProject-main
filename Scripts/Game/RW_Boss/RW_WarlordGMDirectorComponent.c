@@ -41,6 +41,105 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
     [Attribute("10", UIWidgets.Auto, "Arrive this close to a GM waypoint before stopping (metres).", category: "GM Storyline"), RplProp()]
     protected float m_fWaypointArrival;
 
+
+    // Extra GM storyline controls. Defaults keep existing boss AI/defenses and pacing.
+    [Attribute("false", UIWidgets.CheckBox, "Vehicle-only targets for the main AI gunners.", category: "GM Storyline"), RplProp()]
+    protected bool m_bVehicleTargetsOnly;
+
+    [Attribute("true", UIWidgets.CheckBox, "Allow the two independent top siege cannons.", category: "GM Storyline"), RplProp()]
+    protected bool m_bTopCannonsEnabled;
+
+    [Attribute("true", UIWidgets.CheckBox, "Allow defensive stomp and point-defense in All Weapons mode.", category: "GM Storyline"), RplProp()]
+    protected bool m_bDefensesEnabled;
+
+    [Attribute("true", UIWidgets.CheckBox, "Allow the scheduled world-boss warhorn.", category: "GM Storyline"), RplProp()]
+    protected bool m_bWarhornEnabled;
+
+    [Attribute("true", UIWidgets.CheckBox, "Charge before each Warlord laser salvo.", category: "GM Storyline"), RplProp()]
+    protected bool m_bLaserChargeEnabled;
+
+    [Attribute("1.25", UIWidgets.Auto, "Seconds for the three-stage laser charge-up.", category: "GM Storyline"), RplProp()]
+    protected float m_fLaserChargeSeconds;
+
+    [Attribute("1", UIWidgets.Auto, "Multiplier for AI downtime between volleys. Higher = fewer attacks.", category: "GM Storyline"), RplProp()]
+    protected float m_fVolleyPauseScale;
+
+    [Attribute("0", UIWidgets.Auto, "Additional seconds the AI must settle on a target before firing.", category: "GM Storyline"), RplProp()]
+    protected float m_fAimSettleExtraSeconds;
+
+    bool GetVehicleTargetsOnly() { return m_bVehicleTargetsOnly; }
+    bool GetTopCannonsEnabled() { return m_bTopCannonsEnabled; }
+    bool GetDefensesEnabled() { return m_bDefensesEnabled; }
+    bool GetWarhornEnabled() { return m_bWarhornEnabled; }
+    bool GetLaserChargeEnabled() { return m_bLaserChargeEnabled; }
+    float GetLaserChargeSeconds() { return Math.Clamp(m_fLaserChargeSeconds, 0.75, 3.0); }
+    float GetVolleyPauseScale() { return Math.Clamp(m_fVolleyPauseScale, 0.5, 4.0); }
+    float GetAimSettleExtraSeconds() { return Math.Clamp(m_fAimSettleExtraSeconds, 0.0, 8.0); }
+
+    void SetVehicleTargetsOnly(bool enabled)
+    {
+        if (!Replication.IsServer()) return;
+        m_bVehicleTargetsOnly = enabled;
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] vehiclesOnly=%1", enabled));
+    }
+
+    void SetTopCannonsEnabled(bool enabled)
+    {
+        if (!Replication.IsServer()) return;
+        m_bTopCannonsEnabled = enabled;
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] topCannons=%1", enabled));
+    }
+
+    void SetDefensesEnabled(bool enabled)
+    {
+        if (!Replication.IsServer()) return;
+        m_bDefensesEnabled = enabled;
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] defenses=%1", enabled));
+    }
+
+    void SetWarhornEnabled(bool enabled)
+    {
+        if (!Replication.IsServer()) return;
+        m_bWarhornEnabled = enabled;
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] warhorn=%1", enabled));
+    }
+
+    void SetLaserChargeEnabled(bool enabled)
+    {
+        if (!Replication.IsServer()) return;
+        m_bLaserChargeEnabled = enabled;
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] laserCharge=%1", enabled));
+    }
+
+    void SetLaserChargeSeconds(float seconds)
+    {
+        if (!Replication.IsServer()) return;
+        m_fLaserChargeSeconds = Math.Clamp(seconds, 0.75, 3.0);
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] laserChargeSeconds=%1", m_fLaserChargeSeconds));
+    }
+
+    void SetVolleyPauseScale(float multiplier)
+    {
+        if (!Replication.IsServer()) return;
+        m_fVolleyPauseScale = Math.Clamp(multiplier, 0.5, 4.0);
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] volleyPauseScale=%1", m_fVolleyPauseScale));
+    }
+
+    void SetAimSettleExtraSeconds(float seconds)
+    {
+        if (!Replication.IsServer()) return;
+        m_fAimSettleExtraSeconds = Math.Clamp(seconds, 0.0, 8.0);
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD GM] extraAimSettle=%1", m_fAimSettleExtraSeconds));
+    }
+
     int GetWeaponProfile() { return m_iWeaponProfile; }
     float GetInaccuracy() { return m_fInaccuracy; }
     int GetMovementOrder() { return m_iMovementOrder; }
@@ -109,7 +208,7 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
 
     bool AllowsTopCannons()
     {
-        return m_iWeaponProfile == 0 || m_iWeaponProfile == 3;
+        return m_bTopCannonsEnabled && (m_iWeaponProfile == 0 || m_iWeaponProfile == 3);
     }
 
     bool AllowsAutoBattery(bool isLaser, bool isCannon)
@@ -127,7 +226,7 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
     {
         // Explicit weapon profile selections also suppress automatic stomp and
         // point-defense effects. Only All Weapons enables these auxiliary systems.
-        return m_iWeaponProfile == 0;
+        return m_bDefensesEnabled && m_iWeaponProfile == 0;
     }
 
     vector AddAimError(vector worldAim, vector mechPos, float targetTime, int stationNumber)
