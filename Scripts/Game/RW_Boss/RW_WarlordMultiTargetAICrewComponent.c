@@ -21,6 +21,8 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
     [Attribute("7", UIWidgets.Auto, "Minimum seconds to stay locked on a valid visible target. Prevents turrets switching every scan.", category: "Warlord Targeting")]
     protected float m_fMinimumTargetHoldSeconds;
 
+    protected bool m_bLoggedGMWaypointMissing;
+
     protected RW_WarlordGMDirectorComponent StoryDirector()
     {
         return RW_WarlordGMDirectorComponentClass.Find(GetOwner());
@@ -40,6 +42,7 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
                 int order = director.GetMovementOrder();
                 if (order == 1)
                 {
+                    m_bLoggedGMWaypointMissing = false;
                     StopDriver();
                     return;
                 }
@@ -48,9 +51,17 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
                     string reason;
                     if (!driver || !GetDriverWaypoint(driver, reason))
                     {
+                        if (!m_bLoggedGMWaypointMissing)
+                        {
+                            Print(string.Format("[RW WARLORD GM][MOVE] waiting for GM group Move waypoint; driver=%1 reason=%2", driver, reason), LogLevel.WARNING);
+                            m_bLoggedGMWaypointMissing = true;
+                        }
                         StopDriver();
                         return;
                     }
+                    if (m_bLoggedGMWaypointMissing)
+                        Print("[RW WARLORD GM][MOVE] GM waypoint acquired; moving");
+                    m_bLoggedGMWaypointMissing = false;
                     m_fArriveDistance = director.GetWaypointArrival();
                 }
             }
