@@ -340,6 +340,131 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     protected int m_iLastImpactEnergyMs;
     protected int m_iLastImpactExplosiveMs;
     protected int m_iImpactAudioLogs;
+    protected int m_iChargeAudioLogs;
+    protected bool m_bDriverLaserRequested;
+    protected bool m_bDriverLaserCharging;
+
+    // Boss-only reliable charge cue; all nearby clients hear the same 1-2-3
+    // rising hum. Server remains authoritative for starting actual shots.
+    void ServerBroadcastWarlordLaserCharge(vector position)
+    {
+        if (!Replication.IsServer())
+            return;
+
+        if (m_iChargeAudioLogs < 8)
+        {
+            Print(string.Format("[RW WARLORD LASER][SERVER CHARGE SEND] at=%1", position));
+            m_iChargeAudioLogs++;
+        }
+        if (!System.IsConsoleApp())
+            PlayBossCombatAudioLocal(position, "SOUND_WARLORD_LASER_CHARGE");
+
+        Rpc(RpcDo_WarlordLaserCharge, position);
+    }
+
+    [RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+    protected void RpcDo_WarlordLaserCharge(vector position)
+    {
+        if (Replication.IsServer() || System.IsConsoleApp())
+            return;
+        if (m_iChargeAudioLogs < 8)
+        {
+            Print("[RW WARLORD LASER][CLIENT CHARGE RECEIVED]");
+            m_iChargeAudioLogs++;
+        }
+        PlayBossCombatAudioLocal(position, "SOUND_WARLORD_LASER_CHARGE");
+    }
+
+    protected void PlayBossCombatAudioLocal(vector position, string eventName)
+    {
+        if (System.IsConsoleApp())
+            return;
+
+        ResourceName project = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
+        if (m_iImpactAudioLogs < 20)
+        {
+            Resource resource = Resource.Load(project);
+            bool valid = resource && resource.IsValid();
+            float audible = AudioSystem.IsAudible(project, eventName, position);
+            Print(string.Format("[RW WARLORD AUDIO][CLIENT] event=%1 valid=%2 audible=%3 pos=%4",
+                eventName, valid, audible, position));
+            m_iImpactAudioLogs++;
+        }
+
+        vector soundMat[4];
+        Math3D.MatrixIdentity4(soundMat);
+        soundMat[3] = position;
+        BFA_MechWeaponModuleComponent.BFA_MechPlaySound(project, eventName, soundMat);
+    }
+
+    // Charge the pair of DRIVER arm Las Cannons once per held-fire salvo,
+    // not once per individual shot and never on a proxy/client.
+    override void ServerSetFireHeld(string stationId, int weaponGroup, bool held)
+    {
+        if (!Replication.IsServer())
+            return;
+
+        if (stationId != "DRIVER" || weaponGroup != 1)
+        {
+            super.ServerSetFireHeld(stationId, weaponGroup, held);
+            return;
+        }
+
+        if (!held)
+        {
+            m_bDriverLaserRequested = false;
+            m_bDriverLaserCharging = false;
+            if (GetGame() && GetGame().GetCallqueue())
+                GetGame().GetCallqueue().Remove(ServerFinishDriverLaserCharge);
+            super.ServerSetFireHeld(stationId, weaponGroup, false);
+            return;
+        }
+
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(GetOwner());
+        if (!director || !director.GetLaserChargeEnabled())
+        {
+            super.ServerSetFireHeld(stationId, weaponGroup, true);
+            return;
+        }
+
+        if (m_bDriverLaserRequested)
+            return;
+
+        m_bDriverLaserRequested = true;
+        m_bDriverLaserCharging = true;
+        int delayMs = Math.Max((int)(director.GetLaserChargeSeconds() * 1000.0), 750);
+        ServerBroadcastWarlordLaserCharge(GetOwner().GetOrigin() + vector.Up * 18.0);
+        Print(string.Format("[RW WARLORD LASER][DRIVER CHARGE START] delayMs=%1", delayMs));
+
+        if (GetGame() && GetGame().GetCallqueue())
+            GetGame().GetCallqueue().CallLater(ServerFinishDriverLaserCharge, delayMs, false);
+        else
+        {
+            m_bDriverLaserCharging = false;
+            m_bDriverLaserRequested = false;
+        }
+    }
+
+    protected void ServerFinishDriverLaserCharge()
+    {
+        if (!Replication.IsServer() || !m_bDriverLaserRequested || !m_bDriverLaserCharging || !GetOwner())
+            return;
+
+        m_bDriverLaserCharging = false;
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(GetOwner());
+        if (director && !director.AllowsStationGroup("DRIVER", 1))
+            return;
+
+        Print("[RW WARLORD LASER][DRIVER FIRE AFTER CHARGE]");
+        super.ServerSetFireHeld("DRIVER", 1, true);
+    }
+
+    override void OnDelete(IEntity owner)
+    {
+        if (GetGame() && GetGame().GetCallqueue())
+            GetGame().GetCallqueue().Remove(ServerFinishDriverLaserCharge);
+        super.OnDelete(owner);
+    }
 
     // 0 = kinetic, 1 = energy, 2 = explosive. Group nearby impacts to avoid
     // reliable-RPC floods from the Warlord's many simultaneous batteries.
@@ -395,6 +520,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (Replication.IsServer() || System.IsConsoleApp())
             return;
 
+        if (m_iImpactAudioLogs < 20)
+            Print(string.Format("[RW WARLORD IMPACT][CLIENT RECEIVED] kind=%1 pos=%2", kind, position));
         PlayBossImpactAudioLocal(position, kind);
     }
 
@@ -403,52 +530,14 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (System.IsConsoleApp())
             return;
 
-        vector audioTransform[4];
-        Math3D.MatrixIdentity4(audioTransform);
-        audioTransform[3] = position;
-
-        if (m_iImpactAudioLogs < 12)
-        {
-            ResourceName audioProject = "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp";
-            string audioEvent = "SOUND_HIT_VEHICLE";
-            if (kind == 1)
-                audioEvent = "SOUND_HIT";
-            if (kind == 2)
-            {
-                audioProject = "{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp";
-                audioEvent = "SOUND_SHOT_2";
-            }
-
-            Resource resource = Resource.Load(audioProject);
-            bool resourceOK = resource && resource.IsValid();
-            float audible = AudioSystem.IsAudible(audioProject, audioEvent, position);
-            Print(string.Format("[RW WARLORD IMPACT][CLIENT PLAY] kind=%1 pos=%2 valid=%3 audible=%4 event=%5",
-                kind, position, resourceOK, audible, audioEvent));
-            m_iImpactAudioLogs++;
-        }
-
+        string eventName = "SOUND_WARLORD_IMPACT_KINETIC";
         if (kind == 1)
-        {
-            BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
-                "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp",
-                "SOUND_HIT", audioTransform);
-        }
+            eventName = "SOUND_WARLORD_IMPACT_ENERGY";
         else if (kind == 2)
-        {
-            // First-pass heavy percussive accent using an existing local ACP.
-            // A custom explosive impact sample can replace this later.
-            BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
-                "{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp",
-                "SOUND_SHOT_2", audioTransform);
-        }
-        else
-        {
-            BFA_MechWeaponModuleComponent.BFA_MechPlaySound(
-                "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp",
-                "SOUND_HIT_VEHICLE", audioTransform);
-        }
-    }
+            eventName = "SOUND_WARLORD_IMPACT_EXPLOSIVE";
 
+        PlayBossCombatAudioLocal(position, eventName);
+    }
 
     // Reuse this router's established replication path: its shot/audio RPCs
     // already reach the Warlord's multiplayer clients. The warhorn component
@@ -559,6 +648,27 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         int hardpointIndex, int shotId, vector start, vector end,
         int flags, float speed, float length, float thickness)
     {
+        // Main Warlord Las Cannons inherit their old fire sound from the
+        // generic arm prefab. Swap only their audio cue during this shot.
+        // Do not change the shared Mech Core module or model offsets.
+        BFA_MechWeaponModuleComponent laserModule = FindLocalModule(hardpointIndex);
+        if (BFA_MechLasCannonModuleComponent.Cast(laserModule))
+        {
+            BFA_MechWeaponFX laserFX = laserModule.GetFX();
+            if (laserFX)
+            {
+                ResourceName savedProject = laserFX.m_sSoundProject;
+                string savedEvent = laserFX.m_sFireSoundEvent;
+                laserFX.m_sSoundProject = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
+                laserFX.m_sFireSoundEvent = "SOUND_WARLORD_LASER_FIRE";
+                super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+                    speed, Math.AbsFloat(length), thickness);
+                laserFX.m_sSoundProject = savedProject;
+                laserFX.m_sFireSoundEvent = savedEvent;
+                return;
+            }
+        }
+
         if (length >= 0)
         {
             super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
