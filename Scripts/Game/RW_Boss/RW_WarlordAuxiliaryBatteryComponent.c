@@ -346,6 +346,11 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     protected int m_iLastImpactKineticMs;
     protected int m_iLastImpactEnergyMs;
     protected int m_iLastImpactExplosiveMs;
+    // Locality-aware coalescing: one far-away impact must not silence a
+    // separate wall/ground strike near another player in the same 100 ms.
+    protected vector m_vLastImpactKinetic;
+    protected vector m_vLastImpactEnergy;
+    protected vector m_vLastImpactExplosive;
     protected int m_iImpactAudioLogs;
     protected int m_iChargeAudioLogs;
     protected bool m_bDriverLaserRequested;
@@ -485,30 +490,47 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         int now = System.GetTickCount();
         int previous = 0;
         int minGap = 100;
+        vector previousPosition = vector.Zero;
         if (kind == 1)
         {
             previous = m_iLastImpactEnergyMs;
+            previousPosition = m_vLastImpactEnergy;
             minGap = 130;
         }
         else if (kind == 2)
         {
             previous = m_iLastImpactExplosiveMs;
+            previousPosition = m_vLastImpactExplosive;
             minGap = 180;
         }
         else
         {
             previous = m_iLastImpactKineticMs;
+            previousPosition = m_vLastImpactKinetic;
         }
 
-        if (previous > 0 && now - previous < minGap)
+        // Suppress a rapid cluster of essentially coincident impacts, but
+        // never suppress a hit at a different location across the battlefield.
+        // In particular, a far miss cannot mute a shot striking a nearby wall.
+        if (previous > 0 && now - previous < minGap
+            && vector.DistanceSq(previousPosition, position) < 144.0)
             return;
 
         if (kind == 1)
+        {
             m_iLastImpactEnergyMs = now;
+            m_vLastImpactEnergy = position;
+        }
         else if (kind == 2)
+        {
             m_iLastImpactExplosiveMs = now;
+            m_vLastImpactExplosive = position;
+        }
         else
+        {
             m_iLastImpactKineticMs = now;
+            m_vLastImpactKinetic = position;
+        }
 
         if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 12)
         {
@@ -616,6 +638,55 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     // length. For non-beam guns that length is otherwise presentation-only.
     // A negative value means: use a dim kinetic shell visual (all shots still
     // render); every fourth shot uses the bright projectile/tracer FX.
+    // World geometry (walls, roofs, roads, rocks) often has TraceEnt == null.
+    // Core's hitscan returns a precise clipped endpoint for those collisions,
+    // but 'hit' is false because no entity was struck. Probe only a small
+    // neighbourhood around that endpoint to distinguish an actual physical
+    // surface from a clean maximum-range shot through the air.
+    protected bool IsWarlordPhysicalSurfaceAtShotEnd(vector start, vector end, BFA_MechWeaponModuleComponent module)
+    {
+        if (!GetGame() || !GetGame().GetWorld())
+            return false;
+
+        BaseWorld world = GetGame().GetWorld();
+
+        // Terrain is a physical collision even when it has no entity.
+        if (end[1] <= world.GetSurfaceY(end[0], end[2]) + 0.75)
+            return true;
+
+        vector toEnd = end - start;
+        float distance = toEnd.Length();
+        if (distance < 0.1)
+            return false;
+
+        vector direction = toEnd * (1.0 / distance);
+
+        TraceParam probe = new TraceParam();
+        // The server already resolved the actual shot. Rechecking its FINAL
+        // two metres, plus a short overrun, avoids replaying a long ray and
+        // catches walls even when the hit point is on a physics boundary.
+        probe.Start = end - direction * Math.Min(distance * 0.25, 2.0);
+        probe.End = end + direction * 0.65;
+        probe.Flags = TraceFlags.WORLD | TraceFlags.ENTS;
+        probe.LayerMask = EPhysicsLayerPresets.Projectile;
+
+        array<IEntity> excludes = {};
+        if (GetOwner())
+            excludes.Insert(GetOwner());
+        if (module && module.GetOwner())
+            excludes.Insert(module.GetOwner());
+        probe.ExcludeArray = excludes;
+
+        float fraction = world.TraceMove(probe, null);
+        if (fraction >= 1.0)
+            return false;
+
+        vector contact = probe.Start + (probe.End - probe.Start) * fraction;
+        // Do not make a fake impact if a different obstruction happens to
+        // be far away from the authoritative endpoint.
+        return vector.DistanceSq(contact, end) <= 1.44;
+    }
+
     override int ServerBroadcastModuleShot(
         BFA_MechWeaponModuleComponent module,
         vector start, vector end, bool hit, float speed,
@@ -642,16 +713,14 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         // Hitscan cannons and beams have no later server-impact callback.
         // Schedule their audio at the actual endpoint after visual travel.
         // Server-simulated LRMs and flak send audio on actual detonation instead.
-        // TraceShot can return a terrain endpoint without an entity. Allow
-        // ground hits to make a sound, but never explode at a pure sky miss.
-        bool groundImpact = false;
-        if (!hit && module && GetGame() && GetGame().GetWorld())
-        {
-            BaseWorld world = GetGame().GetWorld();
-            groundImpact = end[1] <= world.GetSurfaceY(end[0], end[2]) + 1.0;
-        }
+        // An entity hit is only one type of collision. A shot can miss its
+        // target and still hit world geometry with no TraceEnt (e.g. a wall).
+        // A clean maximum-range sky shot must stay silent at its endpoint.
+        bool physicalImpact = hit;
+        if (!hit && !serverImpact && module && Replication.IsServer())
+            physicalImpact = IsWarlordPhysicalSurfaceAtShotEnd(start, end, module);
 
-        if (Replication.IsServer() && (hit || groundImpact) && !serverImpact && module
+        if (Replication.IsServer() && physicalImpact && !serverImpact && module
             && !RW_WarlordCoverAwareFlakComponent.Cast(module))
         {
             int kind = 0;
