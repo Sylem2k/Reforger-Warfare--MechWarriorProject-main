@@ -12,7 +12,7 @@ class RW_WarlordBossLRM : RW_LRMWeapon
 {
     // One bass-heavy accent for each missile volley, not one accent for every
     // missile in the salvo. The original rocket launch sound remains intact.
-    [Attribute("{D7FD0CE25E74A7A8}Sounds/Weapons/Machineguns/UK59/Cannon_shot.acp", UIWidgets.ResourceNamePicker, "Optional launch accent project. Existing local cannon thump is an initial placeholder until a dedicated missile recording is supplied.", params: "acp", category: "Warlord Audio")]
+    [Attribute("{C6C54B57B6D9D106}Sounds/Warlord/Warlord_Cannons.acp", UIWidgets.ResourceNamePicker, "Optional heavy Warlord launch accent project; the original rocket launch sound remains intact.", params: "acp", category: "Warlord Audio")]
     protected ResourceName m_sLaunchAccentProject;
 
     [Attribute("SOUND_SHOT_2", UIWidgets.EditBox, "Event within the launch accent audio project.", category: "Warlord Audio")]
