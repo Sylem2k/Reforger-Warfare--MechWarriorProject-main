@@ -1159,9 +1159,10 @@ Vehicle {
    m_aShieldPhases {
     0.75 0.5 0.25
    }
-   m_bDebug 1
+   m_bDebug 0
   }
   RW_WarlordBossWeaponRouterComponent "{E60F000000000050}" {
+   m_bVerboseWarlordLogs 0
   }
   RW_WarlordGMDirectorComponent "{AB12112600000020}" {
    m_iWeaponProfile 0
@@ -1238,7 +1239,7 @@ Vehicle {
    m_fRepeatDelayMin 20
    m_fRepeatDelayMax 30
    m_fLongSilenceChance 0
-   m_bDebugWarhorn 1
+   m_bDebugWarhorn 0
   }
   RigidBody "{E60F00000000006E}" {
    Active Active
