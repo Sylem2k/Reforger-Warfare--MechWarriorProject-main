@@ -1,10 +1,9 @@
-// Dedicated Warlord boss only; sound events are played on clients at muzzle/impact.
 AudioClass {
  sounds {
   SoundClass "7177" {
    id 7177
    name "SOUND_WARLORD_LASER_CHARGE"
-   comment "Laser Charge 1 2 3"
+   comment "Warlord original Laser Charge 1 2 3"
    version 5
    tl 462.727 -27.273
    ctl 0 -21
@@ -25,9 +24,9 @@ AudioClass {
   SoundClass "7178" {
    id 7178
    name "SOUND_WARLORD_LASER_FIRE"
-   comment "Heavy Laser Fire"
+   comment "Warlord original Heavy Laser Fire"
    version 5
-   tl 462.727 -27.273
+   tl 462.727 170.727
    ctl 0 -21
    ins {
     ConnectionsClass "con:64" {
@@ -46,9 +45,9 @@ AudioClass {
   SoundClass "7179" {
    id 7179
    name "SOUND_WARLORD_IMPACT_ENERGY"
-   comment "Energy Impact"
+   comment "Warlord original Energy Impact"
    version 5
-   tl 462.727 -27.273
+   tl 462.727 368.727
    ctl 0 -21
    ins {
     ConnectionsClass "con:64" {
@@ -67,9 +66,9 @@ AudioClass {
   SoundClass "7180" {
    id 7180
    name "SOUND_WARLORD_IMPACT_KINETIC"
-   comment "Kinetic Impact"
+   comment "Warlord original Kinetic Impact"
    version 5
-   tl 462.727 -27.273
+   tl 462.727 566.727
    ctl 0 -21
    ins {
     ConnectionsClass "con:64" {
@@ -88,9 +87,9 @@ AudioClass {
   SoundClass "7181" {
    id 7181
    name "SOUND_WARLORD_IMPACT_EXPLOSIVE"
-   comment "Siege Explosion"
+   comment "Warlord original Siege Explosion"
    version 5
-   tl 462.727 -27.273
+   tl 462.727 764.727
    ctl 0 -21
    ins {
     ConnectionsClass "con:64" {
@@ -223,7 +222,7 @@ AudioClass {
    id 3091
    name "Shader Heavy Laser Fire"
    version 5
-   tl 241.818 -41.818
+   tl 241.818 156.182
    ins {
     ConnectionsClass "con:0" {
      id 0
@@ -270,7 +269,7 @@ AudioClass {
    id 3092
    name "Shader Energy Impact"
    version 5
-   tl 241.818 -41.818
+   tl 241.818 354.182
    ins {
     ConnectionsClass "con:0" {
      id 0
@@ -317,7 +316,7 @@ AudioClass {
    id 3093
    name "Shader Kinetic Impact"
    version 5
-   tl 241.818 -41.818
+   tl 241.818 552.182
    ins {
     ConnectionsClass "con:0" {
      id 0
@@ -364,7 +363,7 @@ AudioClass {
    id 3094
    name "Shader Siege Explosion"
    version 5
-   tl 241.818 -41.818
+   tl 241.818 750.182
    ins {
     ConnectionsClass "con:0" {
      id 0
@@ -421,16 +420,16 @@ AudioClass {
      Y 1
     }
     CurvePoint "2" {
-     X 130
-     Y 0.95
+     X 180
+     Y 0.96
     }
     CurvePoint "3" {
-     X 400
-     Y 0.75
+     X 500
+     Y 0.74
     }
     CurvePoint "4" {
-     X 850
-     Y 0.4
+     X 930
+     Y 0.35
     }
     CurvePoint "5" {
      X 1400
@@ -441,7 +440,7 @@ AudioClass {
    id 4116
    name "Amplitude Heavy Laser Fire"
    version 5
-   tl 250 -223
+   tl 250 -25
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
@@ -449,16 +448,16 @@ AudioClass {
      Y 1
     }
     CurvePoint "2" {
-     X 130
-     Y 0.95
+     X 180
+     Y 0.96
     }
     CurvePoint "3" {
-     X 400
-     Y 0.75
+     X 500
+     Y 0.74
     }
     CurvePoint "4" {
-     X 850
-     Y 0.4
+     X 930
+     Y 0.35
     }
     CurvePoint "5" {
      X 1400
@@ -469,7 +468,7 @@ AudioClass {
    id 4117
    name "Amplitude Energy Impact"
    version 5
-   tl 250 -223
+   tl 250 173
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
@@ -477,16 +476,16 @@ AudioClass {
      Y 1
     }
     CurvePoint "2" {
-     X 130
-     Y 0.95
+     X 180
+     Y 0.96
     }
     CurvePoint "3" {
-     X 400
-     Y 0.75
+     X 500
+     Y 0.74
     }
     CurvePoint "4" {
-     X 850
-     Y 0.4
+     X 930
+     Y 0.35
     }
     CurvePoint "5" {
      X 1400
@@ -497,7 +496,7 @@ AudioClass {
    id 4118
    name "Amplitude Kinetic Impact"
    version 5
-   tl 250 -223
+   tl 250 371
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
@@ -505,16 +504,16 @@ AudioClass {
      Y 1
     }
     CurvePoint "2" {
-     X 130
-     Y 0.95
+     X 180
+     Y 0.96
     }
     CurvePoint "3" {
-     X 400
-     Y 0.75
+     X 500
+     Y 0.74
     }
     CurvePoint "4" {
-     X 850
-     Y 0.4
+     X 930
+     Y 0.35
     }
     CurvePoint "5" {
      X 1400
@@ -525,7 +524,7 @@ AudioClass {
    id 4119
    name "Amplitude Siege Explosion"
    version 5
-   tl 250 -223
+   tl 250 569
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
@@ -533,16 +532,16 @@ AudioClass {
      Y 1
     }
     CurvePoint "2" {
-     X 130
-     Y 0.95
+     X 180
+     Y 0.96
     }
     CurvePoint "3" {
-     X 400
-     Y 0.75
+     X 500
+     Y 0.74
     }
     CurvePoint "4" {
-     X 850
-     Y 0.4
+     X 930
+     Y 0.35
     }
     CurvePoint "5" {
      X 1400
@@ -562,28 +561,28 @@ AudioClass {
    id 6166
    name "Frequency Heavy Laser Fire"
    version 5
-   tl 242.727 -136.364
+   tl 242.727 61.636
    enableDistanceAtt 1
   }
   FrequencyClass "6167" {
    id 6167
    name "Frequency Energy Impact"
    version 5
-   tl 242.727 -136.364
+   tl 242.727 259.636
    enableDistanceAtt 1
   }
   FrequencyClass "6168" {
    id 6168
    name "Frequency Kinetic Impact"
    version 5
-   tl 242.727 -136.364
+   tl 242.727 457.636
    enableDistanceAtt 1
   }
   FrequencyClass "6169" {
    id 6169
    name "Frequency Siege Explosion"
    version 5
-   tl 242.727 -136.364
+   tl 242.727 655.636
    enableDistanceAtt 1
   }
  }
@@ -593,7 +592,7 @@ AudioClass {
    name "Laser Charge 1 2 3"
    version 7
    tl 0 -32
-   Volume 0
+   Volume 5
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -605,12 +604,12 @@ AudioClass {
    id 2053
    name "Heavy Laser Fire"
    version 7
-   tl 0 -32
+   tl 0 168
    Volume -2
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
-     Filename "{A810F7CF1FD11DBD}Sounds/Weapons/Machineguns/UK59/las_cannon.wav"
+     Filename "{C6C54B57B6D9D101}Sounds/Warlord/Warlord_LaserFire.wav"
     }
    }
   }
@@ -618,12 +617,12 @@ AudioClass {
    id 2054
    name "Energy Impact"
    version 7
-   tl 0 -32
-   Volume 6
+   tl 0 368
+   Volume 2
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
-     Filename "{F487145888100301}Sounds/Samples/Las/Las_Impact_Hard_01.wav"
+     Filename "{C6C54B57B6D9D102}Sounds/Warlord/Warlord_EnergyImpact.wav"
     }
    }
   }
@@ -631,12 +630,12 @@ AudioClass {
    id 2055
    name "Kinetic Impact"
    version 7
-   tl 0 -32
-   Volume 6
+   tl 0 568
+   Volume 2
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
-     Filename "{F487145888100302}Sounds/Samples/Las/Las_Impact_Hard_02.wav"
+     Filename "{C6C54B57B6D9D103}Sounds/Warlord/Warlord_KineticImpact.wav"
     }
    }
   }
@@ -644,8 +643,8 @@ AudioClass {
    id 2056
    name "Siege Explosion"
    version 7
-   tl 0 -32
-   Volume 5
+   tl 0 768
+   Volume 2
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -666,28 +665,28 @@ AudioClass {
    id 5149
    name "Spatiality Heavy Laser Fire"
    version 5
-   tl 246 -297.909
+   tl 246 -99.909
    spatialFactor 1
   }
   SpatialityClass "5150" {
    id 5150
    name "Spatiality Energy Impact"
    version 5
-   tl 246 -297.909
+   tl 246 98.091
    spatialFactor 1
   }
   SpatialityClass "5151" {
    id 5151
    name "Spatiality Kinetic Impact"
    version 5
-   tl 246 -297.909
+   tl 246 296.091
    spatialFactor 1
   }
   SpatialityClass "5152" {
    id 5152
    name "Spatiality Siege Explosion"
    version 5
-   tl 246 -297.909
+   tl 246 494.091
    spatialFactor 1
   }
  }
