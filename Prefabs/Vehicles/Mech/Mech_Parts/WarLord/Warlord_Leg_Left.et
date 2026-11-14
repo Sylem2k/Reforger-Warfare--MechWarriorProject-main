@@ -12,6 +12,13 @@ GenericEntity {
    m_bBindRelativeJ3IK 1
    m_bFootRestAtLastBone 1
    m_bJ3RestWorldSpace 1
+   m_bTraceHipJoints 1
+   m_WarlordJ1 PointInfo "{A726BFAA00110001}" {
+    PivotID "J1"
+   }
+   m_WarlordJ2 PointInfo "{A726BFAA00120001}" {
+    PivotID "J2"
+   }
    m_fStepHeight 1
    m_fObstacleStepHeight 3
    m_fSwingFraction 0.36
