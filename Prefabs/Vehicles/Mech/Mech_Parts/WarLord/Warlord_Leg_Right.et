@@ -12,7 +12,7 @@ GenericEntity {
    m_bBindRelativeJ3IK 1
    m_bFootRestAtLastBone 1
    m_bJ3RestWorldSpace 1
-   m_bTraceHipJoints 1
+   m_bTraceHipJoints 0
    m_WarlordJ1 PointInfo "{A726BFAA00110002}" {
     PivotID "J1"
    }
