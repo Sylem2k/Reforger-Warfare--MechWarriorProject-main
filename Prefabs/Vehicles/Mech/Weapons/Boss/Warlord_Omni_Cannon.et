@@ -36,7 +36,8 @@ GenericEntity {
    m_fTracerThickness 0.22
    m_FX BFA_MechWeaponFX "{E8A30000000000BD}" {
     m_sMuzzleParticle "{254588526C5E861A}Particles/Weapon/Muzzle_KPVT.ptc"
-    m_sSoundProject "{66E74C5A23D6C8A0}Sounds/Weapons/HeavyWeapons/KPVT/Weapons_HeavyWeapons_KPVT_Shot.acp"
+    m_sSoundProject "{C6C54B57B6D9D106}Sounds/Warlord/Warlord_Cannons.acp"
+    m_sFireSoundEvent "SOUND_SHOT_2"
     m_sImpactParticle "{6FE5C11AEE0A28A1}Particles/Weapon/Explosion_HEI.ptc"
     m_sImpactSoundProject "{F487145888100320}Sounds/Weapons/Las/Weapons_LasHits.acp"
     m_sImpactSoundEvent "SOUND_HIT_VEHICLE"
