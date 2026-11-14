@@ -29,6 +29,9 @@ class RW_WarlordGMDirectorComponentClass : ScriptComponentClass
 // For GM waypoints, the existing hidden pilot must have its own AI group.
 class RW_WarlordGMDirectorComponent : ScriptComponent
 {
+    [Attribute("false", UIWidgets.CheckBox, "Verbose storyline setting-change logs, OFF during Warlord leg diagnosis.", category: "Diagnostics")]
+    protected bool m_bVerboseGMLogs;
+
     [Attribute("0", UIWidgets.Auto, "0=All 1=Missiles only 2=Lasers only 3=Cannons only 4=Hold fire.", category: "GM Storyline"), RplProp()]
     protected int m_iWeaponProfile;
 
@@ -81,7 +84,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_bVehicleTargetsOnly = enabled;
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] vehiclesOnly=%1", enabled));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] vehiclesOnly=%1", enabled));
     }
 
     void SetTopCannonsEnabled(bool enabled)
@@ -89,7 +93,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_bTopCannonsEnabled = enabled;
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] topCannons=%1", enabled));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] topCannons=%1", enabled));
     }
 
     void SetDefensesEnabled(bool enabled)
@@ -97,7 +102,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_bDefensesEnabled = enabled;
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] defenses=%1", enabled));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] defenses=%1", enabled));
     }
 
     void SetWarhornEnabled(bool enabled)
@@ -105,7 +111,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_bWarhornEnabled = enabled;
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] warhorn=%1", enabled));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] warhorn=%1", enabled));
     }
 
     void SetLaserChargeEnabled(bool enabled)
@@ -113,7 +120,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_bLaserChargeEnabled = enabled;
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] laserCharge=%1", enabled));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] laserCharge=%1", enabled));
     }
 
     void SetLaserChargeSeconds(float seconds)
@@ -121,7 +129,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_fLaserChargeSeconds = Math.Clamp(seconds, 0.75, 3.0);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] laserChargeSeconds=%1", m_fLaserChargeSeconds));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] laserChargeSeconds=%1", m_fLaserChargeSeconds));
     }
 
     void SetVolleyPauseScale(float multiplier)
@@ -129,7 +138,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_fVolleyPauseScale = Math.Clamp(multiplier, 0.5, 4.0);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] volleyPauseScale=%1", m_fVolleyPauseScale));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] volleyPauseScale=%1", m_fVolleyPauseScale));
     }
 
     void SetAimSettleExtraSeconds(float seconds)
@@ -137,7 +147,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
         if (!Replication.IsServer()) return;
         m_fAimSettleExtraSeconds = Math.Clamp(seconds, 0.0, 8.0);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] extraAimSettle=%1", m_fAimSettleExtraSeconds));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] extraAimSettle=%1", m_fAimSettleExtraSeconds));
     }
 
     int GetWeaponProfile() { return m_iWeaponProfile; }
@@ -151,7 +162,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
             return;
         m_iWeaponProfile = Math.Clamp(profile, 0, 4);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] weapon profile=%1", m_iWeaponProfile));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] weapon profile=%1", m_iWeaponProfile));
     }
 
     void SetInaccuracy(float scale)
@@ -160,7 +172,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
             return;
         m_fInaccuracy = Math.Clamp(scale, 1.0, 5.0);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] inaccuracy=%1", m_fInaccuracy));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] inaccuracy=%1", m_fInaccuracy));
     }
 
     void SetMovementOrder(int order)
@@ -169,7 +182,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
             return;
         m_iMovementOrder = Math.Clamp(order, 0, 2);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] movement=%1 (0 patrol, 1 hold, 2 GM waypoint)", m_iMovementOrder));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] movement=%1 (0 patrol, 1 hold, 2 GM waypoint)", m_iMovementOrder));
     }
 
     void SetWaypointArrival(float metres)
@@ -178,7 +192,8 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
             return;
         m_fWaypointArrival = Math.Clamp(metres, 3.0, 35.0);
         Replication.BumpMe();
-        Print(string.Format("[RW WARLORD GM] waypoint arrival=%1 m", m_fWaypointArrival));
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] waypoint arrival=%1 m", m_fWaypointArrival));
     }
 
     bool AllowsStationGroup(string station, int group)

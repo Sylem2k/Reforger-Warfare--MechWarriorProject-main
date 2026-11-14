@@ -19,6 +19,9 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
     protected vector m_vWarlordJ3BindModel;
     protected int m_iWarlordIKDebugSamples;
 
+    [Attribute("false", UIWidgets.CheckBox, "Verbose non-hip leg startup and IK traces, OFF during hip testing.", category: "Warlord Hip Diagnostics")]
+    protected bool m_bVerboseOtherLegLogs;
+
     // A leg is a child of the mech's SlotManager, so CoordToParent() is a
     // parent-space transform, NOT guaranteed to be a world-space position.
     // Base GetFootHome() uses CoordToParent(J3 model rest) and then passes it
@@ -50,7 +53,7 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
             + worldMatrix[1] * m_vFootRestModel[1]
             + worldMatrix[2] * m_vFootRestModel[2];
 
-        if (!m_bJ3WorldRestLogged)
+        if (m_bVerboseOtherLegLogs && !m_bJ3WorldRestLogged)
         {
             vector legacyHome = leg.CoordToParent(m_vFootRestModel);
             vector difference = home - legacyHome;
@@ -183,8 +186,9 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
                 m_bIsLeftLeg, m_vJ1OriginalModel, m_vJ2OriginalModel, m_vWarlordJ3BindModel));
         }
 
-        Print(string.Format("[RW WARLORD LEG IK][INIT] leg=%1 left=%2 j3BindModel=%3 bindRelative=%4",
-            GetOwner(), isLeftLeg, m_vWarlordJ3BindModel, m_bBindRelativeJ3IK));
+        if (m_bVerboseOtherLegLogs)
+            Print(string.Format("[RW WARLORD LEG IK][INIT] leg=%1 left=%2 j3BindModel=%3 bindRelative=%4",
+                GetOwner(), isLeftLeg, m_vWarlordJ3BindModel, m_bBindRelativeJ3IK));
         return initialized;
     }
 
@@ -210,7 +214,7 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
         // FROM that initial pose, not the absolute target position.
         vector targetDelta = absoluteModelTarget - m_vWarlordJ3BindModel;
 
-        if (m_iWarlordIKDebugSamples < 3)
+        if (m_bVerboseOtherLegLogs && m_iWarlordIKDebugSamples < 3)
         {
             Print(string.Format("[RW WARLORD LEG IK][TARGET] leg=%1 absolute=%2 bindJ3=%3 delta=%4",
                 GetOwner(), absoluteModelTarget, m_vWarlordJ3BindModel, targetDelta));

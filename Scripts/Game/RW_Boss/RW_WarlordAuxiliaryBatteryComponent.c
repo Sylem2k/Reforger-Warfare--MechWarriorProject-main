@@ -35,6 +35,9 @@ class RW_WarlordAuxiliaryBatteryComponentClass : ScriptComponentClass
 
 class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
 {
+    [Attribute("false", UIWidgets.CheckBox, "Extra aux setup traces, OFF during hip tests.", category: "Diagnostics")]
+    protected bool m_bVerboseAuxLogs;
+
     // Keep this above Mech Core's 0..17 real hardpoints. The boss-only weapon
     // router maps 18+ directly to these locally created modules for shot FX.
     static const int FIRST_VIRTUAL_HARDPOINT = 18;
@@ -311,7 +314,8 @@ class RW_WarlordAuxiliaryBatteryComponent : ScriptComponent
             builtCount++;
         }
 
-        Print(string.Format("[RW WARLORD AUX] %1 autonomous turret modules attached to the torso (%2 configured).", builtCount, m_aWeapons.Count()));
+        if (m_bVerboseAuxLogs)
+            Print(string.Format("[RW WARLORD AUX] %1 autonomous turret modules attached to the torso (%2 configured).", builtCount, m_aWeapons.Count()));
     }
 }
 
@@ -326,6 +330,9 @@ class RW_WarlordBossWeaponRouterComponentClass : BFA_MechWeaponComponentClass
 
 class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 {
+    [Attribute("false", UIWidgets.CheckBox, "Verbose laser, impact audio and warhorn RPC logs, OFF for hip investigation.", category: "Diagnostics")]
+    protected bool m_bVerboseWarlordLogs;
+
     // Count only physical cannon shells. The server puts a visual-only flag in
     // the unused tracer-length field of the EXISTING shot RPC. Thus every client
     // agrees on exactly which shell is a tracer, even with packet loss.
@@ -351,7 +358,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (!Replication.IsServer())
             return;
 
-        if (m_iChargeAudioLogs < 8)
+        if (m_bVerboseWarlordLogs && m_iChargeAudioLogs < 8)
         {
             Print(string.Format("[RW WARLORD LASER][SERVER CHARGE SEND] at=%1", position));
             m_iChargeAudioLogs++;
@@ -367,7 +374,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     {
         if (Replication.IsServer() || System.IsConsoleApp())
             return;
-        if (m_iChargeAudioLogs < 8)
+        if (m_bVerboseWarlordLogs && m_iChargeAudioLogs < 8)
         {
             Print("[RW WARLORD LASER][CLIENT CHARGE RECEIVED]");
             m_iChargeAudioLogs++;
@@ -381,7 +388,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
             return;
 
         ResourceName project = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
-        if (m_iImpactAudioLogs < 20)
+        if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 20)
         {
             Resource resource = Resource.Load(project);
             bool valid = resource && resource.IsValid();
@@ -434,7 +441,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         m_bDriverLaserCharging = true;
         int delayMs = Math.Max((int)(director.GetLaserChargeSeconds() * 1000.0), 750);
         ServerBroadcastWarlordLaserCharge(GetOwner().GetOrigin() + vector.Up * 18.0);
-        Print(string.Format("[RW WARLORD LASER][DRIVER CHARGE START] delayMs=%1", delayMs));
+        if (m_bVerboseWarlordLogs)
+            Print(string.Format("[RW WARLORD LASER][DRIVER CHARGE START] delayMs=%1", delayMs));
 
         if (GetGame() && GetGame().GetCallqueue())
             GetGame().GetCallqueue().CallLater(ServerFinishDriverLaserCharge, delayMs, false);
@@ -455,7 +463,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (director && !director.AllowsStationGroup("DRIVER", 1))
             return;
 
-        Print("[RW WARLORD LASER][DRIVER FIRE AFTER CHARGE]");
+        if (m_bVerboseWarlordLogs)
+            Print("[RW WARLORD LASER][DRIVER FIRE AFTER CHARGE]");
         super.ServerSetFireHeld("DRIVER", 1, true);
     }
 
@@ -501,7 +510,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         else
             m_iLastImpactKineticMs = now;
 
-        if (m_iImpactAudioLogs < 12)
+        if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 12)
         {
             Print(string.Format("[RW WARLORD IMPACT][SERVER SEND] kind=%1 at=%2", kind, position));
             m_iImpactAudioLogs++;
@@ -520,7 +529,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (Replication.IsServer() || System.IsConsoleApp())
             return;
 
-        if (m_iImpactAudioLogs < 20)
+        if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 20)
             Print(string.Format("[RW WARLORD IMPACT][CLIENT RECEIVED] kind=%1 pos=%2", kind, position));
         PlayBossImpactAudioLocal(position, kind);
     }
@@ -557,7 +566,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (!Replication.IsServer())
             return;
 
-        Print("[RW WARLORD HORN][ROUTER][SERVER SEND] broadcasting warhorn cue through weapon router");
+        if (m_bVerboseWarlordLogs)
+            Print("[RW WARLORD HORN][ROUTER][SERVER SEND] broadcasting warhorn cue through weapon router");
         Rpc(RpcDo_WarlordWarhornToClients);
     }
 
@@ -569,7 +579,8 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         if (Replication.IsServer())
             return;
 
-        Print("[RW WARLORD HORN][ROUTER][CLIENT RECEIVED] warhorn RPC arrived");
+        if (m_bVerboseWarlordLogs)
+            Print("[RW WARLORD HORN][ROUTER][CLIENT RECEIVED] warhorn RPC arrived");
 
         IEntity boss = GetOwner();
         if (!boss)

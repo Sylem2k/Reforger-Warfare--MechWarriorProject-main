@@ -59,7 +59,7 @@ class RW_WarlordMultiTargetAICrewComponent : BFA_MechAICrewComponent
                         StopDriver();
                         return;
                     }
-                    if (m_bLoggedGMWaypointMissing)
+                    if (m_bDebug && m_bLoggedGMWaypointMissing)
                         Print("[RW WARLORD GM][MOVE] GM waypoint acquired; moving");
                     m_bLoggedGMWaypointMissing = false;
                     m_fArriveDistance = director.GetWaypointArrival();
