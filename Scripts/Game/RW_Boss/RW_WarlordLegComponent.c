@@ -83,6 +83,76 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
             + forward * m_vFootRestOffset[2];
     }
 
+    // Diagnostic only: compare animated J1/J2 against the leg's immutable
+    // bind-pose joints transformed by its current world-space hip mount.
+    // This never modifies IK targets or bone transforms.
+    [Attribute(desc: "Optional hip root joint marker for Warlord leg diagnostics", category: "Warlord Hip Diagnostics")]
+    protected ref PointInfo m_WarlordJ1;
+
+    [Attribute(desc: "Optional knee joint marker for Warlord leg diagnostics", category: "Warlord Hip Diagnostics")]
+    protected ref PointInfo m_WarlordJ2;
+
+    [Attribute("false", UIWidgets.CheckBox, "Print one left/right joint alignment sample per second for the first 20 seconds. No gameplay changes.", category: "Warlord Hip Diagnostics")]
+    protected bool m_bTraceHipJoints;
+
+    protected bool m_bWarlordHipCaptured;
+    protected vector m_vJ1OriginalModel;
+    protected vector m_vJ2OriginalModel;
+    protected int m_iNextHipSampleMs;
+    protected int m_iHipSamples;
+
+    protected void LogWarlordHipAlignment()
+    {
+        if (!m_bTraceHipJoints || !m_bWarlordHipCaptured || m_iHipSamples >= 20)
+            return;
+
+        IEntity leg = GetOwner();
+        if (!leg)
+            return;
+
+        BaseWorld world = leg.GetWorld();
+        if (!world)
+            return;
+
+        int now = world.GetWorldTime();
+        if (now < m_iNextHipSampleMs)
+            return;
+        m_iNextHipSampleMs = now + 1000;
+        m_iHipSamples++;
+
+        vector worldMatrix[4];
+        leg.GetWorldTransform(worldMatrix);
+
+        // Expected J1 is fixed to the hip slot, transformed from its
+        // original bind pose. Do not sample a moving root as the reference.
+        vector expectedJ1 = worldMatrix[3]
+            + worldMatrix[0] * m_vJ1OriginalModel[0]
+            + worldMatrix[1] * m_vJ1OriginalModel[1]
+            + worldMatrix[2] * m_vJ1OriginalModel[2];
+
+        vector j1WorldMat[4];
+        vector j2WorldMat[4];
+        vector j3WorldMat[4];
+        m_WarlordJ1.GetWorldTransform(j1WorldMat);
+        m_WarlordJ2.GetWorldTransform(j2WorldMat);
+        m_LastBone.GetWorldTransform(j3WorldMat);
+
+        vector j1World = j1WorldMat[3];
+        vector j2World = j2WorldMat[3];
+        vector j3World = j3WorldMat[3];
+
+        float j1AnchorError = (j1World - expectedJ1).Length();
+        float hipToPlanted = (m_vPlantedFoot - expectedJ1).Length();
+        float kneeToHip = (j2World - j1World).Length();
+        float ankleToKnee = (j3World - j2World).Length();
+        float currentFootError = (j3World - m_vCurrentIK).Length();
+
+        Print(string.Format("[RW WARLORD HIP][J1] left=%1 error=%2 expected=%3 animated=%4 legOrigin=%5",
+            m_bIsLeftLeg, j1AnchorError, expectedJ1, j1World, leg.GetOrigin()));
+        Print(string.Format("[RW WARLORD HIP][REACH] left=%1 hipToPlanted=%2 J1J2=%3 J2J3=%4 J3ToIK=%5",
+            m_bIsLeftLeg, hipToPlanted, kneeToHip, ankleToKnee, currentFootError));
+    }
+
     override bool InitLeg(BFA_MechLegPair pair, IEntity bodyEntity, bool isLeftLeg)
     {
         bool initialized = super.InitLeg(pair, bodyEntity, isLeftLeg);
@@ -96,6 +166,23 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
         m_vWarlordJ3BindModel = restMat[3];
         m_bWarlordBindCaptured = true;
 
+        if (m_WarlordJ1 && m_WarlordJ2)
+        {
+            m_WarlordJ1.Init(GetOwner());
+            m_WarlordJ2.Init(GetOwner());
+
+            vector j1Bind[4];
+            vector j2Bind[4];
+            m_WarlordJ1.GetModelTransform(j1Bind);
+            m_WarlordJ2.GetModelTransform(j2Bind);
+            m_vJ1OriginalModel = j1Bind[3];
+            m_vJ2OriginalModel = j2Bind[3];
+            m_bWarlordHipCaptured = true;
+
+            Print(string.Format("[RW WARLORD HIP][INIT] left=%1 J1Model=%2 J2Model=%3 J3Model=%4",
+                m_bIsLeftLeg, m_vJ1OriginalModel, m_vJ2OriginalModel, m_vWarlordJ3BindModel));
+        }
+
         Print(string.Format("[RW WARLORD LEG IK][INIT] leg=%1 left=%2 j3BindModel=%3 bindRelative=%4",
             GetOwner(), isLeftLeg, m_vWarlordJ3BindModel, m_bBindRelativeJ3IK));
         return initialized;
@@ -103,6 +190,8 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
 
     override void ApplyIKToAnimation()
     {
+        LogWarlordHipAlignment();
+
         if (!m_bBindRelativeJ3IK || !m_bWarlordBindCaptured)
         {
             super.ApplyIKToAnimation();
