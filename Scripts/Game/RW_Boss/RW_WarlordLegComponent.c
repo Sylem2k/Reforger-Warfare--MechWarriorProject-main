@@ -182,8 +182,9 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
             m_vJ2OriginalModel = j2Bind[3];
             m_bWarlordHipCaptured = true;
 
-            Print(string.Format("[RW WARLORD HIP][INIT] left=%1 J1Model=%2 J2Model=%3 J3Model=%4",
-                m_bIsLeftLeg, m_vJ1OriginalModel, m_vJ2OriginalModel, m_vWarlordJ3BindModel));
+            if (m_bTraceHipJoints)
+                Print(string.Format("[RW WARLORD HIP][INIT] left=%1 J1Model=%2 J2Model=%3 J3Model=%4",
+                    m_bIsLeftLeg, m_vJ1OriginalModel, m_vJ2OriginalModel, m_vWarlordJ3BindModel));
         }
 
         if (m_bVerboseOtherLegLogs)
