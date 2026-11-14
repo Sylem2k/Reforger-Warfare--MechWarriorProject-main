@@ -11,6 +11,7 @@ GenericEntity {
   RW_WarlordLegComponent "{6AAE3A1598BEA7C5}" {
    m_bBindRelativeJ3IK 1
    m_bFootRestAtLastBone 1
+   m_bJ3RestWorldSpace 1
    m_fStepHeight 1
    m_fObstacleStepHeight 3
    m_LastBone PointInfo "{6AAE3A1598BEA7CE}" {
