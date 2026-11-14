@@ -66,7 +66,7 @@ modded class SCR_AttributesManagerEditorComponent
         if (!list)
             Print("[RW WARLORD GM] Attribute list failed to load from resource container", LogLevel.WARNING);
         else
-            Print("[RW WARLORD GM] Entity editor attributes registered");
+            // Successful registration is intentionally quiet; warnings above remain visible.
 
         return list;
     }
