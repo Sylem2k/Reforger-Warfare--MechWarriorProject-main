@@ -19,6 +19,70 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
     protected vector m_vWarlordJ3BindModel;
     protected int m_iWarlordIKDebugSamples;
 
+    // A leg is a child of the mech's SlotManager, so CoordToParent() is a
+    // parent-space transform, NOT guaranteed to be a world-space position.
+    // Base GetFootHome() uses CoordToParent(J3 model rest) and then passes it
+    // to world-space ground tracing. On an attached Warlord leg, that can
+    // steer both feet toward a common incorrect origin.
+    // Rebuild the ORIGINAL unanimated J3 position using this leg entity's
+    // complete WORLD transform. Do not query the animated J3 every tick.
+    [Attribute("true", UIWidgets.CheckBox, "Use unanimated J3 model-space rest transformed into world space for planted foot home. OFF uses original Core coordinate conversion.", category: "Warlord Leg Fix")]
+    protected bool m_bJ3RestWorldSpace;
+
+    protected bool m_bJ3WorldRestLogged;
+
+    override protected vector GetFootHome()
+    {
+        if (!m_bJ3RestWorldSpace || !m_bFootRestAtLastBone || !m_bFootRestCaptured)
+            return super.GetFootHome();
+
+        IEntity leg = GetOwner();
+        if (!leg)
+            return super.GetFootHome();
+
+        // Engine entity world matrix includes parent hip mount transform and
+        // scale. This keeps the original canted hip/knee/ankle bind geometry.
+        vector worldMatrix[4];
+        leg.GetWorldTransform(worldMatrix);
+
+        vector home = worldMatrix[3]
+            + worldMatrix[0] * m_vFootRestModel[0]
+            + worldMatrix[1] * m_vFootRestModel[1]
+            + worldMatrix[2] * m_vFootRestModel[2];
+
+        if (!m_bJ3WorldRestLogged)
+        {
+            vector legacyHome = leg.CoordToParent(m_vFootRestModel);
+            vector difference = home - legacyHome;
+            Print(string.Format("[RW WARLORD FOOT WORLD][REST] leg=%1 left=%2 J3Model=%3 originWorld=%4 J3World=%5 legacyParent=%6 worldDelta=%7",
+                leg, m_bIsLeftLeg, m_vFootRestModel, leg.GetOrigin(), home, legacyHome, difference.Length()));
+            m_bJ3WorldRestLogged = true;
+        }
+
+        // Original Warlord prefabs leave FootRestOffset at zero.
+        // Retain standard optional root-relative foot offsets if enabled.
+        if (m_vFootRestOffset.LengthSq() < 0.000001)
+            return home;
+
+        IEntity body = m_BodyEntity;
+        if (!body)
+            body = leg.GetRootParent();
+        if (!body)
+            return home;
+
+        vector right = body.GetTransformAxis(0);
+        vector up = body.GetTransformAxis(1);
+        vector forward = body.GetTransformAxis(2);
+        float side = 1.0;
+        if (m_bIsLeftLeg)
+            side = -1.0;
+
+        return home
+            + right * (m_vFootRestOffset[0] * side)
+            + up * m_vFootRestOffset[1]
+            + forward * m_vFootRestOffset[2];
+    }
+
     override bool InitLeg(BFA_MechLegPair pair, IEntity bodyEntity, bool isLeftLeg)
     {
         bool initialized = super.InitLeg(pair, bodyEntity, isLeftLeg);
