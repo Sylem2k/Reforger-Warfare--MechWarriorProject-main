@@ -1,0 +1,12 @@
+// Warlord local visual only: Mech Core receives server-authoritative shot FX.
+// No physics, collision, network replication, damage, or audio on this entity.
+// Initial asset scale 1.0; inspect source FBX dimensions/origin in Workbench.
+GenericEntity {
+ ID "E261113A00000001"
+ components {
+  MeshObject "{E261113B00000001}" {
+   Object "{3BCBDD5B7EF389EA}Common/Models/Titan_War_Lord/Tracers/Tracer_Big.xob"
+  }
+ }
+ scale 1
+}
