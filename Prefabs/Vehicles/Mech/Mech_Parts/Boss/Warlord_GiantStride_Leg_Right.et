@@ -30,7 +30,7 @@ GenericEntity {
    }
   }
   MeshObject "{EA31000000000616}" {
-   Object "{8AA09729CA0DB2A2}Common/Models/Titan_War_Lord/War_Lord_Right_Leg.xob"
+   Object "{65792A2BAA631132}Common/Models/Titan_War_Lord/WarLord_Legs/War_Lord_Right_Leg.xob"
    RainOccluder 0
    WetnessOccluder 0
    ReceiveLight 0

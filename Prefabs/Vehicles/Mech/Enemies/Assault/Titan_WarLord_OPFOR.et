@@ -1461,13 +1461,13 @@ Vehicle {
      Offset 19.4508 -45.7498 0.3086
      Angles 0 0 -1.3552
      MergePhysics 0
-     Prefab "{6BB422555F06DDAD}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Leg_Right.et"
+     Prefab "{EA31000000001102}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
      Offset -18.9966 -48.5041 1.0161
      MergePhysics 0
-     Prefab "{E95CFCAA70835149}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Leg_Left.et"
+     Prefab "{EA31000000001101}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Right_Arm_Mount {
