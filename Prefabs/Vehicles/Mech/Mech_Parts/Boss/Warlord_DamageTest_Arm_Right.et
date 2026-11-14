@@ -5,6 +5,10 @@ GenericEntity : "{BF5A995C0FD5EEAC}Prefabs/Vehicles/Mech/Mech_Parts/Titan_Cannon
  components {
   BFA_MechLasCannonModuleComponent "{6AAE3A126AD58E22}" {
    m_bFireAtAimPoint 1
+   m_FX BFA_MechWeaponFX "{6AAE3A126AD58E2B}" {
+    m_sSoundProject "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp"
+    m_sFireSoundEvent "SOUND_WARLORD_LASER_FIRE"
+   }
    m_fDamageVsInfantry 0.04
    m_fRoundsPerMinute 90
    m_bArmorPiercingFallback 0
