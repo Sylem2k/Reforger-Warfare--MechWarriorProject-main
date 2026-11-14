@@ -65,8 +65,6 @@ modded class SCR_AttributesManagerEditorComponent
             BaseContainerTools.CreateInstanceFromContainer(sourceResource.ToBaseContainer()));
         if (!list)
             Print("[RW WARLORD GM] Attribute list failed to load from resource container", LogLevel.WARNING);
-        else
-            // Successful registration is intentionally quiet; warnings above remain visible.
 
         return list;
     }
