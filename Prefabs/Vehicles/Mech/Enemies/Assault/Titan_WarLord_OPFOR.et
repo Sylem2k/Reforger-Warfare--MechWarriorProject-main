@@ -844,7 +844,6 @@ Vehicle {
      m_sRightLegSlotName "Leg_R1"
     }
    }
-   // Autonomous WALKER: turn/step with the legs instead of strafing.
    m_iLocomotionMode 0
    m_bWalkerADSteering 1
    m_bWalkerFollowTorso 1
@@ -860,10 +859,10 @@ Vehicle {
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 0.36
    m_fSizeScale 2.8
-   m_bTerrainSupport 1
    m_GroundPoint PointInfo "{E60F00000000004F}" {
-    Offset -1.1338 -46.9585 -0.8833
+    Offset -1.1338 -46.5417 -0.8833
    }
+   m_bTerrainSupport 1
    m_fBodyHeightPilot 2.3
    m_fBodyHeightEmpty 0.5
    m_fGroundProbeForward 2
@@ -917,20 +916,6 @@ Vehicle {
   }
   CGS_LaserSpotComponent "{E60F000000000057}" {
   }
-  RW_WarlordGMDirectorComponent "{AB12112600000020}" {
-   m_iWeaponProfile 0
-   m_fInaccuracy 1
-   m_iMovementOrder 0
-   m_fWaypointArrival 10
-   m_bVehicleTargetsOnly 0
-   m_bTopCannonsEnabled 1
-   m_bDefensesEnabled 1
-   m_bWarhornEnabled 1
-   m_bLaserChargeEnabled 1
-   m_fLaserChargeSeconds 1.25
-   m_fVolleyPauseScale 1
-   m_fAimSettleExtraSeconds 0
-  }
   CGS_MechBrainComponent "{E60F00000000009D}" {
    m_bEnabled 1
    m_bDrive 1
@@ -943,7 +928,6 @@ Vehicle {
    m_sPilotPrefab "{C56A957843F590E5}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/REDFOR_BRAIN.et"
    m_sPilotGroupPrefab "{000CD338713F2B5A}Prefabs/AI/Groups/Group_Base.et"
    m_bLockDriverSeat 1
-   // Autonomous siege guard: patrol near the spawn area, not the whole map.
    m_fPatrolRadius 70
    m_fPatrolPause 9
    m_fHuntRadius 10
@@ -1179,12 +1163,26 @@ Vehicle {
   }
   RW_WarlordBossWeaponRouterComponent "{E60F000000000050}" {
   }
+  RW_WarlordGMDirectorComponent "{AB12112600000020}" {
+   m_iWeaponProfile 0
+   m_fInaccuracy 1
+   m_iMovementOrder 0
+   m_fWaypointArrival 10
+   m_bVehicleTargetsOnly 0
+   m_bTopCannonsEnabled 1
+   m_bDefensesEnabled 1
+   m_bWarhornEnabled 1
+   m_bLaserChargeEnabled 1
+   m_fLaserChargeSeconds 1.25
+   m_fVolleyPauseScale 1
+   m_fAimSettleExtraSeconds 0
+  }
   RW_WarlordMultiTargetAICrewComponent "{E60F000000000007}" {
    m_bAIDriver 1
-   m_fSprintDistance 0
+   m_bSpreadTargets 1
    m_fSlowTurnAngle 30
    m_fTurnInPlaceAngle 65
-   m_bSpreadTargets 1
+   m_fSprintDistance 0
    m_bFollowLeader 0
    m_bAdvanceOnTargets 0
    m_bCombatMovement 0
@@ -1201,19 +1199,6 @@ Vehicle {
    m_fBurstLengthMax 2.7
    m_fVolleyPauseMin 3.5
    m_fVolleyPauseMax 7.5
-  }
-  RW_WarlordWarhornComponent "{A6111111000AA003}" {
-   m_bEnabled 1
-   m_sSoundProject "{A6111111000AA002}Sounds/Warlord/Warlord_Warhorn.acp"
-   m_sSoundEvent "SOUND_WARLORD_HORN"
-   m_vHornOffset 0 20 0
-   // TEMPORARY TEST SETTINGS: restore after audio is confirmed.
-   m_fFirstDelayMin 5
-   m_fFirstDelayMax 8
-   m_fRepeatDelayMin 20
-   m_fRepeatDelayMax 30
-   m_fLongSilenceChance 0
-   m_bDebugWarhorn 1
   }
   RW_WarlordShieldComponent "{E60F0000000000AB}" {
    m_fMaxShield 150000
@@ -1242,6 +1227,18 @@ Vehicle {
    m_iLocalAimTickMs 16
    m_fAIYawSpeed 38
    m_fAIPitchSpeed 27
+  }
+  RW_WarlordWarhornComponent "{A6111111000AA003}" {
+   m_bEnabled 1
+   m_sSoundProject "{A6111111000AA002}Sounds/Warlord/Warlord_Warhorn.acp"
+   m_sSoundEvent "SOUND_WARLORD_HORN"
+   m_vHornOffset 0 20 0
+   m_fFirstDelayMin 5
+   m_fFirstDelayMax 8
+   m_fRepeatDelayMin 20
+   m_fRepeatDelayMax 30
+   m_fLongSilenceChance 0
+   m_bDebugWarhorn 1
   }
   RigidBody "{E60F00000000006E}" {
    Active Active
@@ -1337,8 +1334,8 @@ Vehicle {
     }
    }
    m_bAutoRegister ALWAYS
-   m_Flags 773
    m_vIconPos 0 3 0
+   m_Flags 773
   }
   SCR_VehicleCameraDataComponent "{E60F000000000080}" {
    m_fHeight 9.1
@@ -1461,16 +1458,16 @@ Vehicle {
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_R1 {
-     Offset 5.2397 -46.7115 0.3086
+     Offset 19.4508 -45.7498 0.3086
      Angles 0 0 -1.3552
      MergePhysics 0
-     Prefab "{EA31000000001102}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Right.et"
+     Prefab "{6BB422555F06DDAD}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Leg_Right.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Leg_L1 {
-     Offset -6.8394 -9.6889 1.0161
+     Offset -18.9966 -48.5041 1.0161
      MergePhysics 0
-     Prefab "{EA31000000001101}Prefabs/Vehicles/Mech/Mech_Parts/Boss/Warlord_GiantStride_Leg_Left.et"
+     Prefab "{E95CFCAA70835149}Prefabs/Vehicles/Mech/Mech_Parts/WarLord/Warlord_Leg_Left.et"
      DisablePhysicsInteraction 1
     }
     EntitySlotInfo Right_Arm_Mount {
@@ -1592,6 +1589,6 @@ Vehicle {
   Hierarchy "{E60F00000000009C}" {
   }
  }
- coords 6555.188 205.039 6415.945
+ coords 111.693 55.158 195.186
  m_eVehicleType VEHICLE
 }

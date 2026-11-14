@@ -16,7 +16,7 @@ GenericEntity {
    }
   }
   MeshObject "{6AAE3A1598BEA7CD}" {
-   Object "{8AA09729CA0DB2A2}Common/Models/Titan_War_Lord/War_Lord_Right_Leg.xob"
+   Object "{65792A2BAA631132}Common/Models/Titan_War_Lord/WarLord_Legs/War_Lord_Right_Leg.xob"
    RainOccluder 0
    WetnessOccluder 0
    ReceiveLight 0
@@ -67,5 +67,5 @@ GenericEntity {
   Hierarchy "{6AAE3A1598BEA628}" {
   }
  }
- coords 59.165 4.792 34.933
+ coords 123.379 15.389 89.922
 }
