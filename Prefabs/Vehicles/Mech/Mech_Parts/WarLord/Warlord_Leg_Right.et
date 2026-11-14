@@ -8,7 +8,8 @@ GenericEntity {
     "{8B7D7D9A72F30BAD}Sounds/SampleMech.acp"
    }
   }
-  BFA_MechLegComponent "{6AAE3A1598BEA7C5}" {
+  RW_WarlordLegComponent "{6AAE3A1598BEA7C5}" {
+   m_bBindRelativeJ3IK 1
    m_fStepHeight 1
    m_fObstacleStepHeight 3
    m_LastBone PointInfo "{6AAE3A1598BEA7CE}" {
