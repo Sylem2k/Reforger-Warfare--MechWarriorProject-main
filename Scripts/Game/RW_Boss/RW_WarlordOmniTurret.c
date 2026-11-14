@@ -9,6 +9,9 @@ class RW_WarlordOmniTurretClass : RW_WarlordCoverAwareFlakComponentClass
 
 class RW_WarlordOmniTurret : RW_WarlordCoverAwareFlakComponent
 {
+    [Attribute("false", UIWidgets.CheckBox, "Verbose laser charge trace, OFF during hip testing.", category: "Diagnostics")]
+    protected bool m_bVerboseChargeLogs;
+
     [Attribute("10", UIWidgets.Auto, "Highest permitted ground vehicle altitude above terrain (metres).", category: "Warlord Targeting")]
     protected float m_fGroundVehicleMaxAltitude;
 
@@ -86,7 +89,7 @@ class RW_WarlordOmniTurret : RW_WarlordCoverAwareFlakComponent
             if (router)
                 router.ServerBroadcastWarlordLaserCharge(GetShotStart());
 
-            if (m_iChargeLogs < 6)
+            if (m_bVerboseChargeLogs && m_iChargeLogs < 6)
             {
                 Print(string.Format("[RW WARLORD LASER][OMNI CHARGE] mount=%1 delay=%2",
                     m_iHardpointIndex, director.GetLaserChargeSeconds()));
