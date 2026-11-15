@@ -1,0 +1,64 @@
+// One autonomous Warlord napalm projector: 275m siege-range flame stream.
+GenericEntity {
+ ID "E8A2000000000900"
+ components {
+  SignalsManagerComponent "{E8A2000000000901}" {
+  }
+  RW_WarlordNapalmProjector "{E8A2000000000902}" {
+   m_sModuleId "Warlord_Napalm_Projector"
+   m_sDisplayName "Warlord Napalm Siege Projector"
+   m_bRequiresCrew 0
+   m_bAllowInfantry 1
+   m_fGroundVehicleMaxAltitude 6
+   m_fRange 275
+   m_fScanInterval 0.5
+   m_fTargetHoldSeconds 3
+   m_fShellSpeed 160
+   m_fBurstDamage 24
+   m_fBurstRadius 8
+   m_fMissRadius 2
+   m_fMissPer100m 0.3
+   m_iBurstShots 5
+   m_fBurstPause 3
+   m_fShotsPerMinute 210
+   m_bAnimateTurret 1
+   m_fTurnSpeed 75
+   m_fMinElevation -45
+   m_fMaxElevation 50
+   m_fBarrelLength 0.35
+   m_fTracerLength 1.5
+   m_fTracerThickness 0.4
+   m_fStartSpreadScale 1.2
+   m_fSettleTime 3
+   m_fNapalmDuration 6.5
+   m_fNapalmTickSeconds 1
+   m_fNapalmTickDamage 4.5
+   m_fNapalmRadius 9
+   m_iMaxNapalmZones 6
+   m_fPatchMergeRadius 6
+   m_fDamageVsInfantry 0.8
+   m_fDamageVsVehicles 0.4
+   m_fInfantryArmourFloor 0
+   m_fCgsArmorPiercing 0
+   m_fCrewShareKinetic 0
+   m_fCrewShareExplosive 0
+   m_bKillCrewOnDestroy 0
+   m_iImpactType 0
+   m_eDamageKind ENERGY
+   m_FX BFA_MechWeaponFX "{E8A2000000000903}" {
+    m_sMuzzleParticle "{254588526C5E861A}Particles/Weapon/Muzzle_KPVT.ptc"
+    m_sSoundProject "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp"
+    m_sFireSoundEvent "SOUND_WARLORD_LASER_FIRE"
+    m_sTrailParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_ground_medium.ptc"
+    m_sImpactParticle "{AD69C17360EE596B}Particles/Weapon/Explosion_API.ptc"
+    m_sImpactPrefab "{E8A100000000FA0A}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Napalm_FirePatch.et"
+    m_fImpactPrefabLifetime 7
+    m_fProjectileSpeed 160
+    m_fLinger 0.2
+    m_bImpactOnMiss 1
+   }
+  }
+  Hierarchy "{E8A2000000000904}" {
+  }
+ }
+}
