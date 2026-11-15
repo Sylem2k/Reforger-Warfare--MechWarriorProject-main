@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{C6C54B57B6D9D103}Sounds/Warlord/Warlord_KineticImpact.wav"
+ Name "{59B1C7F760E3236F}Sounds/Warlord/Warlord_KineticImpact.wav"
  Configurations {
   WAVResourceClass PC : "{F72B05D02F3F135E}Configs/System/ResourceTypes/PC/Sound.conf" {
   }
