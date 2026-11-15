@@ -1,0 +1,167 @@
+AudioClass {
+ sounds {
+  SoundClass "7181" {
+   id 7181
+   name "SOUND_WARLORD_IMPACT_EXPLOSIVE"
+   comment "Warlord original Siege Explosion"
+   version 5
+   tl 462.727 764.727
+   ctl 0 -21
+   ins {
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "3094:65" {
+       id 3094
+       port 65
+      }
+     }
+    }
+   }
+   outState 8203
+   outStatePort 79883
+  }
+ }
+ mixers {
+  MixerClass "8203" {
+   id 8203
+   name "OutputState 8"
+   comment "Type of sound, used in player settings"
+   version 4
+   tl 697.727 -18.455
+   ctl 0 -24
+   res "{B764D803219C775E}Sounds/FinalMix.afm"
+   ins {
+    ConnectionsClass "con:79883" {
+     id 79883
+     links {
+      ConnectionClass "7181:65" {
+       id 7181
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    4 0
+   }
+   inputs {
+    "WPN_Handling" "WPN_Shots" "WPN_Explosions" "WNP_BulletHits" "CHAR" "ENV_AMB_2D" "VEH_Animations" "Impacts" "Dialog" "ENV_Doors" "VEH_Engine" "VEH_Tires" "VON" "SFX" "SFX_Reverb_OBSOLETE" "VON_Reverb_Small" "Dialog_Reverb" "Impacts_EXT" "ENV_AMB_3D" "WPN_SonicCracks" "CHAR_Gear" "PA" "SFX_Reverb_Exterior" "ENV_AMB_3D_Reverb_Exterior" "SFX_Direct" "SFX_Reverb_Small" "SFX_Reverb_Medium" "SFX_Reverb_Large" "WPN_Shots_Player" "Dialog_Reverb_Small" "Dialog_Reverb_Medium" "Dialog_Reverb_Large" "WPN_TravelingProjectile" "Dialog_Delay_Exterior" "SFX_Reverb_InCabin" "VON_Reverb_Medium" "VON_Reverb_Large"
+   }
+  }
+ }
+ shaders {
+  ShaderClass "3094" {
+   id 3094
+   name "Shader Siege Explosion"
+   version 5
+   tl 241.818 750.182
+   ins {
+    ConnectionsClass "con:0" {
+     id 0
+     links {
+      ConnectionClass "5152:65" {
+       id 5152
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:1" {
+     id 1
+     links {
+      ConnectionClass "4119:65" {
+       id 4119
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:2" {
+     id 2
+     links {
+      ConnectionClass "6169:65" {
+       id 6169
+       port 65
+      }
+     }
+    }
+    ConnectionsClass "con:64" {
+     id 64
+     links {
+      ConnectionClass "2056:65" {
+       id 2056
+       port 65
+      }
+     }
+    }
+   }
+   pi {
+    7 0
+   }
+  }
+ }
+ amplitudes {
+  AmplitudeClass "4119" {
+   id 4119
+   name "Amplitude Siege Explosion"
+   version 5
+   tl 250 569
+   curve Custom
+   AttenuationCurve {
+    CurvePoint "1" {
+     X 12
+     Y 1
+    }
+    CurvePoint "2" {
+     X 115
+     Y 0.66
+    }
+    CurvePoint "3" {
+     X 360
+     Y 0.28
+    }
+    CurvePoint "4" {
+     X 750
+     Y 0.07
+    }
+    CurvePoint "5" {
+     X 1000
+     Y 0
+    }
+   }
+  }
+ }
+ frequency {
+  FrequencyClass "6169" {
+   id 6169
+   name "Frequency Siege Explosion"
+   version 5
+   tl 242.727 655.636
+   enableDistanceAtt 1
+  }
+ }
+ banks_local {
+  BankLocalClass "2056" {
+   id 2056
+   name "Siege Explosion"
+   version 7
+   tl 0 768
+   Volume -10
+   "Pitch variance" 0
+   Samples {
+    AudioBankSampleClass Sample {
+     Filename "{A6111111000AA013}Sounds/Warlord/Warlord_SiegeImpact.wav"
+    }
+   }
+  }
+ }
+ spatialities {
+  SpatialityClass "5152" {
+   id 5152
+   name "Spatiality Siege Explosion"
+   version 5
+   tl 246 494.091
+   spatialFactor 1
+  }
+ }
+ version 2
+}
