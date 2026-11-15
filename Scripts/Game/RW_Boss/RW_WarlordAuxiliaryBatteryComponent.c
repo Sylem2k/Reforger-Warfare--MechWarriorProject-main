@@ -588,6 +588,29 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         PlayBossWarlordAudioLocal(position, project, eventName);
     }
 
+    // The generic Mech Core impact path plays m_sImpactSoundEvent from the
+    // part FX, then Warlord sends a SECOND boss impact event over its own
+    // reliable RPC. This doubles the perceived hit/explosion level near a
+    // player (particularly when the Warlord fires at that player's position).
+    //
+    // This override applies ONLY to the Warlord router. Keep Core's particle
+    // effect and impact prefab, but use the existing one-shot Warlord server
+    // impact-audio router as the single audio source. Never modify Mech Core,
+    // nor permanently clear the part's authored impact event.
+    override protected void PlayImpactLocal(ResourceName particle, BFA_MechWeaponFX fx, vector position)
+    {
+        if (!fx || fx.m_sImpactSoundEvent.IsEmpty())
+        {
+            super.PlayImpactLocal(particle, fx, position);
+            return;
+        }
+
+        string savedEvent = fx.m_sImpactSoundEvent;
+        fx.m_sImpactSoundEvent = "";
+        super.PlayImpactLocal(particle, fx, position);
+        fx.m_sImpactSoundEvent = savedEvent;
+    }
+
     // Core Titan LRMs/rockets resolve impacts using this authoritative call,
     // not the initial shot event. Send sound at the actual detonation position.
     // This complements the Warlord's hitscan and autonomous flak paths.
