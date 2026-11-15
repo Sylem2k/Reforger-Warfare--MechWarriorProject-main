@@ -13,6 +13,12 @@ GenericEntity {
    m_bFootRestAtLastBone 1
    m_bJ3RestWorldSpace 1
    m_bTraceHipJoints 0
+   m_bMPReseedStaleFoot 1
+   m_bMPRepairMount 1
+   m_vMPMountLocal -18.9966 -48.5041 1.0161
+   m_fMPMountTolerance 6
+   m_fMPFootPlanarTolerance 14
+   m_fMPFootVerticalTolerance 7
    m_WarlordJ1 PointInfo "{A726BFAA00110001}" {
     PivotID "J1"
    }

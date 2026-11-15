@@ -34,6 +34,34 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
 
     protected bool m_bJ3WorldRestLogged;
 
+    // MP observers can receive the replicated root AFTER leg-slot children
+    // initialize. Both the foot target and the mount must survive that snap.
+    // Server and singleplayer keep their original behavior without touching
+    // the proven-correct Warlord J1/J2/J3 FBX, hip offsets, or locomotion.
+    [Attribute("true", UIWidgets.CheckBox, "On remote clients, reseed stale planted feet after a large replication correction.", category: "Warlord Multiplayer Legs")]
+    protected bool m_bMPReseedStaleFoot;
+
+    [Attribute("false", UIWidgets.CheckBox, "On remote clients, repair a child leg mount only if it deviates far from the authored slot location.", category: "Warlord Multiplayer Legs")]
+    protected bool m_bMPRepairMount;
+
+    [Attribute("0 0 0", UIWidgets.Auto, "Authored leg slot Offset (mech-root LOCAL coordinates). Set separately for left/right active Warlord leg prefabs.", category: "Warlord Multiplayer Legs")]
+    protected vector m_vMPMountLocal;
+
+    [Attribute("6", UIWidgets.Auto, "Mount error needed for a correction, in root-local metres.", category: "Warlord Multiplayer Legs")]
+    protected float m_fMPMountTolerance;
+
+    [Attribute("14", UIWidgets.Auto, "Horizontal foot-home drift needed to replant, in world metres.", category: "Warlord Multiplayer Legs")]
+    protected float m_fMPFootPlanarTolerance;
+
+    [Attribute("7", UIWidgets.Auto, "Vertical foot-home drift needed to replant, in world metres.", category: "Warlord Multiplayer Legs")]
+    protected float m_fMPFootVerticalTolerance;
+
+    protected bool m_bMPFootReferenceReady;
+    protected bool m_bMPMountInitiallyValid;
+    protected vector m_vMPBindHomeMinusFoot;
+    protected int m_iMPNextCheckMs;
+    protected int m_iMPCorrectionsLogged;
+
     override protected vector GetFootHome()
     {
         if (!m_bJ3RestWorldSpace || !m_bFootRestAtLastBone || !m_bFootRestCaptured)
@@ -164,10 +192,26 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
 
         // Snapshot once at initialization, before the procedural leg starts
         // driving IK. Do NOT read a moving J3 every frame (feedback loop).
-        vector restMat[4];
-        m_LastBone.GetModelTransform(restMat);
-        m_vWarlordJ3BindModel = restMat[3];
-        m_bWarlordBindCaptured = true;
+        // Use EXACTLY the immutable J3 rest already captured in shared Core
+        // InitLeg. Reading the animated joint a second time is unnecessary
+        // and can produce a different bind reference during async MP spawn.
+        m_vWarlordJ3BindModel = m_vFootRestModel;
+        m_bWarlordBindCaptured = m_bFootRestCaptured;
+
+        // This offset is recorded after Core's first ground trace. On an MP
+        // proxy the root's next network snapshot can move independently of
+        // the foot planted during this early initialization.
+        if (!Replication.IsServer() && m_bFootRestCaptured && bodyEntity)
+        {
+            m_vMPBindHomeMinusFoot = GetFootHome() - m_vPlantedFoot;
+            m_bMPFootReferenceReady = true;
+            vector actualMount = bodyEntity.CoordToLocal(GetOwner().GetOrigin());
+            float initialMountError = vector.Distance(actualMount, m_vMPMountLocal);
+            m_bMPMountInitiallyValid = initialMountError < Math.Max(m_fMPMountTolerance * 1.5, 2.0);
+            Print(string.Format("[RW WARLORD LEG MP][INIT] left=%1 leg=%2 root=%3 mountLocal=%4 authored=%5 mountError=%6 restFootDelta=%7",
+                isLeftLeg, GetOwner(), bodyEntity.GetOrigin(), actualMount,
+                m_vMPMountLocal, initialMountError, m_vMPBindHomeMinusFoot));
+        }
 
         if (m_WarlordJ1 && m_WarlordJ2)
         {
@@ -193,8 +237,88 @@ class RW_WarlordLegComponent : BFA_MechLegComponent
         return initialized;
     }
 
+    // Called from the existing root-driven procedural gait on each client.
+    // The remote root is updated to the latest authoritative server snapshot
+    // BEFORE this method (BFA_MechMovementComponent::OnUpdate).
+    // Do not change the server's gait or the pilot's local prediction.
+    protected void RepairRemoteWarlordLegAfterRootSnap()
+    {
+        if (Replication.IsServer() || !m_bMPFootReferenceReady || !m_BodyEntity || !GetOwner())
+            return;
+
+        RplComponent rootRpl = RplComponent.Cast(m_BodyEntity.FindComponent(RplComponent));
+        if (!rootRpl || rootRpl.IsOwner())
+            return;
+
+        BaseWorld world = m_BodyEntity.GetWorld();
+        if (!world)
+            return;
+
+        int now = world.GetWorldTime();
+        if (now < m_iMPNextCheckMs)
+            return;
+        m_iMPNextCheckMs = now + 200;
+
+        bool mountCorrected = false;
+        float mountError = 0;
+        vector actualLocal = m_BodyEntity.CoordToLocal(GetOwner().GetOrigin());
+        mountError = vector.Distance(actualLocal, m_vMPMountLocal);
+
+        // Separate RplComponent on the attached leg may be updated with an
+        // out-of-date origin while the parent root is interpolated. Repair
+        // only when it was initially confirmed to match its authored slot.
+        // Never override a differently mounted Warlord variant.
+        if (m_bMPRepairMount && m_bMPMountInitiallyValid &&
+            mountError > Math.Max(m_fMPMountTolerance, 2.0))
+        {
+            vector rootWorld[4];
+            m_BodyEntity.GetWorldTransform(rootWorld);
+            vector correctOrigin = rootWorld[3]
+                + rootWorld[0] * m_vMPMountLocal[0]
+                + rootWorld[1] * m_vMPMountLocal[1]
+                + rootWorld[2] * m_vMPMountLocal[2];
+            GetOwner().SetOrigin(correctOrigin);
+            mountCorrected = true;
+        }
+
+        if (!m_bMPReseedStaleFoot && !mountCorrected)
+            return;
+
+        vector neutralHome = GetFootHome();
+        vector actualOffset = neutralHome - m_vPlantedFoot;
+        vector delta = actualOffset - m_vMPBindHomeMinusFoot;
+        float planarError = Math.Sqrt(delta[0] * delta[0] + delta[2] * delta[2]);
+        float heightError = Math.AbsFloat(delta[1]);
+
+        if (!mountCorrected &&
+            (!m_bMPReseedStaleFoot ||
+             (planarError < Math.Max(m_fMPFootPlanarTolerance, 3.0) &&
+              heightError < Math.Max(m_fMPFootVerticalTolerance, 3.0))))
+            return;
+
+        // Only a true large discontinuity, not ordinary stance/swing motion.
+        // The nearest physical ground (including roofs) is re-traced at the
+        // CURRENT, fully updated leg mount after client root replication.
+        vector grounded = TraceGroundFromPos(neutralHome);
+        m_vPlantedFoot = grounded;
+        m_vCurrentIK = grounded;
+        m_vSwingFrom = grounded;
+        m_vSwingTarget = grounded;
+        m_bWasSwinging = false;
+        m_vMPBindHomeMinusFoot = GetFootHome() - grounded;
+
+        if (m_iMPCorrectionsLogged < 6)
+        {
+            Print(string.Format("[RW WARLORD LEG MP][REPAIR] left=%1 mountChanged=%2 mountError=%3 planarFootDrift=%4 verticalFootDrift=%5 newGround=%6 root=%7",
+                m_bIsLeftLeg, mountCorrected, mountError, planarError,
+                heightError, grounded, m_BodyEntity.GetOrigin()));
+            m_iMPCorrectionsLogged++;
+        }
+    }
+
     override void ApplyIKToAnimation()
     {
+        RepairRemoteWarlordLegAfterRootSnap();
         LogWarlordHipAlignment();
 
         if (!m_bBindRelativeJ3IK || !m_bWarlordBindCaptured)
