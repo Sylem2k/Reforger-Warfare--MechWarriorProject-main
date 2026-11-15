@@ -1,0 +1,55 @@
+// Wide, short nozzle flame: 0.38s emission overlaps the 0.286s shot
+// spacing of the current Warlord napalm projector without changing damage.
+EffectDef {
+ Version 2
+ Emitters {
+  EmitterDef nozzle_fire {
+   ShapeType Sphere
+   ShapeSize 3.5 3.5 3.5
+   MaxNum 28
+   BirthRate 75
+   Offset 0 0 0
+   Angles 0 0 0
+   LocalTransform 0
+   Material "{77ED367ABC13B69F}Particles/_Materials/Fire/FireBurn_anim_01_Strong_Blurred.emat"
+   SizeMultiplier 3.0
+   SizeRND 0.55
+   RandomRotDir 0
+   RandomAngle 1
+   Velocity 3
+   VelocityRND 3
+   AirResistance 2
+   GravityMultiply -0.08
+   AnimOnce 0
+   AnimFPS 65
+   LifetimeByAnim 0
+   RandomFrame 1
+   Lifetime 0.35
+   LifetimeRND 0.12
+   Color {
+    0 1 0.83 0.27 1 1 0.34 0.03
+   }
+   Alpha {
+    0 0 0.15 0.9 0.7 0.7 1 0
+   }
+   Size {
+    0 0.35 0.2 1 0.8 0.9 1 0.25
+   }
+   EmittingTime 0.38
+   Repeat 0
+   EnableLight 1
+   MaxLV 3
+   RelativeLV 1
+   LightColorMast {
+    0 1 0.52 0.13
+   }
+   LightIntensityMast {
+    0 0 0.22 1 0.6 1 1 0
+   }
+   LightIntensityResponse 10
+  }
+ }
+ MinFPS 30
+ LightRadius 7
+ CastShadow 0
+}
