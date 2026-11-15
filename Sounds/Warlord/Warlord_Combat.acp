@@ -42,69 +42,6 @@ AudioClass {
    outState 8203
    outStatePort 79880
   }
-  SoundClass "7179" {
-   id 7179
-   name "SOUND_WARLORD_IMPACT_ENERGY"
-   comment "Warlord original Energy Impact"
-   version 5
-   tl 462.727 368.727
-   ctl 0 -21
-   ins {
-    ConnectionsClass "con:64" {
-     id 64
-     links {
-      ConnectionClass "3092:65" {
-       id 3092
-       port 65
-      }
-     }
-    }
-   }
-   outState 8203
-   outStatePort 79881
-  }
-  SoundClass "7180" {
-   id 7180
-   name "SOUND_WARLORD_IMPACT_KINETIC"
-   comment "Warlord original Kinetic Impact"
-   version 5
-   tl 462.727 566.727
-   ctl 0 -21
-   ins {
-    ConnectionsClass "con:64" {
-     id 64
-     links {
-      ConnectionClass "3093:65" {
-       id 3093
-       port 65
-      }
-     }
-    }
-   }
-   outState 8203
-   outStatePort 79882
-  }
-  SoundClass "7181" {
-   id 7181
-   name "SOUND_WARLORD_IMPACT_EXPLOSIVE"
-   comment "Warlord original Siege Explosion"
-   version 5
-   tl 462.727 764.727
-   ctl 0 -21
-   ins {
-    ConnectionsClass "con:64" {
-     id 64
-     links {
-      ConnectionClass "3094:65" {
-       id 3094
-       port 65
-      }
-     }
-    }
-   }
-   outState 8203
-   outStatePort 79883
-  }
  }
  mixers {
   MixerClass "8203" {
@@ -134,36 +71,9 @@ AudioClass {
       }
      }
     }
-    ConnectionsClass "con:79881" {
-     id 79881
-     links {
-      ConnectionClass "7179:65" {
-       id 7179
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:79882" {
-     id 79882
-     links {
-      ConnectionClass "7180:65" {
-       id 7180
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:79883" {
-     id 79883
-     links {
-      ConnectionClass "7181:65" {
-       id 7181
-       port 65
-      }
-     }
-    }
    }
    pi {
-    8192 0
+    2 0
    }
    inputs {
     "WPN_Handling" "WPN_Shots" "WPN_Explosions" "WNP_BulletHits" "CHAR" "ENV_AMB_2D" "VEH_Animations" "Impacts" "Dialog" "ENV_Doors" "VEH_Engine" "VEH_Tires" "VON" "SFX" "SFX_Reverb_OBSOLETE" "VON_Reverb_Small" "Dialog_Reverb" "Impacts_EXT" "ENV_AMB_3D" "WPN_SonicCracks" "CHAR_Gear" "PA" "SFX_Reverb_Exterior" "ENV_AMB_3D_Reverb_Exterior" "SFX_Direct" "SFX_Reverb_Small" "SFX_Reverb_Medium" "SFX_Reverb_Large" "WPN_Shots_Player" "Dialog_Reverb_Small" "Dialog_Reverb_Medium" "Dialog_Reverb_Large" "WPN_TravelingProjectile" "Dialog_Delay_Exterior" "SFX_Reverb_InCabin" "VON_Reverb_Medium" "VON_Reverb_Large"
@@ -265,147 +175,6 @@ AudioClass {
     7 0
    }
   }
-  ShaderClass "3092" {
-   id 3092
-   name "Shader Energy Impact"
-   version 5
-   tl 241.818 354.182
-   ins {
-    ConnectionsClass "con:0" {
-     id 0
-     links {
-      ConnectionClass "5150:65" {
-       id 5150
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:1" {
-     id 1
-     links {
-      ConnectionClass "4117:65" {
-       id 4117
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:2" {
-     id 2
-     links {
-      ConnectionClass "6167:65" {
-       id 6167
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:64" {
-     id 64
-     links {
-      ConnectionClass "2054:65" {
-       id 2054
-       port 65
-      }
-     }
-    }
-   }
-   pi {
-    7 0
-   }
-  }
-  ShaderClass "3093" {
-   id 3093
-   name "Shader Kinetic Impact"
-   version 5
-   tl 241.818 552.182
-   ins {
-    ConnectionsClass "con:0" {
-     id 0
-     links {
-      ConnectionClass "5151:65" {
-       id 5151
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:1" {
-     id 1
-     links {
-      ConnectionClass "4118:65" {
-       id 4118
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:2" {
-     id 2
-     links {
-      ConnectionClass "6168:65" {
-       id 6168
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:64" {
-     id 64
-     links {
-      ConnectionClass "2055:65" {
-       id 2055
-       port 65
-      }
-     }
-    }
-   }
-   pi {
-    7 0
-   }
-  }
-  ShaderClass "3094" {
-   id 3094
-   name "Shader Siege Explosion"
-   version 5
-   tl 241.818 750.182
-   ins {
-    ConnectionsClass "con:0" {
-     id 0
-     links {
-      ConnectionClass "5152:65" {
-       id 5152
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:1" {
-     id 1
-     links {
-      ConnectionClass "4119:65" {
-       id 4119
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:2" {
-     id 2
-     links {
-      ConnectionClass "6169:65" {
-       id 6169
-       port 65
-      }
-     }
-    }
-    ConnectionsClass "con:64" {
-     id 64
-     links {
-      ConnectionClass "2056:65" {
-       id 2056
-       port 65
-      }
-     }
-    }
-   }
-   pi {
-    7 0
-   }
-  }
  }
  amplitudes {
   AmplitudeClass "4115" {
@@ -416,23 +185,24 @@ AudioClass {
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
-     X 10
+     X 8
      Y 1
     }
     CurvePoint "2" {
-     X 180
-     Y 0.96
+     X 40
+     Y 0.64
     }
     CurvePoint "3" {
-     X 500
-     Y 0.74
+     X 90
+     Y 0.22
     }
     CurvePoint "4" {
-     X 930
-     Y 0.35
+     X 160
+     Y 0.04
     }
     CurvePoint "5" {
-     X 1400
+     X 230
+     Y 0
     }
    }
   }
@@ -444,107 +214,24 @@ AudioClass {
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
-     X 10
+     X 12
      Y 1
     }
     CurvePoint "2" {
-     X 180
-     Y 0.96
+     X 70
+     Y 0.62
     }
     CurvePoint "3" {
-     X 500
-     Y 0.74
+     X 220
+     Y 0.28
     }
     CurvePoint "4" {
-     X 930
-     Y 0.35
+     X 460
+     Y 0.065
     }
     CurvePoint "5" {
-     X 1400
-    }
-   }
-  }
-  AmplitudeClass "4117" {
-   id 4117
-   name "Amplitude Energy Impact"
-   version 5
-   tl 250 173
-   curve Custom
-   AttenuationCurve {
-    CurvePoint "1" {
-     X 10
-     Y 1
-    }
-    CurvePoint "2" {
-     X 180
-     Y 0.96
-    }
-    CurvePoint "3" {
-     X 500
-     Y 0.74
-    }
-    CurvePoint "4" {
-     X 930
-     Y 0.35
-    }
-    CurvePoint "5" {
-     X 1400
-    }
-   }
-  }
-  AmplitudeClass "4118" {
-   id 4118
-   name "Amplitude Kinetic Impact"
-   version 5
-   tl 250 371
-   curve Custom
-   AttenuationCurve {
-    CurvePoint "1" {
-     X 10
-     Y 1
-    }
-    CurvePoint "2" {
-     X 180
-     Y 0.96
-    }
-    CurvePoint "3" {
-     X 500
-     Y 0.74
-    }
-    CurvePoint "4" {
-     X 930
-     Y 0.35
-    }
-    CurvePoint "5" {
-     X 1400
-    }
-   }
-  }
-  AmplitudeClass "4119" {
-   id 4119
-   name "Amplitude Siege Explosion"
-   version 5
-   tl 250 569
-   curve Custom
-   AttenuationCurve {
-    CurvePoint "1" {
-     X 10
-     Y 1
-    }
-    CurvePoint "2" {
-     X 180
-     Y 0.96
-    }
-    CurvePoint "3" {
-     X 500
-     Y 0.74
-    }
-    CurvePoint "4" {
-     X 930
-     Y 0.35
-    }
-    CurvePoint "5" {
-     X 1400
+     X 750
+     Y 0
     }
    }
   }
@@ -564,27 +251,6 @@ AudioClass {
    tl 242.727 61.636
    enableDistanceAtt 1
   }
-  FrequencyClass "6167" {
-   id 6167
-   name "Frequency Energy Impact"
-   version 5
-   tl 242.727 259.636
-   enableDistanceAtt 1
-  }
-  FrequencyClass "6168" {
-   id 6168
-   name "Frequency Kinetic Impact"
-   version 5
-   tl 242.727 457.636
-   enableDistanceAtt 1
-  }
-  FrequencyClass "6169" {
-   id 6169
-   name "Frequency Siege Explosion"
-   version 5
-   tl 242.727 655.636
-   enableDistanceAtt 1
-  }
  }
  banks_local {
   BankLocalClass "2052" {
@@ -592,7 +258,7 @@ AudioClass {
    name "Laser Charge 1 2 3"
    version 7
    tl 0 -32
-   Volume 5
+   Volume -9
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -605,50 +271,11 @@ AudioClass {
    name "Heavy Laser Fire"
    version 7
    tl 0 168
-   Volume -2
+   Volume -9
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
      Filename "{C6C54B57B6D9D101}Sounds/Warlord/Warlord_LaserFire.wav"
-    }
-   }
-  }
-  BankLocalClass "2054" {
-   id 2054
-   name "Energy Impact"
-   version 7
-   tl 0 368
-   Volume 2
-   "Pitch variance" 0
-   Samples {
-    AudioBankSampleClass Sample {
-     Filename "{C6C54B57B6D9D102}Sounds/Warlord/Warlord_EnergyImpact.wav"
-    }
-   }
-  }
-  BankLocalClass "2055" {
-   id 2055
-   name "Kinetic Impact"
-   version 7
-   tl 0 568
-   Volume 2
-   "Pitch variance" 0
-   Samples {
-    AudioBankSampleClass Sample {
-     Filename "{C6C54B57B6D9D103}Sounds/Warlord/Warlord_KineticImpact.wav"
-    }
-   }
-  }
-  BankLocalClass "2056" {
-   id 2056
-   name "Siege Explosion"
-   version 7
-   tl 0 768
-   Volume 2
-   "Pitch variance" 0
-   Samples {
-    AudioBankSampleClass Sample {
-     Filename "{A6111111000AA013}Sounds/Warlord/Warlord_SiegeImpact.wav"
     }
    }
   }
@@ -666,27 +293,6 @@ AudioClass {
    name "Spatiality Heavy Laser Fire"
    version 5
    tl 246 -99.909
-   spatialFactor 1
-  }
-  SpatialityClass "5150" {
-   id 5150
-   name "Spatiality Energy Impact"
-   version 5
-   tl 246 98.091
-   spatialFactor 1
-  }
-  SpatialityClass "5151" {
-   id 5151
-   name "Spatiality Kinetic Impact"
-   version 5
-   tl 246 296.091
-   spatialFactor 1
-  }
-  SpatialityClass "5152" {
-   id 5152
-   name "Spatiality Siege Explosion"
-   version 5
-   tl 246 494.091
    spatialFactor 1
   }
  }

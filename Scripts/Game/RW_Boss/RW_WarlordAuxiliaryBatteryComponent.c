@@ -353,6 +353,13 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     protected vector m_vLastImpactExplosive;
     protected int m_iImpactAudioLogs;
     protected int m_iChargeAudioLogs;
+
+    // The napalm stream has 20 high-rate flame packets per burst. Each shot
+    // must retain its replicated particles, but starting the same heavy laser
+    // WAV twenty times would stack unnaturally and overwhelm weapon audio.
+    // Play the current temporary sound only once every 650ms. This can be
+    // replaced with a real looped napalm event without changing its damage.
+    protected int m_iLastNapalmShotAudioMs = -100000;
     protected bool m_bDriverLaserRequested;
     protected bool m_bDriverLaserCharging;
 
@@ -389,10 +396,17 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 
     protected void PlayBossCombatAudioLocal(vector position, string eventName)
     {
+        PlayBossWarlordAudioLocal(position,
+            "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp", eventName);
+    }
+
+    // Route by acoustic EVENT TYPE, not through the generic SFX mixer.
+    // WPN_Shots for launch; WNP_BulletHits for ground/wall strikes;
+    // WPN_Explosions for siege blast. Keeps proper game volume and earplug bus.
+    protected void PlayBossWarlordAudioLocal(vector position, ResourceName project, string eventName)
+    {
         if (System.IsConsoleApp())
             return;
-
-        ResourceName project = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
         if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 20)
         {
             Resource resource = Resource.Load(project);
@@ -567,7 +581,11 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         else if (kind == 2)
             eventName = "SOUND_WARLORD_IMPACT_EXPLOSIVE";
 
-        PlayBossCombatAudioLocal(position, eventName);
+        ResourceName project = "{C6C54B57B6D9D107}Sounds/Warlord/Warlord_Hits.acp";
+        if (kind == 2)
+            project = "{C6C54B57B6D9D108}Sounds/Warlord/Warlord_Explosions.acp";
+
+        PlayBossWarlordAudioLocal(position, project, eventName);
     }
 
     // Core Titan LRMs/rockets resolve impacts using this authoritative call,
@@ -751,6 +769,27 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         // generic arm prefab. Swap only their audio cue during this shot.
         // Do not change the shared Mech Core module or model offsets.
         BFA_MechWeaponModuleComponent laserModule = FindLocalModule(hardpointIndex);
+        if (RW_WarlordNapalmProjector.Cast(laserModule))
+        {
+            BFA_MechWeaponFX napalmFX = laserModule.GetFX();
+            if (napalmFX)
+            {
+                int nowMs = System.GetTickCount();
+                bool playSound = nowMs - m_iLastNapalmShotAudioMs >= 650;
+                string savedEvent = napalmFX.m_sFireSoundEvent;
+                if (!playSound)
+                    napalmFX.m_sFireSoundEvent = "";
+                else
+                    m_iLastNapalmShotAudioMs = nowMs;
+
+                // This still renders EACH flamethrower packet, flame trail,
+                // muzzle particle and hit locally on all MP clients.
+                super.PlayShotLocal(hardpointIndex, shotId, start, end,
+                    flags, speed, length, thickness);
+                napalmFX.m_sFireSoundEvent = savedEvent;
+                return;
+            }
+        }
         if (BFA_MechLasCannonModuleComponent.Cast(laserModule))
         {
             BFA_MechWeaponFX laserFX = laserModule.GetFX();
