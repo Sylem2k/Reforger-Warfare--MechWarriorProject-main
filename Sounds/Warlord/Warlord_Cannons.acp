@@ -73,7 +73,7 @@ AudioClass {
     }
    }
    pi {
-    8192 0
+    2 0
    }
    inputs {
     "WPN_Handling" "WPN_Shots" "WPN_Explosions" "WNP_BulletHits" "CHAR" "ENV_AMB_2D" "VEH_Animations" "Impacts" "Dialog" "ENV_Doors" "VEH_Engine" "VEH_Tires" "VON" "SFX" "SFX_Reverb_OBSOLETE" "VON_Reverb_Small" "Dialog_Reverb" "Impacts_EXT" "ENV_AMB_3D" "WPN_SonicCracks" "CHAR_Gear" "PA" "SFX_Reverb_Exterior" "ENV_AMB_3D_Reverb_Exterior" "SFX_Direct" "SFX_Reverb_Small" "SFX_Reverb_Medium" "SFX_Reverb_Large" "WPN_Shots_Player" "Dialog_Reverb_Small" "Dialog_Reverb_Medium" "Dialog_Reverb_Large" "WPN_TravelingProjectile" "Dialog_Delay_Exterior" "SFX_Reverb_InCabin" "VON_Reverb_Medium" "VON_Reverb_Large"
@@ -185,23 +185,24 @@ AudioClass {
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
-     X 10
+     X 12
      Y 1
     }
     CurvePoint "2" {
-     X 180
-     Y 0.96
+     X 100
+     Y 0.68
     }
     CurvePoint "3" {
-     X 500
-     Y 0.74
+     X 350
+     Y 0.27
     }
     CurvePoint "4" {
-     X 930
-     Y 0.35
+     X 720
+     Y 0.07
     }
     CurvePoint "5" {
-     X 1700
+     X 1100
+     Y 0
     }
    }
   }
@@ -213,23 +214,24 @@ AudioClass {
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
-     X 10
+     X 12
      Y 1
     }
     CurvePoint "2" {
-     X 180
-     Y 0.96
+     X 100
+     Y 0.68
     }
     CurvePoint "3" {
-     X 500
-     Y 0.74
+     X 350
+     Y 0.27
     }
     CurvePoint "4" {
-     X 930
-     Y 0.35
+     X 720
+     Y 0.07
     }
     CurvePoint "5" {
-     X 1700
+     X 1100
+     Y 0
     }
    }
   }
@@ -256,7 +258,7 @@ AudioClass {
    name "Warlord Heavy Cannon A"
    version 7
    tl 0 -32
-   Volume -3
+   Volume -10
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -269,7 +271,7 @@ AudioClass {
    name "Warlord Heavy Cannon B"
    version 7
    tl 0 168
-   Volume -3
+   Volume -10
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
