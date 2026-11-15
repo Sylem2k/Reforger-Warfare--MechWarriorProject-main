@@ -1,0 +1,117 @@
+// A long moving jet rather than a bullet: Mech Core moves the emitter along
+// the authorized muzzle-to-impact path, while individual flames are emitted
+// in world space and remain behind it for 0.55-0.75 seconds.
+EffectDef {
+ Version 2
+ Emitters {
+  EmitterDef flame_core {
+   ShapeType Sphere
+   ShapeSize 1.8 1.8 1.8
+   MaxNum 68
+   BirthRate 105
+   Offset 0 0 0
+   Angles 0 0 0
+   LocalTransform 0
+   Material "{77ED367ABC13B69F}Particles/_Materials/Fire/FireBurn_anim_01_Strong_Blurred.emat"
+   SizeMultiplier 2.5
+   SizeRND 0.4
+   RandomRotDir 0
+   RandomAngle 1
+   Velocity 2
+   VelocityRND 2
+   AirResistance 1
+   GravityMultiply -0.03
+   AnimOnce 0
+   AnimFPS 55
+   LifetimeByAnim 0
+   RandomFrame 1
+   Lifetime 0.62
+   LifetimeRND 0.13
+   Color {
+    0 1 0.75 0.22 1 1 0.36 0.05
+   }
+   Alpha {
+    0 0 0.12 0.92 0.55 0.75 1 0
+   }
+   Size {
+    0 0.3 0.2 0.85 0.72 1.1 1 0.3
+   }
+   EmittingTime 2.5
+   Repeat 0
+  }
+  EmitterDef billowing_tongues {
+   ShapeType Sphere
+   ShapeSize 2.4 2.4 2.4
+   MaxNum 45
+   BirthRate 62
+   Offset 0 0 0
+   Angles 0 0 0
+   LocalTransform 0
+   Material "{FF4E3F08B66536D5}Particles/_Materials/Fire/FireBurn_anim_04.emat"
+   SizeMultiplier 3.25
+   SizeRND 0.65
+   RandomRotDir 0
+   RandomAngle 1
+   Velocity 2
+   VelocityRND 3
+   AirResistance 0.5
+   GravityMultiply -0.07
+   AnimOnce 0
+   AnimFPS 72
+   LifetimeByAnim 0
+   RandomFrame 1
+   Lifetime 0.73
+   LifetimeRND 0.15
+   Color {
+    0 1 0.62 0.16 1 0.8 0.2 0.04
+   }
+   Alpha {
+    0 0 0.13 0.8 0.57 0.63 1 0
+   }
+   Size {
+    0 0.35 0.3 1.1 0.8 1.25 1 0.3
+   }
+   EmittingTime 2.5
+   Repeat 0
+  }
+  EmitterDef sparks {
+   ShapeType Point
+   ShapeSize 1 1 1
+   MaxNum 25
+   BirthRate 30
+   Offset 0 0 0
+   Angles 0 0 0
+   LocalTransform 0
+   Material "{2DF4058A4066E031}Particles/_Materials/Fire/Base_Sparks_07.emat"
+   StretchMultiplier 1
+   SizeMultiplier 0.1
+   SizeRND 0.05
+   ScaleX 0.45
+   ScaleY 0.9
+   BillboardingType Full
+   VelAngle 1
+   RandomAngle 1
+   Velocity 3
+   VelocityRND 3
+   AirResistance 2
+   WindInfluence 0.1
+   GravityMultiply 0.25
+   Lifetime 0.55
+   LifetimeRND 0.1
+   RandomFrame 1
+   Color {
+    0 1 0.68 0.13 1 0.8 0.24 0.06
+   }
+   Alpha {
+    0 0 0.15 1 0.75 0.8 1 0
+   }
+   EmittingTime 2.5
+   Repeat 0
+  }
+ }
+ MinFPS 30
+ LightOffset 0 0 0
+ LightClipEV -16
+ LightRadius 7
+ CastShadow 0
+}
