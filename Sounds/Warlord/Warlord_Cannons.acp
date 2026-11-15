@@ -258,7 +258,7 @@ AudioClass {
    name "Warlord Heavy Cannon A"
    version 7
    tl 0 -32
-   Volume -10
+   Volume -16
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -271,7 +271,7 @@ AudioClass {
    name "Warlord Heavy Cannon B"
    version 7
    tl 0 168
-   Volume -10
+   Volume -16
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {

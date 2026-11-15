@@ -258,7 +258,7 @@ AudioClass {
    name "Laser Charge 1 2 3"
    version 7
    tl 0 -32
-   Volume -9
+   Volume -16
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -271,7 +271,7 @@ AudioClass {
    name "Heavy Laser Fire"
    version 7
    tl 0 168
-   Volume -9
+   Volume -16
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {

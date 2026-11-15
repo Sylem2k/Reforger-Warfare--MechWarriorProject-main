@@ -145,7 +145,7 @@ AudioClass {
    name "Siege Explosion"
    version 7
    tl 0 768
-   Volume -10
+   Volume -18
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {

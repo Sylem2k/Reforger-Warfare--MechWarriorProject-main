@@ -258,7 +258,7 @@ AudioClass {
    name "Energy Impact"
    version 7
    tl 0 368
-   Volume -10
+   Volume -18
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
@@ -271,7 +271,7 @@ AudioClass {
    name "Kinetic Impact"
    version 7
    tl 0 568
-   Volume -10
+   Volume -18
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
