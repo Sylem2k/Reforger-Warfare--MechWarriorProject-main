@@ -1146,6 +1146,11 @@ Vehicle {
      m_sPrefab "{E8A100000000FA03}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Omni_Laser.et"
      m_vLocalOffset 0 18 -12
     }
+    RW_WarlordAuxiliaryWeaponDefinition "{BADA202611140201}" {
+     m_sName "NAPALM_SIEGE_PROJECTOR"
+     m_sPrefab "{E8A100000000FA09}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Napalm_Projector.et"
+     m_vLocalOffset 0 12 12
+    }
    }
   }
   RW_WarlordBossDamageComponent "{E60F0000000000AD}" {

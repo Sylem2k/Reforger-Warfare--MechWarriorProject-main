@@ -1,0 +1,9 @@
+// Local-only napalm patch: no physics, networking or damage.
+GenericEntity {
+ ID "E8A2000000000910"
+ components {
+  RW_WarlordNapalmFirePatchVisual "{E8A2000000000911}" {
+   m_sFireParticle "{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_ground_medium.ptc"
+  }
+ }
+}
