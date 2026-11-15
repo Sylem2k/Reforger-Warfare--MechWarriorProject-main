@@ -43,7 +43,7 @@ AudioClass {
     }
    }
    pi {
-    8192 0
+    2097152 0
    }
    inputs {
     "WPN_Handling" "WPN_Shots" "WPN_Explosions" "WNP_BulletHits" "CHAR" "ENV_AMB_2D" "VEH_Animations" "Impacts" "Dialog" "ENV_Doors" "VEH_Engine" "VEH_Tires" "VON" "SFX" "SFX_Reverb_OBSOLETE" "VON_Reverb_Small" "Dialog_Reverb" "Impacts_EXT" "ENV_AMB_3D" "WPN_SonicCracks" "CHAR_Gear" "PA" "SFX_Reverb_Exterior" "ENV_AMB_3D_Reverb_Exterior" "SFX_Direct" "SFX_Reverb_Small" "SFX_Reverb_Medium" "SFX_Reverb_Large" "WPN_Shots_Player" "Dialog_Reverb_Small" "Dialog_Reverb_Medium" "Dialog_Reverb_Large" "WPN_TravelingProjectile" "Dialog_Delay_Exterior" "SFX_Reverb_InCabin" "VON_Reverb_Medium" "VON_Reverb_Large"
@@ -112,23 +112,20 @@ AudioClass {
      Y 1
     }
     CurvePoint "2" {
-     X 200
-     Y 0.96
+     X 130
+     Y 0.6
     }
     CurvePoint "3" {
-     X 500
-     Y 0.82
+     X 340
+     Y 0.26
     }
     CurvePoint "4" {
-     X 750
-     Y 0.68
+     X 620
+     Y 0.08
     }
     CurvePoint "5" {
-     X 1000
-     Y 0.53
-    }
-    CurvePoint "6" {
-     X 1250
+     X 900
+     Y 0
     }
    }
   }
@@ -148,7 +145,7 @@ AudioClass {
    name "Warlord Warhorn"
    version 7
    tl 0 -32
-   Volume 5
+   Volume -11
    "Pitch variance" 0
    Samples {
     AudioBankSampleClass Sample {
