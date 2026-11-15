@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{A6111111000AA013}Sounds/Warlord/Warlord_SiegeImpact.wav"
+ Name "{61DD7C7E10E80B13}Sounds/Warlord/Warlord_SiegeImpact1.wav"
  Configurations {
   WAVResourceClass PC : "{F72B05D02F3F135E}Configs/System/ResourceTypes/PC/Sound.conf" {
   }
