@@ -29,6 +29,14 @@ class RW_WarlordNapalmProjector : RW_WarlordOmniTurret
     [Attribute("6", UIWidgets.Auto, "Refresh, rather than stack, nearby patches within this radius.", category: "Warlord Napalm")]
     protected float m_fPatchMergeRadius;
 
+    [Attribute("24", UIWidgets.Auto, "Half-width of the ground spray at maximum range, metres; jet sweeps left and right across this area.", category: "Warlord Napalm")]
+    protected float m_fSprayHalfWidth;
+
+    [Attribute("500", UIWidgets.Auto, "Milliseconds between replicated ground-fire visual clusters; damage packets remain independent.", category: "Warlord Napalm")]
+    protected int m_iImpactVisualIntervalMs;
+
+    protected int m_iSprayPulse;
+    protected int m_iNextImpactVisualMs;
     protected ref array<ref RW_WarlordNapalmPatch> m_aPatches = {};
     protected bool m_bNapalmTickRunning;
 
@@ -54,10 +62,28 @@ class RW_WarlordNapalmProjector : RW_WarlordOmniTurret
         BaseWorld world = GetGame().GetWorld();
         vector start = GetShotStart();
         vector aim = PredictAimPoint(start);
-        float spread = (Math.Max(m_fMissRadius, 0) + vector.Distance(start, aim) * 0.01 * Math.Max(m_fMissPer100m, 0)) * GetSpreadScale();
-        spread = Math.Clamp(spread, 0, 14);
-        float x = aim[0] + Math.RandomFloat(-spread, spread);
-        float z = aim[2] + Math.RandomFloat(-spread, spread);
+        // Wide sweeping wash, not independent rifle-like shots at one point.
+        // Move the jet across thirteen lanes left-to-right in a repeating
+        // pattern. Small jitter breaks up visibly regular spacing. Width
+        // grows with range and respects the existing GM inaccuracy multiplier.
+        vector horizontal = aim - start;
+        horizontal[1] = 0;
+        if (horizontal.LengthSq() < 0.01)
+            horizontal = GetOwner().GetTransformAxis(2);
+        horizontal[1] = 0;
+        horizontal.Normalize();
+
+        float distanceToTarget = vector.Distance(start, aim);
+        float rangeFactor = Math.Clamp(distanceToTarget / Math.Max(m_fRange, 1), 0.2, 1.0);
+        float spreadFactor = Math.Clamp(GetSpreadScale(), 0.75, 2.0);
+        float halfWidth = Math.Clamp(m_fSprayHalfWidth * rangeFactor * spreadFactor, 0.0, 32.0);
+
+        int lane = Math.Mod(m_iSprayPulse, 13) - 6;
+        m_iSprayPulse++;
+        float sideways = lane * (halfWidth / 6.0) + Math.RandomFloat(-1.5, 1.5);
+        float foreAft = Math.RandomFloat(-halfWidth * 0.3, halfWidth * 0.3);
+        float x = aim[0] + horizontal[2] * sideways + horizontal[0] * foreAft;
+        float z = aim[2] - horizontal[0] * sideways + horizontal[2] * foreAft;
         vector wanted = Vector(x, world.GetSurfaceY(x, z) + 0.35, z);
         vector ray = wanted - start;
         float dist = ray.Length();
@@ -95,6 +121,15 @@ class RW_WarlordNapalmProjector : RW_WarlordOmniTurret
             m_pMechOwner.FindComponent(RW_WarlordBossWeaponRouterComponent));
         if (!router)
             return;
+
+        // Continuous napalm sends many legitimate server-side damage packets.
+        // Do not create one 7-8 second fire prefab and reliable impact RPC for
+        // EVERY packet. Broadcast visual clusters at a bounded interval;
+        // skipped packets still travel, land and deal their normal damage.
+        int now = GetGame().GetWorld().GetWorldTime();
+        if (now < m_iNextImpactVisualMs)
+            return;
+        m_iNextImpactVisualMs = now + Math.Clamp(m_iImpactVisualIntervalMs, 250, 2000);
 
         ResourceName particle = "";
         if (m_FX)
@@ -187,7 +222,11 @@ class RW_WarlordNapalmFirePatchVisual : ScriptComponent
 {
     [Attribute("{79DD3A5F1F3069CD}Particles/Vehicle/Vehicle_fire_ground_medium.ptc", UIWidgets.ResourceNamePicker, "Fire particle.", params: "ptc", category: "Napalm FX")]
     protected ResourceName m_sFireParticle;
-    protected ParticleEffectEntity m_pFire;
+
+    [Attribute("12", UIWidgets.Auto, "Spread local-only ground fire around the impact, metres.", category: "Napalm FX")]
+    protected float m_fGroundVisualRadius;
+
+    protected ref array<ParticleEffectEntity> m_aFires = {};
 
     override void OnPostInit(IEntity owner)
     {
@@ -195,17 +234,39 @@ class RW_WarlordNapalmFirePatchVisual : ScriptComponent
         if (!owner || System.IsConsoleApp() || m_sFireParticle.IsEmpty())
             return;
 
-        ParticleEffectEntitySpawnParams params = new ParticleEffectEntitySpawnParams();
-        Math3D.MatrixIdentity4(params.Transform);
-        params.Transform[3] = owner.GetOrigin();
-        m_pFire = ParticleEffectEntity.SpawnParticleEffect(m_sFireParticle, params);
+        // One authority-sent impact creates a broad, deterministic cluster
+        // on each client. These are NOT damage entities, have no physics or
+        // replication, and are all cleaned up with the parent prefab.
+        float radius = Math.Clamp(m_fGroundVisualRadius, 0, 16);
+        for (int i = 0; i < 5; i++)
+        {
+            vector offset = vector.Zero;
+            if (i == 1)
+                offset = Vector(radius, 0, 0);
+            else if (i == 2)
+                offset = Vector(-radius, 0, 0);
+            else if (i == 3)
+                offset = Vector(0, 0, radius);
+            else if (i == 4)
+                offset = Vector(0, 0, -radius);
+
+            ParticleEffectEntitySpawnParams params = new ParticleEffectEntitySpawnParams();
+            Math3D.MatrixIdentity4(params.Transform);
+            params.Transform[3] = owner.GetOrigin() + offset;
+            ParticleEffectEntity effect = ParticleEffectEntity.SpawnParticleEffect(m_sFireParticle, params);
+            if (effect)
+                m_aFires.Insert(effect);
+        }
     }
 
     override void OnDelete(IEntity owner)
     {
-        if (m_pFire)
-            delete m_pFire;
-        m_pFire = null;
+        foreach (ParticleEffectEntity fire : m_aFires)
+        {
+            if (fire)
+                delete fire;
+        }
+        m_aFires.Clear();
         super.OnDelete(owner);
     }
 }
