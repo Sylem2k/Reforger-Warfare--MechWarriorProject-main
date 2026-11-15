@@ -1182,6 +1182,8 @@ Vehicle {
    m_fLaserChargeSeconds 1.25
    m_fVolleyPauseScale 1
    m_fAimSettleExtraSeconds 0
+   m_bNapalmEnabled 1
+   m_fNapalmRange 275
   }
   RW_WarlordMultiTargetAICrewComponent "{E60F000000000007}" {
    m_bAIDriver 1
