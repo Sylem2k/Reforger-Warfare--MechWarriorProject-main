@@ -27,6 +27,12 @@ class RW_WarlordBossLRM : RW_LRMWeapon
     {
         super.ClientOnShot(start, end);
 
+        // The LRM volley accent is a separate direct PlayEvent outside the
+        // normal router, so the diagnostic toggle must also isolate it.
+        RW_WarlordGMDirectorComponent gm = RW_WarlordGMDirectorComponentClass.Find(m_pMechOwner);
+        if (gm && gm.GetAudioIsolationMute())
+            return;
+
         if (!GetOwner() || m_sLaunchAccentProject.IsEmpty() || m_sLaunchAccentEvent.IsEmpty())
             return;
 
