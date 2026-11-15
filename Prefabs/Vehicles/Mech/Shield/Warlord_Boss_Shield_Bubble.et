@@ -7,7 +7,7 @@ GenericEntity {
    Materials {
     MaterialAssignClass "{E8A3000000000063}" {
      SourceMaterial "DefaultGeneratedMaterial"
-     AssignedMaterial "{E8A100000000B135}Common/Models/Titan_War_Lord/Data/Warlord_Boss_Shield.emat"
+     AssignedMaterial "{BA910374BDD34503}Common/Models/Titan_War_Lord/Data/Ashtray_01_glass_green.emat"
     }
    }
   }
