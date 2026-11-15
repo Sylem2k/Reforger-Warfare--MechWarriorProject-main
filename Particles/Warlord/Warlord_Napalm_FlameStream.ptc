@@ -6,14 +6,14 @@ EffectDef {
  Emitters {
   EmitterDef flame_core {
    ShapeType Sphere
-   ShapeSize 1.8 1.8 1.8
-   MaxNum 68
-   BirthRate 105
+   ShapeSize 4.2 4.2 4.2
+   MaxNum 52
+   BirthRate 75
    Offset 0 0 0
    Angles 0 0 0
    LocalTransform 0
    Material "{77ED367ABC13B69F}Particles/_Materials/Fire/FireBurn_anim_01_Strong_Blurred.emat"
-   SizeMultiplier 2.5
+   SizeMultiplier 4.6
    SizeRND 0.4
    RandomRotDir 0
    RandomAngle 1
@@ -25,7 +25,7 @@ EffectDef {
    AnimFPS 55
    LifetimeByAnim 0
    RandomFrame 1
-   Lifetime 0.62
+   Lifetime 0.82
    LifetimeRND 0.13
    Color {
     0 1 0.75 0.22 1 1 0.36 0.05
@@ -36,19 +36,19 @@ EffectDef {
    Size {
     0 0.3 0.2 0.85 0.72 1.1 1 0.3
    }
-   EmittingTime 2.5
+   EmittingTime 3
    Repeat 0
   }
   EmitterDef billowing_tongues {
    ShapeType Sphere
-   ShapeSize 2.4 2.4 2.4
-   MaxNum 45
-   BirthRate 62
+   ShapeSize 5 5 5
+   MaxNum 36
+   BirthRate 48
    Offset 0 0 0
    Angles 0 0 0
    LocalTransform 0
    Material "{FF4E3F08B66536D5}Particles/_Materials/Fire/FireBurn_anim_04.emat"
-   SizeMultiplier 3.25
+   SizeMultiplier 5.5
    SizeRND 0.65
    RandomRotDir 0
    RandomAngle 1
@@ -60,7 +60,7 @@ EffectDef {
    AnimFPS 72
    LifetimeByAnim 0
    RandomFrame 1
-   Lifetime 0.73
+   Lifetime 0.9
    LifetimeRND 0.15
    Color {
     0 1 0.62 0.16 1 0.8 0.2 0.04
@@ -71,14 +71,14 @@ EffectDef {
    Size {
     0 0.35 0.3 1.1 0.8 1.25 1 0.3
    }
-   EmittingTime 2.5
+   EmittingTime 3
    Repeat 0
   }
   EmitterDef sparks {
    ShapeType Point
    ShapeSize 1 1 1
-   MaxNum 25
-   BirthRate 30
+   MaxNum 14
+   BirthRate 18
    Offset 0 0 0
    Angles 0 0 0
    LocalTransform 0
@@ -105,7 +105,7 @@ EffectDef {
    Alpha {
     0 0 0.15 1 0.75 0.8 1 0
    }
-   EmittingTime 2.5
+   EmittingTime 3
    Repeat 0
   }
  }
