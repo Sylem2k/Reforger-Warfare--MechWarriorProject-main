@@ -298,3 +298,22 @@ class RW_WarlordGMNapalmRangeEditorAttribute : SCR_BaseValueListEditorAttribute
             director.SetNapalmRange(var.GetFloat());
     }
 }
+
+[BaseContainerProps(), SCR_BaseEditorAttributeCustomTitle()]
+class RW_WarlordGMAudioIsolationEditorAttribute : SCR_BaseValueListEditorAttribute
+{
+    override SCR_BaseEditorAttributeVar ReadVariable(Managed item, SCR_AttributesManagerEditorComponent manager)
+    {
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.FromEditorItem(item);
+        if (!director)
+            return null;
+        return SCR_BaseEditorAttributeVar.CreateBool(director.GetAudioIsolationMute());
+    }
+
+    override void WriteVariable(Managed item, SCR_BaseEditorAttributeVar var, SCR_AttributesManagerEditorComponent manager, int playerID)
+    {
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.FromEditorItem(item);
+        if (director && var)
+            director.SetAudioIsolationMute(var.GetBool());
+    }
+}
