@@ -389,10 +389,17 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 
     protected void PlayBossCombatAudioLocal(vector position, string eventName)
     {
+        PlayBossWarlordAudioLocal(position,
+            "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp", eventName);
+    }
+
+    // Route by acoustic EVENT TYPE, not through the generic SFX mixer.
+    // WPN_Shots for launch; WNP_BulletHits for ground/wall strikes;
+    // WPN_Explosions for siege blast. Keeps proper game volume and earplug bus.
+    protected void PlayBossWarlordAudioLocal(vector position, ResourceName project, string eventName)
+    {
         if (System.IsConsoleApp())
             return;
-
-        ResourceName project = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
         if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 20)
         {
             Resource resource = Resource.Load(project);
@@ -567,7 +574,11 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         else if (kind == 2)
             eventName = "SOUND_WARLORD_IMPACT_EXPLOSIVE";
 
-        PlayBossCombatAudioLocal(position, eventName);
+        ResourceName project = "{C6C54B57B6D9D107}Sounds/Warlord/Warlord_Hits.acp";
+        if (kind == 2)
+            project = "{C6C54B57B6D9D108}Sounds/Warlord/Warlord_Explosions.acp";
+
+        PlayBossWarlordAudioLocal(position, project, eventName);
     }
 
     // Core Titan LRMs/rockets resolve impacts using this authoritative call,
