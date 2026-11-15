@@ -14,28 +14,30 @@ GenericEntity {
    m_fScanInterval 0.5
    m_fTargetHoldSeconds 3
    m_fShellSpeed 160
-   m_fBurstDamage 24
-   m_fBurstRadius 8
-   m_fMissRadius 2
+   m_fBurstDamage 9
+   m_fBurstRadius 13
+   m_fMissRadius 3
    m_fMissPer100m 0.3
-   m_iBurstShots 5
-   m_fBurstPause 3
-   m_fShotsPerMinute 210
+   m_iBurstShots 20
+   m_fBurstPause 1.25
+   m_fShotsPerMinute 360
    m_bAnimateTurret 1
    m_fTurnSpeed 75
    m_fMinElevation -45
    m_fMaxElevation 50
    m_fBarrelLength 0.35
    m_fTracerLength 1.5
-   m_fTracerThickness 0.4
+   m_fTracerThickness 0.6
    m_fStartSpreadScale 1.2
-   m_fSettleTime 3
-   m_fNapalmDuration 6.5
+   m_fSettleTime 2
+   m_fNapalmDuration 8
    m_fNapalmTickSeconds 1
-   m_fNapalmTickDamage 4.5
-   m_fNapalmRadius 9
+   m_fNapalmTickDamage 3
+   m_fNapalmRadius 18
    m_iMaxNapalmZones 6
-   m_fPatchMergeRadius 6
+   m_fPatchMergeRadius 18
+   m_fSprayHalfWidth 24
+   m_iImpactVisualIntervalMs 500
    m_fDamageVsInfantry 0.8
    m_fDamageVsVehicles 0.4
    m_fInfantryArmourFloor 0
@@ -52,7 +54,7 @@ GenericEntity {
     m_sTrailParticle "{C6A6202611140101}Particles/Warlord/Warlord_Napalm_FlameStream.ptc"
     m_sImpactParticle "{AD69C17360EE596B}Particles/Weapon/Explosion_API.ptc"
     m_sImpactPrefab "{E8A100000000FA0A}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_Napalm_FirePatch.et"
-    m_fImpactPrefabLifetime 7
+    m_fImpactPrefabLifetime 8.5
     m_fProjectileSpeed 160
     m_fLinger 0.2
     m_bImpactOnMiss 1
