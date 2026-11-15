@@ -70,6 +70,35 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
     [Attribute("0", UIWidgets.Auto, "Additional seconds the AI must settle on a target before firing.", category: "GM Storyline"), RplProp()]
     protected float m_fAimSettleExtraSeconds;
 
+    // Separate napalm controls. These apply only to the Warlord's autonomous
+    // 275m flamer, independent of the broader top-cannon/defense toggles.
+    [Attribute("true", UIWidgets.CheckBox, "Enable or stop the Warlord napalm spray.", category: "GM Storyline"), RplProp()]
+    protected bool m_bNapalmEnabled;
+
+    [Attribute("275", UIWidgets.Auto, "Maximum Warlord napalm range in metres (50-300).", category: "GM Storyline"), RplProp()]
+    protected float m_fNapalmRange;
+
+    bool GetNapalmEnabled() { return m_bNapalmEnabled; }
+    float GetNapalmRange() { return Math.Clamp(m_fNapalmRange, 50.0, 300.0); }
+
+    void SetNapalmEnabled(bool enabled)
+    {
+        if (!Replication.IsServer()) return;
+        m_bNapalmEnabled = enabled;
+        Replication.BumpMe();
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] napalmEnabled=%1", enabled));
+    }
+
+    void SetNapalmRange(float metres)
+    {
+        if (!Replication.IsServer()) return;
+        m_fNapalmRange = Math.Clamp(metres, 50.0, 300.0);
+        Replication.BumpMe();
+        if (m_bVerboseGMLogs)
+            Print(string.Format("[RW WARLORD GM] napalmRange=%1m", m_fNapalmRange));
+    }
+
     bool GetVehicleTargetsOnly() { return m_bVehicleTargetsOnly; }
     bool GetTopCannonsEnabled() { return m_bTopCannonsEnabled; }
     bool GetDefensesEnabled() { return m_bDefensesEnabled; }

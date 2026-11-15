@@ -259,3 +259,42 @@ class RW_WarlordGMExtraAimSettleEditorAttribute : SCR_BaseValueListEditorAttribu
             director.SetAimSettleExtraSeconds(var.GetFloat());
     }
 }
+
+
+[BaseContainerProps(), SCR_BaseEditorAttributeCustomTitle()]
+class RW_WarlordGMNapalmEnabledEditorAttribute : SCR_BaseValueListEditorAttribute
+{
+    override SCR_BaseEditorAttributeVar ReadVariable(Managed item, SCR_AttributesManagerEditorComponent manager)
+    {
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.FromEditorItem(item);
+        if (!director)
+            return null;
+        return SCR_BaseEditorAttributeVar.CreateBool(director.GetNapalmEnabled());
+    }
+
+    override void WriteVariable(Managed item, SCR_BaseEditorAttributeVar var, SCR_AttributesManagerEditorComponent manager, int playerID)
+    {
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.FromEditorItem(item);
+        if (director && var)
+            director.SetNapalmEnabled(var.GetBool());
+    }
+}
+
+[BaseContainerProps(), SCR_BaseEditorAttributeCustomTitle()]
+class RW_WarlordGMNapalmRangeEditorAttribute : SCR_BaseValueListEditorAttribute
+{
+    override SCR_BaseEditorAttributeVar ReadVariable(Managed item, SCR_AttributesManagerEditorComponent manager)
+    {
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.FromEditorItem(item);
+        if (!director)
+            return null;
+        return SCR_BaseEditorAttributeVar.CreateFloat(director.GetNapalmRange());
+    }
+
+    override void WriteVariable(Managed item, SCR_BaseEditorAttributeVar var, SCR_AttributesManagerEditorComponent manager, int playerID)
+    {
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.FromEditorItem(item);
+        if (director && var)
+            director.SetNapalmRange(var.GetFloat());
+    }
+}

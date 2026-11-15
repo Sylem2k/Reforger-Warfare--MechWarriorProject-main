@@ -52,11 +52,38 @@ class RW_WarlordNapalmProjector : RW_WarlordOmniTurret
         super.OnDelete(owner);
     }
 
+    // The existing autonomous CGS heartbeat runs on the server every 50ms.
+    // Apply the editor's replicated director values here BEFORE target scans:
+    // m_fRange is used by both FindTarget()/IsValidTarget() and FireShot().
+    // Stopping the flamer never disables the rest of the boss's batteries.
+    override protected void ServerTick()
+    {
+        if (!Replication.IsServer())
+            return;
+
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(m_pMechOwner);
+        if (director)
+        {
+            m_fRange = director.GetNapalmRange();
+            if (!director.GetNapalmEnabled())
+            {
+                m_pTarget = null;
+                return;
+            }
+        }
+
+        super.ServerTick();
+    }
+
     // Each packet travels toward the surface near a hostile target.
     // Use actual world collision, so walls and roofs block it.
     override protected void FireShot(IEntity instigator)
     {
         if (!Replication.IsServer() || !m_pTarget || !m_pMechOwner || !GetGame() || !GetGame().GetWorld())
+            return;
+
+        RW_WarlordGMDirectorComponent director = RW_WarlordGMDirectorComponentClass.Find(m_pMechOwner);
+        if (director && !director.GetNapalmEnabled())
             return;
 
         BaseWorld world = GetGame().GetWorld();
