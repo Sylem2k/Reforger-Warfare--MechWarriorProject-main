@@ -448,6 +448,13 @@ Vehicle {
    m_fSprintStrafeSpeed 4
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 1
+   // LOWER-BODY STEERING TEST: A/D rotates the hips and IK legs.
+   // Mouse aim controls the upper torso separately; no sideways strafing.
+   m_bWalkerADSteering 1
+   // Keep hips under pilot turn control for this test, rather than forcing
+   // the chassis to chase the torso's aim while the player is standing.
+   m_bWalkerFollowTorso 0
+   m_bWalkerPivotToTorso 0
    m_GroundPoint PointInfo "{6AA7395946953F23}" {
     Offset 0 -3.6888 -1.0509
    }
@@ -561,8 +568,11 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{C630000000020101}" {
    m_sAimStation "DRIVER"
-   m_fMaxTwist 45
-   m_fTwistSpeed 35
+   // Counter-rotate towards camera aim while legs turn underneath.
+   // The torso is mechanically limited to +/-90 degrees, not infinite.
+   m_fMaxTwist 90
+   m_fTwistSpeed 100
+   m_fDeadzone 2
    m_aTwistSlots {
     "Torso"
    }
