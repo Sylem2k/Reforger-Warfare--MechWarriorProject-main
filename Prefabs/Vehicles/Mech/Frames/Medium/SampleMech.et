@@ -23,6 +23,20 @@ Vehicle {
    m_fReticleAimDistance 1000
    m_iLocalAimTickMs 16
   }
+  // Pilot HUD already exists in CGS Mech Core. This opt-in uses the
+  // reference-style compass / dual-heading readout / ring radar and teal
+  // armor panels; no new targeting, radar or damage mechanics are added.
+  CGS_PilotHUDComponent "{C681202611190001}" {
+   m_bEnabled 1
+   m_fSensorRange 800
+   m_fInfantryRange 250
+   m_bNeedLineOfSight 1
+   m_bShowBrackets 1
+   m_bShowRadar 1
+   m_bShowStatus 1
+   m_bMissileWarning 1
+   m_bReferenceLayout 1
+  }
   BFA_MechControllerComponent "{6A8740653CE8F8D0}" {
    MaxStartupTime 8
    m_sCrewStationId "DRIVER"
