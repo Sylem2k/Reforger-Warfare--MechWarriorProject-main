@@ -1,3 +1,3 @@
-Vehicle Titan_WarLord_OPFOR1 : "{D60000000000000F}Prefabs/Vehicles/Mech/Enemies/Assault/Titan_WarLord_OPFOR.et" {
- coords 4783.746 75.35 11561.523
+Vehicle SampleMech1 : "{33D70479FF3498E0}Prefabs/Vehicles/Mech/Frames/Medium/SampleMech.et" {
+ coords 4782.273 32.388 11093.959
 }
