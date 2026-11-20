@@ -465,8 +465,8 @@ Vehicle {
    m_fSprintStrafeSpeed 4
    m_fAvgHeightSpeed 2
    m_fAngularSpeed 1
-   // LOWER-BODY STEERING TEST: A/D rotates the hips and IK legs.
-   // Mouse aim controls the upper torso separately; no sideways strafing.
+   // INDEPENDENT LOWER-BODY TEST: A/D rotates Hip and leg attachments only.
+   // W/S follows that heading. The rigid-body root/cockpit does not yaw.
    m_bWalkerADSteering 0
    // This test rotates the authored Hip + Leg slots, NOT the vehicle root.
    m_bWalkerHipDrive 1
@@ -588,11 +588,10 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{C630000000020101}" {
    m_sAimStation "DRIVER"
-   // Counter-rotate towards camera aim while legs turn underneath.
-   // The torso is mechanically limited to +/-90 degrees, not infinite.
+   // The upper torso is fixed for this steering test (no torsion correction).
+   // Weapon mount aim remains independent of this torso twist component.
    // Keep the torso fixed to the cockpit; separate arm aiming still works.
    m_fMaxTwist 0
-   // Fast counter-rotation keeps upper body facing its desired world yaw.
    m_fTwistSpeed 180
    m_fDeadzone 0.75
    m_bHoldUpperHeadingWhileHipsTurn 0
