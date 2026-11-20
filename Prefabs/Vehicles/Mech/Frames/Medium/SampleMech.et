@@ -22,6 +22,9 @@ Vehicle {
   BFA_MechAimComponent "{6A8D7F3B129C4E01}" {
    m_fReticleAimDistance 1000
    m_iLocalAimTickMs 16
+   // Replace the default little white + with the reference HUD's
+   // large calibrated reticle. Weapon convergence/gun markers are unchanged.
+   m_bShowCrosshair 0
   }
   // Pilot HUD already exists in CGS Mech Core. This opt-in uses the
   // reference-style compass / dual-heading readout / ring radar and teal
