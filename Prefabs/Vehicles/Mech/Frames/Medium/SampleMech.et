@@ -743,8 +743,11 @@ Vehicle {
    m_fDist_Desired 9
    m_fAngleFirstPerson 5
    m_fAngleThirdPerson 15
+   // DIAGNOSTIC: test whether vehicle camera auto-alignment is dragging the
+   // pilot view with the steering root instead of the stabilized torso.
+   // No changes to camera type, seat, controls, or mech movement.
    m_pCameraAlignData SCR_VehicleCameraAlignment "{6A8740653CE8FB78}" {
-    m_fInterpolateSpeed 0.2
+    m_fInterpolateSpeed 0
    }
   }
   SCR_VehicleDamageManagerComponent "{00FF38D43CF7A51E}" {
