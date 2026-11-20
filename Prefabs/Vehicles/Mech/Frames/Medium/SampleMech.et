@@ -585,8 +585,10 @@ Vehicle {
    // Counter-rotate towards camera aim while legs turn underneath.
    // The torso is mechanically limited to +/-90 degrees, not infinite.
    m_fMaxTwist 90
-   m_fTwistSpeed 100
-   m_fDeadzone 2
+   // Fast counter-rotation keeps upper body facing its desired world yaw.
+   m_fTwistSpeed 180
+   m_fDeadzone 0.75
+   m_bHoldUpperHeadingWhileHipsTurn 1
    m_aTwistSlots {
     "Torso"
    }
