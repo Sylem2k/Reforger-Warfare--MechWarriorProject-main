@@ -443,3 +443,34 @@ modded class BFA_MechHUDDisplay
 		m_aRwAimDecor.Clear();
 	}
 }
+
+
+//------------------------------------------------------------------------------------------------
+//! Mech Core's reference cockpit HUD also draws a weapon list. With RW Combat
+//! HUD installed that would put TWO independently-owned weapon panels in the
+//! bottom-right corner. Keep RW's detailed real-weapon/group/heat panel and
+//! suppress ONLY the duplicate reference weapon list.
+//!
+//! Other reference HUD sections (compass, component health, radar, actual
+//! bore/rocket pips, incoming missile warning) remain driven by Mech Core.
+//! This modded class exists only in the downstream Warfare addon, so Core
+//! remains standalone and displays its own weapons when RW isn't installed.
+//------------------------------------------------------------------------------------------------
+modded class CGS_MWReferenceHUD
+{
+    override protected void DrawWeapons(IEntity mech, float screenW, float screenH)
+    {
+        // The reference HUD creates widgets during Build(). Hide all of its
+        // weapon-list widgets, including the NO FITTED WEAPONS fallback.
+        // No call to super.DrawWeapons: RW_MechCombatHUD is the sole weapon
+        // panel owner while the Warfare addon is loaded.
+        Show(m_wWeaponPanel, false);
+        Show(m_wWeaponTitle, false);
+        Show(m_wWeaponMode, false);
+
+        for (int i = 0; i < m_aWeaponNames.Count(); i++)
+            Show(m_aWeaponNames[i], false);
+        for (int j = 0; j < m_aWeaponAmmo.Count(); j++)
+            Show(m_aWeaponAmmo[j], false);
+    }
+}
