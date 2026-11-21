@@ -470,6 +470,8 @@ Vehicle {
    m_bWalkerADSteering 0
    // This test rotates the authored Hip + Leg slots, NOT the vehicle root.
    m_bWalkerHipDrive 1
+   // Diagnostic only: record active prefab mode and actual A/D input in logs.
+   m_bDebugWalkerHipInput 1
    m_fWalkerHipMaxYaw 180
    // Keep hips under pilot turn control for this test, rather than forcing
    // the chassis to chase the torso's aim while the player is standing.
