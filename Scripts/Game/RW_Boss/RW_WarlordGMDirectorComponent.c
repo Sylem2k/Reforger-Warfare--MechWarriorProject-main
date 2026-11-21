@@ -78,6 +78,25 @@ class RW_WarlordGMDirectorComponent : ScriptComponent
     [Attribute("275", UIWidgets.Auto, "Maximum Warlord napalm range in metres (50-300).", category: "GM Storyline"), RplProp()]
     protected float m_fNapalmRange;
 
+    // A/B diagnostic only. ON suppresses audio started by the Warlord boss
+    // weapon router (module shots, laser-charge RPC, server impact cues) plus
+    // its additional LRM accent. All damage, movement, muzzle FX and impact
+    // visuals continue. Other addon sounds are deliberately NOT intercepted.
+    [Attribute("false", UIWidgets.CheckBox, "Diagnostic: mute Warlord routed firing/charge/impact cues without stopping attacks.", category: "Diagnostics"), RplProp()]
+    protected bool m_bAudioIsolationMute;
+
+    bool GetAudioIsolationMute() { return m_bAudioIsolationMute; }
+
+    void SetAudioIsolationMute(bool enabled)
+    {
+        if (!Replication.IsServer())
+            return;
+
+        m_bAudioIsolationMute = enabled;
+        Replication.BumpMe();
+        Print(string.Format("[RW WARLORD AUDIO ISOLATE][SERVER] routedAudioMuted=%1", enabled));
+    }
+
     bool GetNapalmEnabled() { return m_bNapalmEnabled; }
     float GetNapalmRange() { return Math.Clamp(m_fNapalmRange, 50.0, 300.0); }
 

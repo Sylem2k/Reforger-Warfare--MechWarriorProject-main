@@ -403,9 +403,15 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
     // Route by acoustic EVENT TYPE, not through the generic SFX mixer.
     // WPN_Shots for launch; WNP_BulletHits for ground/wall strikes;
     // WPN_Explosions for siege blast. Keeps proper game volume and earplug bus.
+    protected bool IsWarlordRoutedAudioTestMuted()
+    {
+        RW_WarlordGMDirectorComponent gm = RW_WarlordGMDirectorComponentClass.Find(GetOwner());
+        return gm && gm.GetAudioIsolationMute();
+    }
+
     protected void PlayBossWarlordAudioLocal(vector position, ResourceName project, string eventName)
     {
-        if (System.IsConsoleApp())
+        if (System.IsConsoleApp() || IsWarlordRoutedAudioTestMuted())
             return;
         if (m_bVerboseWarlordLogs && m_iImpactAudioLogs < 20)
         {
@@ -784,6 +790,39 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         return shotId;
     }
 
+    // Wrap the native shared Mech Core visual shot path, muting only the
+    // sound-event field temporarily while the GM test is enabled. The rest
+    // of ClientOnShot (particles, shells, beams, impact, animations) still runs.
+    protected void PlayShotLocalWithAudioTest(
+        int hardpointIndex, int shotId, vector start, vector end,
+        int flags, float speed, float length, float thickness)
+    {
+        if (!IsWarlordRoutedAudioTestMuted())
+        {
+            super.PlayShotLocal(hardpointIndex, shotId, start, end,
+                flags, speed, length, thickness);
+            return;
+        }
+
+        BFA_MechWeaponModuleComponent module = FindLocalModule(hardpointIndex);
+        BFA_MechWeaponFX fx;
+        if (module)
+            fx = module.GetFX();
+
+        if (!fx)
+        {
+            super.PlayShotLocal(hardpointIndex, shotId, start, end,
+                flags, speed, length, thickness);
+            return;
+        }
+
+        string saved = fx.m_sFireSoundEvent;
+        fx.m_sFireSoundEvent = "";
+        super.PlayShotLocal(hardpointIndex, shotId, start, end,
+            flags, speed, length, thickness);
+        fx.m_sFireSoundEvent = saved;
+    }
+
     override protected void PlayShotLocal(
         int hardpointIndex, int shotId, vector start, vector end,
         int flags, float speed, float length, float thickness)
@@ -807,7 +846,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 
                 // This still renders EACH flamethrower packet, flame trail,
                 // muzzle particle and hit locally on all MP clients.
-                super.PlayShotLocal(hardpointIndex, shotId, start, end,
+                PlayShotLocalWithAudioTest(hardpointIndex, shotId, start, end,
                     flags, speed, length, thickness);
                 napalmFX.m_sFireSoundEvent = savedEvent;
                 return;
@@ -822,7 +861,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
                 string savedEvent = laserFX.m_sFireSoundEvent;
                 laserFX.m_sSoundProject = "{A6111111000AA012}Sounds/Warlord/Warlord_Combat.acp";
                 laserFX.m_sFireSoundEvent = "SOUND_WARLORD_LASER_FIRE";
-                super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+                PlayShotLocalWithAudioTest(hardpointIndex, shotId, start, end, flags,
                     speed, Math.AbsFloat(length), thickness);
                 laserFX.m_sSoundProject = savedProject;
                 laserFX.m_sFireSoundEvent = savedEvent;
@@ -832,7 +871,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
 
         if (length >= 0)
         {
-            super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+            PlayShotLocalWithAudioTest(hardpointIndex, shotId, start, end, flags,
                 speed, length, thickness);
             return;
         }
@@ -840,7 +879,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         BFA_MechWeaponModuleComponent module = FindLocalModule(hardpointIndex);
         if (!IsBossKineticCannon(module))
         {
-            super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+            PlayShotLocalWithAudioTest(hardpointIndex, shotId, start, end, flags,
                 speed, Math.AbsFloat(length), thickness);
             return;
         }
@@ -848,7 +887,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         BFA_MechWeaponFX fx = module.GetFX();
         if (!fx)
         {
-            super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+            PlayShotLocalWithAudioTest(hardpointIndex, shotId, start, end, flags,
                 speed, Math.AbsFloat(length), thickness);
             return;
         }
@@ -860,7 +899,7 @@ class RW_WarlordBossWeaponRouterComponent : BFA_MechWeaponComponent
         ResourceName savedTrail = fx.m_sTrailParticle;
         fx.m_sProjectilePrefab = "{EA61110000000002}Prefabs/Vehicles/Mech/Weapons/Boss/Warlord_CannonShell.et";
         fx.m_sTrailParticle = "";
-        super.PlayShotLocal(hardpointIndex, shotId, start, end, flags,
+        PlayShotLocalWithAudioTest(hardpointIndex, shotId, start, end, flags,
             speed, Math.AbsFloat(length), thickness);
         fx.m_sProjectilePrefab = savedProjectile;
         fx.m_sTrailParticle = savedTrail;
