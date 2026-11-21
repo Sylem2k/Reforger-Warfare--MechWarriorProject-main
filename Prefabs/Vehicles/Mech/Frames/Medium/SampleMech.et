@@ -472,6 +472,11 @@ Vehicle {
    m_bWalkerHipDrive 1
    // Diagnostic only: record active prefab mode and actual A/D input in logs.
    m_bDebugWalkerHipInput 1
+   // Prevent the physical waist from winding more than 90 degrees between
+   // the rotating Hip/legs and the camera-aimed Torso. When reached, the
+   // independent movement component passes remaining A/D yaw to the root.
+   m_bWalkerHipWaistFollow 1
+   m_fWalkerHipWaistLimit 90
    m_fWalkerHipMaxYaw 180
    // Keep hips under pilot turn control for this test, rather than forcing
    // the chassis to chase the torso's aim while the player is standing.
