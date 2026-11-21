@@ -51,10 +51,10 @@ Vehicle {
      m_sStationId "DRIVER"
      m_bCanDrive 1
      m_bCanAim 1
-     m_iWeaponGroupMask 1
+     m_iWeaponGroupMask 3
      m_iCompartmentIndex 0
      m_iPrimaryWeaponGroup 1
-     m_iSecondaryWeaponGroup 0
+     m_iSecondaryWeaponGroup 2
      m_iAuxWeaponGroup 0
     }
    }
@@ -643,7 +643,7 @@ Vehicle {
    m_sFrameName "Cricket"
    m_eWeightClass LIGHT
    m_fMaxTons 25
-   m_fFrameTons 25
+   m_fFrameTons 15
    m_aHardpoints {
     RW_FrameHardpoint "{098B692C87D025B7}" {
      m_sHardpoint "ARM"
@@ -652,8 +652,8 @@ Vehicle {
     }
     RW_FrameHardpoint "{B4F9A235919C037B}" {
      m_sHardpoint "SHOULDER"
-     m_eType SUPPORT
-     m_eMaxSize SMALL
+     m_eType ANY
+     m_eMaxSize MEDIUM
     }
    }
    m_iStartExtraHeatsinks 0
