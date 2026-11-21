@@ -54,21 +54,30 @@ class RW_MechLabInput : ScriptedWidgetEventHandler
 	override bool OnMouseButtonDown(Widget w, int x, int y, int button)
 	{
 		if (m_Menu)
+		{
+			m_Menu.MouseInteracted();
 			m_Menu.OnPress(button);
+		}
 		return true;
 	}
 
 	override bool OnMouseButtonUp(Widget w, int x, int y, int button)
 	{
 		if (m_Menu)
+		{
+			m_Menu.MouseInteracted();
 			m_Menu.OnRelease(button);
+		}
 		return true;
 	}
 
 	override bool OnMouseWheel(Widget w, int x, int y, int wheel)
 	{
 		if (m_Menu)
+		{
+			m_Menu.MouseInteracted();
 			m_Menu.OnWheel(wheel);
+		}
 		return true;
 	}
 }
@@ -281,6 +290,14 @@ class RW_MechLabMenu : ChimeraMenuBase
 	protected float m_fPressY;
 	protected bool m_bDragging;
 
+	// Controller navigation selects the same existing click rows. There is no
+	// mouse cursor simulation, different loadout authority or new server RPC.
+	protected bool m_bPadModeActive;
+	protected int m_iPadFocusRow = -1;
+	protected float m_fPadLastMouseX = -9999;
+	protected float m_fPadLastMouseY = -9999;
+	protected ref array<ImageWidget> m_aPadFocusBorder = {};
+
 	// Widgets that change.
 	protected TextWidget m_wFrameName;
 	protected TextWidget m_wFrameClass;
@@ -382,7 +399,17 @@ class RW_MechLabMenu : ChimeraMenuBase
 
 		InputManager input = GetGame().GetInputManager();
 		if (input)
+		{
 			input.AddActionListener("MenuBack", EActionTrigger.DOWN, OnBack);
+			input.AddActionListener("CGS_MechLabNavUp", EActionTrigger.DOWN, PadUp);
+			input.AddActionListener("CGS_MechLabNavDown", EActionTrigger.DOWN, PadDown);
+			input.AddActionListener("CGS_MechLabNavLeft", EActionTrigger.DOWN, PadLeft);
+			input.AddActionListener("CGS_MechLabNavRight", EActionTrigger.DOWN, PadRight);
+			input.AddActionListener("CGS_MechLabConfirm", EActionTrigger.DOWN, PadConfirm);
+			input.AddActionListener("CGS_MechLabClear", EActionTrigger.DOWN, PadClear);
+			input.AddActionListener("CGS_MechLabPrevTab", EActionTrigger.DOWN, PadPrevTab);
+			input.AddActionListener("CGS_MechLabNextTab", EActionTrigger.DOWN, PadNextTab);
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -390,7 +417,17 @@ class RW_MechLabMenu : ChimeraMenuBase
 	{
 		InputManager input = GetGame().GetInputManager();
 		if (input)
+		{
 			input.RemoveActionListener("MenuBack", EActionTrigger.DOWN, OnBack);
+			input.RemoveActionListener("CGS_MechLabNavUp", EActionTrigger.DOWN, PadUp);
+			input.RemoveActionListener("CGS_MechLabNavDown", EActionTrigger.DOWN, PadDown);
+			input.RemoveActionListener("CGS_MechLabNavLeft", EActionTrigger.DOWN, PadLeft);
+			input.RemoveActionListener("CGS_MechLabNavRight", EActionTrigger.DOWN, PadRight);
+			input.RemoveActionListener("CGS_MechLabConfirm", EActionTrigger.DOWN, PadConfirm);
+			input.RemoveActionListener("CGS_MechLabClear", EActionTrigger.DOWN, PadClear);
+			input.RemoveActionListener("CGS_MechLabPrevTab", EActionTrigger.DOWN, PadPrevTab);
+			input.RemoveActionListener("CGS_MechLabNextTab", EActionTrigger.DOWN, PadNextTab);
+		}
 		if (m_Camera)
 			m_Camera.Stop();
 		m_Camera = null;
@@ -401,6 +438,9 @@ class RW_MechLabMenu : ChimeraMenuBase
 			m_wRetiredCanvas.RemoveFromHierarchy();
 		m_wRetiredCanvas = null;
 		m_aRows.Clear();
+		m_aPadFocusBorder.Clear();
+		m_bPadModeActive = false;
+		m_iPadFocusRow = -1;
 		s_pNextMech = null;
 		s_pNextBay = null;
 		super.OnMenuClose();
@@ -421,6 +461,12 @@ class RW_MechLabMenu : ChimeraMenuBase
 	override void OnMenuUpdate(float tDelta)
 	{
 		super.OnMenuUpdate(tDelta);
+
+		// Like the normal mech contexts, this must be activated every frame.
+		// It is scoped to this menu and listens only to gamepad controls.
+		InputManager menuInput = GetGame().GetInputManager();
+		if (menuInput)
+			menuInput.ActivateContext("CGS_MechLabContext");
 
 		if (!m_pMech && m_OrderBay)
 		{
@@ -460,6 +506,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		WidgetManager.GetMousePos(mx, my);
 		m_fMouseX = ws.DPIUnscale(mx) / m_fS;
 		m_fMouseY = ws.DPIUnscale(my) / m_fS;
+		PadMouseMoved();
 
 		if (m_Camera)
 			m_Camera.Update(tDelta);
@@ -467,6 +514,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (m_bGroupsOpen)
 		{
 			RefreshGroupsScreen();
+			RefreshPadFocus();
 			return;
 		}
 
@@ -477,6 +525,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		}
 
 		Refresh();
+		RefreshPadFocus();
 	}
 
 	//==================================================================================================
@@ -613,6 +662,214 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//==================================================================================================
 	// INPUT
 	//==================================================================================================
+
+	//------------------------------------------------------------------------------------------------
+	// Gamepad focus works across all existing screens (frame orders, refit,
+	// saved builds, weapon groups and confirmation buttons). Mouse remains the
+	// default until a pad direction/confirm is pressed, and takes over again
+	// on a real cursor movement or click.
+	void MouseInteracted()
+	{
+		m_bPadModeActive = false;
+		m_iPadFocusRow = -1;
+	}
+
+	protected void PadMouseMoved()
+	{
+		if (m_fPadLastMouseX > -9000 && m_fPadLastMouseY > -9000)
+		{
+			float movement = Math.AbsFloat(m_fMouseX - m_fPadLastMouseX) + Math.AbsFloat(m_fMouseY - m_fPadLastMouseY);
+			if (m_bPadModeActive && movement > 8)
+				MouseInteracted();
+		}
+		m_fPadLastMouseX = m_fMouseX;
+		m_fPadLastMouseY = m_fMouseY;
+	}
+
+	protected bool PadRowValid(int index)
+	{
+		if (index < 0 || index >= m_aRows.Count())
+			return false;
+		RW_LabRow row = m_aRows[index];
+		if (!row || row.m_bHidden || row.m_iKind == ROW_MARKER)
+			return false;
+		return row.m_fW > 1 && row.m_fH > 1;
+	}
+
+	protected void EnsurePadFocus()
+	{
+		if (PadRowValid(m_iPadFocusRow))
+			return;
+		m_iPadFocusRow = -1;
+		int preferredKind = ROW_HARDPOINT;
+		if (!m_pMech && m_OrderBay)
+			preferredKind = ROW_ORDER;
+		else if (m_bGroupsOpen)
+			preferredKind = ROW_GROUP_CHAIN;
+
+		for (int i = 0; i < m_aRows.Count(); i++)
+		{
+			if (!PadRowValid(i))
+				continue;
+			if (m_aRows[i].m_iKind == preferredKind)
+			{
+				m_iPadFocusRow = i;
+				return;
+			}
+		}
+		for (int j = 0; j < m_aRows.Count(); j++)
+		{
+			if (PadRowValid(j))
+			{
+				m_iPadFocusRow = j;
+				return;
+			}
+		}
+	}
+
+	protected int PadHoverRow()
+	{
+		if (m_bPadModeActive && PadRowValid(m_iPadFocusRow))
+			return m_iPadFocusRow;
+		return RowAt(m_fMouseX, m_fMouseY);
+	}
+
+	protected void MovePadFocus(int horizontal, int vertical)
+	{
+		if (!m_bBuilt || m_aRows.IsEmpty())
+			return;
+		bool hadFocus = m_bPadModeActive && PadRowValid(m_iPadFocusRow);
+		m_bPadModeActive = true;
+		EnsurePadFocus();
+		if (!hadFocus || !PadRowValid(m_iPadFocusRow))
+			return;
+
+		RW_LabRow origin = m_aRows[m_iPadFocusRow];
+		float ox = origin.m_fX + origin.m_fW * 0.5;
+		float oy = origin.m_fY + origin.m_fH * 0.5;
+		int nearest = -1;
+		float bestScore = 9999999;
+		for (int i = 0; i < m_aRows.Count(); i++)
+		{
+			if (i == m_iPadFocusRow || !PadRowValid(i))
+				continue;
+			RW_LabRow row = m_aRows[i];
+			float dx = row.m_fX + row.m_fW * 0.5 - ox;
+			float dy = row.m_fY + row.m_fH * 0.5 - oy;
+			float ahead = dy * vertical;
+			float sideways = Math.AbsFloat(dx);
+			if (horizontal != 0)
+			{
+				ahead = dx * horizontal;
+				sideways = Math.AbsFloat(dy);
+			}
+			if (ahead <= 2)
+				continue;
+			float score = ahead + sideways * 2.3;
+			if (sideways > ahead * 2.5 + 30)
+				score = score + 600;
+			if (score < bestScore)
+			{
+				bestScore = score;
+				nearest = i;
+			}
+		}
+		if (nearest >= 0)
+			m_iPadFocusRow = nearest;
+	}
+
+	protected void PadUp() { MovePadFocus(0, -1); }
+	protected void PadDown() { MovePadFocus(0, 1); }
+	protected void PadLeft() { MovePadFocus(-1, 0); }
+	protected void PadRight() { MovePadFocus(1, 0); }
+
+	protected void PadConfirm()
+	{
+		if (!m_bBuilt)
+			return;
+		m_bPadModeActive = true;
+		EnsurePadFocus();
+		if (!PadRowValid(m_iPadFocusRow))
+			return;
+
+		// Dispatch through the EXACT SAME mouse-row logic. This preserves
+		// all item fitting, server validation, two-step deletion, and RPCs.
+		RW_LabRow row = m_aRows[m_iPadFocusRow];
+		float previousX = m_fMouseX;
+		float previousY = m_fMouseY;
+		m_fMouseX = row.m_fX + row.m_fW * 0.5;
+		m_fMouseY = row.m_fY + row.m_fH * 0.5;
+		OnPress(0);
+		OnRelease(0);
+		m_fMouseX = previousX;
+		m_fMouseY = previousY;
+	}
+
+	protected void PadClear()
+	{
+		if (!m_bBuilt || !m_pMech || m_bGroupsOpen || !m_Hardpoints)
+			return;
+		m_bPadModeActive = true;
+		EnsurePadFocus();
+		int hardpoint = m_iSelectedHp;
+		if (PadRowValid(m_iPadFocusRow) && m_aRows[m_iPadFocusRow].m_iKind == ROW_HARDPOINT)
+			hardpoint = m_aRows[m_iPadFocusRow].m_iValue;
+		Assign(hardpoint, 0);
+	}
+
+	protected void PadPrevTab() { PadChangeTab(-1); }
+	protected void PadNextTab() { PadChangeTab(1); }
+
+	protected void PadChangeTab(int step)
+	{
+		if (!m_bBuilt)
+			return;
+		m_bPadModeActive = true;
+		if (!m_pMech && m_OrderBay)
+		{
+			m_iOrderPage = Math.Clamp(m_iOrderPage + step, 0, Math.Max(m_OrderBay.GetFrameCount() - 1, 0));
+			RebuildOrder();
+		}
+		else if (m_bGroupsOpen)
+		{
+			int maxPage = 0;
+			if (!m_aGroupHardpoints.IsEmpty())
+				maxPage = (m_aGroupHardpoints.Count() - 1) / Math.Max(m_iGroupRowsPerPage, 1);
+			m_iGroupPage = Math.Clamp(m_iGroupPage + step, 0, maxPage);
+			RebuildGroupsScreen();
+		}
+		else if (m_pMech)
+		{
+			m_iPartFilter = Math.Clamp(m_iPartFilter + step, 0, 4);
+			m_iPartScroll = 0;
+			ScrollParts(0, true);
+		}
+	}
+
+	protected void RefreshPadFocus()
+	{
+		if (m_aPadFocusBorder.Count() != 4)
+			return;
+		bool visible = m_bPadModeActive && PadRowValid(m_iPadFocusRow);
+		for (int n = 0; n < 4; n++)
+			m_aPadFocusBorder[n].SetVisible(visible);
+		if (!visible)
+			return;
+		RW_LabRow row = m_aRows[m_iPadFocusRow];
+		float x = row.m_fX - 2;
+		float y = row.m_fY - 2;
+		float w = row.m_fW + 4;
+		float h = row.m_fH + 4;
+		PlaceS(m_aPadFocusBorder[0], x, y);
+		SizeS(m_aPadFocusBorder[0], w, 2);
+		PlaceS(m_aPadFocusBorder[1], x, y + h - 2);
+		SizeS(m_aPadFocusBorder[1], w, 2);
+		PlaceS(m_aPadFocusBorder[2], x, y);
+		SizeS(m_aPadFocusBorder[2], 2, h);
+		PlaceS(m_aPadFocusBorder[3], x + w - 2, y);
+		SizeS(m_aPadFocusBorder[3], 2, h);
+	}
+
 
 	//------------------------------------------------------------------------------------------------
 	protected int RowAt(float x, float y)
@@ -871,6 +1128,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 		Rect(EDGE, 12, 5, 31, m_cWarm, 2);
 		Text(EDGE + 18, 12, 250, 35, 23, m_cText, "CGS / MECH SYSTEMS");
 		Text(EDGE + 300, 17, 390, 27, 16, m_cAccent, section);
+		Text(EDGE + 24, 61, sw - EDGE * 2, 18, 12, m_cAccent,
+			"CONTROLLER: D-PAD navigate  /  A select  /  X clear  /  LB/RB tabs  /  B back");
 		m_wTopState = Text(sw - 305, 18, 270, 25, 16, m_cGood, "BAY SYSTEMS  //  ONLINE");
 	}
 
@@ -1292,7 +1551,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//------------------------------------------------------------------------------------------------
 	protected void Refresh()
 	{
-		int hover = RowAt(m_fMouseX, m_fMouseY);
+		int hover = PadHoverRow();
 		float tons = m_Frame.BuildTons(m_Hardpoints, m_aPending, m_iPendingHS);
 		float maxTons = m_Frame.GetMaxTons();
 		bool over = tons > maxTons + 0.001;
@@ -1952,7 +2211,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//! Highlight from local preview immediately, then reconcile from RplProps.
 	protected void RefreshGroupsScreen()
 	{
-		int hover = RowAt(m_fMouseX, m_fMouseY);
+		int hover = PadHoverRow();
 		if (m_wStatus)
 		{
 			if (Now() < m_fLocalUntil)
@@ -2085,8 +2344,10 @@ class RW_MechLabMenu : ChimeraMenuBase
 		WidgetManager.GetMousePos(mx, my);
 		m_fMouseX = ws.DPIUnscale(mx) / m_fS;
 		m_fMouseY = ws.DPIUnscale(my) / m_fS;
+		PadMouseMoved();
 
 		RefreshOrder();
+		RefreshPadFocus();
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -2112,11 +2373,22 @@ class RW_MechLabMenu : ChimeraMenuBase
 			m_wRetiredCanvas.RemoveFromHierarchy();
 		m_wRetiredCanvas = m_wCanvas;
 		m_wCanvas = null;
+		m_aPadFocusBorder.Clear();
+		m_iPadFocusRow = -1;
 	}
 
 	//------------------------------------------------------------------------------------------------
 	protected void FinishCanvasSwitch()
 	{
+		// Four small strokes make a visible controller focus outline, including
+		// on disabled rows whose ordinary mouse-hover styling is suppressed.
+		m_aPadFocusBorder.Clear();
+		for (int n = 0; n < 4; n++)
+		{
+			ImageWidget border = Rect(0, 0, 2, 2, m_cWarm, 12);
+			border.SetVisible(false);
+			m_aPadFocusBorder.Insert(border);
+		}
 		if (!m_wRetiredCanvas)
 			return;
 		m_wRetiredCanvas.RemoveFromHierarchy();
@@ -2308,7 +2580,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 	//------------------------------------------------------------------------------------------------
 	protected void RefreshOrder()
 	{
-		int hover = RowAt(m_fMouseX, m_fMouseY);
+		int hover = PadHoverRow();
 		for (int r = 0; r < m_aRows.Count(); r++)
 		{
 			RW_LabRow row = m_aRows[r];
