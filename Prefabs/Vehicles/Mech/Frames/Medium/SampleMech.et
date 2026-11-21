@@ -600,10 +600,11 @@ Vehicle {
   }
   CGS_TorsoTwistComponent "{C630000000020101}" {
    m_sAimStation "DRIVER"
-   // The upper torso is fixed for this steering test (no torsion correction).
-   // Weapon mount aim remains independent of this torso twist component.
-   // Keep the torso fixed to the cockpit; separate arm aiming still works.
-   m_fMaxTwist 0
+   // Independent controls: A/D rotates Hip + legs (CGS_HipTwistComponent),
+   // while camera/freelook turns the upper torso toward the DRIVER aim.
+   // This is an ordinary aim-driven twist, NOT the old root-turn
+   // counterrotation. Leave hip-world-heading hold disabled.
+   m_fMaxTwist 90
    m_fTwistSpeed 180
    m_fDeadzone 0.75
    m_bHoldUpperHeadingWhileHipsTurn 0
