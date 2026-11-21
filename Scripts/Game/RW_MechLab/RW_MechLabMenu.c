@@ -401,14 +401,15 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (input)
 		{
 			input.AddActionListener("MenuBack", EActionTrigger.DOWN, OnBack);
-			input.AddActionListener("CGS_MechLabNavUp", EActionTrigger.DOWN, PadUp);
-			input.AddActionListener("CGS_MechLabNavDown", EActionTrigger.DOWN, PadDown);
-			input.AddActionListener("CGS_MechLabNavLeft", EActionTrigger.DOWN, PadLeft);
-			input.AddActionListener("CGS_MechLabNavRight", EActionTrigger.DOWN, PadRight);
-			input.AddActionListener("CGS_MechLabConfirm", EActionTrigger.DOWN, PadConfirm);
-			input.AddActionListener("CGS_MechLabClear", EActionTrigger.DOWN, PadClear);
-			input.AddActionListener("CGS_MechLabPrevTab", EActionTrigger.DOWN, PadPrevTab);
-			input.AddActionListener("CGS_MechLabNextTab", EActionTrigger.DOWN, PadNextTab);
+			// Native menu actions run in the MenuContext that Reforger
+			// automatically activates for open menus. The old custom
+			// CGS_MechLabContext was blocked by the active menu priority.
+			// Use vanilla mappings, including real Xbox controller buttons.
+			input.AddActionListener("MenuUp", EActionTrigger.DOWN, PadUp);
+			input.AddActionListener("MenuDown", EActionTrigger.DOWN, PadDown);
+			input.AddActionListener("MenuLeft", EActionTrigger.DOWN, PadLeft);
+			input.AddActionListener("MenuRight", EActionTrigger.DOWN, PadRight);
+			input.AddActionListener("MenuSelect", EActionTrigger.DOWN, PadConfirm);
 		}
 	}
 
@@ -419,14 +420,11 @@ class RW_MechLabMenu : ChimeraMenuBase
 		if (input)
 		{
 			input.RemoveActionListener("MenuBack", EActionTrigger.DOWN, OnBack);
-			input.RemoveActionListener("CGS_MechLabNavUp", EActionTrigger.DOWN, PadUp);
-			input.RemoveActionListener("CGS_MechLabNavDown", EActionTrigger.DOWN, PadDown);
-			input.RemoveActionListener("CGS_MechLabNavLeft", EActionTrigger.DOWN, PadLeft);
-			input.RemoveActionListener("CGS_MechLabNavRight", EActionTrigger.DOWN, PadRight);
-			input.RemoveActionListener("CGS_MechLabConfirm", EActionTrigger.DOWN, PadConfirm);
-			input.RemoveActionListener("CGS_MechLabClear", EActionTrigger.DOWN, PadClear);
-			input.RemoveActionListener("CGS_MechLabPrevTab", EActionTrigger.DOWN, PadPrevTab);
-			input.RemoveActionListener("CGS_MechLabNextTab", EActionTrigger.DOWN, PadNextTab);
+			input.RemoveActionListener("MenuUp", EActionTrigger.DOWN, PadUp);
+			input.RemoveActionListener("MenuDown", EActionTrigger.DOWN, PadDown);
+			input.RemoveActionListener("MenuLeft", EActionTrigger.DOWN, PadLeft);
+			input.RemoveActionListener("MenuRight", EActionTrigger.DOWN, PadRight);
+			input.RemoveActionListener("MenuSelect", EActionTrigger.DOWN, PadConfirm);
 		}
 		if (m_Camera)
 			m_Camera.Stop();
@@ -462,11 +460,8 @@ class RW_MechLabMenu : ChimeraMenuBase
 	{
 		super.OnMenuUpdate(tDelta);
 
-		// Like the normal mech contexts, this must be activated every frame.
-		// It is scoped to this menu and listens only to gamepad controls.
-		InputManager menuInput = GetGame().GetInputManager();
-		if (menuInput)
-			menuInput.ActivateContext("CGS_MechLabContext");
+		// MenuContext is managed automatically by MenuManager for this menu.
+		// Do not activate another context that competes with it for gamepad input.
 
 		if (!m_pMech && m_OrderBay)
 		{
@@ -1129,7 +1124,7 @@ class RW_MechLabMenu : ChimeraMenuBase
 		Text(EDGE + 18, 12, 250, 35, 23, m_cText, "CGS / MECH SYSTEMS");
 		Text(EDGE + 300, 17, 390, 27, 16, m_cAccent, section);
 		Text(EDGE + 24, 61, sw - EDGE * 2, 18, 12, m_cAccent,
-			"CONTROLLER: D-PAD navigate  /  A select  /  X clear  /  LB/RB tabs  /  B back");
+			"CONTROLLER: D-PAD navigate  /  A select  /  B back  /  CLEAR: select Empty");
 		m_wTopState = Text(sw - 305, 18, 270, 25, 16, m_cGood, "BAY SYSTEMS  //  ONLINE");
 	}
 
